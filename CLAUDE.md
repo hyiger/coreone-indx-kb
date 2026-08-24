@@ -28,9 +28,12 @@ a human on hardware before it lands.
 
 Numbers that **may** be published, because they identify rather than instruct:
 firmware version strings, dates, counts of affected users, board revisions, part and
-chip designations, nozzle diameters as hardware identifiers, and a vendor's own
-published material specification. The test is whether a reader would dial the number
-into a slicer or a drill. If they would, withhold it.
+chip designations, nozzle diameters as hardware identifiers, fastener and magnet
+specifications, a vendor's own published material specification, and assembly
+procedure values whose outcome is immediately visible (how far to loosen a screw,
+which cable to thread first). The test is whether a reader would dial the number into
+a slicer or a drill — a persisted setting that silently degrades prints. If they
+would, withhold it.
 
 This is the one that matters. A wrong nozzle temperature published under someone's
 name causes a clog on a stranger's printer.
@@ -90,10 +93,11 @@ job; moving a page into `docs/` is theirs.
 ./.venv/bin/mkdocs build --strict
 ```
 
-Must pass with zero warnings. `--strict` turns broken links into build failures,
-which is what keeps the site honest. Adding a page under `docs/` requires adding it
-to the `nav` in `mkdocs.yml`, or the strict build fails on an unreferenced file.
+Must pass with zero warnings — `--strict` turns broken links into build failures,
+which keeps the site honest. A new page under `docs/` must also be added to `nav` in
+`mkdocs.yml`, or the strict build fails on the unreferenced file. Links that cross
+between `docs/issues/` and `docs/reference/` need `../`.
 
-Pages is enabled with `build_type: workflow`, publishing to
-<https://hyiger.github.io/coreone-indx-kb/> on every push to `main`. Do not change
-Pages or repository settings without being asked — that call is the human's.
+Pages publishes to <https://hyiger.github.io/coreone-indx-kb/> on every push to
+`main`. Do not change Pages or repository settings unless asked — that call is the
+human's.

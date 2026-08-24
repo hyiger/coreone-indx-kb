@@ -19,6 +19,9 @@ of the site assumes.
 
 ## Pages
 
+- **[Assembly notes](assembly-notes.md)** — what builders wish they had known before
+  starting the conversion: what to print and stage in advance, the handful of steps
+  that consistently catch people out, and the dock magnets.
 - **[Hardware](hardware.md)** — components, revisions, and what each sensor
   actually does.
 

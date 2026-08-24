@@ -118,6 +118,9 @@ at the board.
 
 - [Probing fails or nozzle never touches the bed](loadcell-emi-noise.md) — the other
   sensor, frequently confused with this one
+- [Assembly notes](../reference/assembly-notes.md) — if this is failing on a
+  freshly built machine that has never calibrated successfully, check the build
+  first: this is one of the two selftest failures that recur on new conversions
 - [Who to contact](support-and-warranty-path.md) — getting the replacement part:
   diagnosis from Prusa, hardware from Bondtech, and open the case early enough that
   the date falls inside your warranty window.

@@ -49,6 +49,7 @@ nav:
   - G-code: gcode/index.md
   - Reference:
       - Overview: reference/index.md
+      - Assembly notes: reference/assembly-notes.md
       - Hardware: reference/hardware.md
   - Contributing: contributing.md
 exclude_docs: |

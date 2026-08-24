@@ -125,3 +125,6 @@ value bands and ferrite specifications are single-source and withheld above.
   material is accumulating on the nozzle before contact, that is the other one.
 - [Who to contact](support-and-warranty-path.md) — if it comes to a parts request:
   diagnosis from Prusa first, then the hardware from Bondtech.
+- [Assembly notes](../reference/assembly-notes.md) — if the loadcell test has been
+  unstable since the machine was built and never worked, treat it as a build
+  question before an interference one.
