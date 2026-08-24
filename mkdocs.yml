@@ -50,6 +50,7 @@ nav:
   - Reference:
       - Overview: reference/index.md
       - Assembly notes: reference/assembly-notes.md
+      - Build plate compatibility: reference/build-plate-compatibility.md
       - Hardware: reference/hardware.md
   - Contributing: contributing.md
 exclude_docs: |

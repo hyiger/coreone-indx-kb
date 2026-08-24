@@ -70,6 +70,12 @@ downloads will not match the current guide.
 - A **large sheet of cardboard** to stand the printer on, so you can spin and tilt it
   freely during the awkward steps.
 
+**Check your build plate now, not afterwards.** If you print on an oversized
+third-party flex sheet, it may stop clearing the tool docks once they are installed —
+even though it fits your machine perfectly well today. See
+[build plate compatibility](build-plate-compatibility.md). Sorting this out before you
+start beats finishing the build and finding your go-to sheet unusable.
+
 !!! danger "Update the firmware *before* you take the old printer apart"
     If you are converting a machine that started life as an MK4S, bring its firmware
     up to the level the conversion requires **while it is still assembled and

@@ -22,6 +22,9 @@ of the site assumes.
 - **[Assembly notes](assembly-notes.md)** — what builders wish they had known before
   starting the conversion: what to print and stage in advance, the handful of steps
   that consistently catch people out, and the dock magnets.
+- **[Build plate compatibility](build-plate-compatibility.md)** — oversized
+  third-party sheets stop clearing the tool docks once they are fitted, even though
+  they fit a stock Core One perfectly well.
 - **[Hardware](hardware.md)** — components, revisions, and what each sensor
   actually does.
 
