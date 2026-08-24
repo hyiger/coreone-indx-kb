@@ -1,0 +1,22 @@
+# Raw forum crawl output — other people's words, never committed.
+crawl/
+raw/
+
+# Extraction output awaiting human review. Promotion to docs/ is manual.
+drafts/
+
+# Internal process docs. Kept locally, deliberately not published — this repo
+# is public, and the crawl prompt in particular is not something to publish.
+bionic-forum-collect.md
+kb-setup-brief.md
+
+# MkDocs build output
+site/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store

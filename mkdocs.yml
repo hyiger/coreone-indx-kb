@@ -1,0 +1,45 @@
+site_name: Core One INDX Knowledge Base
+site_description: Community reference for the Bondtech INDX toolchanger on the Prusa Core One
+repo_url: https://github.com/hyiger/coreone-indx-kb
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.action.edit
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle: {icon: material/weather-night, name: Dark mode}
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle: {icon: material/weather-sunny, name: Light mode}
+
+plugins:
+  - search
+  - tags
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - tables
+  - attr_list
+  - toc: {permalink: true}
+
+nav:
+  - Home: index.md
+  - Calibration: calibration/index.md
+  - Issues: issues/index.md
+  - G-code: gcode/index.md
+  - Reference:
+      - Overview: reference/index.md
+      - Hardware: reference/hardware.md
+  - Contributing: contributing.md
+exclude_docs: |
+  _template.md
