@@ -73,7 +73,8 @@ What makes this fault confusing:
 4. **Open a support case.** The reported route is diagnosis with Prusa first, then a
    Bondtech ticket for the replacement board, carrying Prusa's findings with it. A
    ticket that already says what Prusa identified moves faster than one starting from
-   symptoms. Open it early even if you are not ready to act, so the date is on record.
+   symptoms. Open it early even if you are not ready to act, so the date is on record
+   — see [who to contact](support-and-warranty-path.md).
 
 The sensor works on eddy currents, which is worth knowing for two reasons: it is why
 a non-conductive nozzle tip is a design constraint for future nozzle variants, and it
@@ -117,6 +118,6 @@ at the board.
 
 - [Probing fails or nozzle never touches the bed](loadcell-emi-noise.md) — the other
   sensor, frequently confused with this one
-- **Support and warranty route** *(page in preparation)* — getting the replacement
-  part: diagnosis from Prusa, hardware from Bondtech, and open the case early enough
-  that the date falls inside your warranty window.
+- [Who to contact](support-and-warranty-path.md) — getting the replacement part:
+  diagnosis from Prusa, hardware from Bondtech, and open the case early enough that
+  the date falls inside your warranty window.

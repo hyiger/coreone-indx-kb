@@ -110,9 +110,8 @@ value bands and ferrite specifications are single-source and withheld above.
 
 - [Tool offset calibration fails](offset-sensor-board-failure.md) — separate
   sensor, separate fault, often confused with this one
-- **Oozing during probing and calibration** *(page in preparation)* — a completely
-  different cause with an overlapping symptom, worth ruling out. If material is
-  accumulating on the nozzle before contact, that is the other one.
-- **Support and warranty route** *(page in preparation)* — if it comes to a parts
-  request, the short version is to get the fault diagnosed by Prusa first, then take
-  that diagnosis to Bondtech for the hardware.
+- [Oozing spoils bed probing and tool calibration](oozing-during-probing-and-calibration.md)
+  — a completely different cause with an overlapping symptom, worth ruling out. If
+  material is accumulating on the nozzle before contact, that is the other one.
+- [Who to contact](support-and-warranty-path.md) — if it comes to a parts request:
+  diagnosis from Prusa first, then the hardware from Bondtech.

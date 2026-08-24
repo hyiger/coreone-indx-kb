@@ -10,10 +10,7 @@ Plain markdown, MkDocs Material, GitHub Pages.
 | `docs/` | Published content, CC BY-SA 4.0 | yes |
 | `docs/_template.md` | Page template, excluded from build | yes |
 | `drafts/` | Extraction output awaiting human review | **no** |
-| `crawl/`, `raw/` | Raw forum crawl output | **no** |
-
-Raw crawl output lives in a separate working repo (`~/indx-kb-work/`) and never
-enters this one.
+| `crawl/`, `raw/` | Raw forum crawl output, from `~/indx-kb-work/` | **no** |
 
 ## Prohibitions
 
@@ -28,6 +25,12 @@ perimeter counts, and any physical dimension a reader might drill or cut to.
 If a task seems to require a number, write `TODO(verify): <what is withheld and
 which source it came from>` and report it. Every number on this site is verified by
 a human on hardware before it lands.
+
+Numbers that **may** be published, because they identify rather than instruct:
+firmware version strings, dates, counts of affected users, board revisions, part and
+chip designations, nozzle diameters as hardware identifiers, and a vendor's own
+published material specification. The test is whether a reader would dial the number
+into a slicer or a drill. If they would, withhold it.
 
 This is the one that matters. A wrong nozzle temperature published under someone's
 name causes a clog on a stranger's printer.

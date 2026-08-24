@@ -31,35 +31,51 @@ Thresholds, temperatures, dimensions and deadlines are verified against hardware
 against the vendor before they are published here, because a wrong one costs the
 reader a part, a print, or a warranty window.
 
-## Pages
+## Start with the symptom
 
-- **[Probing fails or nozzle never touches the bed](loadcell-emi-noise.md)** —
-  electrical interference in the loadcell signal makes the printer think it has
-  touched the bed while the nozzle is still well clear.
-- **[Tool offset calibration fails](offset-sensor-board-failure.md)** — the
-  contactless offset sensor returns no samples, so calibration has nothing to work
-  with. Usually the sensor board.
+**The printer disagrees with reality about which tool is where**
 
-These two are worth reading together. They involve **different sensors** and have
-different fixes, but they are routinely confused with each other, and chasing the
-wrong one costs days. The quickest way to tell them apart: loadcell noise makes
-probing stop with the nozzle visibly nowhere near the sheet; an offset sensor fault
-shows up during tool offset calibration and leaves bed probing working.
+- [Phantom tools, "tool not detected" and park failures](tool-detection-ringdown-decay.md)
+  — a tool that isn't there is reported present, a tool that is there is reported
+  missing, or a tool that parked correctly is reported still attached.
 
-## Fault families
+**Probing or calibration fails**
 
-The faults reported so far group into a few families:
+- [Probing fails or nozzle never touches the bed](loadcell-emi-noise.md) —
+  electrical interference in the loadcell signal makes the printer believe it has
+  touched down while the nozzle is still well clear.
+- [Tool offset calibration fails](offset-sensor-board-failure.md) — the contactless
+  offset sensor returns no samples, so calibration has nothing to work with. Usually
+  the sensor board.
+- [Oozing spoils bed probing and tool calibration](oozing-during-probing-and-calibration.md)
+  — material where the machine is trying to take a measurement. Start by cleaning the
+  offset sensor window.
 
-- **Detection** — the printer believing something untrue about which tool is
-  present, or whether it has parked.
-- **Sensing** — probing and offset calibration failing, whether from electrical
-  noise, contamination, or a failed sensor board.
-- **Nozzles and consumables** — hardness and abrasive wear, factory defects,
-  filament path obstructions.
-- **Support and process** — who to contact for what, and in what order.
+**Nozzles and the filament path**
 
-!!! note "Pages in preparation"
-    Further pages covering tool detection and park failures, oozing during probing,
-    nozzle hardness, the filament guide bore, and the support and warranty route are
-    drafted and awaiting review. They appear here once their claims and any numbers
-    have been checked by a human.
+- [Nozzle hardness and abrasive filaments](nozzle-hardness.md) — the shipped nozzles
+  are not hardened in the conventional sense. What that means for filled filaments,
+  and the vendor's remediation offer.
+- [Unload and eject failures](filament-guide-bore-unload-failure.md) — printing works
+  but unloading fails. *Single source — read the caveat before acting.*
+
+**Process**
+
+- [Who to contact](support-and-warranty-path.md) — diagnosis and replacement parts
+  come from two different companies, and sending your problem to the wrong one is the
+  most common way owners lose weeks.
+
+## Three faults that look alike
+
+Probing and calibration failures are the ones people misdiagnose most, because three
+unrelated causes present through the same two error paths. The quickest discriminators:
+
+| What you see | Likely page |
+|---|---|
+| Probing stops with the nozzle **visibly** nowhere near the sheet | [Loadcell noise](loadcell-emi-noise.md) |
+| Bed probing is fine, but **tool offset calibration** fails | [Offset sensor](offset-sensor-board-failure.md) |
+| Material is building on the nozzle, deposits left on the sheet | [Oozing](oozing-during-probing-and-calibration.md) |
+| Failures follow a **firmware update** rather than appearing gradually | [Tool detection](tool-detection-ringdown-decay.md) |
+
+Chasing the wrong one of these costs days, which is why each page opens by saying how
+to tell it apart from its neighbours.

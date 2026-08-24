@@ -37,8 +37,13 @@ nav:
   - Calibration: calibration/index.md
   - Issues:
       - Overview: issues/index.md
+      - Tool detection and park failures: issues/tool-detection-ringdown-decay.md
       - Probing and loadcell noise: issues/loadcell-emi-noise.md
       - Tool offset calibration: issues/offset-sensor-board-failure.md
+      - Oozing during probing: issues/oozing-during-probing-and-calibration.md
+      - Nozzle hardness: issues/nozzle-hardness.md
+      - Filament guide bore: issues/filament-guide-bore-unload-failure.md
+      - Support and warranty: issues/support-and-warranty-path.md
   - G-code: gcode/index.md
   - Reference:
       - Overview: reference/index.md
