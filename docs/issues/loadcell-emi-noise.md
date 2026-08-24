@@ -71,6 +71,16 @@ Symptoms reported in this family:
    extension-board connector rather than on the main cable — made the problem worse.
    If your first placement degrades things, move it rather than abandoning the idea.
 
+!!! tip "How to tell interference from a genuinely bad loadcell"
+    A ferrite core treats electrical interference. It will not fix a failed loadcell,
+    and the two present almost identically. One owner separated them cleanly: their
+    probing fault **followed a replacement toolhead** across a swap while the original
+    head homed perfectly every time, on a recent controller board. Interference is a
+    property of the machine and its wiring; a fault that travels with the toolhead is
+    in the toolhead. See [diagonal banding](diagonal-banding.md), where that swap is
+    described. If your board is recent and the fault moves with the head, go to the
+    vendor rather than buying ferrites.
+
 If none of that helps, particularly if the failure happens only with the heater on
 and you are on an early board revision, the path is hardware replacement through the
 vendor. One owner reported success wrapping the wiring at the controller connector in

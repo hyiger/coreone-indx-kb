@@ -227,3 +227,6 @@ a cooling problem rather than a wiper one — it belongs on its own page, at
   suspect when wiper results differ between tools
 - [Phantom tools and park failures](tool-detection-ringdown-decay.md) — the other
   area 6.9.0 changed, in that case possibly for the worse
+- [Diagonal banding across print walls](diagonal-banding.md) — the other print-quality
+  page. If your defect is a regular pattern on the walls rather than discrete blobs
+  landing on the part, it is the extruder, not the wiper.

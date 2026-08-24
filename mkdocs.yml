@@ -42,6 +42,7 @@ nav:
       - Tool offset calibration: issues/offset-sensor-board-failure.md
       - Oozing during probing: issues/oozing-during-probing-and-calibration.md
       - Wiper, purge and blobs: issues/stringing-and-wiper-calibration.md
+      - Diagonal banding: issues/diagonal-banding.md
       - Nozzle hardness: issues/nozzle-hardness.md
       - Filament guide bore: issues/filament-guide-bore-unload-failure.md
       - Support and warranty: issues/support-and-warranty-path.md
