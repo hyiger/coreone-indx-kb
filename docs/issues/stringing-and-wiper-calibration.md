@@ -9,6 +9,7 @@ hotend:       unknown
 nozzle:       0.4mm reported
 firmware:     6.9.0; earlier behaviour noted throughout
 sources:
+  - https://help.prusa3d.com/downloads/core-one-indx
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
@@ -18,11 +19,15 @@ superseded_by:
 # Blobs dragged into the print — nozzle wiper and purge
 
 !!! tip "Update to 6.9.0 before doing anything else"
-    Firmware 6.9.0 introduced **automatic loadcell-driven alignment of the wiper in
-    both horizontal axes**, along with a changed purge location, a revised wiping
-    path and different purge amounts. Two owners independently report the difference as
-    dramatic — clean tool changes across mixed-material prints, and one no longer
-    needing a brim to catch debris on the first layer.
+    Firmware 6.9.0 introduced **automatic calibration of the nozzle cleaner** — this
+    is confirmed in Prusa's own release notes, not just inferred from owner reports.
+    The same release moved the purge point in Y and made the nozzle reheat in the
+    cleaner when a print resumes. Owners additionally describe a revised wiping path
+    and changed purge amounts.
+
+    Two owners independently report the difference as dramatic — clean tool changes
+    across mixed-material prints, and one no longer needing a brim to catch debris on
+    the first layer.
 
     Most of the manual procedure below exists because that calibration used to be
     done by hand, badly, with no way to see what you were doing. If you are on 6.9.0
@@ -183,7 +188,13 @@ section is deliberately empty.
 ## Verification
 
 `reported` — multiple independent owners, across two dedicated threads, over roughly
-a month of firmware changes.
+a month of firmware changes, with the firmware behaviour itself confirmed first-party.
+
+The 6.9.0 changes are documented in
+[Prusa's own release notes](https://help.prusa3d.com/downloads/core-one-indx), which
+name the automatic nozzle cleaner calibration, the shift in purge point, and the nozzle
+reheat on resume. That upgrades the headline claim on this page from owner inference to
+vendor-documented fact.
 
 The primary source is
 [Nozzle cleaning/calibration issues](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/),

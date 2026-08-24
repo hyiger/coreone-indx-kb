@@ -9,6 +9,7 @@ hotend:       unknown
 nozzle:       unknown
 firmware:     6.6.3, 6.9.0
 sources:
+  - https://help.prusa3d.com/downloads/core-one-indx
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/6-9-0-firmware-tool-docking/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/will-the-prusa-indxs-wave1-ship-with-fixed-induction-coils/
@@ -34,11 +35,20 @@ ambiguous. In the ambiguous middle the firmware holds the last known state rathe
 than guessing. That is a sensible design, but it means a machine whose readings sit
 in or near that middle band gets *sticky* wrong answers instead of intermittent ones.
 
-TODO(verify): the low and high threshold values, and the readings that distinguish a
-healthy head from a marginal one. These are quoted in the common-problems summary and
-were confirmed there against firmware source, but they are deliberately withheld
-here — see the warning below about why publishing them is risky. Where the firmware
-exposes the live value, it is readable from the printer's sensor information screen.
+Where the firmware exposes the live value, it is readable from the printer's sensor
+information screen.
+
+Prusa's own release notes for firmware 6.9.0 name the "nozzle presence" decay
+threshold and give both its old and new value: it moved from **0.095 to 0.085**. Prusa
+frames this as easing the upper bound in the interest of more reliable detection. That
+is a first-party figure, so it is published here. Note the scale: the community
+discussed these readings multiplied by a thousand, so a forum post describing a
+threshold of "95" and the changelog's `0.095` are the same number.
+
+TODO(verify): the *lower* threshold, and the idle readings that distinguish a healthy
+head from a marginal one — including the differences reported between controller board
+revisions. Those are community measurements rather than published figures, and they
+have not been checked against hardware, so they are withheld.
 
 ### Two opposite symptoms, one mechanism
 
@@ -92,15 +102,34 @@ problem rather than the heater.
     if your head is genuinely failing, because it masks a hardware fault you would
     otherwise have replaced under warranty.
 
-    This page does not supply threshold values or build instructions. Establish
-    first, with the vendor, whether your head is faulty.
+    This page does not supply build instructions. **Firmware 6.9.0 has since made
+    this change officially**, which removes most of the reason anyone was doing it
+    by hand — update before you consider patching anything. Establish first, with the
+    vendor, whether your head is faulty.
 
-!!! warning "Firmware 6.9.0 changed this behaviour"
-    The threshold model described above was documented in the 6.6.3 era. An owner
-    reports new park-detection messages appearing only after updating to 6.9.0 and
-    suspects the ringdown thresholds changed. Re-running dock calibration is the
-    first suggestion. If you are on 6.9.0 or later, treat pre-6.9.0 numbers and
-    advice as possibly stale, and check current release notes.
+!!! important "Firmware 6.9.0 relaxed the detection threshold — what that means for you"
+    Prusa's release notes for 6.9.0 record two related changes: they **eased the upper
+    bound on nozzle-presence detection**, citing more reliable detection as the goal,
+    and moved the decay threshold from 0.095 to 0.085.
+
+    **If your fault was a tool reading as missing after pickup**, this is the change you
+    were waiting for. Readings that previously fell just under the old bar clear the new
+    one, so update before pursuing a replacement toolhead.
+
+    **If your fault is the opposite**, be aware the same change cuts the other way. A
+    lower bar for "a tool is present" makes the firmware more willing to believe a tool
+    is still attached — and an owner running 6.9.0 reports exactly that, getting "The
+    tool is still detected after parking" on a machine where parking itself always
+    succeeds and a retry always clears it.
+
+    Connecting those two is this page's inference, not a claim either source makes:
+    Prusa documents the threshold change, an owner reports the new park messages, and
+    the mechanism links them directly. It is consistent with both, but it has not been
+    confirmed by Prusa, and it is possible the park behaviour has an unrelated cause.
+    Re-running dock calibration is the first thing to try either way.
+
+    Treat any pre-6.9.0 threshold figure you find on the forum as describing the old
+    behaviour.
 
 ## Verification
 
@@ -115,6 +144,14 @@ firmware. [Will the Prusa INDXs wave1 ship with fixed induction coils?](https://
 shows owners treating coil wear as a known concern ahead of the retail wave, though
 that thread is speculation about quality control rather than diagnosis, and one
 participant in it confuses the coil issue with the separate nozzle issue.
+
+**First-party.** The 6.9.0 threshold change — both the relaxation and the specific
+decay values — comes from
+[Prusa's own release notes](https://help.prusa3d.com/downloads/core-one-indx), which
+is the strongest class of source on this site: dated, unambiguous, and published by
+the people who wrote the firmware. It also retrospectively supports the community's
+threshold model, since the value Prusa names matches the figure owners had derived,
+differing only by the factor of a thousand in how it was written down.
 
 **Single-source, and the main caveat on this page:** the three-band threshold model,
 the board-revision differences, the temperature drift, the break-in effect, and the
