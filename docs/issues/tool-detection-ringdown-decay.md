@@ -233,6 +233,9 @@ different machines, which is why this page leads with the mechanism instead of a
   something untrue about its own state"
 - [Tool offset calibration failures](offset-sensor-board-failure.md) — where the
   preheat error tends to surface
+- [Toolhead collides with finished parts](complete-individual-objects-collision.md) —
+  the other thing that can go wrong around a park and a tool change, and the more
+  destructive one. Unrelated mechanism: a motion-clearance fault, not a detection one.
 - [Blobs dragged into the print](stringing-and-wiper-calibration.md) — the other
   area 6.9.0 reworked. Owners report that change as a clear improvement, which is
   worth weighing against the park-detection regression described above.

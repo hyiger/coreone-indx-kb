@@ -245,3 +245,6 @@ a cooling problem rather than a wiper one — it belongs on its own page, at
 - [Diagonal banding across print walls](diagonal-banding.md) — the other print-quality
   page. If your defect is a regular pattern on the walls rather than discrete blobs
   landing on the part, it is the extruder, not the wiper.
+- [Toolhead collides with finished parts](complete-individual-objects-collision.md) —
+  also damage caused around a tool change, but mechanical rather than material. If parts
+  are being knocked or gouged rather than dirtied, read that instead.

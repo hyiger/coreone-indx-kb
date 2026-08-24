@@ -33,6 +33,13 @@ reader a part, a print, or a warranty window.
 
 ## Start with the symptom
 
+**The machine damages the print, or itself**
+
+- [Toolhead collides with finished parts](complete-individual-objects-collision.md) —
+  slicing with *Complete individual objects* while an object contains a mid-object tool
+  change can drive the head through parts it has already finished. Turn the feature off
+  until it is fixed.
+
 **The printer disagrees with reality about which tool is where**
 
 - [Phantom tools, "tool not detected" and park failures](tool-detection-ringdown-decay.md)
