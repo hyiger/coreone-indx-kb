@@ -9,6 +9,7 @@ hotend:       unknown
 nozzle:       unknown
 firmware:     unknown
 sources:
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/offset-sensor-failure/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
@@ -25,6 +26,22 @@ anything you have assembled wrongly. Clean the sensor first, because a fleck of
 filament on it produces exactly the same failure. If cleaning does not fix it, the
 resolution reported by multiple owners is a replacement sensor board — and belt
 tension, which support may suggest, has not fixed a single reported case.
+
+!!! important "Before you suspect the board: are you on 6.9.0?"
+    An open bug report against the firmware describes tool offset calibration failing
+    repeatedly **after upgrading to 6.9.0**, on a machine where it had been working.
+    A second owner confirms the same. It affects all nozzles, and re-running the
+    calibration wizard succeeds only after several retries.
+
+    That matters here because it presents almost identically to the hardware fault
+    this page is about, and the fix is completely different. If your calibration was
+    fine before an update and started failing after one, you are more likely looking
+    at this than at a failed sensor board — and replacing hardware will not help.
+
+    The report is open and unresolved at the time of writing, so there is no fix to
+    point at yet beyond retrying. Check the issue for the current state before
+    starting an RMA. The firmware also links an official help article for this error
+    code, which the reporter says did not resolve it for them.
 
 ## Detail
 
@@ -113,6 +130,13 @@ single-source and have not been separately confirmed in the forum corpus.
 Where the sources disagree: support's own first suggestions varied between cable and
 board, and in one case belt tension was raised. Owner experience points consistently
 at the board.
+
+**Added since first publication.** The 6.9.0 calibration regression comes from the
+[firmware issue tracker](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442),
+which is a stronger class of source than the forum for firmware behaviour — it is
+first-party, versioned and reproducible. Two owners report it. It is an open issue, so
+it may be fixed, reclassified, or turn out to be something else; treat the section
+above as current-as-of-writing rather than settled.
 
 ## Related
 

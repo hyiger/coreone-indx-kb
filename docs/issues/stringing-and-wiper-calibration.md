@@ -25,9 +25,10 @@ superseded_by:
     cleaner when a print resumes. Owners additionally describe a revised wiping path
     and changed purge amounts.
 
-    Two owners independently report the difference as dramatic — clean tool changes
-    across mixed-material prints, and one no longer needing a brim to catch debris on
-    the first layer.
+    Three owners independently report the difference as dramatic — clean tool changes
+    across mixed-material prints, one no longer needing a brim to catch debris on the
+    first layer, and — most tellingly — the owner who opened the original complaint
+    thread reporting that 6.9.0 has largely settled both the oozing and the cleaning.
 
     Most of the manual procedure below exists because that calibration used to be
     done by hand, badly, with no way to see what you were doing. If you are on 6.9.0
@@ -202,10 +203,13 @@ a 58-post thread with nine participants running from late July to late August 20
 contains the symptom reports, the visibility complaints, the Tune-menu adjustments,
 the wipe-tower experiment, and the 6.9.0 outcome.
 
-The 6.9.0 improvement is **independently confirmed**: one owner reports clean tool
-changes on a mixed TPU/PETG print and again on a four-colour PETG print, and a second
-owner separately reports the result is much cleaner and that they no longer need a
-brim to catch debris. That is the strongest claim on this page.
+The 6.9.0 improvement is **independently confirmed** by three owners: one reports clean
+tool changes on a mixed TPU/PETG print and again on a four-colour PETG print; a second
+separately reports the result is much cleaner and that they no longer need a brim to
+catch debris; and the owner who started the thread — the person with the worst of the
+problem — has since confirmed that 6.9.0 has mostly resolved the oozing and cleaning
+for them. The last of those is the strongest single data point on this page, because it
+is the original complainant closing their own report. That is the strongest claim on this page.
 
 The "bury the nozzle" finding comes from
 [Nozzle wiper vs. INDX offset sensor](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/),

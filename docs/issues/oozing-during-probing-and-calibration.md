@@ -56,6 +56,16 @@ afterwards. This costs a few minutes and it is the highest-value thing to check.
     TODO(verify): whether the vendor has published an official cleaning procedure
     for the offset sensor window.
 
+!!! warning "Clean it, but do not polish it"
+    A later caution in the same thread is worth heeding: the sensor face is meant to
+    be matte, and should not end up shiny or reflective. Be sparing. The goal is to
+    lift filament debris off it, not to bring up a shine.
+
+    One caveat on that advice — the owner giving it describes the sensor as infrared,
+    whereas the offset sensor is elsewhere described as eddy-current based. Those are
+    different sensing principles and it is not clear which component is meant. The
+    practical instruction is sound either way: remove the debris, stop there.
+
 ### Dry the filament
 
 Suggested early and repeatedly for PETG in particular: moisture makes filament
@@ -121,7 +131,9 @@ confirmed in the forum corpus, and no numbers from it are reproduced here.
 
 Where the sources disagree: drying was offered confidently as the likely cause for
 PETG, but the case that was actually resolved was resolved by cleaning, not drying.
-Do not assume moisture just because the filament is PETG.
+Do not assume moisture just because the filament is PETG — when the question was put
+to the original poster directly, they replied that they had been printing straight
+from a filament dryer, which rules moisture out for that case entirely.
 
 ## Related
 

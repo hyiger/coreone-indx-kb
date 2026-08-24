@@ -10,6 +10,7 @@ nozzle:       unknown
 firmware:     6.6.3, 6.9.0
 sources:
   - https://help.prusa3d.com/downloads/core-one-indx
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5392
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/6-9-0-firmware-tool-docking/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/will-the-prusa-indxs-wave1-ship-with-fixed-induction-coils/
@@ -35,8 +36,17 @@ ambiguous. In the ambiguous middle the firmware holds the last known state rathe
 than guessing. That is a sensible design, but it means a machine whose readings sit
 in or near that middle band gets *sticky* wrong answers instead of intermittent ones.
 
-Where the firmware exposes the live value, it is readable from the printer's sensor
-information screen.
+### Reading the value on your own machine
+
+The live figure is on the printer at **Info → Sensor Info → Ringdown Decay**.
+
+For a reference point, one owner reported their healthy machine reading **29 with no
+tool in the head and 101 with a tool docked**. That is a single machine rather than a
+survey, so treat it as "this is roughly what healthy looks like" rather than a pass
+mark — but it is a first-hand reading taken from the menu above, which is more than
+the forum offered before. If yours sits far from both of those with the head empty,
+that is worth investigating; if it sits close to them, detection is probably not your
+problem.
 
 Prusa's own release notes for firmware 6.9.0 name the "nozzle presence" decay
 threshold and give both its old and new value: it moved from **0.095 to 0.085**. Prusa
@@ -45,19 +55,22 @@ is a first-party figure, so it is published here. Note the scale: the community
 discussed these readings multiplied by a thousand, so a forum post describing a
 threshold of "95" and the changelog's `0.095` are the same number.
 
-TODO(verify): the *lower* threshold, and the idle readings that distinguish a healthy
-head from a marginal one — including the differences reported between controller board
-revisions. Those are community measurements rather than published figures, and they
-have not been checked against hardware, so they are withheld.
+TODO(verify): the *lower* threshold. A figure circulates on the forum but the owner
+quoting it hedged it as a belief rather than a reading, and Prusa's release notes name
+only the upper one. Also outstanding: how idle readings differ between controller board
+revisions, which remains a community claim with no published figures behind it.
 
 ### Two opposite symptoms, one mechanism
 
 **Reads a tool that is not there (phantom tool).** The head's idle reading sits high
-enough to be taken as "tool present" when the head is empty. On current firmware this
-also shows up as *park* failures: an owner on 6.9.0 reports regularly getting "The
-tool is still detected after parking", where the tool has in fact parked correctly
-and a retry always succeeds. The machine is not failing to park; it is failing to
-believe the tool has left.
+enough to be taken as "tool present" when the head is empty, so the machine believes
+it is holding a tool it is not.
+
+Note that a park failure is **not** reliably a symptom of this. It looks like one —
+the machine insists a tool is present after parking — but there is a separate,
+better-documented cause with a different fix, covered further down. If your tool
+physically parks correctly and a retry clears the error, read that section before
+concluding your head is marginal.
 
 **Reads no tool when one is fitted.** The mirror image: a real tool picked up from the
 dock reads just below the "tool present" conclusion, so the firmware reports the tool
@@ -116,20 +129,41 @@ problem rather than the heater.
     were waiting for. Readings that previously fell just under the old bar clear the new
     one, so update before pursuing a replacement toolhead.
 
-    **If your fault is the opposite**, be aware the same change cuts the other way. A
-    lower bar for "a tool is present" makes the firmware more willing to believe a tool
-    is still attached — and an owner running 6.9.0 reports exactly that, getting "The
-    tool is still detected after parking" on a machine where parking itself always
-    succeeds and a retry always clears it.
-
-    Connecting those two is this page's inference, not a claim either source makes:
-    Prusa documents the threshold change, an owner reports the new park messages, and
-    the mechanism links them directly. It is consistent with both, but it has not been
-    confirmed by Prusa, and it is possible the park behaviour has an unrelated cause.
-    Re-running dock calibration is the first thing to try either way.
+    **If your fault is park detection**, see the section below. An earlier version of
+    this page suggested the threshold change might be causing it. Better evidence has
+    since arrived and points elsewhere, so that suggestion has been withdrawn.
 
     Treat any pre-6.9.0 threshold figure you find on the forum as describing the old
     behaviour.
+
+### "Tool is still detected after parking" is a timing problem, not a threshold one
+
+This deserves separating from the rest of the page, because the mechanism is
+different and so is the fix.
+
+A bug report against the firmware, filed with logs, describes parking failing to
+confirm the nozzle as absent on **6.6.3**. The routine that verifies nozzle state
+times out, logs that the nozzle is still detected after the park, retries, times out
+again, and the toolchange fails. The tool has physically parked correctly throughout —
+it releases and stays in the dock. Roughly twenty seconds later the firmware works it
+out for itself and corrects its own record to "no tool", so the reading *does* settle.
+It simply settles long after the verification window has closed.
+
+Two details make this convincing. The reporter downgraded the same printer to
+**6.6.2** and the problem disappeared completely, with nothing else changed. And
+picking a tool up from an empty head works fine — it is specifically the park that
+fails.
+
+**Why this matters for the threshold story above:** the park failure was already
+present in 6.6.3, which is *before* 6.9.0 relaxed the detection threshold. So the
+threshold change cannot be its cause, and an owner reporting park messages on 6.9.0 is
+most likely seeing this same longstanding bug rather than a side effect of the
+relaxation. If your park fails but the tool is physically docked and a retry clears
+it, you are probably looking at the settling-time problem, not a marginal head.
+
+TODO(verify): the verification timeout the firmware allows, and how long the reading
+actually takes to settle. Both are quoted in the linked issue, which is open and
+unresolved at the time of writing.
 
 ## Verification
 
@@ -144,6 +178,14 @@ firmware. [Will the Prusa INDXs wave1 ship with fixed induction coils?](https://
 shows owners treating coil wear as a known concern ahead of the retail wave, though
 that thread is speculation about quality control rather than diagnosis, and one
 participant in it confuses the coil issue with the separate nozzle issue.
+
+**A correction.** An earlier version of this page suggested 6.9.0's relaxed threshold
+might explain the "tool is still detected after parking" reports, flagged at the time as
+an inference rather than a claim any source made. A firmware bug report has since shown
+the park failure occurring on 6.6.3 and disappearing on a downgrade to 6.6.2 — before
+the threshold moved at all. The suggestion has been withdrawn and the park behaviour now
+has its own section, where the evidence points at a settling-time problem instead. The
+issue is open and unresolved, so that account may yet change too.
 
 **First-party.** The 6.9.0 threshold change — both the relaxation and the specific
 decay values — comes from
