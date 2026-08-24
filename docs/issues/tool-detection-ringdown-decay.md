@@ -40,13 +40,24 @@ in or near that middle band gets *sticky* wrong answers instead of intermittent 
 
 The live figure is on the printer at **Info → Sensor Info → Ringdown Decay**.
 
-For a reference point, one owner reported their healthy machine reading **29 with no
-tool in the head and 101 with a tool docked**. That is a single machine rather than a
-survey, so treat it as "this is roughly what healthy looks like" rather than a pass
-mark — but it is a first-hand reading taken from the menu above, which is more than
-the forum offered before. If yours sits far from both of those with the head empty,
-that is worth investigating; if it sits close to them, detection is probably not your
-problem.
+Two owners have posted readings from healthy machines, and they agree closely:
+
+| | Head empty | Tool docked |
+|---|---|---|
+| Machine A | 29 | 101 |
+| Machine B | 27 | 103–104 |
+
+Two machines is not a survey, so treat this as "roughly what healthy looks like"
+rather than a pass mark. But they were taken independently, from the menu above, and
+they land within a couple of points of each other at both ends — which is more than
+the forum offered before. A reading close to these with the head empty means detection
+is probably not your problem. One sitting well above them is worth investigating.
+
+TODO(verify): whether the reading drifts once the head and coil are warm. An owner
+raised this after noticing their machine misbehaved despite healthy cold readings, and
+suggested someone take a reading part-way through a long job, or immediately after one,
+to compare against the cold figure. Nobody has reported doing so. The community summary separately records the idle floor rising with ambient
+temperature, so the question is a reasonable one.
 
 Prusa's own release notes for firmware 6.9.0 name the "nozzle presence" decay
 threshold and give both its old and new value: it moved from **0.095 to 0.085**. Prusa
@@ -160,6 +171,13 @@ threshold change cannot be its cause, and an owner reporting park messages on 6.
 most likely seeing this same longstanding bug rather than a side effect of the
 relaxation. If your park fails but the tool is physically docked and a retry clears
 it, you are probably looking at the settling-time problem, not a marginal head.
+
+A second line of evidence points the same way. One of the owners who posted the
+healthy readings above — comfortably clear of any threshold at both ends — is the same
+owner whose machine had been reporting failed unloads. A head reading that healthy
+cannot be marginal, so whatever caused their park messages was not a borderline
+detection value. That is consistent with a settling-time problem and hard to reconcile
+with a threshold one.
 
 TODO(verify): the verification timeout the firmware allows, and how long the reading
 actually takes to settle. Both are quoted in the linked issue, which is open and
