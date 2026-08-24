@@ -7,7 +7,7 @@ is no database and no hosted service to lapse — if this copy stalls, anyone ca
 it and carry on. That is the point: this exists because the previous community INDX
 resource went offline.
 
-<!-- Add the published URL here once GitHub Pages is enabled. -->
+**Live site: <https://hyiger.github.io/coreone-indx-kb/>**
 
 ## Who it's for
 

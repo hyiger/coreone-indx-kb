@@ -94,5 +94,6 @@ Must pass with zero warnings. `--strict` turns broken links into build failures,
 which is what keeps the site honest. Adding a page under `docs/` requires adding it
 to the `nav` in `mkdocs.yml`, or the strict build fails on an unreferenced file.
 
-GitHub Pages requires Settings → Pages → Source: GitHub Actions. That is a manual
-step in the web UI — flag it, do not attempt it.
+Pages is enabled with `build_type: workflow`, publishing to
+<https://hyiger.github.io/coreone-indx-kb/> on every push to `main`. Do not change
+Pages or repository settings without being asked — that call is the human's.
