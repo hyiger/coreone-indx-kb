@@ -13,6 +13,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/sourcing-tool-dock-hardware/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/removing-magnets-from-tool-docks-you-dont-need-to-destroy-them/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/parts-list-for-screws-and-bolts/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kind-of/
 superseded_by:
 ---
 
@@ -68,6 +69,23 @@ downloads will not match the current guide.
   for the dock magnets.
 - A **large sheet of cardboard** to stand the printer on, so you can spin and tilt it
   freely during the awkward steps.
+
+!!! danger "Update the firmware *before* you take the old printer apart"
+    If you are converting a machine that started life as an MK4S, bring its firmware
+    up to the level the conversion requires **while it is still assembled and
+    working**. One owner built the INDX kit onto an MK4S-to-Core One upgrade without
+    ever running the Core One in its Nextruder form, and without raising the MK4S
+    firmware first. The assembled machine came up to a red error screen on first power
+    on, with no route forward from the screen itself.
+
+    The recovery, if you are already in this position: refit the original Nextruder
+    and disconnect the door sensor, so the bootloader identifies the machine as an
+    MK4S again. That is enough to let the firmware updates run, after which you can
+    reassemble the conversion.
+
+    *Single report.* One owner, first-hand, who recovered the machine — but nobody
+    has reproduced it, and the recovery involves partly undoing your build. Read it
+    as a reason to update early rather than as a procedure you should expect to need.
 
 ## Supply gotchas
 
@@ -237,8 +255,11 @@ Independently corroborated:
   [Sourcing tool dock hardware](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/sourcing-tool-dock-hardware/),
   which is marked answered and compiled by an owner adding docks to a four-tool kit.
 
-Weaker: the magnet grade substitution is one owner's experience and is flagged as such
-in place. The circulating unofficial fastener PDF was described by the person sharing
+Weaker: the magnet grade substitution and the MK4S bootloader lockout are each one
+owner's experience, and both are flagged as such in place. The lockout comes from the
+general discussion thread, which is overwhelmingly shipping and order chatter — it was
+found by reading all 1534 posts, and it is one of only two durable technical items that
+survived review out of that entire thread. The circulating unofficial fastener PDF was described by the person sharing
 it as AI-generated and unverified, and is recorded here only as something you may
 encounter, not as a resource to rely on.
 
