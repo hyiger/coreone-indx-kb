@@ -23,20 +23,16 @@ pressure advance, retraction, shrinkage, flow, acceleration, speed, infill and
 perimeter counts, and any physical dimension a reader might drill or cut to.
 
 If a task seems to require a number, write `TODO(verify): <what is withheld and
-which source it came from>` and report it. Every number on this site is verified by
-a human on hardware before it lands.
+which source it came from>` and report it. Every number here is human-verified on
+hardware first. A wrong nozzle temperature published under someone's name causes a
+clog on a stranger's printer — this is the rule that matters.
 
 Numbers that **may** be published, because they identify rather than instruct:
-firmware version strings, dates, counts of affected users, board revisions, part and
-chip designations, nozzle diameters as hardware identifiers, fastener and magnet
-specifications, a vendor's own published material specification, and assembly
-procedure values whose outcome is immediately visible (how far to loosen a screw,
-which cable to thread first). The test is whether a reader would dial the number into
-a slicer or a drill — a persisted setting that silently degrades prints. If they
-would, withhold it.
-
-This is the one that matters. A wrong nozzle temperature published under someone's
-name causes a clog on a stranger's printer.
+firmware versions, dates, counts, board revisions, part/chip designations, nozzle
+diameters, fastener and magnet specs, a vendor's published material specification,
+and assembly values whose outcome is immediately visible (how far to loosen a screw).
+The test: would a reader dial it into a slicer or a drill, as a persisted setting
+that silently degrades prints? Then withhold it.
 
 **Never commit verbatim forum or Discord content**, including in `drafts/` and in
 commit messages. Extract the finding, write it in your own words, cite the source
