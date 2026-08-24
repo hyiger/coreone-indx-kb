@@ -31,6 +31,21 @@ Thresholds, temperatures, dimensions and deadlines are verified against hardware
 against the vendor before they are published here, because a wrong one costs the
 reader a part, a print, or a warranty window.
 
+## Pages
+
+- **[Probing fails or nozzle never touches the bed](loadcell-emi-noise.md)** —
+  electrical interference in the loadcell signal makes the printer think it has
+  touched the bed while the nozzle is still well clear.
+- **[Tool offset calibration fails](offset-sensor-board-failure.md)** — the
+  contactless offset sensor returns no samples, so calibration has nothing to work
+  with. Usually the sensor board.
+
+These two are worth reading together. They involve **different sensors** and have
+different fixes, but they are routinely confused with each other, and chasing the
+wrong one costs days. The quickest way to tell them apart: loadcell noise makes
+probing stop with the nozzle visibly nowhere near the sheet; an offset sensor fault
+shows up during tool offset calibration and leaves bed probing working.
+
 ## Fault families
 
 The faults reported so far group into a few families:
@@ -44,7 +59,7 @@ The faults reported so far group into a few families:
 - **Support and process** — who to contact for what, and in what order.
 
 !!! note "Pages in preparation"
-    Drafts covering tool detection, loadcell noise, offset sensor failures, oozing
-    during probing, nozzle hardness, the filament guide bore, and the support route
-    are written and awaiting review. They appear here once their claims and any
-    numbers have been checked by a human.
+    Further pages covering tool detection and park failures, oozing during probing,
+    nozzle hardness, the filament guide bore, and the support and warranty route are
+    drafted and awaiting review. They appear here once their claims and any numbers
+    have been checked by a human.

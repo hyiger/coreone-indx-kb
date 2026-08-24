@@ -35,7 +35,10 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Calibration: calibration/index.md
-  - Issues: issues/index.md
+  - Issues:
+      - Overview: issues/index.md
+      - Probing and loadcell noise: issues/loadcell-emi-noise.md
+      - Tool offset calibration: issues/offset-sensor-board-failure.md
   - G-code: gcode/index.md
   - Reference:
       - Overview: reference/index.md
