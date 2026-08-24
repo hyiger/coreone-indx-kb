@@ -136,4 +136,7 @@ different machines, which is why this page leads with the mechanism instead of a
   something untrue about its own state"
 - [Tool offset calibration failures](offset-sensor-board-failure.md) — where the
   preheat error tends to surface
+- [Blobs dragged into the print](stringing-and-wiper-calibration.md) — the other
+  area 6.9.0 reworked. Owners report that change as a clear improvement, which is
+  worth weighing against the park-detection regression described above.
 - [Who to contact](support-and-warranty-path.md) — for a toolhead replacement

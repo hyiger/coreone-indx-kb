@@ -51,6 +51,12 @@ reader a part, a print, or a warranty window.
   — material where the machine is trying to take a measurement. Start by cleaning the
   offset sensor window.
 
+**Blobs and debris land on the print**
+
+- [Blobs dragged into the print — nozzle wiper and purge](stringing-and-wiper-calibration.md)
+  — material carried out of the purge area at tool changes. Largely addressed by
+  firmware 6.9.0, which automated the wiper alignment that used to be done by hand.
+
 **Nozzles and the filament path**
 
 - [Nozzle hardness and abrasive filaments](nozzle-hardness.md) — the shipped nozzles

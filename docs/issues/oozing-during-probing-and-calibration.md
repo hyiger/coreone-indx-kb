@@ -128,3 +128,6 @@ Do not assume moisture just because the filament is PETG.
 - [Probing fails or nozzle never touches the bed](loadcell-emi-noise.md)
 - [Tool offset calibration fails](offset-sensor-board-failure.md)
 - [Phantom tools and park failures](tool-detection-ringdown-decay.md)
+- [Blobs dragged into the print](stringing-and-wiper-calibration.md) — the same
+  problem of material in the wrong place, but occurring at tool changes rather than
+  during probing. If your deposits appear at tool swaps, start there instead.
