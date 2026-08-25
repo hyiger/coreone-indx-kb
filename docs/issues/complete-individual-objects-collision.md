@@ -1,6 +1,6 @@
 ---
 title:        Toolhead collides with finished parts — "Complete individual objects"
-confidence:   provisional
+confidence:   reported
 updated:      2026-08-24
 author:       hyiger
 printer:      Core One
@@ -9,6 +9,7 @@ hotend:       unknown
 nozzle:       unknown
 firmware:     unknown
 sources:
+  - https://github.com/prusa3d/PrusaSlicer/issues/14298
   - https://kb.nomadsgalaxy.com/topics/core-one/indx/issues/2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy
 superseded_by:
@@ -21,19 +22,30 @@ superseded_by:
     change part-way up, the toolhead can travel across the plate *below the top of
     objects it has already finished* and drive straight into them.
 
-    There is no setting to correct it and no firmware fix as of late August 2026. The
-    only mitigation reported is to stop using the feature. Damage is not limited to the
-    ruined part — the collision is into a rigid finished object at travel speed, so the
-    toolhead is at risk too.
+    This is not new and it is not INDX-specific. Prusa acknowledged the same fault on
+    the XL in **March 2025**, raised an internal ticket, and it remains open across
+    every PrusaSlicer release since. Damage is not limited to the ruined part — the
+    collision is into a rigid finished object at travel speed, so the toolhead is at
+    risk too, and at least one reporter had a nozzle jam into a part until the noise
+    brought someone running.
+
+    Turning the feature off is the only reliable answer. There is a partial workaround
+    involving print order, covered below, but the people using it say plainly that it
+    works by coincidence.
 
 ## Summary
 
 Sequential printing normally lifts the head clear of everything already built before
 crossing the plate. That clearance is applied when the machine moves *between* objects.
-It is reportedly **not** applied when the move is part of a tool change, and a tool
-change in the middle of an object produces exactly that kind of move. The head goes to
-the dock and comes back at roughly the height of the layer it was printing, which on a
-sequential print may be far below the top of a neighbour that finished hours ago.
+It is **not** applied when the move is part of a tool change, and a tool change produces
+exactly that kind of move. The head goes to the dock and comes back at roughly the
+height of the layer it was printing, which on a sequential print may be far below the
+top of a neighbour that finished hours ago.
+
+The underlying limitation is in the slicer rather than the machine: the sequential
+printing algorithm does not model tool-change travel at all. That is why it affects
+Prusa's toolchangers generally rather than the INDX specifically, and why auto-arrange
+cheerfully lays out a plate it cannot actually print safely.
 
 ## Detail
 
@@ -118,26 +130,72 @@ explained, is at [annotated profile G-code](../gcode/indx-profile-gcode.md).
 ### Recognising it
 
 - You are slicing with **Complete individual objects**.
-- At least one object has a **tool change part-way up** — a colour swap mid-object, not
-  merely different tools on different objects.
+- More than one tool is in use anywhere on the plate.
 - Objects differ enough in height, or are ordered such that a finished one stands taller
   than the layer being printed elsewhere.
 - The damage appears at a **tool change**, not at a layer change or at the start of an
   object.
 
-If your tool changes only ever happen *between* whole objects, you are probably not
-exposed — but the reporter says plainly they are unsure about that case, so do not treat
-it as safe on this page's authority.
+!!! danger "Tool changes between whole objects are not safe either"
+    An earlier version of this page suggested that if your tool changes only ever happen
+    *between* whole objects — one object per material, rather than a swap part-way up —
+    you were probably not exposed. The INDX reporter was unsure on that point and the
+    page said so.
+
+    **The XL thread settles it the other way.** Its original case is precisely one object
+    per material with no mid-object swaps, and it crashes. That is the more thoroughly
+    documented of the two reports, so treat between-object tool changes as exposed.
+
+    A mid-object swap is not a precondition. Multiple tools on a sequential plate is.
+
+### It has been open on the XL since March 2025
+
+The INDX report is not the first sighting. The same fault was filed against PrusaSlicer
+in **March 2025** for the Prusa XL, using the same feature with multiple extruders, and
+that thread is the better documented of the two.
+
+What it establishes:
+
+- **Prusa acknowledged it the day it was filed**, raised an internal ticket, and said it
+  would be addressed in an upcoming release.
+- **It is still open.** Reporters confirm it across PrusaSlicer 2.9.1, 2.9.2 and 2.9.3,
+  with comments running into 2026.
+- **Roughly seven independent owners** have reported hitting it, all on multi-tool XLs.
+- **The slicer gives no warning.** Auto-arrange will lay out a multi-tool sequential
+  plate and say nothing about collisions. It *does* warn that you should arrange to
+  avoid collisions — but that check does not consider tool changes.
+- **The preview will not show you.** Tool-change moves are not drawn in the motion
+  preview, so you cannot verify a plate is safe by looking at it.
+
+The mechanism as stated in that thread matches what the G-code shows: tool-change travel
+is simply not part of what the sequential algorithm reasons about.
+
+The practical consequence for an INDX owner is that this is not a new bug likely to be
+fixed shortly. It is a known, acknowledged, long-unfixed limitation of the feature on
+Prusa toolchangers, which the INDX has now inherited.
 
 ### What to do
 
 **Disable Complete individual objects** for any plate where an object contains a tool
-change. That is the only mitigation reported.
+change. That is the only reliable answer.
 
 If you need both sequential printing and multi-colour parts, the honest answer today is
-that you cannot have them together on this machine — print the multi-colour parts
-normally, all objects rising together, and reserve sequential printing for single-tool
-plates.
+that you cannot safely have them together — print the multi-colour parts normally, all
+objects rising together, and reserve sequential printing for single-tool plates.
+
+!!! warning "The front-to-back workaround reduces exposure. It does not fix anything."
+    XL owners report ordering objects **front to back**, so that tool-change travel does
+    not need to cross anything already finished. Several say it has been sufficient for
+    their prints.
+
+    Read the rest of that thread before relying on it. The same people describe it as
+    working "by coincidence", and note it holds only for particular part geometries and
+    layouts. It also fails on interruption: a filament runout or a pause can present the
+    tool at the front of the bed at a height that then collides on resume, which is
+    reported as a separate open fault.
+
+    So: useful for reducing risk on a print you will be watching, not a basis for
+    leaving a long multi-tool sequential job running unattended.
 
 !!! warning "Do not try to patch this in the start G-code"
     It is tempting to add a lift to the toolchange sequence. The travel that collides
@@ -147,7 +205,8 @@ plates.
 
 ## Verification
 
-`provisional` — one thread, one detailed reporter, no independent corroborating source.
+`reported` — two threads on two sites, roughly eight independent reporters between
+them, one of which Prusa has acknowledged.
 
 The [source report](https://kb.nomadsgalaxy.com/topics/core-one/indx/issues/2) is
 unusually well evidenced for a single thread. It carries video of the collision,
@@ -157,33 +216,40 @@ begins and absent at a mid-object tool change. Three owners mark themselves as a
 The thread is open, and the reporter states that prior discussion happened on the
 vendor's Discord and that the problem was escalated to Prusa, with no fix released.
 
-**The mechanism is now verified; the incident count is not.** That distinction is why
-this page stays `provisional` while nonetheless being much better founded than when it
-was written.
+This page was `provisional` when first written, on a single INDX report. Two things
+moved it.
 
-What changed: the explanation no longer depends on the bug report's machine-generated
-diagram. The layer-relative lifts are visible in any stock toolchange block, and `G27`'s
-`P` parameter is documented in the firmware source with `P0` described as raising above
-the print and `P2` — the one actually used — as a plain relative move. Anyone can check
-both in a few minutes. See [annotated profile G-code](../gcode/indx-profile-gcode.md).
+**The mechanism stopped depending on interpretation.** The explanation originally rested
+on a diagram in the INDX report that its author disclosed as machine-generated. It no
+longer does: the layer-relative lifts are visible in any stock toolchange block, and
+`G27`'s `P` parameter is documented in the firmware source, with `P0` described as
+raising above the print and `P2` — the one actually used — as a plain relative move.
+Anyone can check both against their own profile in a few minutes. See
+[annotated profile G-code](../gcode/indx-profile-gcode.md).
 
-What did not change: still one report, on one site, of the collision actually happening.
-This site requires corroboration across different sources, and a verified mechanism is
-not a second incident.
+**Independent reports turned up on another machine.**
+[PrusaSlicer issue 14298](https://github.com/prusa3d/PrusaSlicer/issues/14298) documents
+the same fault on the Prusa XL from March 2025, with around seven distinct owners
+reporting it over the following thirteen months across three slicer releases. Prusa
+responded the same day, raised an internal ticket, and the issue remains open.
 
-It does, though, make the single report considerably more credible. A lone report with
-no plausible mechanism might be user error or a mis-sliced file. A lone report whose
-mechanism you can read in the G-code and confirm in the firmware's own parameter
-documentation is a different thing. Treat the page as: the cause is established, the
-prevalence is not.
+**On treating XL reports as corroboration.** These are a different toolchanger, and
+hardware findings from an XL would not transfer to an INDX. This one does, because the
+limitation is in the slicer rather than the machine — the same feature, in the same
+slicer, failing to account for tool-change travel. What the XL thread corroborates is
+the mechanism and the fact that it goes unfixed, not anything about INDX hardware. The
+INDX sighting remains a single report; what is no longer single-source is the fault
+itself.
 
 No versions are recorded. The thread names neither a firmware nor a slicer version,
 which matters here: without one, nobody reading later can tell whether a fix has landed.
 
-What would move this to `reported`: a second owner describing the same collision in a
-different thread, a firmware issue filed against it, or a vendor statement. Note that
-the mechanism being verifiable makes a firmware issue easy to file well — it can point
-at the exact parameter rather than describing symptoms. Note that
+What would strengthen it further: a second INDX owner reporting the collision, or an
+INDX-specific ticket on the slicer tracker. The existing XL issue is the natural place
+to add one — it already has Prusa's attention and an internal ticket, and a report
+showing the same fault on a second toolchanger is more useful to them than a fresh
+thread. The mechanism being verifiable means such a report can point at the exact
+parameter rather than describing symptoms. Note that
 the Prusa firmware tracker has nothing on it under this description — the entries there
 matching the feature name concern other printers and predate the INDX.
 

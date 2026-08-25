@@ -36,9 +36,9 @@ reader a part, a print, or a warranty window.
 **The machine damages the print, or itself**
 
 - [Toolhead collides with finished parts](complete-individual-objects-collision.md) —
-  slicing with *Complete individual objects* while an object contains a mid-object tool
-  change can drive the head through parts it has already finished. Turn the feature off
-  until it is fixed.
+  slicing with *Complete individual objects* with more than one tool in use can drive the
+  head through parts it has already finished. Open and unfixed on Prusa's toolchangers
+  since March 2025. Turn the feature off.
 
 **The printer disagrees with reality about which tool is where**
 
