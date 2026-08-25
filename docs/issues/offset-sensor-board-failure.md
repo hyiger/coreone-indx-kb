@@ -7,7 +7,7 @@ printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     unknown
+firmware:     6.9.0 for the calibration regression; the board fault is not version-specific
 sources:
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
