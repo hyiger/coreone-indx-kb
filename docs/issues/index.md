@@ -74,6 +74,9 @@ reader a part, a print, or a warranty window.
   and the vendor's remediation offer.
 - [Unload and eject failures](filament-guide-bore-unload-failure.md) — printing works
   but unloading fails. *Single source — read the caveat before acting.*
+- [Only one nozzle size has a slicer profile](missing-slicer-profiles.md) — the slicer
+  offers the INDX a single nozzle variant, so other sizes cannot be selected at all.
+  Worth knowing before buying nozzles, or taking store credit for them.
 
 **Process**
 

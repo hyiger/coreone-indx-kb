@@ -111,10 +111,9 @@ owner did, wanting enough credit to buy a genuinely hardened nozzle once one exi
     INDX only a single nozzle variant, so other sizes have no profile to print with.
     One owner making exactly this decision put it plainly — they had never tried other
     sizes because there are no profiles for them, which makes credit-for-more-nozzles a
-    weaker proposition than it looks. A page on the profile gap is drafted and awaiting
-    review; until it lands, the short version is that both INDX printer models declare a
-    single nozzle variant in Prusa's published profile bundle, so no other size is
-    selectable.
+    weaker proposition than it looks — both INDX printer models declare a single nozzle
+    variant in Prusa's published profile bundle, so no other size is selectable. See
+    [missing slicer profiles](missing-slicer-profiles.md).
 
 Be aware the adequacy of the compensation is disputed. At least one owner worked
 through the arithmetic and found the offered credit represents a substantially
