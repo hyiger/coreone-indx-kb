@@ -17,7 +17,7 @@ superseded_by:
 
 !!! info "This is the stock profile, reproduced verbatim"
     Everything below is Prusa's own PrusaSlicer profile for the Core One INDX on
-    firmware 6.9.0 — not a customisation. If you are on 6.9.0 this is what you already
+    firmware 6.9.0 — not a customization. If you are on 6.9.0 this is what you already
     have, before you change anything.
 
     That is the reason to read it. The values are the shipped defaults rather than
@@ -25,7 +25,7 @@ superseded_by:
     is actually doing on every print, and gives you a baseline to diff your own changes
     against.
 
-    The command behaviour is verified against the Prusa firmware source. The profile
+    The command behavior is verified against the Prusa firmware source. The profile
     itself changes between firmware releases, so check the version above against yours —
     the 6.6.3 profile differed from this one in several places.
 
@@ -35,7 +35,7 @@ Five blocks, covering the whole print lifecycle:
 
 | Block | Runs | Does |
 |---|---|---|
-| Start | Once, before the print | Preflight checks, homing, tool calibration, heat soak, mesh bed levelling, clean and prime |
+| Start | Once, before the print | Preflight checks, homing, tool calibration, heat soak, mesh bed leveling, clean and prime |
 | Before layer change | Every layer | Resets the extruder, tapers acceleration with height |
 | After layer change | Every layer | Dock fan control, on layers 1 and 3 only |
 | Tool change | Every tool change | Park, swap, purge or wipe, resume |
@@ -150,7 +150,7 @@ later:
 
 `M555` declares the print area, derived from the first layer's bounding box with margin.
 The firmware uses it to know which part of the bed matters — most visibly, it is what
-mesh bed levelling probes rather than probing the whole sheet.
+mesh bed leveling probes rather than probing the whole sheet.
 
 `G90` / `M83` set absolute positioning for motion and relative for the extruder. Every
 `E` value after this point is a delta, not a target.
@@ -217,7 +217,7 @@ temperature. This is the longest single wait in the whole startup.
 
 `perimeter_flow_rate` is computed once and reused by all eight lines. It is the
 volumetric flow implied by the external perimeter settings: speed multiplied by the
-cross-sectional area of an extrusion, modelled as a rectangle with semicircular ends.
+cross-sectional area of an extrusion, modeled as a rectangle with semicircular ends.
 The fallback chain means it degrades to perimeter speed, then to a constant, rather
 than producing zero if a speed is unset.
 
@@ -246,7 +246,7 @@ T{initial_tool} S1 L0 D0
 physical tools the print needs, calibrates each in XYZ, and writes the results to
 runtime variables and EEPROM.
 
-Its two parameters are both about accuracy. `R` is millimetres of random jitter applied
+Its two parameters are both about accuracy. `R` is millimeters of random jitter applied
 to X and Y while Z-probing each tool, which stops every probe landing on exactly the
 same spot. `P` is how many Z probes to take per point and average. So `R2 P3` means
 jitter by two, average three.
@@ -256,7 +256,7 @@ This is the step that fails on machines with a bad offset sensor — see
 
 `T{initial_tool} S1 L0 D0` then picks the tool the print actually starts with.
 
-### Chamber soak, heat soak and mesh bed levelling
+### Chamber soak, heat soak and mesh bed leveling
 
 ```gcode
 {if chamber_minimal_temperature[initial_tool] != 0}
@@ -313,7 +313,7 @@ M569 S0 E ; set spreadcycle mode for extruder
 G92 E0 ; reset extruder position
 ```
 
-Mesh bed levelling, in stages. `M84 E` de-energises the extruder motor first so it
+Mesh bed leveling, in stages. `M84 E` de-energizes the extruder motor first so it
 cannot creep and disturb a reading. `G29 P1` throws away any existing mesh and probes
 the print area — the area declared by `M555` earlier. `P3.2` interpolates between the
 probed points, `P3.13` extrapolates the mesh outward past the probed region so travel
@@ -420,7 +420,7 @@ does not land mid-move.
 
 !!! important "The last interesting line is `{tool_init[initial_tool] = 1}`"
     That marks the starting tool as already cleaned and primed. Nothing in this block
-    uses it — the tool change block does, and it changes behaviour in two ways.
+    uses it — the tool change block does, and it changes behavior in two ways.
 
     A tool whose `tool_init` is still `0` gets a fixed deretract length instead of the
     computed one, and is forced down the purge-station path **even if a wipe tower is
@@ -428,7 +428,7 @@ does not land mid-move.
     purge, and a wipe tower is not the place to do it.
 
     So this single assignment is the difference between the first tool change behaving
-    like a normal one and behaving like a first-time initialisation. If you rewrite this
+    like a normal one and behaving like a first-time initialization. If you rewrite this
     section, carry that line across.
 
 ## Before layer change
@@ -536,7 +536,7 @@ risk of the filament in it going soft.
 The setup block above this (elided for length) computes the same locals as the prime
 section, plus a few branches: a zero configured purge falls back to a fixed volume, an
 explicit flush volume or speed overrides the computed one, FLEX gets its own retract and
-deretract speeds, and — as described above — an uninitialised tool gets a fixed deretract
+deretract speeds, and — as described above — an uninitialized tool gets a fixed deretract
 length and is forced down the purge-station path.
 
 There is also a first-layer override: if the layer is at or below first-layer height, the
@@ -553,7 +553,7 @@ target temperature becomes the first-layer temperature rather than the normal on
 | `V…` | Retraction feedrate, independent of the move feedrate |
 | `A…` | Do the Z move *in parallel* with XY, at this angle, until target Z is reached |
 
-The `A` parameter is a nice touch — instead of lifting and then travelling, the head
+The `A` parameter is a nice touch — instead of lifting and then traveling, the head
 climbs on a slope while it moves, which is faster.
 
 `P0 S1 L0 D0` then drops the current tool in its dock, and `T{next_extruder} S1 L0 D0`
@@ -670,12 +670,12 @@ starting the next print with an unexpected state.
 pressure advance and flow so a later print does not inherit them — worth doing because
 both persist in firmware across prints.
 
-`M84 X Y E` disables the X, Y and extruder motors but deliberately leaves Z energised, so
+`M84 X Y E` disables the X, Y and extruder motors but deliberately leaves Z energized, so
 the bed holds its position rather than sagging.
 
 ## Command reference
 
-Behaviour verified against the Prusa firmware source unless marked otherwise.
+Behavior verified against the Prusa firmware source unless marked otherwise.
 
 | Command | What it does |
 |---|---|
@@ -724,7 +724,7 @@ Behaviour verified against the Prusa firmware source unless marked otherwise.
 ## Verification
 
 `measured` — this is Prusa's shipped profile for firmware 6.9.0, reproduced verbatim
-rather than reconstructed, and every command's behaviour was checked against the
+rather than reconstructed, and every command's behavior was checked against the
 firmware handler that implements it rather than assumed from standard Marlin.
 
 That provenance is what earns the tier. These are not one owner's settings that happened
@@ -739,7 +739,7 @@ Prusa firmware repository, so the description here is inference from its call si
 is flagged in place.
 
 `M262` and `M264` deserve a note. They are frequently described as chamber-light
-commands, and the profile they came from labelled them that way. They are not: the
+commands, and the profile they came from labeled them that way. They are not: the
 firmware implements them as generic I2C GPIO expander operations — configure a pin
 direction, write a pin level. What a given pin controls is whatever the owner has wired
 to it. Anything you read that treats them as a lighting command is describing a
@@ -766,4 +766,4 @@ version in the front matter, expect differences.
 - [Tool offset calibration fails](../issues/offset-sensor-board-failure.md) — what
   happens when `G427` cannot complete
 - [Blobs dragged into the print](../issues/stringing-and-wiper-calibration.md) — the
-  purge and cleaning behaviour these blocks drive
+  purge and cleaning behavior these blocks drive

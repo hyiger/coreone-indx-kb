@@ -22,6 +22,6 @@ SOFTWARE.
 
 ---
 
-Scope: this licence covers the build configuration, workflows, scripts and
+Scope: this license covers the build configuration, workflows, scripts and
 other machinery in this repository. It does NOT cover the prose content under
 `docs/`, which is licensed separately — see LICENSE-CONTENT.

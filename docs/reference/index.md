@@ -46,6 +46,6 @@ are involved in setting a machine up, they fail with overlapping symptoms, and o
 routinely chase the wrong one — which costs days. Getting the vocabulary right is not
 pedantry here; it is the thing that makes the rest of the site usable.
 
-Firmware version strings matter for the same reason. Behaviour has changed across
+Firmware version strings matter for the same reason. Behavior has changed across
 releases, so a finding without a version attached may be describing a machine that no
 longer exists.

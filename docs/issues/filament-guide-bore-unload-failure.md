@@ -19,7 +19,7 @@ superseded_by:
     Everything on this page comes from one thread, which is itself a condensation of a
     community knowledge base that is now offline. Nothing here has been independently
     reproduced by another owner in the forum. It is published because the symptom is
-    distinctive enough to be worth recognising, not because the fix is established.
+    distinctive enough to be worth recognizing, not because the fix is established.
 
 ## Summary
 

@@ -69,18 +69,18 @@ Corrections to a page that has gone stale are the second most valuable. Supersed
 pages are marked with `superseded_by` and kept, never deleted — people arrive from
 stale search results and need to know they have.
 
-## Licences
+## Licenses
 
-Two licences, because code and prose have different reuse needs and contributors need
+Two licenses, because code and prose have different reuse needs and contributors need
 to know which applies to what.
 
-| What | Licence | File |
+| What | License | File |
 |---|---|---|
 | Build config, workflows, scripts | MIT | [LICENSE](LICENSE) |
 | Everything under `docs/` | CC BY-SA 4.0 | [LICENSE-CONTENT](LICENSE-CONTENT) |
 
 Cited forum threads and other external sources remain the copyright of their
-authors and are not covered by either licence. Findings here are rewritten and
+authors and are not covered by either license. Findings here are rewritten and
 sourced, never reproduced verbatim.
 
 ## Repository layout

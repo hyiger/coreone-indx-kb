@@ -47,7 +47,7 @@ twisted, which cancels most of its radiated noise, but the loadcell's signal pai
 not — so it is comparatively exposed to whatever the heater is doing. When that
 noise is large enough, the firmware reads it as a contact event.
 
-The tell-tale is *how wrong* the behaviour is. A mechanical or offset problem makes
+The tell-tale is *how wrong* the behavior is. A mechanical or offset problem makes
 the nozzle probe slightly too high or too low. Noise-driven false contact makes it
 stop while the nozzle is plainly nowhere near the sheet — a gap you can see across
 the room, not one you would measure with paper. If you are watching a probing pass
@@ -60,7 +60,7 @@ Symptoms reported in this family:
 - Z homing or probing that fails **only once the hotend is hot** — a strong hint,
   because it points at the heater as the noise source
 - False Z-collision errors
-- Repeated bed-levelling retries, and unusually long mesh times
+- Repeated bed-leveling retries, and unusually long mesh times
 - A first layer that does not stick, or that drags filament up into a blob, because
   the machine believes the bed is higher than it is
 
@@ -119,7 +119,7 @@ an owner reports probing running with the nozzle far above the sheet on a machin
 that had passed all its setup calibrations; after fitting a ferrite core to the main
 cable they confirm probing began working correctly. A second owner in the same thread
 reports one probe-too-high incident and fitted a core pre-emptively without
-regression. The mechanism, the vendor's acknowledgement, and the toroid variant come
+regression. The mechanism, the vendor's acknowledgment, and the toroid variant come
 from the [common problems summary](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/),
 which is a condensation of a now-offline community knowledge base.
 

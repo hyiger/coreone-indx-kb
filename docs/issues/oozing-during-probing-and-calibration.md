@@ -77,7 +77,7 @@ chasing anything more complicated.
 
 ### The probe temperature may not be the one you expect
 
-There is a reported firmware and slicer behaviour where the temperature used for
+There is a reported firmware and slicer behavior where the temperature used for
 pre-print bed probing is derived from the filament assigned to **tool 1**, not from
 the tool actually doing the probing. If a high-temperature material is assigned to
 T1, everything probes hot and oozes, regardless of what is loaded elsewhere.
@@ -86,7 +86,7 @@ The reported workaround is elegant if it holds: it is enough to *declare* a
 low-temperature filament in T1 in the slicer — the physical filament does not have to
 be there — which would explain why jobs sliced from profiles that assume a
 low-temperature material never showed the problem. There is also a start-G-code
-approach that forces the probing temperature before the mesh bed levelling block, by
+approach that forces the probing temperature before the mesh bed leveling block, by
 replacing the generated temperature command with a fixed one.
 
 TODO(verify): the probing temperature to force, and the exact G-code command and

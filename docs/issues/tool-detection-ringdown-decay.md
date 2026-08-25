@@ -26,7 +26,7 @@ The INDX decides whether a tool is present by pinging an induction coil in the h
 and measuring how the ringing dies away — the firmware calls this the *ringdown
 decay* value. There is a band in the middle of the scale where the reading is
 ambiguous, and in that band the firmware keeps whatever it last believed. That single
-design detail explains most of the confusing behaviour in this family: why a wrong
+design detail explains most of the confusing behavior in this family: why a wrong
 tool state persists, why it survives a retry, and why two machines with opposite
 symptoms can have the same underlying cause.
 
@@ -163,7 +163,7 @@ problem rather than the heater.
     since arrived and points elsewhere, so that suggestion has been withdrawn.
 
     Treat any pre-6.9.0 threshold figure you find on the forum as describing the old
-    behaviour.
+    behavior.
 
 ### "Tool is still detected after parking" is a timing problem, not a threshold one
 
@@ -219,7 +219,7 @@ participant in it confuses the coil issue with the separate nozzle issue.
 might explain the "tool is still detected after parking" reports, flagged at the time as
 an inference rather than a claim any source made. A firmware bug report has since shown
 the park failure occurring on 6.6.3 and disappearing on a downgrade to 6.6.2 — before
-the threshold moved at all. The suggestion has been withdrawn and the park behaviour now
+the threshold moved at all. The suggestion has been withdrawn and the park behavior now
 has its own section, where the evidence points at a settling-time problem instead. The
 issue is open and unresolved, so that account may yet change too.
 

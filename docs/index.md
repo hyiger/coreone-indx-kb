@@ -16,7 +16,7 @@ Community reference for the Bondtech INDX toolchanger on the Prusa Core One.
   the hardware and method they were measured on.
 - **[Issues](issues/index.md)** — known faults, causes, and fixes.
 - **[G-code](gcode/index.md)** — start, end, layer change, and toolchange blocks;
-  placeholder syntax; firmware behaviour.
+  placeholder syntax; firmware behavior.
 - **[Reference](reference/index.md)** — hardware specs, tool numbering, assembly notes.
 
 ## Hardware matters more than you'd expect

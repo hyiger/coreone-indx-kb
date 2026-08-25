@@ -89,7 +89,7 @@ machine changes.
 
 TODO(verify): whether a custom profile can be made to work for another nozzle size by
 hand, and what breaks if you try. Nobody in the sources has reported attempting it, and
-this page will not speculate — the toolchanger's purge and calibration behaviour is
+this page will not speculate — the toolchanger's purge and calibration behavior is
 tied to the profile in ways that are not obvious.
 
 ## Verification

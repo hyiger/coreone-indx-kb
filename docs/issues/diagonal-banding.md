@@ -20,7 +20,7 @@ superseded_by:
 ## Summary
 
 A regular, repeatable diagonal pattern across vertical walls, which reverses direction
-depending on whether perimeters run clockwise or anticlockwise, points at the extruder
+depending on whether perimeters run clockwise or counterclockwise, points at the extruder
 rather than the motion system. There is a two-print test that settles it in about an
 hour without any disassembly, and it is worth running before you open a support case.
 A faint version of this artifact appears to be normal for a dual-gear extruder; a

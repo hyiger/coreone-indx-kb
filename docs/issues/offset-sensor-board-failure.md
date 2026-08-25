@@ -145,7 +145,7 @@ at the board.
 
 **Added since first publication.** The 6.9.0 calibration regression comes from the
 [firmware issue tracker](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442),
-which is a stronger class of source than the forum for firmware behaviour — it is
+which is a stronger class of source than the forum for firmware behavior — it is
 first-party, versioned and reproducible. Two owners report it. It is an open issue, so
 it may be fixed, reclassified, or turn out to be something else; treat the section
 above as current-as-of-writing rather than settled.

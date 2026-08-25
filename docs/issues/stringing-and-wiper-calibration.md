@@ -7,7 +7,7 @@ printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       0.4mm reported
-firmware:     6.9.0; earlier behaviour noted throughout
+firmware:     6.9.0; earlier behavior noted throughout
 sources:
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
@@ -73,7 +73,7 @@ is the single most useful thing to know before you start adjusting, because it m
 you are looking for a narrow window, not a broad one.
 
 TODO(verify): the Y adjustment magnitude that one owner reported as the difference
-between rice grains and worms. It is a small fraction of a millimetre and it is
+between rice grains and worms. It is a small fraction of a millimeter and it is
 machine-specific, so it is withheld here rather than published as a target.
 
 !!! note "Which pellet shape is actually better is disputed"
@@ -83,11 +83,11 @@ machine-specific, so it is withheld here rather than published as a target.
     from nestling into the top of a blob, detaches more readily, and does less damage
     if it does reach the print. Both readings are in the sources. Treat pellet shape
     as a *sensitive indicator that your alignment changed*, which it certainly is,
-    rather than as a target to optimise toward.
+    rather than as a target to optimize toward.
 
 ### The real difficulty is that you cannot see it
 
-Owners are unanimous that the hard part is visibility, not judgement. The wiper sits
+Owners are unanimous that the hard part is visibility, not judgment. The wiper sits
 where you cannot get eyes on it during a purge, and people resorted to dentists'
 mirrors. Two techniques circulate:
 
@@ -144,8 +144,8 @@ just touching"), which needs no number.
   reported it came out very clean, for a small increase in print time.
 
     The trade-off is material-dependent, and worth getting right: a wipe tower is
-    good for multiple colours of the **same** material, where the aim is only to
-    stabilise flow. For **dissimilar** materials that do not bond to each other, the
+    good for multiple colors of the **same** material, where the aim is only to
+    stabilize flow. For **dissimilar** materials that do not bond to each other, the
     purge bin has the clear advantage, because a tower built from materials that will
     not stick together falls apart.
 
@@ -189,7 +189,7 @@ section is deliberately empty.
 ## Verification
 
 `reported` — multiple independent owners, across two dedicated threads, over roughly
-a month of firmware changes, with the firmware behaviour itself confirmed first-party.
+a month of firmware changes, with the firmware behavior itself confirmed first-party.
 
 The 6.9.0 changes are documented in
 [Prusa's own release notes](https://help.prusa3d.com/downloads/core-one-indx), which
@@ -204,7 +204,7 @@ contains the symptom reports, the visibility complaints, the Tune-menu adjustmen
 the wipe-tower experiment, and the 6.9.0 outcome.
 
 The 6.9.0 improvement is **independently confirmed** by three owners: one reports clean
-tool changes on a mixed TPU/PETG print and again on a four-colour PETG print; a second
+tool changes on a mixed TPU/PETG print and again on a four-color PETG print; a second
 separately reports the result is much cleaner and that they no longer need a brim to
 catch debris; and the owner who started the thread — the person with the worst of the
 problem — has since confirmed that 6.9.0 has mostly resolved the oozing and cleaning

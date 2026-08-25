@@ -40,7 +40,7 @@ crossing the plate. That clearance is applied when the machine moves *between* o
 It is **not** applied when the move is part of a tool change, and a tool change produces
 exactly that kind of move. The head goes to the dock and comes back at roughly the
 height of the layer it was printing, which on a sequential print may be far below the
-top of a neighbour that finished hours ago.
+top of a neighbor that finished hours ago.
 
 The underlying limitation is in the slicer rather than the machine: the sequential
 printing algorithm does not model tool-change travel at all. That is why it affects
@@ -55,7 +55,7 @@ The two cases behave differently, and the difference is the whole bug.
 
 **Starting a new object — clearance is applied.** The previous object is finished, so
 the machine raises the head to that object's full height plus a small fixed clearance
-before travelling. It crosses the plate safely, drops to first-layer height, and
+before traveling. It crosses the plate safely, drops to first-layer height, and
 carries on.
 
 **Changing tool inside an object — clearance is skipped.** The machine is part-way up
@@ -77,7 +77,7 @@ has not been checked against firmware.
 ### You can see it in the toolchange G-code
 
 That explanation originally came from a diagram in the bug report whose author disclosed
-it as machine-generated. It no longer has to rest on that. The behaviour is visible in a
+it as machine-generated. It no longer has to rest on that. The behavior is visible in a
 stock toolchange block, and the firmware documents the parameter that governs it.
 
 Three lines in a toolchange decide how high the head travels. From a working profile:
@@ -98,7 +98,7 @@ this is correct. On a sequential print it is simply the wrong reference.
 **The park is where it gets interesting.** `G27`'s `P` parameter selects what the Z
 movement means, and the firmware documents three options:
 
-| `P` | Z behaviour |
+| `P` | Z behavior |
 |---|---|
 | `0` | *(default)* Raise to at least Z **above print** |
 | `1` | Absolute move to Z — may move the nozzle **down** |
@@ -142,7 +142,7 @@ explained, is at [annotated profile G-code](../gcode/indx-profile-gcode.md).
     INDX, and whether enabling it would catch a toolchange collision. Worth checking
     before running a sequential multi-tool print, not after.
 
-### Recognising it
+### Recognizing it
 
 - You are slicing with **Complete individual objects**.
 - More than one tool is in use anywhere on the plate.
@@ -194,8 +194,8 @@ Prusa toolchangers, which the INDX has now inherited.
 **Disable Complete individual objects** for any plate where an object contains a tool
 change. That is the only reliable answer.
 
-If you need both sequential printing and multi-colour parts, the honest answer today is
-that you cannot safely have them together — print the multi-colour parts normally, all
+If you need both sequential printing and multi-color parts, the honest answer today is
+that you cannot safely have them together — print the multi-color parts normally, all
 objects rising together, and reserve sequential printing for single-tool plates.
 
 !!! warning "The front-to-back workaround reduces exposure. It does not fix anything."

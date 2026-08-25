@@ -27,7 +27,7 @@ worse than no page — someone will act on it.
 - **Verbatim forum posts.** Forum content is copyrighted by its author.
   Extract the finding, write it in your own words, link to the thread.
 - **Discord content**, unless the server admins have agreed and participants
-  are anonymised. Public forums and private support servers are different.
+  are anonymized. Public forums and private support servers are different.
 - **Raw crawl output.** That lives in a separate working repo, gitignored here.
 - **Screenshots containing usernames or personal details.**
 

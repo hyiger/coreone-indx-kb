@@ -35,7 +35,7 @@ the Nextruder many owners are coming from.
 
 So every page here states `printer`, `toolhead`, `hotend`, `nozzle` and `firmware` in
 its front matter. If yours differs on any of those, treat the value as a starting
-point and re-verify it rather than dialling it in.
+point and re-verify it rather than dialing it in.
 
 ## What belongs here
 

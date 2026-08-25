@@ -35,7 +35,7 @@ Intended contents, none of it written yet:
   contactless inductive sensor used for tool offsets. These are distinct parts with
   distinct failure modes and are frequently confused.
 - **Controller** — board revisions and how to identify yours, since some reported
-  behaviour differs by revision.
+  behavior differs by revision.
 - **Cabling** — the main toolhead loom and its connectors.
 - **Nozzles** — geometries, materials and surface treatments.
 

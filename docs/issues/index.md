@@ -24,7 +24,7 @@ apart from the one that merely resembles it.
 ## How to read a page here
 
 Check the `confidence` field before acting. A `provisional` page is one person's
-experience written down so the next person recognises it — not a procedure.
+experience written down so the next person recognizes it — not a procedure.
 
 Where a page withholds a number behind a `TODO(verify)` marker, that is intentional.
 Thresholds, temperatures, dimensions and deadlines are verified against hardware or
@@ -119,4 +119,4 @@ unrelated causes present through the same two error paths. The quickest discrimi
 | Failures follow a **firmware update** rather than appearing gradually | [Tool detection](tool-detection-ringdown-decay.md) |
 
 Chasing the wrong one of these costs days, which is why each page opens by saying how
-to tell it apart from its neighbours.
+to tell it apart from its neighbors.

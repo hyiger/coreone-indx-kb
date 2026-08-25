@@ -101,8 +101,8 @@ than several builders received. People have had to source or cut their own. This
 the reason for the screw assortment above — running out mid-step is the difference
 between an evening and a weekend.
 
-**There is no consolidated fastener list.** Fasteners are itemised step by step in the
-guide and nowhere else, so if you like to pre-sort into labelled bins you will be
+**There is no consolidated fastener list.** Fasteners are itemized step by step in the
+guide and nowhere else, so if you like to pre-sort into labeled bins you will be
 extracting that list yourself. An unofficial fastener PDF has circulated on the forum,
 but it was AI-generated and unverified by its own poster — treat it as a starting
 point to check against the guide, not as a bill of materials.
@@ -124,7 +124,7 @@ back out of its slot.
 TODO(verify): the length of pull-string to feed before securing the cover.
 
 **Aligning the linear rail.** Loosen the six rail screws **only two or three turns** —
-Prusa confirmed this in the guide comments. Do not fully unscrew them: the centre
+Prusa confirmed this in the guide comments. Do not fully unscrew them: the center
 block can drop out, and reassembling it is genuinely miserable. This is a good moment
 to re-lubricate the rail while you have access. Tighten the bottom gantry screw again
 before you continue.
@@ -252,7 +252,7 @@ Independently corroborated:
 
 - **The absent fastener list** is confirmed by
   [Parts list for screws and bolts?](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/parts-list-for-screws-and-bolts/),
-  where a builder asks for one and is told the guide itemises fasteners step by step
+  where a builder asks for one and is told the guide itemizes fasteners step by step
   and nowhere else.
 - **The magnet press fit and extraction** are covered first-hand with photographs in
   [Removing magnets from Tool docks](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/removing-magnets-from-tool-docks-you-dont-need-to-destroy-them/),

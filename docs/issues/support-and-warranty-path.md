@@ -66,7 +66,7 @@ TODO(verify): the stated warranty period for non-EU purchases, the EU statutory
 period, and the UK position after leaving the EU. Sourced from the Warranty Concern
 (UK) thread, where the participants are owners reasoning about consumer law rather
 than anyone qualified to state it — one of them explicitly recommends asking a
-consumer-rights organisation instead.
+consumer-rights organization instead.
 
 What is safe to act on: **who you bought from determines whose warranty applies**,
 and that is not always who shipped the box. Founders Edition kits were purchased from

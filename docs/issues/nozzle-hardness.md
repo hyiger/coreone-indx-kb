@@ -43,10 +43,10 @@ the per-tool declaration that also carries the abrasive and high-flow flags.
 ### What was promised and what shipped
 
 Marketing for the passive tools described hardened steel construction with abrasive
-resistance sufficient for carbon fibre, glass fibre and glow-in-the-dark filaments
+resistance sufficient for carbon fiber, glass fiber and glow-in-the-dark filaments
 without meaningful wear, and listed hardened nozzles as standard equipment. That
 wording was later removed from shop listings, and the vendor published an admission
-that the shipped nozzles are nitrocarburised — a surface treatment — at roughly
+that the shipped nozzles are nitrocarburized — a surface treatment — at roughly
 30–32 HRC.
 
 For context on why owners consider that a material difference rather than a quibble:
@@ -98,7 +98,7 @@ TODO(verify) that length too.
 
 **How the claim goes, from owners who have filed one.** The contact form has no
 category that obviously fits, and owners report submitting under the generic "other"
-request type. Expect an automated acknowledgement immediately and then a wait — one
+request type. Expect an automated acknowledgment immediately and then a wait — one
 owner reports writing a week earlier, being acknowledged, and still having no substantive
 reply. Another filed the day this was written and says much the same. So file early, keep
 your own record of what you asked for, and do not read silence as refusal.
