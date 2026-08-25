@@ -75,7 +75,8 @@ matter and a banner at the top. Firmware changes and Bondtech ships revisions;
 readers arrive from stale search results.
 
 **Author attribution is `hyiger`.** Do not use any other name in commits, front
-matter, page content, or config.
+matter, page content, or config. **American spellings** — behavior, leveling,
+license; quoted firmware strings and G-code keep the machine's own spelling.
 
 **Facts versus wording.** Facts are not copyrightable. The sentence someone wrote
 stating them is. Rewrite, then cite.
@@ -89,10 +90,9 @@ job; moving a page into `docs/` is theirs.
 ./.venv/bin/mkdocs build --strict
 ```
 
-Must pass with zero warnings — `--strict` turns broken links into build failures,
-which keeps the site honest. A new page under `docs/` must also be added to `nav` in
-`mkdocs.yml`, or the strict build fails on the unreferenced file. Links that cross
-between `docs/issues/` and `docs/reference/` need `../`.
+Must pass with zero warnings — `--strict` turns broken links into failures, which
+keeps the site honest. A new page under `docs/` must also be in `nav`, or the build
+fails on the unreferenced file. Links crossing between sections need `../`.
 
 Pages publishes to <https://hyiger.github.io/coreone-indx-kb/> on every push to
 `main`. Do not change Pages or repository settings unless asked — that call is the
