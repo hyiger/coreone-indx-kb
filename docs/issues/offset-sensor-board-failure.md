@@ -1,7 +1,7 @@
 ---
 title:        Tool offset calibration fails — contactless offset sensor
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-08-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -9,6 +9,7 @@ hotend:       unknown
 nozzle:       unknown
 firmware:     unknown
 sources:
+  - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/offset-sensor-failure/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
@@ -42,6 +43,17 @@ tension, which support may suggest, has not fixed a single reported case.
     point at yet beyond retrying. Check the issue for the current state before
     starting an RMA. The firmware also links an official help article for this error
     code, which the reporter says did not resolve it for them.
+
+## Error codes that lead here
+
+| Code | What the printer shows |
+|---|---|
+| [`36130`](https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016) | Tool offset failed |
+| [`36136`](https://help.prusa3d.com/article/calibrate-dock-from-menu-17136-xl-36136-core-one-indx_1037195) | Calibrate dock from menu |
+
+`36130` is this page. It is also the code the firmware links its own help
+article for, which the owner reporting the 6.9.0 regression says did not resolve
+their case.
 
 ## Detail
 

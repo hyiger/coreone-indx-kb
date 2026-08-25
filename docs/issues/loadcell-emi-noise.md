@@ -1,7 +1,7 @@
 ---
 title:        Probing fails or nozzle never touches the bed — loadcell noise
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-08-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -9,6 +9,7 @@ hotend:       unknown
 nozzle:       unknown
 firmware:     unknown
 sources:
+  - https://help.prusa3d.com/article/loadcell-measure-failed-31526-core-one-35526-core-one-l-36526-core-one-indx-26526-mk4s-13526-mk4-27526-mk3-9s-21526-mk3-9-36526-core-one-indx_405741
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-not-touching-bed-during-probing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
@@ -26,6 +27,17 @@ acknowledged interference from the heater as the working theory. The community f
 which vendor support now also recommends, is a clamp-on ferrite core on the main
 toolhead cable close to where it enters the controller board. Several owners report
 this resolving the fault outright.
+
+## Error codes that lead here
+
+| Code | What the printer shows |
+|---|---|
+| [`36526`](https://help.prusa3d.com/article/loadcell-measure-failed-31526-core-one-35526-core-one-l-36526-core-one-indx-26526-mk4s-13526-mk4-27526-mk3-9s-21526-mk3-9-36526-core-one-indx_405741) | Loadcell measure failed |
+| [`36527`](https://help.prusa3d.com/article/loadcell-bad-configuration-31527-core-one-35527-core-one-l-36527-core-one-indx-26527-mk4s-13527-mk4-27527-mk3-9s-21527-mk3-9_405749) | Loadcell bad configuration |
+| [`36528`](https://help.prusa3d.com/article/loadcell-timeout-31528-core-one-35528-core-one-l-26528-mk4s-36528-core-one-indx-13528-mk4-27528-mk3-9s-21528-mk3-9_405757) | Loadcell timeout |
+
+All three are loadcell faults. Interference tends to show as a failed
+measurement or a timeout rather than a configuration error.
 
 ## Detail
 

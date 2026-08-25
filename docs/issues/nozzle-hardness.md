@@ -1,7 +1,7 @@
 ---
 title:        Nozzle hardness and abrasive filaments
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-08-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -9,6 +9,7 @@ hotend:       CHT high-flow, and plain-bore variants
 nozzle:       0.4mm standard
 firmware:     unknown
 sources:
+  - https://help.prusa3d.com/article/unknown-nozzle-36121-core-one-indx_1072730
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
@@ -25,6 +26,16 @@ hardness well below what the trade normally means by "hardened". If you bought a
 INDX expecting to run abrasive filament from day one, you cannot, and the vendor has
 published a remediation offer that includes a full return. Treat abrasive filament on
 the current nozzles as consuming them.
+
+## Error codes that lead here
+
+| Code | What the printer shows |
+|---|---|
+| [`36121`](https://help.prusa3d.com/article/unknown-nozzle-36121-core-one-indx_1072730) | Unknown nozzle |
+| [`36122`](https://help.prusa3d.com/article/unknown-nozzle-36122-core-one-indx_1072738) | Unknown nozzle |
+
+These fire when the nozzle fitted does not match what the sliced file declared —
+the per-tool declaration that also carries the abrasive and high-flow flags.
 
 ## Detail
 

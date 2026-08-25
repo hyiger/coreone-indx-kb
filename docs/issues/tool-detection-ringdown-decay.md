@@ -1,7 +1,7 @@
 ---
 title:        Phantom tools, "tool not detected" and park failures
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-08-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -9,6 +9,7 @@ hotend:       unknown
 nozzle:       unknown
 firmware:     6.6.3, 6.9.0
 sources:
+  - https://help.prusa3d.com/article/tool-park-failed-36127-core-one-indx_1073624
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5392
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/6-9-0-firmware-tool-docking/
@@ -28,6 +29,22 @@ ambiguous, and in that band the firmware keeps whatever it last believed. That s
 design detail explains most of the confusing behaviour in this family: why a wrong
 tool state persists, why it survives a retry, and why two machines with opposite
 symptoms can have the same underlying cause.
+
+## Error codes that lead here
+
+| Code | What the printer shows |
+|---|---|
+| [`36125`](https://help.prusa3d.com/article/tool-pickup-failed-36125-core-one-indx_1083573) | Tool pickup failed |
+| [`36127`](https://help.prusa3d.com/article/tool-park-failed-36127-core-one-indx_1073624) | Tool park failed |
+| [`36128`](https://help.prusa3d.com/article/retry-tool-park-36128-core-one-indx_1072357) | Retry tool park |
+| [`36124`](https://help.prusa3d.com/article/tool-lost-36124-core-one-indx_1072958) | Tool lost |
+| [`36123`](https://help.prusa3d.com/article/occupied-dock-36123-core-one-indx_1072788) | Occupied dock |
+| [`36202`](https://help.prusa3d.com/article/hotend-preheat-error-36202-core-one-indx_1088818) | Hotend preheat error |
+| [`36135`](https://help.prusa3d.com/article/toolchanger-error-17135-xl-36135-core-one-indx_399944) | Toolchanger error |
+
+Detection faults surface as one of these. `36125` and `36127` are the two halves
+of the problem this page describes — a tool that will not read as picked up, and
+one that will not read as parked. `36128` is the retry that usually succeeds.
 
 ## Detail
 
@@ -56,7 +73,8 @@ is probably not your problem. One sitting well above them is worth investigating
 TODO(verify): whether the reading drifts once the head and coil are warm. An owner
 raised this after noticing their machine misbehaved despite healthy cold readings, and
 suggested someone take a reading part-way through a long job, or immediately after one,
-to compare against the cold figure. Nobody has reported doing so. The community summary separately records the idle floor rising with ambient
+to compare against the cold figure. Nobody has reported doing so. The community
+summary separately records the idle floor rising with ambient
 temperature, so the question is a reasonable one.
 
 Prusa's own release notes for firmware 6.9.0 name the "nozzle presence" decay

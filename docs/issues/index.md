@@ -81,6 +81,28 @@ reader a part, a print, or a warranty window.
   come from two different companies, and sending your problem to the wrong one is the
   most common way owners lose weeks.
 
+## Arrived here with an error code?
+
+The `361xx` block is the toolchanger family. These are the codes that map onto a page:
+
+| Code | On screen | Page |
+|---|---|---|
+| `36121` `36122` | Unknown nozzle | [Nozzle hardness](nozzle-hardness.md) |
+| `36123` | Occupied dock | [Tool detection](tool-detection-ringdown-decay.md) |
+| `36124` | Tool lost | [Tool detection](tool-detection-ringdown-decay.md) |
+| `36125` | Tool pickup failed | [Tool detection](tool-detection-ringdown-decay.md) |
+| `36127` | Tool park failed | [Tool detection](tool-detection-ringdown-decay.md) |
+| `36128` | Retry tool park | [Tool detection](tool-detection-ringdown-decay.md) |
+| `36130` | Tool offset failed | [Tool offset calibration](offset-sensor-board-failure.md) |
+| `36135` | Toolchanger error | [Tool detection](tool-detection-ringdown-decay.md) |
+| `36136` | Calibrate dock from menu | [Tool offset calibration](offset-sensor-board-failure.md) |
+| `36202` | Hotend preheat error | [Tool detection](tool-detection-ringdown-decay.md) |
+| `36526` `36527` `36528` | Loadcell measure failed / bad configuration / timeout | [Loadcell noise](loadcell-emi-noise.md) |
+
+Prusa publishes an article for every code, linked from each page. Around 104 distinct
+INDX codes exist; the ones above are those this knowledge base has something to add to.
+For anything else, Prusa's own article is the better answer.
+
 ## Three faults that look alike
 
 Probing and calibration failures are the ones people misdiagnose most, because three
