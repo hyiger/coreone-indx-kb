@@ -13,6 +13,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/missing-profiles-in-slicer-for-non-0-4-nozzles-and-other-materials/
 superseded_by:
 ---
 
@@ -94,6 +95,26 @@ is a figure or a deadline where being wrong costs the reader money or a missed
 window — get them from the vendor's own current statement, not from this page.
 Separately, Prusa published an extended return period for initial-batch kit orders;
 TODO(verify) that length too.
+
+**How the claim goes, from owners who have filed one.** The contact form has no
+category that obviously fits, and owners report submitting under the generic "other"
+request type. Expect an automated acknowledgement immediately and then a wait — one
+owner reports writing a week earlier, being acknowledged, and still having no substantive
+reply. Another filed the day this was written and says much the same. So file early, keep
+your own record of what you asked for, and do not read silence as refusal.
+
+You can also ask for a **mix** of credit and cash rather than all of one. At least one
+owner did, wanting enough credit to buy a genuinely hardened nozzle once one exists.
+
+!!! note "Store credit buys nozzles you may not be able to use yet"
+    Worth knowing before you choose credit over cash: PrusaSlicer currently offers the
+    INDX only a single nozzle variant, so other sizes have no profile to print with.
+    One owner making exactly this decision put it plainly — they had never tried other
+    sizes because there are no profiles for them, which makes credit-for-more-nozzles a
+    weaker proposition than it looks. A page on the profile gap is drafted and awaiting
+    review; until it lands, the short version is that both INDX printer models declare a
+    single nozzle variant in Prusa's published profile bundle, so no other size is
+    selectable.
 
 Be aware the adequacy of the compensation is disputed. At least one owner worked
 through the arithmetic and found the offered credit represents a substantially
