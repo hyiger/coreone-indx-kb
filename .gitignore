@@ -20,3 +20,6 @@ __pycache__/
 
 # OS
 .DS_Store
+
+# Background agent worktrees — transient, never committed
+.claude/worktrees/

@@ -1,7 +1,7 @@
 ---
 title:        Annotated start, layer and toolchange G-code
 confidence:   measured
-updated:      2026-08-24
+updated:      2026-08-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -10,6 +10,9 @@ nozzle:       unknown
 firmware:     6.9.0+16311
 sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy
+  - https://help.prusa3d.com/article/buddy-firmware-specific-g-code-commands_633112
+  - https://reprap.org/wiki/G-code
+  - https://docs.duet3d.com/User_manual/Reference/Gcodes
 superseded_by:
 ---
 
@@ -225,16 +228,46 @@ Each `M574` line then converts that volumetric figure into a linear filament fee
 dividing by the filament's cross-sectional area, capped by the material's maximum
 volumetric speed where one is set. FLEX is excluded.
 
-!!! note "M574 is the one command here I could not verify"
-    `M574` does not appear anywhere in the Prusa firmware source. Every other command on
-    this page was confirmed against its handler; this one returns no matches at all.
+!!! note "M574 is not implemented — the firmware ignores it"
+    `M574` has no handler in Prusa Buddy firmware. That is checked against the `v6.9.0`
+    release tag, the version this profile targets, and against every object in the public
+    repository's history, with `M572` and `M575` as positive controls to prove the search
+    finds what is actually there. Marlin is vendored in-tree under `lib/Marlin` rather
+    than as a submodule, so the same search covers the Marlin layer.
 
-    From context it prepares each tool ahead of use — the arguments are a tool index, a
-    fixed `V35`, the tool's target temperature and the computed feedrate — and the
-    comment above it in the profile reads "try picking tools used in print". But that is
-    inference from the call site, not verification.
+    What the machine does with it follows from the parser's fallback. Prusa's own
+    dispatcher declines the command, Marlin's switch reaches
+    `default: parser.unknown_command_error()`, and `queue.ok_to_send()` still runs
+    afterwards. So the printer logs `Unknown command:` with the offending line, answers
+    `ok`, and carries on — no error, no pause, nothing on screen. Eight ignored lines per
+    print, one per used non-FLEX tool.
 
-    TODO(verify): what `M574` does and what `S`, `V`, `T` and `F` each mean.
+    *That paragraph is derived from the firmware source, not from a captured log.* No
+    terminal or log capture of a real INDX receiving `M574` appears to exist publicly,
+    and no issue about it has ever been filed against Prusa's firmware or slicer tracker.
+
+    One limit on the claim: Prusa develops privately and publishes release tags, so this
+    establishes that the firmware **you run** has no handler — not that none exists
+    anywhere.
+
+!!! warning "The number collides with an established assignment"
+    `M574` is not an unclaimed number. The RepRap G-code registry and RepRapFirmware both
+    assign it to endstop configuration, where `S` selects an endstop type and `V`, `T` and
+    `F` do not exist as parameters at all. This profile's usage contradicts that outright,
+    which is worth knowing for a second reason: most of what you will find searching for
+    "M574" describes endstops on a Duet and has nothing to do with this.
+
+    It does appear to be Prusa's own. Prusa reaches into the RepRapFirmware number space
+    when Marlin lacks a code — its `M572` pressure advance is RepRapFirmware's assignment,
+    not Marlin's `M900`. And Bondtech's published INDX toolchain, which targets
+    RepRapFirmware and Klipper, never uses the number. Cutting the other way: when Prusa
+    does add toolchanger G-code it lands high and out of the way, at `M1982`–`M1987`,
+    `G427` and `G750`, nowhere near the nearly empty `M57x` range.
+
+    TODO(verify): what `M574` is intended to do, and what `S`, `V`, `T` and `F` each mean.
+    `S` is a tool index and `T` a target temperature by inference from the call site; the
+    fixed `V35` has no established meaning and is deliberately not guessed at here. Prusa
+    documents the command nowhere, and it appears in no release note or changelog.
 
 ```gcode
 G427 R2 P3 ; Calibrate all used and mapped tools
@@ -719,7 +752,7 @@ Behavior verified against the Prusa firmware source unless marked otherwise.
 | `M77` | Stop the print timer |
 | `M262 P B` | IO expander pin direction — `B0` output, `B1` input |
 | `M264 P B` | IO expander pin level — `B0` low, non-zero high |
-| `M574 S V T F` | **Unverified** — absent from the firmware source; see the note above |
+| `M574 S V T F` | **Not implemented** — no handler; logged as unknown and skipped |
 
 ## Verification
 
@@ -734,9 +767,11 @@ is also why they appear here at all, when the site otherwise withholds print set
 until someone has verified them on hardware.
 
 Where a command's meaning could not be established it is marked as such rather than
-guessed. `M574` is the only one in that state: it returns no matches anywhere in the
-Prusa firmware repository, so the description here is inference from its call site and
-is flagged in place.
+guessed. `M574` is the only one in that state, and the distinction matters: its *absence*
+from the firmware is now established to the same standard as the other commands'
+presence — checked against the v6.9.0 release tag and every object in the public
+repository's history, with positive controls. What it was intended to do is still
+unknown, and is flagged in place rather than reconstructed.
 
 `M262` and `M264` deserve a note. They are frequently described as chamber-light
 commands, and the profile they came from labeled them that way. They are not: the
