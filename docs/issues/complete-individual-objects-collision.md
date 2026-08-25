@@ -127,6 +127,21 @@ at what those three lines reference.
 The annotated block these lines come from, with the rest of the toolchange sequence
 explained, is at [annotated profile G-code](../gcode/indx-profile-gcode.md).
 
+!!! danger "A collision may not stop the print"
+    The XL reporter notes that crash detection is disabled by default on their
+    machine, because phase stepping is enabled during guided setup and the two are
+    mutually exclusive. The result in their case was that the nozzle jammed into the
+    part and stayed there, grinding, until someone heard it — rather than the
+    printer detecting a fault and stopping.
+
+    Whether the same default applies to a Core One INDX is **not established**. If
+    it does, the failure mode here is worse than a ruined part: nothing halts the
+    machine.
+
+    TODO(verify): whether crash detection is disabled by default on the Core One
+    INDX, and whether enabling it would catch a toolchange collision. Worth checking
+    before running a sequential multi-tool print, not after.
+
 ### Recognising it
 
 - You are slicing with **Complete individual objects**.
@@ -193,6 +208,11 @@ objects rising together, and reserve sequential printing for single-tool plates.
     layouts. It also fails on interruption: a filament runout or a pause can present the
     tool at the front of the bed at a height that then collides on resume, which is
     reported as a separate open fault.
+
+    **And it is XL advice.** Front-to-back works there because of where the XL's
+    docks sit relative to the bed. The INDX's dock arrangement is not the same, so
+    whether the same ordering reduces exposure on a Core One has not been
+    established by anyone. Do not assume the direction transfers.
 
     So: useful for reducing risk on a print you will be watching, not a basis for
     leaving a long multi-tool sequential job running unattended.
