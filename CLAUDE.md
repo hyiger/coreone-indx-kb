@@ -31,12 +31,12 @@ Numbers that **may** be published, because they identify rather than instruct:
 firmware versions, dates, counts, board revisions, part/chip designations, nozzle
 diameters, fastener and magnet specs, a vendor's published material specification,
 and assembly values whose outcome is immediately visible (how far to loosen a screw).
-The test: would a reader dial it into a slicer or a drill, as a persisted setting
-that silently degrades prints? Then withhold it.
+The test: would a reader dial it into a slicer or a drill, as a persisted setting that
+silently degrades prints? Then withhold it. Exception: a complete working profile
+reproduced verbatim under `docs/gcode/` is an artifact, not advice — see that section.
 
 **Never commit verbatim forum or Discord content**, including in `drafts/` and in
-commit messages. Extract the finding, write it in your own words, cite the source
-URL.
+commit messages. Extract the finding, write it yourself, cite the source URL.
 
 **Never commit anything from `crawl/`, `raw/`, or `drafts/`**, and do not remove
 those entries from `.gitignore`.

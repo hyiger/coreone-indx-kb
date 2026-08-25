@@ -44,10 +44,21 @@ until you know to look.
 Paste G-code **verbatim** in fenced blocks. Do not reformat, re-indent or "tidy" it —
 whitespace and ordering can matter, and a reader will copy it directly.
 
-Any numeric argument that is a print setting rather than a structural part of the
-command is subject to the same verification rule as everything else: it is checked on
-hardware before it is published. A snippet may name a command while withholding its
-argument pending verification.
+Two cases, and they are treated differently.
 
-!!! note "Empty for now"
-    Nothing here yet.
+A **snippet** — a few lines offered as something to adopt — is advice, and every numeric
+argument in it is a print setting subject to the usual rule: verified on hardware before
+publication, or named with its argument withheld.
+
+A **complete working profile**, reproduced verbatim and annotated, is an artifact rather
+than advice. Its literals are part of what is being documented and are reproduced as they
+stand. Such a page is tiered `measured`, states whose machine and which firmware version
+it came from, and says plainly that the values belong to that configuration. Do not
+extract a value out of one and present it as a recommendation — that turns an artifact
+back into advice, without the verification advice requires.
+
+## Pages
+
+- **[Annotated start, layer and toolchange G-code](indx-profile-gcode.md)** — a complete
+  working INDX profile reproduced verbatim and annotated line by line, with every
+  command checked against the firmware source that implements it.
