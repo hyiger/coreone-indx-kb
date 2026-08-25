@@ -264,7 +264,9 @@ volumetric speed where one is set. FLEX is excluded.
 !!! info "Where it comes from, and the feature Prusa has announced"
     There is no commit to find. `M574` has never existed in any public Prusa git
     repository — the line ships out-of-band in Prusa's vendor profile bundle rather than
-    in the slicer source. It first appeared in PrusaResearch bundle 2.5.0 on 26 June 2026,
+    in the slicer source. It first appeared in
+    [PrusaResearch bundle 2.5.0](https://files.prusa3d.com/?latest=slicer-profiles&lng=en)
+    on 26 June 2026,
     the bundle that added the Core One INDX profiles, and was rewritten in 2.5.7 on
     20 August 2026. It is INDX-exclusive — not XL, not MK4, not plain Core One — so there
     is no older toolchanger ecosystem in which it is already documented.
@@ -275,12 +277,14 @@ volumetric speed where one is set. FLEX is excluded.
     thirteen INDX filament profiles since they first shipped. `M573` is likewise absent
     from the firmware.
 
-    On 13 August 2026 Prusa announced that it is replacing the single fixed pressure
-    advance value with a flow-dependent model whose parameters the **load cell measures
-    automatically before every print**, together with new extrusion-aware acceleration
-    limits that stop the printer demanding flow changes faster than the extruder can
-    deliver. The announcement describes the work as in internal testing and gives no
-    release date, no firmware version, and **no G-code command**.
+    On 13 August 2026 Prusa
+    [announced](https://blog.prusa3d.com/better-prints-easier-use-prusa-xl-core-one-l-and-core-one-gen-2-our-big-product-update_137539/)
+    that it is replacing the single fixed pressure advance value with a flow-dependent
+    model whose parameters the **load cell measures automatically before every print**,
+    together with new extrusion-aware acceleration limits that stop the printer demanding
+    flow changes faster than the extruder can deliver. The announcement describes the work
+    as in internal testing and gives no release date, no firmware version, and **no G-code
+    command**.
 
     `M574` carries, per tool, a target temperature and the peak extrusion rate the print
     will demand — which is the shape of input that work would need, and the profiles
