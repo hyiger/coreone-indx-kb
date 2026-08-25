@@ -15,16 +15,19 @@ superseded_by:
 
 # Annotated start, layer and toolchange G-code
 
-!!! warning "This is one machine's profile, not a recommended configuration"
-    Everything below is reproduced verbatim from a working PrusaSlicer profile on a
-    single Core One INDX. It is here because the *structure* is worth understanding —
-    what each command does, why the blocks are ordered as they are, and where they
-    depend on each other.
+!!! info "This is the stock profile, reproduced verbatim"
+    Everything below is Prusa's own PrusaSlicer profile for the Core One INDX on
+    firmware 6.9.0 — not a customisation. If you are on 6.9.0 this is what you already
+    have, before you change anything.
 
-    The literal values in it belong to that machine and that firmware. Copying the
-    whole thing onto a different configuration is not safe, and the page makes no claim
-    that any particular number is correct for anyone else. The command *behaviour*,
-    however, is verified against the firmware source and holds generally.
+    That is the reason to read it. The values are the shipped defaults rather than
+    anyone's tuning, so understanding what each block does tells you what your machine
+    is actually doing on every print, and gives you a baseline to diff your own changes
+    against.
+
+    The command behaviour is verified against the Prusa firmware source. The profile
+    itself changes between firmware releases, so check the version above against yours —
+    the 6.6.3 profile differed from this one in several places.
 
 ## What this is
 
@@ -720,9 +723,15 @@ Behaviour verified against the Prusa firmware source unless marked otherwise.
 
 ## Verification
 
-`measured` — this is a profile in daily use on the author's own machine, reproduced
-verbatim rather than reconstructed, and every command's behaviour was checked against
-the firmware handler that implements it rather than assumed from standard Marlin.
+`measured` — this is Prusa's shipped profile for firmware 6.9.0, reproduced verbatim
+rather than reconstructed, and every command's behaviour was checked against the
+firmware handler that implements it rather than assumed from standard Marlin.
+
+That provenance is what earns the tier. These are not one owner's settings that happened
+to work; they are the vendor's defaults, which every INDX on this firmware starts with.
+The values are therefore general in a way the rest of this site's numbers are not — which
+is also why they appear here at all, when the site otherwise withholds print settings
+until someone has verified them on hardware.
 
 Where a command's meaning could not be established it is marked as such rather than
 guessed. `M574` is the only one in that state: it returns no matches anywhere in the
@@ -736,8 +745,17 @@ direction, write a pin level. What a given pin controls is whatever the owner ha
 to it. Anything you read that treats them as a lighting command is describing a
 convention, not the command.
 
-What is *not* verified: the numeric values. They are one machine's, on one firmware
-version, and this page makes no claim they suit any other configuration.
+What is *not* verified: whether these defaults are *good*. They are what Prusa ships,
+which makes them authoritative as a description and says nothing about whether a given
+value is optimal for your filament or your part. Several are actively disputed by
+owners — stock temperatures and accelerations both come up on the forum as running high
+for this toolhead. Reproducing a default is not endorsing it.
+
+Nor is the profile static. It changes across firmware releases: the 6.6.3 version had a
+misspelled variable in the probe-temperature expression, used a different offset for PC
+and PA, omitted the `low_temp_types` global that the after-layer-change block depends on,
+and included chamber-light commands this one drops. If your firmware differs from the
+version in the front matter, expect differences.
 
 ## Related
 

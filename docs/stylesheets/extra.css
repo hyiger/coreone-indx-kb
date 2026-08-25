@@ -1,0 +1,48 @@
+/* Sidebar section headers.
+   With navigation.sections enabled, the section label and the page links beneath it
+   render at almost the same weight and colour, so the groups do not read as groups.
+   These rules give the label its own treatment and put a rule above each group. */
+
+.md-nav--primary .md-nav__item--section > .md-nav__link,
+.md-nav--primary .md-nav__item--section > label.md-nav__link {
+  color: var(--md-default-fg-color);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  opacity: 1;
+  margin-top: 1.1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* The first group does not need a rule above it — there is nothing to separate from. */
+.md-nav--primary > .md-nav__list > .md-nav__item--section:first-child > .md-nav__link,
+.md-nav--primary > .md-nav__list > .md-nav__item--section:first-child > label.md-nav__link {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* Page links sit quieter than their heading, and indent so the grouping reads
+   structurally as well as typographically. */
+.md-nav--primary .md-nav__item--section .md-nav__list .md-nav__link {
+  color: var(--md-default-fg-color--light);
+}
+.md-nav--primary .md-nav__item--section .md-nav__list .md-nav__link:hover,
+.md-nav--primary .md-nav__item--section .md-nav__list .md-nav__link:focus {
+  color: var(--md-accent-fg-color);
+}
+
+/* The current page still wins. */
+.md-nav--primary .md-nav__link--active,
+.md-nav--primary .md-nav__link--active:hover {
+  color: var(--md-typeset-a-color);
+  font-weight: 600;
+}
+
+/* Slate needs a slightly stronger rule — the lightest token nearly vanishes on it. */
+[data-md-color-scheme="slate"] .md-nav--primary .md-nav__item--section > .md-nav__link,
+[data-md-color-scheme="slate"] .md-nav--primary .md-nav__item--section > label.md-nav__link {
+  border-top-color: var(--md-default-fg-color--lighter);
+}

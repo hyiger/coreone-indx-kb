@@ -20,6 +20,9 @@ theme:
       scheme: slate
       toggle: {icon: material/weather-sunny, name: Light mode}
 
+extra_css:
+  - stylesheets/extra.css
+
 plugins:
   - search
   - tags

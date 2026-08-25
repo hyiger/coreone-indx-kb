@@ -50,12 +50,13 @@ A **snippet** — a few lines offered as something to adopt — is advice, and e
 argument in it is a print setting subject to the usual rule: verified on hardware before
 publication, or named with its argument withheld.
 
-A **complete working profile**, reproduced verbatim and annotated, is an artifact rather
-than advice. Its literals are part of what is being documented and are reproduced as they
-stand. Such a page is tiered `measured`, states whose machine and which firmware version
-it came from, and says plainly that the values belong to that configuration. Do not
-extract a value out of one and present it as a recommendation — that turns an artifact
-back into advice, without the verification advice requires.
+A **complete profile**, reproduced verbatim and annotated, is an artifact rather than
+advice. Its literals are part of what is being documented and are reproduced as they
+stand. Such a page is tiered `measured`, states which firmware version the profile came
+from, and says whether it is the shipped default or somebody's customisation — those are
+very different claims. Do not extract a value out of one and present it as a
+recommendation: reproducing a default is describing what the machine does, whereas
+recommending it is advice, and advice needs the verification advice requires.
 
 ## Pages
 
