@@ -233,6 +233,11 @@ Each `M574` line then converts that volumetric figure into a linear filament fee
 dividing by the filament's cross-sectional area, capped by the material's maximum
 volumetric speed where one is set. FLEX is excluded.
 
+Note the unit. Every input above is in mm per second, so `F` is emitted in mm per second
+of filament. A Marlin `F` is always mm per minute. Whatever consumes this is not using
+the standard feedrate convention, which is further sign that `M574` is a custom command
+carrying its own.
+
 !!! note "M574 is not implemented — the firmware ignores it"
     `M574` has no handler in Prusa Buddy firmware. That is checked against the `v6.9.0`
     release tag, the version this profile targets, and against every object in the public
@@ -286,12 +291,19 @@ volumetric speed where one is set. FLEX is excluded.
     as in internal testing and gives no release date, no firmware version, and **no G-code
     command**.
 
-    `M574` carries, per tool, a target temperature and the peak extrusion rate the print
-    will demand — which is the shape of input that work would need, and the profiles
-    predate the announcement by about seven weeks. **No source connects the two.** That
-    reading is recorded because it is the most plausible one available, not because it is
-    established; it also fits the acceleration-limit half of the announcement at least as
-    well as the calibration half.
+    `M574` carries, per tool, a target temperature and the **external-perimeter**
+    extrusion rate — not the print's peak, which infill would exceed. Two details make
+    that look deliberate. Sampling external perimeters points at something concerned with
+    the regime where surface quality is decided, which is exactly where pressure advance
+    artifacts show up. And the expression converts volumetric flow into a *filament*
+    feedrate, discarding the natural unit for anything thermal — heat demand scales with
+    volume, so a heater model would want mm³/s. Filament mm/s is the unit of extruder
+    kinematics, and of pressure advance itself.
+
+    The profiles also predate the announcement by about seven weeks. **But no source
+    connects the two.** The reading is recorded because it is the most plausible one
+    available, not because it is established; it also fits the acceleration-limit half of
+    the announcement at least as well as the calibration half.
 
     TODO(verify): what `M574` and `M573 R` are for, and what `S`, `V`, `T` and `F` each
     mean. `S` is a tool index and `T` a temperature by inference from the call site — a
