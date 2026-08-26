@@ -1,5 +1,6 @@
 site_name: Core One INDX Knowledge Base
 site_description: Community reference for the Bondtech INDX toolchanger on the Prusa Core One
+site_url: https://hyiger.github.io/coreone-indx-kb/
 repo_url: https://github.com/hyiger/coreone-indx-kb
 edit_uri: edit/main/docs/
 
@@ -24,6 +25,39 @@ extra_css:
   - stylesheets/extra.css
 
 plugins:
+  - i18n:
+      docs_structure: suffix
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+        - locale: de
+          name: Deutsch
+          build: true
+          nav_translations:
+            Home: Startseite
+            Calibration: Kalibrierung
+            Issues: Probleme
+            Overview: Übersicht
+            Toolhead collisions (Complete individual objects): Werkzeugkopf-Kollisionen (Vollständige Einzelobjekte)
+            Tool detection and park failures: Werkzeugerkennung und Parkfehler
+            Probing and loadcell noise: Abtastung und Wägezellen-Störungen
+            Tool offset calibration: Werkzeug-Offset-Kalibrierung
+            Oozing during probing: Nachsickern beim Abtasten
+            Wiper, purge and blobs: Abstreifer, Spülen und Blobs
+            Diagonal banding: Diagonale Streifenbildung
+            Nozzle hardness: Düsenhärte
+            Missing slicer profiles: Fehlende Slicer-Profile
+            Filament guide bore: Filamentführungsbohrung
+            Support and warranty: Support und Garantie
+            G-code: G-Code
+            Annotated profile: Kommentiertes Profil
+            Reference: Referenz
+            Assembly notes: Montagehinweise
+            Build plate compatibility: Druckbett-Kompatibilität
+            Hardware: Hardware
+            Contributing: Mitwirken
   - search
   - tags
 

@@ -7,8 +7,7 @@ Plain markdown, MkDocs Material, GitHub Pages.
 
 | Path | What | Committed |
 |---|---|---|
-| `docs/` | Published content, CC BY-SA 4.0 | yes |
-| `docs/_template.md` | Page template, excluded from build | yes |
+| `docs/` | Published content (CC BY-SA 4.0); `_template.md` excluded from build | yes |
 | `drafts/` | Extraction output awaiting human review | **no** |
 | `crawl/`, `raw/` | Raw forum crawl output, from `~/indx-kb-work/` | **no** |
 
@@ -22,18 +21,16 @@ inference. This includes nozzle and bed temperatures, extrusion multiplier,
 pressure advance, retraction, shrinkage, flow, acceleration, speed, infill and
 perimeter counts, and any physical dimension a reader might drill or cut to.
 
-If a task seems to require a number, write `TODO(verify): <what is withheld and
-which source it came from>` and report it. Every number here is human-verified on
-hardware first. A wrong nozzle temperature published under someone's name causes a
-clog on a stranger's printer — this is the rule that matters.
+If a task seems to require a number, write `TODO(verify): <what is withheld and which
+source it came from>` and report it. Every number here is human-verified on hardware
+first. A wrong nozzle temperature under someone's name clogs a stranger's printer.
 
-Numbers that **may** be published, because they identify rather than instruct:
-firmware versions, dates, counts, board revisions, part/chip designations, nozzle
-diameters, fastener and magnet specs, a vendor's published material specification,
-and assembly values whose outcome is immediately visible (how far to loosen a screw).
-The test: would a reader dial it into a slicer or a drill, as a persisted setting that
-silently degrades prints? Then withhold it. Exception: a complete working profile
-reproduced verbatim under `docs/gcode/` is an artifact, not advice — see that section.
+Numbers that **may** be published, because they identify rather than instruct: firmware
+versions, dates, counts, board revisions, part/chip designations, nozzle diameters,
+fastener and magnet specs, a vendor's published material spec, and assembly values whose
+outcome is immediately visible. The test: would a reader dial it into a slicer or a
+drill, as a persisted setting that silently degrades prints? Then withhold it. Exception:
+a complete profile reproduced verbatim under `docs/gcode/` is an artifact, not advice.
 
 **Never commit verbatim forum or Discord content**, including in `drafts/` and in
 commit messages. Extract the finding, write it yourself, cite the source URL.
@@ -41,10 +38,9 @@ commit messages. Extract the finding, write it yourself, cite the source URL.
 **Never commit anything from `crawl/`, `raw/`, or `drafts/`**, and do not remove
 those entries from `.gitignore`.
 
-**Never include personal details** — usernames tied to a specific person's faulty
-machine, support ticket numbers, named vendor staff, email addresses. The community
-resource this replaces was taken offline by its owner over user privacy. Write "one
-reporter", "several owners", "the vendor".
+**Never include personal details** — usernames tied to a person's faulty machine, ticket
+numbers, named vendor staff, emails. Write "one reporter", "several owners", "the
+vendor". The resource this replaces was taken offline by its owner over user privacy.
 
 **Never `git push`** without being asked. Commit locally; let the human review.
 
@@ -83,6 +79,10 @@ stating them is. Rewrite, then cite.
 
 **Drafts are promoted by the human, not by you.** Writing into `drafts/` is your
 job; moving a page into `docs/` is theirs.
+
+**Translations mirror, never extend.** German pages are `*.de.md` siblings. Code fences,
+inline code, URLs, front-matter values and `TODO(verify)` stay byte-identical, and a
+withheld number stays withheld. `python tools/i18n_check.py` before pushing; CI gates it.
 
 ## Build
 
