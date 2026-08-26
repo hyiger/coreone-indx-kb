@@ -1,7 +1,7 @@
 ---
 title:        Unload and eject failures — undersized filament guide bore
 confidence:   provisional
-updated:      2026-08-24
+updated:      2026-08-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -40,8 +40,13 @@ the narrowest point in the path in its fattest state. If the bore is undersized,
 swollen tip jams and the unload or eject aborts. On affected tools this is reported
 to fail on a large fraction of attempts rather than occasionally.
 
-The reported explanation is that the factory drills this bore to a finished diameter
-as a production step, and that the affected batch missed that step.
+The reported explanation is a skipped finishing step rather than a design fault. The
+affected half of the tool is produced by laser sintering, which leaves the internal
+filament path at whatever size it comes out of the machine rather than a controlled one.
+Bringing that bore to a defined diameter is a separate operation at the factory — a
+drill or reamer run through the path — and affected tools are ones that shipped without
+it. The scale is described as small: a handful escaping rather than a whole production
+run.
 
 ### What to do
 
@@ -83,9 +88,17 @@ account there is specific and internally plausible — it names a measured range
 intended diameter, a vendor confirmation, and a success rate — but specificity is not
 corroboration.
 
-What would move this to `reported`: a second owner describing unload failures on a
-tool that prints normally, ideally with their own measurement of the bore. If you
-have that, it is the most useful thing you could add to this page.
+A second account has since been relayed from the vendor's Discord, independent of the
+forum thread. It agrees on the mechanism — a finishing pass that brings the sintered
+bore to a defined size, omitted on a small number of tools before shipping — and is
+what establishes that the part is laser-sintered. That venue has no citable permalink
+and this site does not cite Discord, so it is recorded here as corroboration **a reader
+cannot check**, and the tier does not move. Two agreeing accounts in two venues
+strengthen the mechanism; they are not the two linkable sources `reported` requires.
+
+What would still move this to `reported`: a second owner describing unload failures on a
+tool that prints normally, in a citable venue, ideally with their own measurement of the
+bore. If you have that, it is the most useful thing you could add to this page.
 
 ## Related
 
