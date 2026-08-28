@@ -42,7 +42,8 @@ those entries from `.gitignore`.
 numbers, named vendor staff, emails. Write "one reporter", "several owners", "the
 vendor". The resource this replaces was taken offline by its owner over user privacy.
 
-**Never `git push`** without being asked. Commit locally; let the human review.
+**Never `git push` to `main`** without being asked; commit locally and let the human
+review. The weekly refresh task may push a `kb-refresh/*` branch and open a PR, only.
 
 **Do not add analytics, trackers, or third-party embeds.**
 
@@ -90,9 +91,8 @@ withheld number stays withheld. `python tools/i18n_check.py` before pushing; CI 
 ./.venv/bin/mkdocs build --strict
 ```
 
-Must pass with zero warnings — `--strict` turns broken links into failures, which
-keeps the site honest. A new page under `docs/` must also be in `nav`, or the build
-fails on the unreferenced file. Links crossing between sections need `../`.
+Must pass with zero warnings; `--strict` turns broken links into failures. A new page
+under `docs/` must also be in `nav`, and links crossing between sections need `../`.
 
 Pages publishes to <https://hyiger.github.io/coreone-indx-kb/> on every push to
 `main`. Do not change Pages or repository settings unless asked — that call is the
