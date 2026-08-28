@@ -8,7 +8,8 @@ toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
 firmware:     unknown
-sources:      []
+sources:
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-l-with-indx-now-available-assembled-and-upgrade/
 superseded_by:
 ---
 
@@ -16,8 +17,9 @@ superseded_by:
 
 !!! warning "Stub"
     This page is a placeholder. It exists to prove the template, the front matter
-    convention and the navigation work end to end. Nothing below has been verified,
-    and no specifications have been recorded yet.
+    convention and the navigation work end to end. No specifications have been
+    recorded yet, and nothing below has been verified **except** the machines the
+    INDX ships on, which is sourced.
 
 ## Summary
 
@@ -52,10 +54,12 @@ came from in their `printer:` front matter, and a finding from a Core One does n
 automatically transfer to an L: the build volume differs, and the assembly notes
 describe a chassis that is not the same one.
 
-Sourced from the vendor's own announcement and product listings:
-[assembled](https://www.prusa3d.com/en/product/prusa-core-one-l-indx-8-tool/) ·
-[conversion kit](https://www.prusa3d.com/product/indx-8-tool-conversion-kit-for-core-one-l/).
-Unlike the rest of this page, that paragraph is sourced rather than a placeholder.
+Sourced from the vendor's [dated announcement](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-l-with-indx-now-available-assembled-and-upgrade/) of 27 August 2026, which is what
+fixes the availability and the shipping date. The product listings for the
+[assembled printer](https://www.prusa3d.com/en/product/prusa-core-one-l-indx-8-tool/) and
+the [conversion kit](https://www.prusa3d.com/product/indx-8-tool-conversion-kit-for-core-one-l/)
+are given as convenience links only — storefront copy changes, so they are not the
+citation. Unlike the rest of this page, that paragraph is sourced.
 
 ## Verification
 

@@ -8,16 +8,19 @@ toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
 firmware:     unknown
-sources:      []
+sources:
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-l-with-indx-now-available-assembled-and-upgrade/
 superseded_by:
-source_sha:   ec7d643b4e4e630266cde8885e101948788b244ae651d6296bcd37885f33334d
+source_sha:   c06fbaefef4e92a3895ecafad0a7920fbf98b87513db733f06b4a19f5bcd55cd
 ---
 # Hardware
 
 !!! warning "Rumpfseite"
     Diese Seite ist ein Platzhalter. Sie existiert, um zu belegen, dass die Vorlage,
-    die Front-Matter-Konvention und die Navigation durchgängig funktionieren. Nichts
-    weiter unten wurde überprüft, und es wurden noch keine Spezifikationen erfasst.
+    die Front-Matter-Konvention und die Navigation durchgängig funktionieren. Es wurden
+    noch keine Spezifikationen erfasst, und nichts weiter unten wurde überprüft —
+    **ausgenommen** die Maschinen, auf denen der INDX ausgeliefert wird; dieser
+    Abschnitt ist belegt.
 
 ## Zusammenfassung
 
@@ -52,10 +55,12 @@ ihrem `printer:`-Feld fest, von welcher Maschine ein Befund stammt, und ein Befu
 einer Core One überträgt sich nicht automatisch auf eine L: Der Bauraum unterscheidet
 sich, und die Montagehinweise beschreiben ein anderes Chassis.
 
-Quelle ist die Ankündigung des Herstellers samt Produktseiten:
-[fertig montiert](https://www.prusa3d.com/en/product/prusa-core-one-l-indx-8-tool/) ·
-[Umbausatz](https://www.prusa3d.com/product/indx-8-tool-conversion-kit-for-core-one-l/).
-Anders als der Rest dieser Seite ist dieser Abschnitt belegt und kein Platzhalter.
+Quelle ist die [datierte Ankündigung](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-l-with-indx-now-available-assembled-and-upgrade/) des Herstellers vom 27. August 2026; sie
+ist es, die Verfügbarkeit und Liefertermin festhält. Die Produktseiten für den
+[fertig montierten Drucker](https://www.prusa3d.com/en/product/prusa-core-one-l-indx-8-tool/)
+und den [Umbausatz](https://www.prusa3d.com/product/indx-8-tool-conversion-kit-for-core-one-l/)
+sind nur als bequeme Verweise angegeben — Shop-Texte ändern sich, sie sind nicht der
+Beleg. Anders als der Rest dieser Seite ist dieser Abschnitt belegt.
 
 ## Überprüfung
 
