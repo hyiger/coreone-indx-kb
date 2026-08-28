@@ -11,7 +11,7 @@ firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-l-with-indx-now-available-assembled-and-upgrade/
 superseded_by:
-source_sha:   c06fbaefef4e92a3895ecafad0a7920fbf98b87513db733f06b4a19f5bcd55cd
+source_sha:   29c6d043d612978cffb359a7e36a6a43bafb67682443c58438d32dea01404584
 ---
 # Hardware
 
@@ -19,7 +19,7 @@ source_sha:   c06fbaefef4e92a3895ecafad0a7920fbf98b87513db733f06b4a19f5bcd55cd
     Diese Seite ist ein Platzhalter. Sie existiert, um zu belegen, dass die Vorlage,
     die Front-Matter-Konvention und die Navigation durchgängig funktionieren. Es wurden
     noch keine Spezifikationen erfasst, und nichts weiter unten wurde überprüft —
-    **ausgenommen** die Maschinen, auf denen der INDX ausgeliefert wird; dieser
+    **ausgenommen** die Maschinen, für die der INDX angeboten wird; dieser
     Abschnitt ist belegt.
 
 ## Zusammenfassung
@@ -42,7 +42,7 @@ Vorgesehene Inhalte, noch nichts davon geschrieben:
 - **Verkabelung** — der Hauptkabelbaum des Werkzeugkopfs und seine Stecker.
 - **Düsen** — Geometrien, Materialien und Oberflächenbehandlungen.
 
-## Maschinen, auf denen der INDX ausgeliefert wird
+## Maschinen, für die der INDX angeboten wird
 
 Der INDX wird sowohl als Umbausatz für eine bereits vorhandene Maschine als auch ab
 Werk in einem vollständigen Drucker verbaut verkauft. Stand August 2026 führt der

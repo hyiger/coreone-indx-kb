@@ -19,7 +19,7 @@ superseded_by:
     This page is a placeholder. It exists to prove the template, the front matter
     convention and the navigation work end to end. No specifications have been
     recorded yet, and nothing below has been verified **except** the machines the
-    INDX ships on, which is sourced.
+    INDX is offered for, which is sourced.
 
 ## Summary
 
@@ -41,7 +41,7 @@ Intended contents, none of it written yet:
 - **Cabling** — the main toolhead loom and its connectors.
 - **Nozzles** — geometries, materials and surface treatments.
 
-## Machines the INDX ships on
+## Machines the INDX is offered for
 
 The INDX is sold both as a conversion kit for a machine you already own and factory
 fitted to a complete printer. As of August 2026 the vendor lists it for the Core One
