@@ -11,7 +11,7 @@ firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-l-with-indx-now-available-assembled-and-upgrade/
 superseded_by:
-source_sha:   29c6d043d612978cffb359a7e36a6a43bafb67682443c58438d32dea01404584
+source_sha:   5144299989d66f085f0461cbb35f1c63566b64fb67ff207016e8fba45fa47d46
 ---
 # Hardware
 
@@ -20,7 +20,7 @@ source_sha:   29c6d043d612978cffb359a7e36a6a43bafb67682443c58438d32dea01404584
     die Front-Matter-Konvention und die Navigation durchgängig funktionieren. Es wurden
     noch keine Spezifikationen erfasst, und nichts weiter unten wurde überprüft —
     **ausgenommen** die Maschinen, für die der INDX angeboten wird; dieser
-    Abschnitt ist belegt.
+    Abschnitt trägt seine eigene Stufe inline.
 
 ## Zusammenfassung
 
@@ -60,7 +60,19 @@ ist es, die Verfügbarkeit und Liefertermin festhält. Die Produktseiten für de
 [fertig montierten Drucker](https://www.prusa3d.com/en/product/prusa-core-one-l-indx-8-tool/)
 und den [Umbausatz](https://www.prusa3d.com/product/indx-8-tool-conversion-kit-for-core-one-l/)
 sind nur als bequeme Verweise angegeben — Shop-Texte ändern sich, sie sind nicht der
-Beleg. Anders als der Rest dieser Seite ist dieser Abschnitt belegt.
+Beleg.
+
+!!! note "`provisional` — nur dieser Abschnitt"
+    Die Seite als Ganzes ist eine ungeprüfte Rumpfseite und deklariert
+    `confidence: unknown`. Dieser Abschnitt ist die Ausnahme und trägt seine eigene
+    Stufe, damit er nicht außerhalb des Konfidenzmodells der Website veröffentlicht wird.
+
+    `provisional` ist die ehrliche Stufe: Eine Quelle stützt ihn, die Ankündigung des
+    Herstellers. Die Produktseiten sind bequeme Verweise und ausdrücklich kein Beleg.
+    Und der 5. November 2026 ist eine zum Zeitpunkt der Ankündigung **erklärte Absicht**
+    und kein verstrichenes Datum — behandeln Sie die Lieferangabe als Plan und die
+    Verfügbarkeitsangabe als zutreffend für August 2026, nicht für den Zeitpunkt, zu dem
+    Sie dies lesen.
 
 ## Überprüfung
 

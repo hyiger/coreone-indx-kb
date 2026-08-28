@@ -19,7 +19,7 @@ superseded_by:
     This page is a placeholder. It exists to prove the template, the front matter
     convention and the navigation work end to end. No specifications have been
     recorded yet, and nothing below has been verified **except** the machines the
-    INDX is offered for, which is sourced.
+    INDX is offered for, which carries its own tier inline.
 
 ## Summary
 
@@ -59,7 +59,19 @@ fixes the availability and the shipping date. The product listings for the
 [assembled printer](https://www.prusa3d.com/en/product/prusa-core-one-l-indx-8-tool/) and
 the [conversion kit](https://www.prusa3d.com/product/indx-8-tool-conversion-kit-for-core-one-l/)
 are given as convenience links only — storefront copy changes, so they are not the
-citation. Unlike the rest of this page, that paragraph is sourced.
+citation.
+
+!!! note "`provisional` — this section only"
+    The page as a whole is an unverified stub and declares `confidence: unknown`. This
+    section is the exception and carries its own tier, so it is not published outside
+    the site's confidence model.
+
+    `provisional` is the honest level: one source supports it, the vendor's
+    announcement. The product listings are convenience links and are expressly not
+    evidence. And 5 November 2026 is a **stated intention** at the time of the
+    announcement, not a date that has passed — treat the shipping claim as a plan, and
+    the availability claim as true of August 2026 rather than of whenever you are
+    reading this.
 
 ## Verification
 
