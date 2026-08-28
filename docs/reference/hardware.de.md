@@ -1,9 +1,9 @@
 ---
 title:        Hardware
 confidence:   unknown
-updated:      2026-08-24
+updated:      2026-08-28
 author:       hyiger
-printer:      Core One
+printer:      Core One, Core One L
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
