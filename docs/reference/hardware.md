@@ -39,9 +39,27 @@ Intended contents, none of it written yet:
 - **Cabling** — the main toolhead loom and its connectors.
 - **Nozzles** — geometries, materials and surface treatments.
 
+## Machines the INDX ships on
+
+The INDX is sold both as a conversion kit for a machine you already own and factory
+fitted to a complete printer. As of August 2026 the vendor lists it for the Core One
+and, newly, for the larger Core One L — the latter as an assembled eight-tool printer
+or as a conversion kit for an existing L, with shipping stated to begin 5 November
+2026.
+
+This matters for reading the rest of this site. Pages here record the machine a finding
+came from in their `printer:` front matter, and a finding from a Core One does not
+automatically transfer to an L: the build volume differs, and the assembly notes
+describe a chassis that is not the same one.
+
+Sourced from the vendor's own announcement and product listings:
+[assembled](https://www.prusa3d.com/en/product/prusa-core-one-l-indx-8-tool/) ·
+[conversion kit](https://www.prusa3d.com/product/indx-8-tool-conversion-kit-for-core-one-l/).
+Unlike the rest of this page, that paragraph is sourced rather than a placeholder.
+
 ## Verification
 
-`unknown` — nothing on this page has been checked. No component specification,
+`unknown` — nothing else on this page has been checked. No component specification,
 revision identifier or measurement should be taken from here until this notice is
 removed and the confidence field is set.
 
