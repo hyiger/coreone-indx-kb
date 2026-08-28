@@ -1,14 +1,15 @@
 ---
 title:        Hardware
 confidence:   unknown
-updated:      2026-08-24
+updated:      2026-08-28
 author:       hyiger
-printer:      Core One
+printer:      Core One, Core One L
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
 firmware:     unknown
-sources:      []
+sources:
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-l-with-indx-now-available-assembled-and-upgrade/
 superseded_by:
 ---
 
@@ -16,8 +17,9 @@ superseded_by:
 
 !!! warning "Stub"
     This page is a placeholder. It exists to prove the template, the front matter
-    convention and the navigation work end to end. Nothing below has been verified,
-    and no specifications have been recorded yet.
+    convention and the navigation work end to end. No specifications have been
+    recorded yet, and nothing below has been verified **except** the machines the
+    INDX is offered for, which carries its own tier inline.
 
 ## Summary
 
@@ -39,9 +41,41 @@ Intended contents, none of it written yet:
 - **Cabling** — the main toolhead loom and its connectors.
 - **Nozzles** — geometries, materials and surface treatments.
 
+## Machines the INDX is offered for
+
+The INDX is sold both as a conversion kit for a machine you already own and factory
+fitted to a complete printer. As of August 2026 the vendor lists it for the Core One
+and, newly, for the larger Core One L — the latter as an assembled eight-tool printer
+or as a conversion kit for an existing L, with shipping stated to begin 5 November
+2026.
+
+This matters for reading the rest of this site. Pages here record the machine a finding
+came from in their `printer:` front matter, and a finding from a Core One does not
+automatically transfer to an L: the build volume differs, and the assembly notes
+describe a chassis that is not the same one.
+
+Sourced from the vendor's [dated announcement](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-l-with-indx-now-available-assembled-and-upgrade/) of 27 August 2026, which is what
+fixes the availability and the shipping date. The product listings for the
+[assembled printer](https://www.prusa3d.com/en/product/prusa-core-one-l-indx-8-tool/) and
+the [conversion kit](https://www.prusa3d.com/product/indx-8-tool-conversion-kit-for-core-one-l/)
+are given as convenience links only — storefront copy changes, so they are not the
+citation.
+
+!!! note "`provisional` — this section only"
+    The page as a whole is an unverified stub and declares `confidence: unknown`. This
+    section is the exception and carries its own tier, so it is not published outside
+    the site's confidence model.
+
+    `provisional` is the honest level: one source supports it, the vendor's
+    announcement. The product listings are convenience links and are expressly not
+    evidence. And 5 November 2026 is a **stated intention** at the time of the
+    announcement, not a date that has passed — treat the shipping claim as a plan, and
+    the availability claim as true of August 2026 rather than of whenever you are
+    reading this.
+
 ## Verification
 
-`unknown` — nothing on this page has been checked. No component specification,
+`unknown` — nothing else on this page has been checked. No component specification,
 revision identifier or measurement should be taken from here until this notice is
 removed and the confidence field is set.
 
