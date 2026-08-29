@@ -1,7 +1,7 @@
 ---
 title:        Diagonal banding across print walls
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-08-29
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -137,7 +137,7 @@ which would make this a quality-control spread rather than a design flaw.
 owner, tired of waiting on a promised replacement, opened the extruder and looked at the
 contact patch on the motor pinion. It was bearing only at the top of the shaft, which
 says the pinion and the first gear are not co-axial — tilted relative to one another
-rather than eccentric. That is a different fault from an out-of-round or off-centre gear,
+rather than eccentric. That is a different fault from an out-of-round or off-center gear,
 and it predicts exactly what the earlier analysis found: an artifact at every tooth mesh.
 
 Napkin geometry from the contact patch puts the misalignment at roughly 0.6°. Where that
@@ -150,7 +150,7 @@ If it holds, it reframes the fault: not a gear that was made badly, but a stack-
 depends on machining being perfect and offers no adjustment when it is not.
 
 TODO(verify): the same teardown reports a discrepancy between the extruder steps per
-millimetre implied by the vendor's own toolboard documentation and what the firmware
+millimeter implied by the vendor's own toolboard documentation and what the firmware
 uses. The figure is withheld here because extruder steps/mm is a calibration value and a
 wrong one degrades every print silently — the opposite of the shim, whose result you see
 immediately. Recorded because it is a real lead, not because it is settled: it appears in

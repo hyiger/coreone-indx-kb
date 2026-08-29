@@ -1,7 +1,7 @@
 ---
 title:        Diagonale Bänderung auf den Druckwänden
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-08-29
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -13,7 +13,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   f41bc02e7932423c19ad0870fe38399fdf116aa6d2f5a23a76c41f72845d6e59
+source_sha:   afc012e869c2c6a1d92a693212352248cb015b323f301b2390c80734ae5525f8
 ---
 # Diagonale Bänderung auf den Druckwänden
 
