@@ -13,7 +13,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   afc012e869c2c6a1d92a693212352248cb015b323f301b2390c80734ae5525f8
+source_sha:   92511049e052ed339e72a112c91cc4ec0acf32098c45210be84d01aaafeca03d
 ---
 # Diagonale Bänderung auf den Druckwänden
 
@@ -144,13 +144,18 @@ nicht perfekt konzentrisch oder ungenau ausgerichtet sind, mit von Exemplar zu E
 unterschiedlicher Ausprägung — was daraus eine Streuung in der Qualitätskontrolle machen
 würde und keinen Konstruktionsfehler.
 
-**Eine spätere Demontage widerspricht der Konzentrizitäts-Deutung und hat Belege
-dafür.** Ein Besitzer, der das Warten auf einen zugesagten Austausch satt hatte, öffnete
-den Extruder und sah sich das Tragbild am Motorritzel an. Es trug nur am oberen Ende der
-Welle, was besagt, dass Ritzel und erstes Zahnrad nicht koaxial sind — gegeneinander
-verkippt statt exzentrisch. Das ist ein anderer Fehler als ein unrundes oder außermittiges
-Zahnrad, und er sagt genau das voraus, was die frühere Analyse fand: einen Artefakt bei
-jedem Zahneingriff.
+**Eine spätere Demontage weist auf einen anderen Fehler hin, mit Belegen dafür.** Ein
+Besitzer, der das Warten auf einen zugesagten Austausch satt hatte, öffnete den Extruder
+und sah sich das Tragbild am Motorritzel an. Es trug nur am oberen Ende der Welle.
+
+Ineinandergreifende Zahnräder teilen sich nie eine Achse. Was dieses Tragbild anzeigt,
+ist also nicht, dass Ritzel und erstes Zahnrad nicht koaxial wären — das ist jedes
+gesunde Paar nicht —, sondern dass ihre Achsen nicht **parallel** sind: eine
+Winkelabweichung über die Zahnbreite. Das ist ein anderer Fehler als ein unrundes oder
+exzentrisches Zahnrad. Er widerlegt die obige Exzentrizitäts-Deutung für sich genommen
+nicht, und beides könnte zusammen auftreten. Er benennt jedoch etwas, das ein Besitzer
+finden und korrigieren kann, und er sagt den Artefakt bei jedem Zahneingriff voraus, den
+die frühere Analyse unabhängig davon herleitete.
 
 Eine überschlägige Rechnung aus dem Tragbild beziffert die Fehlausrichtung auf etwa 0,6°.
 Woher sie stammt, ist nicht geklärt. Der Motor sitzt auf einer CNC-gefrästen Stahlplatte,

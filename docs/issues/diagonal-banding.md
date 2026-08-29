@@ -133,12 +133,17 @@ Another owner suggests the underlying cause is gears that are not perfectly roun
 not perfectly concentric, or imperfectly aligned, with severity varying unit to unit —
 which would make this a quality-control spread rather than a design flaw.
 
-**A later teardown disagrees with the concentricity reading, and has evidence.** One
-owner, tired of waiting on a promised replacement, opened the extruder and looked at the
-contact patch on the motor pinion. It was bearing only at the top of the shaft, which
-says the pinion and the first gear are not co-axial — tilted relative to one another
-rather than eccentric. That is a different fault from an out-of-round or off-center gear,
-and it predicts exactly what the earlier analysis found: an artifact at every tooth mesh.
+**A later teardown points at a different fault, with evidence.** One owner, tired of
+waiting on a promised replacement, opened the extruder and looked at the contact patch on
+the motor pinion. It was bearing only at the top of the shaft.
+
+Meshing gears never share an axis, so what that pattern indicates is not that the pinion
+and first gear are non-coaxial — every healthy pair is — but that their axes are not
+**parallel**: an angular misalignment across the tooth face. That is a distinct fault
+from an out-of-round or eccentric gear. It does not by itself disprove the eccentricity
+theory above, and the two could coexist. What it does is name something an owner could
+find and correct, and it predicts the artifact at every tooth mesh that the earlier
+analysis derived independently.
 
 Napkin geometry from the contact patch puts the misalignment at roughly 0.6°. Where that
 comes from is not established. The motor mounts to a CNC-milled steel plate, so that
