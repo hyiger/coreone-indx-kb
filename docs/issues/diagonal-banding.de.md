@@ -1,7 +1,7 @@
 ---
 title:        Diagonale Bänderung auf den Druckwänden
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-08-29
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -13,7 +13,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   1f37a423653f7d44d8d09036e15b6eb2f32df2b918f58556d96c98b50156bf1d
+source_sha:   92511049e052ed339e72a112c91cc4ec0acf32098c45210be84d01aaafeca03d
 ---
 # Diagonale Bänderung auf den Druckwänden
 
@@ -144,6 +144,39 @@ nicht perfekt konzentrisch oder ungenau ausgerichtet sind, mit von Exemplar zu E
 unterschiedlicher Ausprägung — was daraus eine Streuung in der Qualitätskontrolle machen
 würde und keinen Konstruktionsfehler.
 
+**Eine spätere Demontage weist auf einen anderen Fehler hin, mit Belegen dafür.** Ein
+Besitzer, der das Warten auf einen zugesagten Austausch satt hatte, öffnete den Extruder
+und sah sich das Tragbild am Motorritzel an. Es trug nur am oberen Ende der Welle.
+
+Ineinandergreifende Zahnräder teilen sich nie eine Achse. Was dieses Tragbild anzeigt,
+ist also nicht, dass Ritzel und erstes Zahnrad nicht koaxial wären — das ist jedes
+gesunde Paar nicht —, sondern dass ihre Achsen nicht **parallel** sind: eine
+Winkelabweichung über die Zahnbreite. Das ist ein anderer Fehler als ein unrundes oder
+exzentrisches Zahnrad. Er widerlegt die obige Exzentrizitäts-Deutung für sich genommen
+nicht, und beides könnte zusammen auftreten. Er benennt jedoch etwas, das ein Besitzer
+finden und korrigieren kann, und er sagt den Artefakt bei jedem Zahneingriff voraus, den
+die frühere Analyse unabhängig davon herleitete.
+
+Eine überschlägige Rechnung aus dem Tragbild beziffert die Fehlausrichtung auf etwa 0,6°.
+Woher sie stammt, ist nicht geklärt. Der Motor sitzt auf einer CNC-gefrästen Stahlplatte,
+diese Fläche ist also ein unwahrscheinlicher Verursacher; die eigene Vermutung des
+Besitzers ist, dass der Schwingarm nicht rechtwinklig zur Platte steht, möglicherweise
+weil das Gewinde des Drehpunkts leicht schief geschnitten wurde. Bestätigt ist davon
+nichts.
+
+Trifft es zu, rückt das den Fehler in ein anderes Licht: kein schlecht gefertigtes
+Zahnrad, sondern eine Toleranzkette, die auf perfekter Fertigung beruht und keine
+Nachstellmöglichkeit bietet, wenn diese ausbleibt.
+
+TODO(verify): dieselbe Demontage berichtet von einer Abweichung zwischen den
+Extruderschritten je Millimeter, die aus der Toolboard-Dokumentation des Herstellers
+folgen, und dem, was die Firmware verwendet. Die Zahl wird hier zurückgehalten, weil
+Extruderschritte/mm ein Kalibrierwert sind und ein falscher jeden Druck unbemerkt
+verschlechtert — das Gegenteil des Distanzstücks, dessen Ergebnis sofort sichtbar ist.
+Festgehalten, weil es ein echter Hinweis ist, nicht weil es geklärt wäre: Es steht in
+einer Randbemerkung eines einzelnen Beitrags, und niemand hat bestätigt, dass die beiden
+Angaben tatsächlich voneinander abweichen.
+
 TODO(verify): die Übersetzungsverhältnisse, der Filamentvorschub pro Ritzelzahn und der
 daraus erwartete Bandabstand. Der Besitzer, der sie hergeleitet hat, bezeichnete eine der
 Eingangsgrößen als Schätzung, daher werden die Zahlen zurückgehalten; die
@@ -156,6 +189,46 @@ Bei einem deutlich ausgeprägten Fall ist der berichtete Weg ein **Austausch des
 Werkzeugkopfs** über den Hersteller, da der Fehler zum Zeitpunkt der Abfassung nicht auf
 ein einzeln austauschbares Teil eingegrenzt war. Siehe
 [wen Sie kontaktieren](support-and-warranty-path.md).
+
+#### Der Behelf mit dem Distanzstück
+
+Ein Besitzer korrigierte die Fehlausrichtung, indem er den Motor unterlegte: die
+Abstandsbolzen lösen, die den Motor halten, und eine Unterlegscheibe unter den
+Abstandsbolzen **unten links** legen, von der Rückseite des Extruders aus gesehen.
+Verwendet wurden gewöhnliche M3-Unterlegscheiben aus den Prusa-Bausätzen.
+
+Die Dicke war entscheidend, und die berichteten Ergebnisse verliefen nicht monoton:
+
+| Distanzstück | Berichtetes Ergebnis |
+|---|---|
+| dünne Unterlegscheibe, Dicke nicht festgehalten | verringerte die Bänderung deutlich |
+| 0,45 mm oder 0,55 mm | praktisch gleichwertig, Wände nahezu sauber |
+| 0,7 mm | zu viel — die diagonalen Linien kehrten zurück |
+
+Es gibt also ein Fenster und keinen Zusammenhang nach dem Muster „mehr ist besser“ — was
+zu erwarten ist, wenn das Distanzstück einen Winkel korrigiert und keinen Spalt ausgleicht.
+Das beste Ergebnis des Besitzers zeigte immer noch die schwächste Bänderung, wenn man
+danach suchte.
+
+!!! warning "Ein Besitzer, eine Maschine, und ein invasiver Eingriff"
+    `provisional`, inline auf einer ansonsten mit `reported` bewerteten Seite. Dies ist
+    ein einzelner Erfahrungsbericht aus erster Hand. Niemand hat ihn reproduziert, der
+    Hersteller hat sich nicht dazu geäußert, und die obigen Dicken sind das, was an
+    **einem** Werkzeugkopf funktioniert hat — wenn die Fehlausrichtung tatsächlich eine
+    Toleranzkette ist, streut sie von Exemplar zu Exemplar, und Ihrer braucht
+    möglicherweise ein anderes Maß oder gar keines.
+
+    Es bedeutet außerdem, einen Werkzeugkopf zu zerlegen, den der Hersteller andernfalls
+    im Rahmen der Gewährleistung ersetzen könnte. Der Besitzer ging diesen Weg erst, als
+    ein zugesagter Austausch eine Woche lang unbeantwortet blieb. **Fragen Sie zuerst
+    nach dem Austausch** — siehe [wen Sie kontaktieren](support-and-warranty-path.md) —
+    und behandeln Sie dies als das, was Sie tun, wenn dieser Weg stockt, nicht als
+    ersten Schritt.
+
+    Anders als eine gebohrte Öffnung ist dies umkehrbar: Die Unterlegscheibe kommt wieder
+    heraus. Das ist der Grund, warum die Maße überhaupt veröffentlicht werden, und warum
+    sich das Ergebnis in einem einzigen Testdruck im Vasenmodus prüfen lässt, statt
+    spätere Drucke unbemerkt zu verschlechtern.
 
 !!! warning "Prüfen Sie den Austausch, bevor Sie sich freuen"
     Der Besitzer, auf dessen Fall diese Seite beruht, erhielt einen Austausch-Werkzeugkopf,
@@ -184,7 +257,7 @@ Aussagen dieser Seite hinweg ungleich verteilt.
 [Thread zur diagonalen Bänderung](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/)
 beschrieben, von massiv bis kaum wahrnehmbar auf glänzendem Filament; das Phänomen ist
 also nicht die Einbildung einer einzelnen Person. Der Thread ist als beantwortet markiert
-und umfasst 78 Beiträge. Das Zwei-Druck-Protokoll ist seine als Lösung markierte Antwort,
+und umfasst 79 Beiträge. Das Zwei-Druck-Protokoll ist seine als Lösung markierte Antwort,
 verfasst von dem Besitzer, der das Problem unter Beteiligung des Herstellers und des
 Prusa-Supports bearbeitet hat, und die Begründung, warum es Extrusion von Bewegung trennt,
 ist in sich schlüssig.

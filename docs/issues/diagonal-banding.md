@@ -1,7 +1,7 @@
 ---
 title:        Diagonal banding across print walls
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-08-29
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -133,6 +133,34 @@ Another owner suggests the underlying cause is gears that are not perfectly roun
 not perfectly concentric, or imperfectly aligned, with severity varying unit to unit —
 which would make this a quality-control spread rather than a design flaw.
 
+**A later teardown points at a different fault, with evidence.** One owner, tired of
+waiting on a promised replacement, opened the extruder and looked at the contact patch on
+the motor pinion. It was bearing only at the top of the shaft.
+
+Meshing gears never share an axis, so what that pattern indicates is not that the pinion
+and first gear are non-coaxial — every healthy pair is — but that their axes are not
+**parallel**: an angular misalignment across the tooth face. That is a distinct fault
+from an out-of-round or eccentric gear. It does not by itself disprove the eccentricity
+theory above, and the two could coexist. What it does is name something an owner could
+find and correct, and it predicts the artifact at every tooth mesh that the earlier
+analysis derived independently.
+
+Napkin geometry from the contact patch puts the misalignment at roughly 0.6°. Where that
+comes from is not established. The motor mounts to a CNC-milled steel plate, so that
+surface is an unlikely culprit; the owner's own guess is the swing arm not sitting
+perpendicular to the plate, possibly from the pivot thread being tapped slightly
+off-axis. Nothing confirms any of that.
+
+If it holds, it reframes the fault: not a gear that was made badly, but a stack-up that
+depends on machining being perfect and offers no adjustment when it is not.
+
+TODO(verify): the same teardown reports a discrepancy between the extruder steps per
+millimeter implied by the vendor's own toolboard documentation and what the firmware
+uses. The figure is withheld here because extruder steps/mm is a calibration value and a
+wrong one degrades every print silently — the opposite of the shim, whose result you see
+immediately. Recorded because it is a real lead, not because it is settled: it appears in
+a sidenote of a single post, and nobody has confirmed the two figures actually disagree.
+
 TODO(verify): the gear ratios, the filament advance per pinion tooth, and the
 resulting expected band pitch. The owner who derived these described one input as an
 estimate, so the numbers are withheld; the *conclusion* — band spacing matching one
@@ -143,6 +171,41 @@ tooth of the first reduction stage — is the reportable part and needs none of 
 For a pronounced case the reported route is a **toolhead replacement** through the
 vendor, since at the time of writing the fault had not been narrowed to an
 individually replaceable part. See [who to contact](support-and-warranty-path.md).
+
+#### The shim workaround
+
+One owner corrected the misalignment by shimming the motor: unscrew the standoffs that
+hold the motor, and put a washer under the **bottom-left** standoff, viewed from the back
+of the extruder. Ordinary M3 washers from the Prusa kits were used.
+
+Thickness mattered, and the reported results were not monotonic:
+
+| Shim | Reported result |
+|---|---|
+| a thin washer, thickness unrecorded | clearly reduced the banding |
+| 0.45 mm or 0.55 mm | practically identical, walls almost clean |
+| 0.7 mm | overshot — the diagonal lines came back |
+
+So there is a window rather than a "more is better" relationship, which is what you would
+expect if the shim is correcting an angle rather than taking up a gap. The owner's best
+result still showed the faintest banding if you went looking for it.
+
+!!! warning "One owner, one machine, and an invasive fix"
+    `provisional`, inline on an otherwise `reported` page. This is a single first-hand
+    account. Nobody has reproduced it, the vendor has not commented on it, and the
+    thicknesses above are what worked on **one** toolhead — if the misalignment really is
+    a machining stack-up, it will vary unit to unit and yours may want a different shim
+    or none.
+
+    It also means dismantling a toolhead the vendor may otherwise replace under warranty.
+    The owner here went this route only after a promised replacement went quiet for a
+    week. **Ask for the replacement first** — see
+    [who to contact](support-and-warranty-path.md) — and treat this as what you do when
+    that path stalls, not as the first move.
+
+    Unlike a drilled hole this is reversible: the washer comes back out. That is the
+    reason the figures are published at all, and why the outcome is checkable in one
+    vase-mode test print rather than silently degrading later prints.
 
 !!! warning "Check the replacement before you celebrate"
     The owner whose case drives this page received a replacement toolhead that cured
@@ -168,7 +231,7 @@ claims on this page.
 **Well supported.** The artifact itself is described by five different participants in
 [the diagonal banding thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/),
 ranging from severe to barely perceptible on glossy filament, so the phenomenon is not
-one person's imagination. The thread is marked answered and runs to 78 posts. The
+one person's imagination. The thread is marked answered and runs to 79 posts. The
 two-print protocol is its accepted answer, written by the owner who worked the problem
 with vendor and Prusa support involvement, and the reasoning for why it isolates
 extrusion from motion is sound on its own terms.
