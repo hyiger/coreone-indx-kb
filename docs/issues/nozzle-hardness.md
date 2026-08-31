@@ -1,7 +1,7 @@
 ---
 title:        Nozzle hardness and abrasive filaments
 confidence:   reported
-updated:      2026-08-25
+updated:      2026-08-30
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -9,6 +9,7 @@ hotend:       CHT high-flow, and plain-bore variants
 nozzle:       0.4mm standard
 firmware:     unknown
 sources:
+  - https://blog.prusa3d.com/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders_137623/
   - https://help.prusa3d.com/article/unknown-nozzle-36121-core-one-indx_1072730
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
@@ -72,6 +73,44 @@ The vendor's account is that the planned fully hardened version could not be
 machined reliably. Owners have noted that at least one other induction-based
 toolchanger does ship hardened steel nozzles, so the constraint is evidently not
 absolute — but it is a real engineering tension rather than a purely commercial one.
+
+### What the vendor's own wear testing found
+
+On 30 August 2026 the vendor published the results of its wear testing on the shipped
+nozzles, alongside the announcement that Gen 2 machines were shipping. It is the first
+first-party statement of what these nozzles will actually take, as opposed to what they
+were specified to be, and it is more useful than anything preceding it on this page.
+
+Three things come out of it.
+
+**The hardening question is settled from the vendor's side.** These nozzles carry a
+hardened surface over an unhardened body, which the vendor attributes to how Bondtech
+specified them. That is no longer something inferred from marketing copy and its
+retraction; it is stated plainly by the party that ships them.
+
+**Non-abrasive printing is not affected.** Everything unfilled behaves as it would on a
+standard Core One nozzle, and the vendor's list is broad enough to be worth grouping:
+the everyday four (PLA, PETG, ABS, ASA); the flexibles (TPU, TPE); the soluble and
+support materials (PVA, BVOH, HIPS); and the unfilled engineering plastics — nylon, PP,
+PBT, PC and PC blends. If you do not run filled or abrasive filament, this page's
+problem is not yours.
+
+**For abrasives, there is now a service life rather than a warning.** Per nozzle, the
+vendor's present estimates are:
+
+| Filament | Approximate life per nozzle |
+|---|---|
+| PETG-CF | 10 kg |
+| PC-CF | 5 kg |
+| highly abrasive glow-type | 0.5 kg |
+
+The vendor is also candid about the limit: if a printer's whole job is abrasive
+filament, what ships today is not the right answer for it.
+
+Two caveats worth carrying. The vendor describes these as current figures from testing
+that is still running, with a fuller write-up promised — so they may move. And they
+reported the results as better than their own initial accelerated tests suggested, which
+is a statement about their earlier testing rather than independent confirmation.
 
 ### What to do now
 
@@ -161,6 +200,11 @@ material in the threads rather than as owner inference.
     one is the industry convention owners are measuring it against, not a
     specification of any shipped part. Both are cited. Please do not strip them —
     without them the central claim of this page cannot be checked.
+
+    The nozzle service-life figures added on 30 August fall under the same reasoning.
+    A kilogram-per-nozzle wear estimate is not a value anyone dials into anything; it
+    is the vendor's published guidance on when a consumable is spent, and it is cited
+    to the announcement it came from.
 
 Weaker: the hardness figure a buyer "should" have expected is a community norm rather
 than a published standard. The compensation-adequacy arithmetic is one owner's
