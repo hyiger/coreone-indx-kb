@@ -1,7 +1,7 @@
 ---
 title:        Düsenhärte und abrasive Filamente
 confidence:   reported
-updated:      2026-08-25
+updated:      2026-08-30
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -9,13 +9,14 @@ hotend:       CHT high-flow, and plain-bore variants
 nozzle:       0.4mm standard
 firmware:     unknown
 sources:
+  - https://blog.prusa3d.com/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders_137623/
   - https://help.prusa3d.com/article/unknown-nozzle-36121-core-one-indx_1072730
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/missing-profiles-in-slicer-for-non-0-4-nozzles-and-other-materials/
 superseded_by:
-source_sha:   0bb8955fe8c1b2eafc22dfc998b72933e9ac775d38dfffb92ea6dbe4265c0ed8
+source_sha:   6ecaf27c35d6a0f917c18146749fb67147011149393d19e76e56483c0117493e
 ---
 # Düsenhärte und abrasive Filamente
 
@@ -77,6 +78,47 @@ Version nicht zuverlässig fertigen. Besitzer haben angemerkt, dass mindestens e
 induktionsbasierter Werkzeugwechsler durchaus Düsen aus gehärtetem Stahl ausliefert, die
 Einschränkung ist also offenkundig nicht absolut — es handelt sich aber um einen realen
 technischen Zielkonflikt und nicht um einen rein kommerziellen.
+
+### Was die Verschleißtests des Herstellers ergaben
+
+Am 30. August 2026 veröffentlichte der Hersteller die Ergebnisse seiner Verschleißtests
+an den ausgelieferten Düsen, zusammen mit der Ankündigung, dass Gen-2-Maschinen
+ausgeliefert werden. Es ist die erste Aussage aus erster Hand darüber, was diese Düsen
+tatsächlich aushalten — im Unterschied zu dem, wie sie spezifiziert waren — und sie ist
+brauchbarer als alles, was auf dieser Seite davor steht.
+
+Drei Punkte gehen daraus hervor.
+
+**Die Härtefrage ist von Herstellerseite geklärt.** Diese Düsen tragen eine gehärtete
+Oberfläche über einem ungehärteten Grundkörper, was der Hersteller darauf zurückführt,
+wie Bondtech sie spezifiziert hat. Das ist nichts mehr, was aus Marketingtexten und
+deren Rücknahme erschlossen wird; es wird von der Seite, die sie ausliefert, klar
+festgestellt.
+
+**Das Drucken nicht abrasiver Materialien ist nicht betroffen.** Alles Ungefüllte
+verhält sich wie an einer Standarddüse der Core One, und die Liste des Herstellers ist
+breit genug, um sie zu gruppieren: die vier Alltagsmaterialien (PLA, PETG, ABS, ASA);
+die Flexiblen (TPU, TPE); die löslichen und Stützmaterialien (PVA, BVOH, HIPS); und die
+ungefüllten technischen Kunststoffe — Nylon, PP, PBT, PC und PC-Blends. Wer kein
+gefülltes oder abrasives Filament verarbeitet, hat das Problem dieser Seite nicht.
+
+**Für Abrasives gibt es nun eine Standzeit statt einer Warnung.** Je Düse lauten die
+derzeitigen Schätzungen des Herstellers:
+
+| Filament | Ungefähre Standzeit je Düse |
+|---|---|
+| PETG-CF | 10 kg |
+| PC-CF | 5 kg |
+| stark abrasives Glow-Filament | 0,5 kg |
+
+Er sagt außerdem klar, dass eine Maschine, die ausschließlich stark abrasives Material
+verarbeitet, mit dem derzeit Ausgelieferten nicht gut bedient ist.
+
+Zwei Vorbehalte sind mitzunehmen. Der Hersteller bezeichnet dies als derzeitige Werte aus
+noch laufenden Tests und stellt eine ausführlichere Darstellung in Aussicht — sie können
+sich also ändern. Und er berichtet die Ergebnisse als besser, als seine eigenen ersten
+beschleunigten Tests nahelegten, was eine Aussage über jene früheren Tests ist und keine
+unabhängige Bestätigung.
 
 ### Was jetzt zu tun ist
 
@@ -176,6 +218,12 @@ Schlussfolgerung von Besitzern.
     ihn messen, und keine Spezifikation eines ausgelieferten Teils. Beide sind belegt.
     Bitte entfernen Sie sie nicht — ohne sie lässt sich die zentrale Aussage dieser Seite
     nicht überprüfen.
+
+    Die am 30. August ergänzten Angaben zur Standzeit der Düsen fallen unter dieselbe
+    Begründung. Eine Verschleißschätzung in Kilogramm je Düse ist kein Wert, den jemand
+    irgendwo einstellt; sie ist die veröffentlichte Angabe des Herstellers dazu, wann ein
+    Verschleißteil aufgebraucht ist, und sie ist auf die Ankündigung belegt, aus der sie
+    stammt.
 
 Schwächer: Der Härtewert, den ein Käufer hätte erwarten „dürfen“, ist eine Konvention der
 Community und kein veröffentlichter Standard. Die Rechnung zur Angemessenheit der
