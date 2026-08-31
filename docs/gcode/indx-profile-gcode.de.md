@@ -1,7 +1,7 @@
 ---
 title:        Kommentierter G-Code für Start, Schichtwechsel und Werkzeugwechsel
 confidence:   measured
-updated:      2026-08-25
+updated:      2026-08-30
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -16,7 +16,7 @@ sources:
   - https://blog.prusa3d.com/better-prints-easier-use-prusa-xl-core-one-l-and-core-one-gen-2-our-big-product-update_137539/
   - https://github.com/SimplyPrint/slicer-profiles-db
 superseded_by:
-source_sha:   8e9c763ca92d487634a305737982d433808d7303baf6228de5bd2a733259e5fc
+source_sha:   2dfdbc29fcaa7015acd9accb81aa1645e3260b33a8b91cdac89b4b312685f250
 ---
 # Kommentierter G-Code für Start, Schichtwechsel und Werkzeugwechsel
 
@@ -249,85 +249,42 @@ also in mm Filament pro Sekunde ausgegeben. Ein `F` in Marlin ist immer mm pro M
 auch immer diesen Wert verarbeitet, verwendet nicht die übliche Vorschubkonvention — ein
 weiteres Indiz dafür, dass `M574` ein herstellereigener Befehl mit eigener Konvention ist.
 
-!!! note "M574 ist nicht implementiert — die Firmware ignoriert es"
-    `M574` hat in der Prusa-Buddy-Firmware keinen Handler. Das ist gegen das Release-Tag
-    `v6.9.0` geprüft — die Version, auf die dieses Profil zielt — sowie gegen jedes Objekt
-    in der Historie des öffentlichen Repositorys, mit `M572` und `M575` als
-    Positivkontrollen, um zu belegen, dass die Suche findet, was tatsächlich vorhanden ist.
-    Marlin liegt unter `lib/Marlin` im Baum selbst und nicht als Submodul, dieselbe Suche
-    deckt also die Marlin-Ebene mit ab.
+!!! note "M574 ist nicht implementiert — und vermutlich nicht fertig"
+    Keine Prusa-Firmware hat einen Handler für `M574`. Der Drucker protokolliert
+    `Unknown command:`, antwortet mit `ok` und fährt fort: acht ignorierte Zeilen je
+    Druck, eine je verwendetem Nicht-FLEX-Werkzeug. Nichts geht kaputt. Das ist aus dem
+    Firmware-Quellcode abgeleitet — öffentlich scheint es keine Aufzeichnung von einer
+    echten Maschine zu geben, und Prusa entwickelt nicht öffentlich. Belegt ist also,
+    dass die Firmware, **die Sie einsetzen**, den Befehl ignoriert, nicht, dass nirgends
+    ein Handler existiert.
 
-    Was die Maschine damit tut, folgt aus dem Rückfallpfad des Parsers. Prusas eigener
-    Dispatcher lehnt den Befehl ab, Marlins Verzweigung erreicht
-    `default: parser.unknown_command_error()`, und `queue.ok_to_send()` läuft danach
-    trotzdem. Der Drucker protokolliert also `Unknown command:` mit der betreffenden Zeile,
-    antwortet mit `ok` und fährt fort — kein Fehler, keine Pause, nichts auf dem Display.
-    Acht ignorierte Zeilen pro Druck, eine je verwendetem Nicht-FLEX-Werkzeug.
+    Auch einen Commit gibt es nicht zu finden. Die Zeile wird außerhalb des Repositorys
+    im Profilbündel des Herstellers ausgeliefert, erstmals in
+    [PrusaResearch 2.5.0](https://files.prusa3d.com/?latest=slicer-profiles&lng=en) am
+    26. Juni 2026 und neu gefasst in 2.5.7 am 20. August. Sie ist INDX-exklusiv. Ein
+    verwandtes `M573 R` — ein buchstäbliches Flag ohne Wert, kein nicht aufgelöster
+    Platzhalter — steht direkt unter `M572` im Filament-Start-G-Code und fehlt in der
+    Firmware ebenso.
 
-    *Dieser Absatz ist aus dem Firmware-Quellcode abgeleitet, nicht aus einem
-    aufgezeichneten Log.* Öffentlich scheint es keine Terminal- oder Log-Aufzeichnung eines
-    echten INDX zu geben, der `M574` empfängt, und im Firmware- oder Slicer-Tracker von
-    Prusa wurde dazu nie ein Issue eröffnet.
+    Am 13. August 2026
+    [kündigte](https://blog.prusa3d.com/better-prints-easier-use-prusa-xl-core-one-l-and-core-one-gen-2-our-big-product-update_137539/)
+    Prusa ein flussabhängiges Pressure-Advance-Modell an, dessen Parameter die
+    **Wägezelle vor jedem Druck misst**, dazu extrusionsbewusste Beschleunigungsgrenzen.
+    Kein Termin, keine Firmware-Version und **kein genannter G-Code**. `M574` trägt je
+    Werkzeug eine Temperatur und die Extrusionsrate der Außenperimeter — nicht das
+    Maximum des Drucks —, was der Form der Eingaben entspricht, die diese Arbeit
+    benötigte, und die Profile gehen der Ankündigung um sieben Wochen voraus. **Keine
+    Quelle verbindet beides**, und die Nutzlast passt zur Hälfte mit den
+    Beschleunigungsgrenzen mindestens ebenso gut wie zur Kalibrierungshälfte.
 
-    Eine Einschränkung dieser Aussage: Prusa entwickelt nicht öffentlich und veröffentlicht
-    Release-Tags. Belegt ist damit, dass die Firmware, **die Sie einsetzen**, keinen
-    Handler hat — nicht, dass nirgends einer existiert.
+    Eine praktische Warnung: `M574` bedeutet in RepRap und RepRapFirmware
+    Endschalter-Konfiguration, daher beschreibt fast alles, was eine Suche liefert, ein
+    Duet.
 
-!!! warning "Eine Suche nach M574 führt in die Irre"
-    `M574` ist keine unbelegte Nummer. Sowohl das RepRap-G-Code-Register als auch
-    RepRapFirmware weisen sie der Endschalter-Konfiguration zu, wo `S` einen
-    Endschaltertyp auswählt und `V`, `T` und `F` als Parameter überhaupt nicht existieren.
-    Fast alles, was eine Suche nach "M574" liefert, beschreibt Endschalter an einem Duet
-    und hat mit diesem Befehl nichts zu tun.
-
-!!! info "Woher es stammt und das Feature, das Prusa angekündigt hat"
-    Es gibt keinen Commit zu finden. `M574` hat in keinem öffentlichen Git-Repository von
-    Prusa je existiert — die Zeile wird außerhalb davon im Herstellerprofil-Bundle
-    ausgeliefert und nicht im Quellcode des Slicers. Sie tauchte erstmals im
-    [PrusaResearch-Bundle 2.5.0](https://files.prusa3d.com/?latest=slicer-profiles&lng=en)
-    am 26. Juni 2026 auf,
-    dem Bundle, das die Profile für den Core One INDX hinzufügte, und wurde in 2.5.7 am
-    20. August 2026 neu geschrieben. Sie ist INDX-exklusiv — nicht XL, nicht MK4, nicht der
-    einfache Core One — es gibt also kein älteres Werkzeugwechsler-Ökosystem, in dem sie
-    bereits dokumentiert wäre.
-
-    Sie hat ein Geschwister. Dasselbe Bundle gibt `M573 R` in seinem Filament-Start-G-Code
-    aus, in der Zeile unmittelbar nachdem `M572` Pressure Advance setzt. Das `R` trägt
-    keinen Wert und ist kein nicht ausgewerteter Platzhalter; es ist ein wörtliches,
-    nacktes Flag, identisch in allen dreizehn INDX-Filamentprofilen seit ihrer ersten
-    Auslieferung. `M573` fehlt in der Firmware ebenso.
-
-    Am 13. August 2026 hat Prusa
-    [angekündigt](https://blog.prusa3d.com/better-prints-easier-use-prusa-xl-core-one-l-and-core-one-gen-2-our-big-product-update_137539/),
-    den einzelnen festen Pressure-Advance-Wert durch ein flussabhängiges Modell zu
-    ersetzen, dessen Parameter die **Wägezelle vor jedem Druck automatisch misst**,
-    zusammen mit neuen, extrusionsbewussten Beschleunigungsgrenzen, die verhindern, dass
-    der Drucker schnellere Flussänderungen verlangt, als der Extruder liefern kann. Die
-    Ankündigung bezeichnet die Arbeiten als in interner Erprobung und nennt kein
-    Veröffentlichungsdatum, keine Firmware-Version und **keinen G-Code-Befehl**.
-
-    `M574` trägt je Werkzeug eine Zieltemperatur und die Extrusionsrate der **äußeren
-    Perimeterlinie** — nicht das Maximum des Drucks, das der Infill übertreffen würde. Zwei
-    Details lassen das absichtlich erscheinen. Dass ausgerechnet äußere Perimeterlinien
-    herangezogen werden, deutet auf etwas hin, das sich mit dem Bereich befasst, in dem die
-    Oberflächenqualität entschieden wird — genau dort zeigen sich
-    Pressure-Advance-Artefakte. Und der Ausdruck rechnet volumetrischen Fluss in einen
-    *Filament*-Vorschub um und verwirft damit die natürliche Einheit für alles Thermische —
-    der Wärmebedarf skaliert mit dem Volumen, ein Heizermodell würde also mm³/s verlangen.
-    Filament-mm/s ist die Einheit der Extruderkinematik und die von Pressure Advance
-    selbst.
-
-    Die Profile liegen zudem etwa sieben Wochen vor der Ankündigung. **Doch keine Quelle
-    verbindet beides.** Diese Lesart wird festgehalten, weil sie die plausibelste
-    verfügbare ist, nicht weil sie belegt wäre; sie passt außerdem mindestens ebenso gut
-    zur Hälfte der Ankündigung über die Beschleunigungsgrenzen wie zu der über die
-    Kalibrierung.
-
-    TODO(verify): wofür `M574` und `M573 R` da sind und was `S`, `V`, `T` und `F` jeweils
-    bedeuten. `S` ist ein Werkzeugindex und `T` eine Temperatur — erschlossen aus der
-    Aufrufstelle, eine Lesart, die man locker halten sollte, da Marlins eigene Konvention
-    die umgekehrte ist: `S` für Temperatur und `T` für Werkzeug. Das feste `V35` hat keine
-    belegte Bedeutung und wird hier bewusst nicht erraten.
+    TODO(verify): wofür `M574` und `M573 R` da sind und was `S`, `V`, `T` und `F`
+    bedeuten. `S` als Werkzeugindex und `T` als Temperatur sind aus der Aufrufstelle
+    erschlossen — halten Sie das locker, denn Marlins eigene Konvention ist umgekehrt.
+    Das feste `V35` hat keine belegte Bedeutung und wird hier bewusst nicht erraten.
 
 ```gcode
 G427 R2 P3 ; Calibrate all used and mapped tools

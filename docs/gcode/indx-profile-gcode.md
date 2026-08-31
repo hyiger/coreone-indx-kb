@@ -1,7 +1,7 @@
 ---
 title:        Annotated start, layer and toolchange G-code
 confidence:   measured
-updated:      2026-08-25
+updated:      2026-08-30
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -238,78 +238,38 @@ of filament. A Marlin `F` is always mm per minute. Whatever consumes this is not
 the standard feedrate convention, which is further sign that `M574` is a custom command
 carrying its own.
 
-!!! note "M574 is not implemented — the firmware ignores it"
-    `M574` has no handler in Prusa Buddy firmware. That is checked against the `v6.9.0`
-    release tag, the version this profile targets, and against every object in the public
-    repository's history, with `M572` and `M575` as positive controls to prove the search
-    finds what is actually there. Marlin is vendored in-tree under `lib/Marlin` rather
-    than as a submodule, so the same search covers the Marlin layer.
-
-    What the machine does with it follows from the parser's fallback. Prusa's own
-    dispatcher declines the command, Marlin's switch reaches
-    `default: parser.unknown_command_error()`, and `queue.ok_to_send()` still runs
-    afterwards. So the printer logs `Unknown command:` with the offending line, answers
-    `ok`, and carries on — no error, no pause, nothing on screen. Eight ignored lines per
-    print, one per used non-FLEX tool.
-
-    *That paragraph is derived from the firmware source, not from a captured log.* No
-    terminal or log capture of a real INDX receiving `M574` appears to exist publicly,
-    and no issue about it has ever been filed against Prusa's firmware or slicer tracker.
-
-    One limit on the claim: Prusa develops privately and publishes release tags, so this
-    establishes that the firmware **you run** has no handler — not that none exists
+!!! note "M574 is not implemented — and probably not finished"
+    No Prusa firmware has a handler for `M574`. The printer logs `Unknown command:`,
+    answers `ok`, and carries on: eight ignored lines per print, one per used non-FLEX
+    tool. Nothing breaks. That is derived from the firmware source — no capture from a
+    real machine appears to exist publicly, and Prusa develops privately, so it
+    establishes that the firmware **you run** ignores it, not that no handler exists
     anywhere.
 
-!!! warning "Searching for M574 will mislead you"
-    `M574` is not an unclaimed number. The RepRap G-code registry and RepRapFirmware both
-    assign it to endstop configuration, where `S` selects an endstop type and `V`, `T` and
-    `F` do not exist as parameters at all. Almost everything a search returns for "M574"
-    describes endstops on a Duet and has nothing to do with this command.
-
-!!! info "Where it comes from, and the feature Prusa has announced"
-    There is no commit to find. `M574` has never existed in any public Prusa git
-    repository — the line ships out-of-band in Prusa's vendor profile bundle rather than
-    in the slicer source. It first appeared in
-    [PrusaResearch bundle 2.5.0](https://files.prusa3d.com/?latest=slicer-profiles&lng=en)
-    on 26 June 2026,
-    the bundle that added the Core One INDX profiles, and was rewritten in 2.5.7 on
-    20 August 2026. It is INDX-exclusive — not XL, not MK4, not plain Core One — so there
-    is no older toolchanger ecosystem in which it is already documented.
-
-    It has a sibling. The same bundle emits `M573 R` in its filament start G-code, on the
-    line immediately after `M572` sets pressure advance. The `R` carries no value and is
-    not an unrendered placeholder; it is a literal bare flag, identical across all
-    thirteen INDX filament profiles since they first shipped. `M573` is likewise absent
-    from the firmware.
+    There is no commit to find either. The line ships out-of-band in Prusa's vendor
+    profile bundle, first appearing in
+    [PrusaResearch 2.5.0](https://files.prusa3d.com/?latest=slicer-profiles&lng=en) on
+    26 June 2026 and rewritten in 2.5.7 on 20 August. It is INDX-exclusive. A sibling
+    `M573 R` — a literal bare flag, not an unrendered placeholder — sits directly beneath
+    `M572` in the filament start G-code and is equally absent from the firmware.
 
     On 13 August 2026 Prusa
     [announced](https://blog.prusa3d.com/better-prints-easier-use-prusa-xl-core-one-l-and-core-one-gen-2-our-big-product-update_137539/)
-    that it is replacing the single fixed pressure advance value with a flow-dependent
-    model whose parameters the **load cell measures automatically before every print**,
-    together with new extrusion-aware acceleration limits that stop the printer demanding
-    flow changes faster than the extruder can deliver. The announcement describes the work
-    as in internal testing and gives no release date, no firmware version, and **no G-code
-    command**.
+    a flow-dependent pressure advance model whose parameters the **load cell measures
+    before every print**, plus extrusion-aware acceleration limits. No release date, no
+    firmware version, and **no G-code named**. `M574` carries per tool a temperature and
+    the external-perimeter extrusion rate — not the print's peak — which is the shape of
+    input that work would need, and the profiles predate the announcement by seven weeks.
+    **No source connects the two**, and the payload fits the acceleration-limit half at
+    least as well as the calibration half.
 
-    `M574` carries, per tool, a target temperature and the **external-perimeter**
-    extrusion rate — not the print's peak, which infill would exceed. Two details make
-    that look deliberate. Sampling external perimeters points at something concerned with
-    the regime where surface quality is decided, which is exactly where pressure advance
-    artifacts show up. And the expression converts volumetric flow into a *filament*
-    feedrate, discarding the natural unit for anything thermal — heat demand scales with
-    volume, so a heater model would want mm³/s. Filament mm/s is the unit of extruder
-    kinematics, and of pressure advance itself.
+    One practical warning: `M574` means endstop configuration in RepRap and
+    RepRapFirmware, so almost everything a search returns describes a Duet.
 
-    The profiles also predate the announcement by about seven weeks. **But no source
-    connects the two.** The reading is recorded because it is the most plausible one
-    available, not because it is established; it also fits the acceleration-limit half of
-    the announcement at least as well as the calibration half.
-
-    TODO(verify): what `M574` and `M573 R` are for, and what `S`, `V`, `T` and `F` each
-    mean. `S` is a tool index and `T` a temperature by inference from the call site — a
-    reading worth holding loosely, since Marlin's own convention is the opposite, `S` for
-    temperature and `T` for tool. The fixed `V35` has no established meaning and is
-    deliberately not guessed at here.
+    TODO(verify): what `M574` and `M573 R` are for, and what `S`, `V`, `T` and `F` mean.
+    `S` as a tool index and `T` as a temperature are inferred from the call site — hold
+    that loosely, since Marlin's own convention is the reverse. The fixed `V35` has no
+    established meaning and is deliberately not guessed at.
 
 ```gcode
 G427 R2 P3 ; Calibrate all used and mapped tools
