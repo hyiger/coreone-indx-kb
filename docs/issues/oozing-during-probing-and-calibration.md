@@ -96,8 +96,8 @@ non-INDX Core One for the same symptom, quoted as a range rather than a single f
 No temperature is published on this page until someone has confirmed it on hardware.
 
 Two further reported details in this area, worth knowing before you go hunting: a
-slicer configuration update corrected the derivation for most materials but at least
-one engineering material still probes hot; and the temperature used for tool offset
+slicer configuration update corrected how that temperature is worked out, for most
+materials — though one engineering material still probes hot; and the temperature used for tool offset
 calibration is fixed in firmware and cannot be changed from G-code, so this workaround
 does not help that failure mode. That second detail is still single-source. There is
 also a sibling slicer trap in which the **bed** temperature follows T1 in the same way.
