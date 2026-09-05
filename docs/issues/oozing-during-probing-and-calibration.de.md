@@ -14,7 +14,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   e27ec403d56e0d16344845e3e7587074258831ba25dc18ec9bb104d712809f74
+source_sha:   a3c7a01fe916419b28eae798e715cf63f285966e2d9552c4bd3e8d593cf16fbc
 ---
 # Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 
@@ -120,12 +120,13 @@ der Düsentemperatur beim nächsten Versuch behob es vollständig. Damit steht �
 ein Konstruktionsmaterial tastet weiterhin heiß ab“ nicht mehr auf einem einzigen
 Bericht und hat einen Namen.
 
-Zwei Punkte aus diesem Bericht schärfen das Bild. Die Abtasttemperatur ist **nicht als
-Slicer-Einstellung zugänglich** — der Besitzer suchte die Temperaturen für die erste und
-die weiteren Schichten durch und fand nichts, was die Phase vor dem Druck steuert;
-deshalb ist jeder Workaround hier ein G-Code- oder Werkzeugzuweisungs-Trick und kein
-Häkchen. Und die slicereigene **Option zur Sickerverhinderung half nicht**, sodass es
-einen Druck kostet, zuerst danach zu greifen.
+Zwei Punkte aus diesem Bericht schärfen das Bild. Es gibt **kein eigenes Feld für die
+Abtasttemperatur** im Slicer — der Besitzer suchte die Temperaturen für die erste und
+die weiteren Schichten durch und fand nichts, was die Phase vor dem Druck steuert. Das
+heißt nicht, dass keine Einstellung sie beeinflusst: Die oben beschriebene Ableitung
+über T1 ist genau ein solcher Hebel, weshalb die Workarounds hier indirekt sind statt
+ein Häkchen namens „Abtasttemperatur“. Und die slicereigene **Option zur
+Sickerverhinderung half nicht**, sodass es einen Druck kostet, zuerst danach zu greifen.
 
 TODO(verify): Jener Bericht nennt sowohl die Temperatur, mit der abgetastet wurde, als
 auch die niedrigere, die funktionierte. Keine von beiden wird hier veröffentlicht. Ein

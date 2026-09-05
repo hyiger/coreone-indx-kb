@@ -108,12 +108,13 @@ leveling, and lowering the nozzle temperature by hand on the next attempt cured 
 outright. That moves "at least one engineering material still probes hot" off a single
 report and gives it a name.
 
-Two things from that account sharpen the picture. The probing temperature is **not
-exposed as a slicer setting** — the owner went looking through first-layer and
-other-layer temperatures and found nothing governing the pre-print stage, which is why
-every workaround here is a G-code or tool-assignment trick rather than a checkbox. And
-the slicer's own **oozing-prevention option did not help**, so reaching for it first
-will cost you a print.
+Two things from that account sharpen the picture. There is **no dedicated
+probing-temperature field** in the slicer — the owner went looking through first-layer
+and other-layer temperatures and found nothing governing the pre-print stage. That is
+not the same as no setting influencing it: the T1 derivation above is exactly such a
+lever, which is why the workarounds here are indirect rather than a checkbox marked
+"probing temperature". And the slicer's own **oozing-prevention option did not help**,
+so reaching for it first will cost you a print.
 
 TODO(verify): that account states both the temperature probing used and the lower one
 that worked. Neither is published here. A single forum report is not the hardware

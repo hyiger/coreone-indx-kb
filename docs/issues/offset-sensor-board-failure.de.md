@@ -1,7 +1,7 @@
 ---
 title:        Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 confidence:   reported
-updated:      2026-08-25
+updated:      2026-09-05
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -15,7 +15,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   0fb3079a066907633d62298c0668474f9e2a4d1ca37762d340f55b5a5fac6078
+source_sha:   36e9655734bd3e3a1a0cbe5619dd52a0bf485b8da6630c6c3990f4f95bd2d8af
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 
@@ -30,11 +30,14 @@ und die Riemenspannung, die der Support unter Umständen vorschlägt, hat keinen
 einzigen berichteten Fall behoben.
 
 !!! important "Bevor Sie die Platine verdächtigen: Läuft bei Ihnen 6.9.0?"
-    Ein offener Fehlerbericht zur Firmware beschreibt, dass die
-    Werkzeug-Offset-Kalibrierung **nach dem Upgrade auf 6.9.0** wiederholt
-    fehlschlägt, an einer Maschine, an der sie zuvor funktioniert hat. Ein zweiter
-    Besitzer bestätigt dasselbe. Betroffen sind alle Düsen, und ein erneuter Durchlauf
-    des Kalibrierassistenten gelingt erst nach mehreren Versuchen.
+    Ein offener [Fehlerbericht zur Firmware](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442) beschreibt, dass die
+    Werkzeug-Offset-Kalibrierung **nach dem Upgrade auf 6.9.0** wiederholt fehlschlägt,
+    an Maschinen, an denen sie zuvor funktioniert hat. Es sind längst nicht mehr zwei
+    Berichte: Der Bericht zieht einen stetigen Zustrom von Besitzern an, an Vier- wie
+    an Achtwerkzeug-Maschinen, darunter neu aufgebaute Gen-2-Geräte, die bei der
+    Montage jede Kalibrierung bestanden haben. Betroffen sind mehrere Werkzeuge und
+    nicht nur eines, und der Kalibrierassistent gelingt oft, während die Prüfung beim
+    Druckstart weiterhin scheitert.
 
     Das ist hier von Belang, weil es sich fast identisch zu dem Hardwarefehler
     darstellt, um den es auf dieser Seite geht, die Abhilfe aber eine völlig andere
@@ -42,11 +45,32 @@ einzigen berichteten Fall behoben.
     fehlzuschlagen begann, liegt eher dieser Fall vor als eine defekte Sensorplatine —
     und ein Hardwaretausch hilft dann nicht.
 
-    Der Bericht ist zum Zeitpunkt der Erstellung offen und ungelöst; es gibt also außer
-    erneuten Versuchen noch keine Abhilfe, auf die sich verweisen ließe. Prüfen Sie den
-    aktuellen Stand des Issues, bevor Sie eine RMA anstoßen. Die Firmware verlinkt
-    außerdem einen offiziellen Hilfeartikel zu diesem Fehlercode, der dem Melder nach
-    eigener Aussage nicht geholfen hat.
+    **Der stärkste Beleg dafür, dass es die Firmware ist:** Mehrere Besitzer berichten,
+    dass die Rückkehr zu 6.6.3 die Kalibrierung wieder zuverlässig macht und dass der
+    Fehler mit 6.9.0 zurückkehrt.
+
+    Eine Ursache zeichnet sich im Thread ab, ist aber nicht bestätigt. Die
+    Offset-Kalibrierung erwärmt das Werkzeug, die Düse sickert, und die Ablagerung
+    reicht aus, um die Messung zu verderben — weshalb die Meldung auf dem Bildschirm
+    dazu auffordert, die Düse auf Sauberkeit zu prüfen. Trifft das zu, ist es derselbe
+    Mechanismus wie bei
+    [Nachsickern beim Abtasten](oozing-during-probing-and-calibration.md), mit dem dort
+    genannten wichtigen Unterschied: Die Kalibriertemperatur ist in der Firmware fest
+    hinterlegt, sodass die slicerseitigen Workarounds jener Seite hier nicht greifen.
+
+    **Eine Konfigurationsfalle, die zuerst auszuräumen ist.** 6.9.0 brachte
+    Unterstützung für die neueren 1.5-GT-Riemen. Wenn Ihre Maschine sie nicht hat, muss
+    diese Option ausgeschaltet sein — sie verändert die Geometrie spürbar. Mehrere
+    Besitzer prüften das und fanden ihre Einstellungen bereits korrekt; es ist also
+    nicht die ganze Erklärung, aber kostenlos auszuschließen.
+
+    Ein Entwickler des Herstellers ist an dem Bericht beteiligt und hat Besitzer um
+    Druckerprotokolle gebeten — das ist das Nützlichste, was Sie beitragen können, wenn
+    Sie betroffen sind. Der Bericht bleibt offen und unbehoben; es gibt also nichts
+    außer erneuten Versuchen und einem Downgrade. Prüfen Sie den aktuellen Stand des
+    Issues, bevor Sie eine RMA anstoßen. Die Firmware verweist auf einen offiziellen
+    Hilfeartikel zu diesem Fehlercode, der ihn laut Besitzern nicht behoben hat.
+
 
 ## Fehlercodes, die hierher führen
 
@@ -161,10 +185,17 @@ der Besitzer weist durchgängig auf die Platine.
 **Seit der Erstveröffentlichung ergänzt.** Die Kalibrierungsregression unter 6.9.0 stammt
 aus dem [Firmware-Issue-Tracker](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442),
 der für Firmware-Verhalten eine stärkere Quellenklasse ist als das Forum — er ist
-herstellereigen, versioniert und reproduzierbar. Zwei Besitzer berichten davon. Es ist ein
-offenes Issue; es kann behoben, neu eingeordnet oder als etwas anderes erkannt werden.
-Betrachten Sie den obigen Abschnitt daher als Stand zum Zeitpunkt der Erstellung und nicht
-als gesichert.
+herstellereigen, versioniert und reproduzierbar. Aus zwei Berichten ist ein langer Thread
+unabhängiger Melder an beiden Maschinengrößen geworden, von denen mehrere das Problem
+durch ein Downgrade gelöst haben. Dieser wechselseitige Test — scheitert unter 6.9.0,
+funktioniert unter 6.6.3, scheitert erneut unter 6.9.0 — ist es, was die Regression selbst
+gut belegt macht.
+
+Die *Ursache* ist es nicht. Die Sicker-Erklärung ist eine Annäherung der Besitzer im
+Thread und kein Befund des Herstellers; weder eine Diagnose noch eine Behebung wurde
+veröffentlicht. Es ist ein offenes Issue und kann noch neu eingeordnet werden; behandeln
+Sie den Mechanismus als derzeit beste Vermutung und die Regression als den gesicherten
+Teil.
 
 ## Verwandte Seiten
 
