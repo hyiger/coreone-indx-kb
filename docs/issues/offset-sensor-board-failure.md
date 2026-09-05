@@ -46,6 +46,13 @@ tension, which support may suggest, has not fixed a single reported case.
     going back to 6.6.3 restores reliable calibration, and that returning to 6.9.0
     brings the failure back.
 
+    **But downgrading is not open to every machine.** Support for the newer 1.5 GT
+    belts arrived *in* 6.9.0, so a printer fitted with them has no earlier firmware
+    that knows their geometry. One owner in the thread could revert only because they
+    had refitted the original belts first. If yours are the new ones, reverting is not
+    the workaround — it trades a calibration failure for a motion system the firmware
+    does not model.
+
     A cause is converging in the thread, though it is not confirmed. Offset calibration
     heats the tool, the nozzle oozes, and the deposit is enough to spoil the
     measurement — which is why the on-screen message asks you to check the nozzle is

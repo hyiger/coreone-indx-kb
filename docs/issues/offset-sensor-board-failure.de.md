@@ -15,7 +15,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   36e9655734bd3e3a1a0cbe5619dd52a0bf485b8da6630c6c3990f4f95bd2d8af
+source_sha:   8c9bdfbe979efe54e082302409c9ff5920c9a8ff9b64c855c1f3795717da5724
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 
@@ -48,6 +48,13 @@ einzigen berichteten Fall behoben.
     **Der stärkste Beleg dafür, dass es die Firmware ist:** Mehrere Besitzer berichten,
     dass die Rückkehr zu 6.6.3 die Kalibrierung wieder zuverlässig macht und dass der
     Fehler mit 6.9.0 zurückkehrt.
+
+    **Ein Downgrade steht aber nicht jeder Maschine offen.** Die Unterstützung für die
+    neueren 1.5-GT-Riemen kam *mit* 6.9.0; ein damit ausgerüsteter Drucker hat also
+    keine ältere Firmware, die ihre Geometrie kennt. Ein Besitzer im Thread konnte nur
+    deshalb zurückgehen, weil er zuvor die ursprünglichen Riemen wieder eingebaut
+    hatte. Sind Ihre die neuen, ist ein Downgrade nicht die Abhilfe — es tauscht einen
+    Kalibrierfehler gegen eine Mechanik, die die Firmware nicht abbildet.
 
     Eine Ursache zeichnet sich im Thread ab, ist aber nicht bestätigt. Die
     Offset-Kalibrierung erwärmt das Werkzeug, die Düse sickert, und die Ablagerung
