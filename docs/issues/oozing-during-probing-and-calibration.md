@@ -1,7 +1,7 @@
 ---
 title:        Oozing spoils bed probing and tool calibration
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-09-05
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -10,6 +10,7 @@ nozzle:       0.25mm, 0.4mm, 0.8mm reported
 firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/petg-oozing-and-impeding-bed-probing/
+  - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-pc-on-indx-oozing-at-bed-probing-leveling/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
@@ -94,13 +95,31 @@ argument to use. Also TODO(verify): the reduction one owner used successfully on
 non-INDX Core One for the same symptom, quoted as a range rather than a single figure.
 No temperature is published on this page until someone has confirmed it on hardware.
 
-Two further reported details in this area, both single-source and both worth knowing
-before you go hunting: a slicer configuration update corrected the derivation for
-most materials but at least one engineering material still probes hot; and the
-temperature used for tool offset calibration is fixed in firmware and cannot be
-changed from G-code, so this workaround does not help that failure mode. There is
-also a sibling slicer trap in which the **bed** temperature follows T1 in the same
-way.
+Two further reported details in this area, worth knowing before you go hunting: a
+slicer configuration update corrected how that temperature is worked out, for most
+materials — though one engineering material still probes hot; and the temperature used for tool offset
+calibration is fixed in firmware and cannot be changed from G-code, so this workaround
+does not help that failure mode. That second detail is still single-source. There is
+also a sibling slicer trap in which the **bed** temperature follows T1 in the same way.
+
+**The engineering material is PC.** A [second owner](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-pc-on-indx-oozing-at-bed-probing-leveling/) hit this with PC Blend and
+described it from the other end: probing ran hot enough to ooze onto the sheet and fail
+leveling, and lowering the nozzle temperature by hand on the next attempt cured it
+outright. That moves "at least one engineering material still probes hot" off a single
+report and gives it a name.
+
+Two things from that account sharpen the picture. There is **no dedicated
+probing-temperature field** in the slicer — the owner went looking through first-layer
+and other-layer temperatures and found nothing governing the pre-print stage. That is
+not the same as no setting influencing it: the T1 derivation above is exactly such a
+lever, which is why the workarounds here are indirect rather than a checkbox marked
+"probing temperature". And the slicer's own **oozing-prevention option did not help**,
+so reaching for it first will cost you a print.
+
+TODO(verify): that account states both the temperature probing used and the lower one
+that worked. Neither is published here. A single forum report is not the hardware
+confirmation this page requires before a temperature goes on it — but it is a lead, and
+it is the same figure the marker above is asking for.
 
 ### If none of that helps
 

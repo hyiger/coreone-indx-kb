@@ -1,7 +1,7 @@
 ---
 title:        Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-09-05
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -10,10 +10,11 @@ nozzle:       0.25mm, 0.4mm, 0.8mm reported
 firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/petg-oozing-and-impeding-bed-probing/
+  - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-pc-on-indx-oozing-at-bed-probing-leveling/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   6709a449eb6899c0d5cb3b379c11ad47d15419db871d567f3b4e75c01355c64e
+source_sha:   a3c7a01fe916419b28eae798e715cf63f285966e2d9552c4bd3e8d593cf16fbc
 ---
 # Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 
@@ -103,14 +104,35 @@ gleichen Symptom auf einer Core One ohne INDX erfolgreich verwendet hat, angegeb
 Bereich statt als Einzelwert. Auf dieser Seite wird keine Temperatur veröffentlicht,
 bevor sie jemand auf der Hardware bestätigt hat.
 
-Zwei weitere berichtete Einzelheiten in diesem Bereich, beide aus einer einzigen Quelle
-und beide zu kennen, bevor man auf die Suche geht: Ein Konfigurationsupdate des Slicers
-hat die Ableitung für die meisten Materialien korrigiert, mindestens ein
-Konstruktionsmaterial tastet jedoch weiterhin heiß ab; und die Temperatur für die
-Werkzeug-Offset-Kalibrierung ist in der Firmware fest hinterlegt und lässt sich nicht
-per G-Code ändern, weshalb dieser Workaround gegen diesen Fehlerfall nicht hilft. Es
-gibt zudem eine verwandte Slicer-Falle, bei der die **Bett**temperatur auf dieselbe
-Weise T1 folgt.
+Zwei weitere berichtete Einzelheiten in diesem Bereich, die man kennen sollte, bevor man
+auf die Suche geht: Ein Konfigurationsupdate des Slicers hat die Ableitung für die
+meisten Materialien korrigiert, mindestens ein Konstruktionsmaterial tastet jedoch
+weiterhin heiß ab; und die Temperatur für die Werkzeug-Offset-Kalibrierung ist in der
+Firmware fest hinterlegt und lässt sich nicht per G-Code ändern, weshalb dieser
+Workaround gegen diesen Fehlerfall nicht hilft. Die zweite Einzelheit stammt weiterhin
+aus einer einzigen Quelle. Es gibt zudem eine verwandte Slicer-Falle, bei der die
+**Bett**temperatur auf dieselbe Weise T1 folgt.
+
+**Das Konstruktionsmaterial ist PC.** Ein [zweiter Besitzer](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-pc-on-indx-oozing-at-bed-probing-leveling/) geriet damit an
+PC Blend und beschrieb es von der anderen Seite: Die Abtastung lief heiß genug, um auf
+das Blech zu sickern und das Leveling scheitern zu lassen, und ein händisches Absenken
+der Düsentemperatur beim nächsten Versuch behob es vollständig. Damit steht „mindestens
+ein Konstruktionsmaterial tastet weiterhin heiß ab“ nicht mehr auf einem einzigen
+Bericht und hat einen Namen.
+
+Zwei Punkte aus diesem Bericht schärfen das Bild. Es gibt **kein eigenes Feld für die
+Abtasttemperatur** im Slicer — der Besitzer suchte die Temperaturen für die erste und
+die weiteren Schichten durch und fand nichts, was die Phase vor dem Druck steuert. Das
+heißt nicht, dass keine Einstellung sie beeinflusst: Die oben beschriebene Ableitung
+über T1 ist genau ein solcher Hebel, weshalb die Workarounds hier indirekt sind statt
+ein Häkchen namens „Abtasttemperatur“. Und die slicereigene **Option zur
+Sickerverhinderung half nicht**, sodass es einen Druck kostet, zuerst danach zu greifen.
+
+TODO(verify): Jener Bericht nennt sowohl die Temperatur, mit der abgetastet wurde, als
+auch die niedrigere, die funktionierte. Keine von beiden wird hier veröffentlicht. Ein
+einzelner Forenbericht ist nicht die Hardware-Bestätigung, die diese Seite verlangt,
+bevor eine Temperatur auf ihr erscheint — aber er ist ein Hinweis, und es ist dieselbe
+Angabe, nach der die Markierung weiter oben fragt.
 
 ### Wenn nichts davon hilft
 

@@ -1,7 +1,7 @@
 ---
 title:        Tool offset calibration fails — contactless offset sensor
 confidence:   reported
-updated:      2026-08-25
+updated:      2026-09-05
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -29,20 +29,42 @@ resolution reported by multiple owners is a replacement sensor board — and bel
 tension, which support may suggest, has not fixed a single reported case.
 
 !!! important "Before you suspect the board: are you on 6.9.0?"
-    An open bug report against the firmware describes tool offset calibration failing
-    repeatedly **after upgrading to 6.9.0**, on a machine where it had been working.
-    A second owner confirms the same. It affects all nozzles, and re-running the
-    calibration wizard succeeds only after several retries.
+    An open [bug report against the firmware](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442) describes tool offset calibration
+    failing repeatedly **after upgrading to 6.9.0**, on machines where it had been
+    working. It is no longer a couple of accounts: the report has drawn a steady stream
+    of owners across both four- and eight-tool machines, including new Gen 2 builds
+    that passed every calibration during assembly. It affects multiple tools rather
+    than one, and the calibration wizard often succeeds while the check at print start
+    keeps failing.
 
     That matters here because it presents almost identically to the hardware fault
     this page is about, and the fix is completely different. If your calibration was
     fine before an update and started failing after one, you are more likely looking
     at this than at a failed sensor board — and replacing hardware will not help.
 
-    The report is open and unresolved at the time of writing, so there is no fix to
-    point at yet beyond retrying. Check the issue for the current state before
-    starting an RMA. The firmware also links an official help article for this error
-    code, which the reporter says did not resolve it for them.
+    **The strongest evidence that it is the firmware:** several owners report that
+    going back to 6.6.3 restores reliable calibration, and that returning to 6.9.0
+    brings the failure back.
+
+    A cause is converging in the thread, though it is not confirmed. Offset calibration
+    heats the tool, the nozzle oozes, and the deposit is enough to spoil the
+    measurement — which is why the on-screen message asks you to check the nozzle is
+    clean. If that is right it is the same mechanism as
+    [oozing during probing](oozing-during-probing-and-calibration.md), with the
+    important difference noted there: the calibration temperature is fixed in firmware,
+    so the slicer-side workarounds on that page do not reach it.
+
+    **One configuration trap worth clearing first.** 6.9.0 added support for the newer
+    1.5 GT belts. If your machine does not have them, that option must be off — it
+    changes the geometry enough to matter. Several owners checked and found their
+    settings already correct, so it is not the whole story, but it is free to rule out.
+
+    A vendor developer is engaged on the report and has asked owners for printer logs,
+    which is the single most useful thing you can contribute if you are affected. It
+    remains open and unfixed, so there is nothing to point at beyond retrying and
+    downgrading. Check the issue for the current state before starting an RMA. The
+    firmware links an official help article for this error code, which owners say did
+    not resolve it.
 
 ## Error codes that lead here
 
@@ -146,9 +168,15 @@ at the board.
 **Added since first publication.** The 6.9.0 calibration regression comes from the
 [firmware issue tracker](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442),
 which is a stronger class of source than the forum for firmware behavior — it is
-first-party, versioned and reproducible. Two owners report it. It is an open issue, so
-it may be fixed, reclassified, or turn out to be something else; treat the section
-above as current-as-of-writing rather than settled.
+first-party, versioned and reproducible. What began as two accounts has become a long
+thread of independent reporters on both machine sizes, several of whom resolved it by
+downgrading. That reciprocal test — fails on 6.9.0, works on 6.6.3, fails again on
+6.9.0 — is what makes the regression itself well supported.
+
+The *cause* is not. The oozing explanation is owners converging in the thread, not a
+vendor finding, and no fix or diagnosis has been published. It is an open issue, so it
+may still be reclassified; treat the mechanism as the current best guess and the
+regression as the established part.
 
 ## Related
 
