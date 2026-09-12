@@ -1,7 +1,7 @@
 ---
 title:        Silicone sock migration over the temperature sensor
 confidence:   provisional
-updated:      2026-08-27
+updated:      2026-09-12
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -11,6 +11,7 @@ firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-maintenance/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/
 superseded_by:
 ---
 
@@ -58,10 +59,12 @@ against a schematic or the vendor's documentation.
 The sock is reported to slide upward from where it seats. One owner found it partially
 covering the temperature sensor and got a thermal runaway error as a direct result —
 that is a first-hand account of the occlusion and its immediate consequence. The author of this
-page found the sock displaced on three separate nozzles on one machine.
+page found the sock displaced on three separate nozzles on one machine, and another
+owner, in a [separate thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/), had to reseat it on two tools after only a
+couple of test prints. The migration is no longer something seen on one machine.
 
-Why it migrates is not established. Nothing in either account identifies a trigger,
-and neither the vendor nor the community has published a cause.
+Why it migrates is not established. None of the accounts identifies a trigger, and
+neither the vendor nor the community has published a cause.
 
 ### Overheating and caking
 
@@ -93,8 +96,20 @@ failing on a tool that was previously fine, look at whether the sock has crept u
 the sensor window before investigating the sensor, the nozzle or the filament. It costs
 seconds and it is reversible.
 
-**Seat it back down.** Both accounts describe simply pushing the sock back into
-position. Neither reports needing a replacement part.
+**Seat it back down.** Every account of migration describes simply pushing the sock
+back into position, and none needed a replacement part to do it.
+
+**Do not remove the sock to stop it migrating.** It is the tempting fix and the wrong
+one. This page's author read the firmware source and concluded that the nozzle's
+temperature measurement assumes a sock is fitted, so running without one is likely to
+throw the reading far enough off to risk a thermal runaway error. That is an inference
+from source rather than a test, but the downside is serious enough to respect.
+
+**Inspect the socks from time to time.** With no known trigger and no fix, looking is
+the only defense. It is worth a look after a blob in particular: on the author's
+machine a lump of PCTG stuck to a nozzle tip was dragged through the wiper hard enough
+to tear the sock. Spares were not included in the kit and could not be found in the
+vendor's shop at the time of writing, so a torn sock may mean a wait.
 
 **Clean the tip if material has already baked on.** See
 [oozing during probing](oozing-during-probing-and-calibration.md) for the
@@ -106,9 +121,13 @@ cleaning caution — remove debris, do not polish the sensor face.
 
 What is corroborated, in different threads by different owners:
 
-- **Sock migration over the temperature sensor, with a thermal consequence.** One
-  first-hand report in the [maintenance thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-maintenance/),
-  describing a thermal runaway error caused by exactly this.
+- **Sock migration, now in two threads.** One first-hand report in the
+  [maintenance thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-maintenance/)
+  describes a thermal runaway error caused by exactly this, and a second owner in
+  [a later thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/) had to reseat the sock on two tools. That later thread was
+  started by this page's author, but the corroborating account is another owner's, which
+  is why it counts. Taken alone, the migration claim now meets `reported`; the page as a
+  whole stays `provisional` because the chain below it does not.
 - **PET-family and PCTG caking onto INDX nozzle tips**, including the observation that
   the sock geometry contributes, in the
   [wiper thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/).
@@ -121,7 +140,9 @@ temperature was measured. Both ends are individually supported; the join between
 inferred.
 
 The suggestion that the nozzle or sock needs a design revision is this author's
-conclusion, not a vendor position, and is recorded as opinion rather than finding.
+conclusion, not a vendor position, and is recorded as opinion rather than finding. So
+are three later additions, all the author's own and each from a single machine: the
+advice not to remove the sock, the sock torn by a blob, and spares being unavailable.
 
 What would move this to `reported`: a second owner describing the full sequence —
 displaced sock, then overheating, then caking, then failed calibration — in a citable

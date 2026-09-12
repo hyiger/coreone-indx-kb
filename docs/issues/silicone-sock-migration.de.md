@@ -1,7 +1,7 @@
 ---
 title:        Verrutschen der Silikonsocke über den Temperatursensor
 confidence:   provisional
-updated:      2026-08-27
+updated:      2026-09-12
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -11,8 +11,9 @@ firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-maintenance/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/
 superseded_by:
-source_sha:   0800b65856775ca65315dd7bd0ad7ca4b14406d8ff7608f1dced09bf3cf7f3c5
+source_sha:   6f43d5a6696b2b04a80b5dd51decaae7e043729d2926fd1634a592ae672dbb4c
 ---
 # Verrutschen der Silikonsocke über den Temperatursensor
 
@@ -63,7 +64,9 @@ sie in einer Position vor, in der sie den Temperatursensor teilweise verdeckte, 
 erhielt als unmittelbare Folge einen Thermal-Runaway-Fehler — das ist ein
 Erfahrungsbericht aus erster Hand zur Verdeckung und ihrer unmittelbaren Konsequenz. Der
 Autor dieser Seite fand die Socke an drei verschiedenen Düsen einer Maschine verschoben
-vor.
+vor, und ein weiterer Besitzer musste sie in einem [anderen Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/) nach nur
+wenigen Testdrucken an zwei Werkzeugen wieder zurechtsetzen. Das Wandern ist nicht mehr
+etwas, das an einer einzigen Maschine beobachtet wurde.
 
 Warum sie wandert, ist nicht geklärt. Keiner der Berichte benennt einen Auslöser, und
 weder der Hersteller noch die Community haben eine Ursache veröffentlicht.
@@ -100,9 +103,23 @@ Offset-Kalibrierung an einem Werkzeug zu scheitern beginnt, das zuvor einwandfre
 sehen Sie nach, ob die Socke über das Sensorfenster gewandert ist, bevor Sie den Sensor,
 die Düse oder das Filament untersuchen. Das kostet Sekunden und ist umkehrbar.
 
-**Setzen Sie sie wieder nach unten.** Beide Berichte beschreiben, dass die Socke
-einfach wieder in Position geschoben wurde. Keiner berichtet von einem nötigen
+**Setzen Sie sie wieder nach unten.** Jeder Bericht über das Wandern beschreibt, dass
+die Socke einfach wieder in Position geschoben wurde, und keiner brauchte dafür ein
 Ersatzteil.
+
+**Entfernen Sie die Socke nicht, um das Wandern zu verhindern.** Das ist die naheliegende
+Lösung und die falsche. Der Autor dieser Seite hat den Firmware-Quellcode gelesen und
+geschlossen, dass die Temperaturmessung der Düse eine montierte Socke voraussetzt; ohne
+sie dürfte der Messwert so weit abweichen, dass ein Thermal-Runaway-Fehler droht. Das
+ist eine Schlussfolgerung aus dem Quellcode und kein Test, aber die Folgen sind ernst
+genug, um sie zu beachten.
+
+**Prüfen Sie die Socken von Zeit zu Zeit.** Ohne bekannten Auslöser und ohne Behebung
+ist Nachsehen der einzige Schutz. Nach einem Klumpen lohnt es sich besonders: An der
+Maschine des Autors wurde ein an der Düsenspitze haftender PCTG-Klumpen so fest durch
+den Abstreifer gezogen, dass die Socke riss. Ersatzsocken lagen dem Bausatz nicht bei und
+waren zum Zeitpunkt der Abfassung im Shop des Herstellers nicht zu finden; eine
+gerissene Socke kann also Wartezeit bedeuten.
 
 **Reinigen Sie die Spitze, wenn bereits Material festgebacken ist.** Siehe
 [Nachsickern beim Abtasten](oozing-during-probing-and-calibration.md) für die
@@ -114,9 +131,14 @@ Vorsichtsmaßnahme beim Reinigen — Ablagerungen entfernen, nicht polieren.
 
 Was in unterschiedlichen Threads von unterschiedlichen Besitzern bestätigt wird:
 
-- **Wandern der Socke über den Temperatursensor mit thermischer Folge.** Ein Bericht aus
-  erster Hand im [Wartungs-Thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-maintenance/),
-  der einen genau dadurch verursachten Thermal-Runaway-Fehler beschreibt.
+- **Wandern der Socke, nun in zwei Threads.** Ein Bericht aus erster Hand im
+  [Wartungs-Thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-maintenance/)
+  beschreibt einen genau dadurch verursachten Thermal-Runaway-Fehler, und ein zweiter
+  Besitzer musste in [einem späteren Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/) die Socke an zwei Werkzeugen wieder
+  zurechtsetzen. Jener spätere Thread wurde vom Autor dieser Seite eröffnet, der
+  bestätigende Bericht stammt aber von einem anderen Besitzer, weshalb er zählt. Für sich
+  genommen erfüllt die Aussage zum Wandern nun `reported`; die Seite als Ganzes bleibt
+  `provisional`, weil die Kette darunter das nicht tut.
 - **Anbacken der PET-Familie und von PCTG an INDX-Düsenspitzen**, einschließlich der
   Beobachtung, dass die Geometrie der Socke dazu beiträgt, im
   [Wischer-Thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/).
@@ -130,7 +152,9 @@ Verbindung dazwischen ist erschlossen.
 
 Die Einschätzung, dass Düse oder Socke überarbeitet werden müssten, ist die
 Schlussfolgerung dieses Autors und keine Herstellerposition; sie wird als Meinung
-festgehalten, nicht als Befund.
+festgehalten, nicht als Befund. Ebenso drei spätere Ergänzungen, alle vom Autor selbst
+und jeweils von einer einzigen Maschine: der Rat, die Socke nicht zu entfernen, die von
+einem Klumpen zerrissene Socke und die nicht erhältlichen Ersatzteile.
 
 Was diese Seite auf `reported` heben würde: ein zweiter Besitzer, der die vollständige
 Abfolge — verschobene Socke, dann Überhitzung, dann Anbackungen, dann fehlgeschlagene

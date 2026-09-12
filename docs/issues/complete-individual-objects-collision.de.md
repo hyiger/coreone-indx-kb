@@ -1,7 +1,7 @@
 ---
 title:        Werkzeugkopf kollidiert mit fertigen Teilen — "Complete individual objects"
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-09-12
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -10,10 +10,12 @@ nozzle:       unknown
 firmware:     unknown
 sources:
   - https://github.com/prusa3d/PrusaSlicer/issues/14298
+  - https://github.com/prusa3d/PrusaSlicer/issues/15672
+  - https://github.com/prusa3d/PrusaSlicer/issues/15778
   - https://kb.nomadsgalaxy.com/topics/core-one/indx/issues/2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy
 superseded_by:
-source_sha:   e3fa6ce57125d55071d3dc6caa9f3ff8b8f2766366a8fe81147a86a0d0addf69
+source_sha:   18c4985008dcb9c749ede732fb96f544454a11146e9df88ce72b7dd81b698126
 ---
 # Werkzeugkopf kollidiert mit fertigen Teilen — "Complete individual objects"
 
@@ -288,23 +290,28 @@ Werkzeugwechsler, und Hardware-Befunde von einer XL ließen sich nicht auf einen
 übertragen. Dieser hier schon, weil die Einschränkung im Slicer und nicht in der Maschine
 liegt — dieselbe Funktion, im selben Slicer, die den Verfahrweg beim Werkzeugwechsel
 nicht berücksichtigt. Was der XL-Thread bestätigt, ist der Mechanismus und die Tatsache,
-dass er unbehoben bleibt, nicht irgendetwas über INDX-Hardware. Die INDX-Sichtung bleibt
-ein einzelner Bericht; was nicht länger auf einer einzigen Quelle beruht, ist der Fehler
-selbst.
+dass er unbehoben bleibt, nicht irgendetwas über INDX-Hardware. Der Fehler selbst
+beruht nicht länger auf einer einzigen Quelle; die INDX-Seite folgt weiter unten.
 
-Es sind keine Versionen festgehalten. Der Thread nennt weder eine Firmware- noch eine
-Slicer-Version, was hier ins Gewicht fällt: Ohne eine solche Angabe kann niemand, der
-später liest, erkennen, ob eine Behebung eingespielt wurde.
+**Es hat inzwischen den Slicer-Tracker des INDX selbst erreicht, zweimal.** Im September
+2026 eröffnete ein INDX-Besitzer [PrusaSlicer-Issue 15672](https://github.com/prusa3d/PrusaSlicer/issues/15672), das beschreibt,
+wie der Werkzeugkopf in Mehrfarbobjekte fährt, und reproduzierte es auf einer Alpha von
+PrusaSlicer 3.0 — die nächste Hauptversion des Slicers behebt es also noch nicht. Tage
+später eröffnete ein anderer Besitzer [PrusaSlicer-Issue 15778](https://github.com/prusa3d/PrusaSlicer/issues/15778), nachdem der
+Werkzeugkopf beim ersten Werkzeugwechsel eines Auftrags mit vier Objekten unter
+PrusaSlicer 2.9.6 ein fertiges Teil getroffen hatte, mit angehängter Projektdatei.
 
-Was die Seite weiter stärken würde: ein zweiter INDX-Besitzer, der die Kollision meldet,
-oder ein INDX-spezifisches Ticket im Tracker des Slicers. Das bestehende XL-Issue ist der
-naheliegende Ort dafür — es hat bereits Prusas Aufmerksamkeit und ein internes Ticket,
-und ein Bericht, der denselben Fehler an einem zweiten Werkzeugwechsler zeigt, ist für
-Prusa nützlicher als ein neuer Thread. Da der Mechanismus überprüfbar ist, kann ein
-solcher Bericht auf genau den Parameter zeigen, statt Symptome zu beschreiben. Zu
-beachten: Im Firmware-Tracker von Prusa findet sich unter dieser Beschreibung nichts —
-die dortigen Einträge, die auf den Namen der Funktion passen, betreffen andere Drucker
-und liegen zeitlich vor dem INDX.
+Nur das zweite davon ist ein neuer Beleg. Das erste verweist auf dieselbe
+Community-Darstellung, die diese Seite bereits zitiert; es ist also diese Quelle, die in
+den Tracker getragen wurde, und keine unabhängige Sichtung. Das zweite stammt von einem
+unbeteiligten Besitzer, und erst dadurch ist die INDX-Seite mehr als ein einzelner
+Bericht.
+
+Versionen sind nun festgehalten — 2.9.6 und eine Alpha von 3.0 —, sodass ein späterer
+Leser erkennen kann, ob eine Behebung eingespielt wurde. Im Firmware-Tracker von Prusa
+findet sich für den INDX weiterhin nichts dazu; die dortigen Einträge, die auf den Namen
+der Funktion passen, betreffen die XL und liegen zeitlich vor dem INDX, was dazu passt,
+dass der Fehler im Slicer liegt.
 
 ## Verwandte Seiten
 

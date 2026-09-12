@@ -1,7 +1,7 @@
 ---
 title:        Kompatibilität der Druckplatten nach dem INDX-Umbau
-confidence:   provisional
-updated:      2026-08-24
+confidence:   reported
+updated:      2026-09-12
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -10,16 +10,11 @@ nozzle:       unknown
 firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kind-of/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/sometimes-tools-dont-stay-in-dock/
 superseded_by:
-source_sha:   fd8dd8c5ed5f0aaf103c98ca3b8c282e2ff56c1742f6d7ab3dc49de594eb5649
+source_sha:   50da9cb601731a272dbee2a8ca31bff8bb9047137ab07357601a80b1718ca475
 ---
 # Kompatibilität der Druckplatten nach dem INDX-Umbau
-
-!!! warning "Ein einziger Thread — den Vorbehalt beachten"
-    Mehrere Besitzer berichten dies unabhängig voneinander, und zwei haben Fotos
-    veröffentlicht, doch alles stammt aus einem einzigen Forumsthread. Das reicht nach
-    den Regeln dieser Website nicht aus, um es als `reported` (mehrfach berichtet)
-    einzustufen. Die physischen Belege sind gut; die Stichprobe ist schmal.
 
 ## Zusammenfassung
 
@@ -30,6 +25,11 @@ Teile. Die Tücke liegt darin, dass diese Bleche auf eine unveränderte Core One
 einwandfrei passen: Wer also einen Drucker umbaut, den er bereits nutzt, dessen
 Alltagsblech kann an dem Tag, an dem der Umbau fertig ist, klammheimlich unbrauchbar
 werden.
+
+Es sieht nicht immer nach einem Passproblem aus. Dieselbe Kollision kann Werkzeuge nach
+Druckbeginn aus ihren Docks schieben, während jede Kalibrierung besteht — was sich wie
+ein Dockfehler liest statt wie eine zu große Platte —, und sie beschränkt sich nicht auf
+übergroße Bleche, denn auch eine Platte mit anderem Randprofil kann das verursachen.
 
 ## Details
 
@@ -45,6 +45,23 @@ Das ist Geometrie, nicht Firmware. Kein Update wird es aus der Welt schaffen.
 betroffen ist, und das fragliche Blech hat auf denselben Drucker bislang anstandslos
 gepasst. Besitzer beschreiben diese Platten als ihre erste Wahl — genau deshalb sollte
 man von der Inkompatibilität vor dem Beginn wissen und nicht danach.
+
+### Es kann wie ein Dockfehler aussehen
+
+In einem anderen Thread erhielt ein Besitzer, dessen Werkzeuge nicht in ihren Docks
+blieben — bei bestandener Dock-Kalibrierung —, zwei voneinander unabhängige Antworten,
+die beide auf die Platte zeigten. Ein Besitzer hatte dieses Symptom auf eine größere als
+die Serienplatte zurückgeführt, die die Düsenabstreifer an der Dockhalterung berührte,
+und ergänzte, dass verbogene oder verkehrt herum montierte Abstreifer ebenfalls eine
+Prüfung wert sind. Ein anderer hatte beobachtet, wie Werkzeuge nach Druckbeginn aus
+ihren Docks gestoßen wurden, auf einer Drittanbieterplatte mit anderem Profil als die
+Serienplatte, ebenfalls bei bestandener Kalibrierung.
+
+Der zweite Fall ist der bemerkenswerte, denn jene Platte wurde nie als übergroß
+beschrieben. Entscheidend ist, was unter den Docks liegt, nicht nur die Grundfläche.
+Wenn Werkzeuge in ihren Docks gestört werden, schließen Sie die Platte aus, bevor Sie
+Magnete oder die Dock-Kalibrierung verdächtigen — siehe
+[Werkzeugerkennung und Parkfehler](../issues/tool-detection-ringdown-decay.md).
 
 ### Was Besitzer dagegen unternommen haben
 
@@ -81,26 +98,29 @@ Zwei Wege, beide aus erster Hand berichtet:
 
 ## Überprüfung
 
-`provisional` (vorläufig) — mehrere unabhängige Meldende, aber ein einziger Thread.
+`reported` — unabhängige Besitzer, über zwei verschiedene Threads hinweg.
 
-Innerhalb dieses Threads sind die Belege besser, als die Stufe vermuten lässt. Ein
-Besitzer brachte die Kollision zunächst als Verdacht vor; gestützt wurde sie dann durch
-ein Foto einer Platte, die die Docks berührt, durch einen zweiten Besitzer, der seine
-bereits zugeschnitten und das Ergebnis gezeigt hatte, und durch einen dritten, der
-dieselbe Methode bestätigte und die Technik ergänzte, die Löcher der Platte zur Führung
-eines geraden Schnitts zu nutzen. Ein vierter umging das Problem, indem er eine Platte
-im Prusa-Format kaufte. Das sind vier übereinstimmende Besitzer, was gewöhnlich als
-belastbar gelten würde.
+Der [ursprüngliche Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kind-of/)
+belegte die Kollision: Ein Besitzer brachte sie auf, ein Foto zeigte eine Platte, die die
+Docks berührte, zwei weitere Besitzer hatten ihre bereits zugeschnitten, und ein vierter
+kaufte eine passend dimensionierte Platte. Das wurde auf `provisional` gehalten, weil
+jede dieser Meldungen in derselben Diskussion stand.
 
-Auf `provisional` gehalten wird es dadurch, dass diese Website eine Bestätigung über
-*verschiedene* Threads hinweg verlangt, und jede dieser Meldungen steht in derselben
-Diskussion. Erwähnenswert ist auch, dass der betreffende Thread überwiegend aus
-Versand- und Bestellgeplauder besteht — dieser Befund kam nur durch vollständiges Lesen
-zutage, und er war eines von lediglich zwei dauerhaften technischen Ergebnissen, die
-aus diesem gesamten Thread die Prüfung überstanden haben.
+Ein zweiter, davon unabhängiger [Thread über Werkzeuge, die nicht im Dock bleiben](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/sometimes-tools-dont-stay-in-dock/)
+hat inzwischen die Bestätigung über Threads hinweg geliefert, auf die diese Seite gewartet
+hatte. Zwei Besitzer dort führten das Symptom unabhängig voneinander auf eine
+Nicht-Serienplatte zurück, die den Dockbereich stört. Das erfüllt die Schwelle dieser
+Website für `reported`.
 
-Was es auf `reported` heben würde: eine einzige Meldung aus einem beliebigen anderen
-Thread oder eine Herstelleraussage zum Freiraum für Platten bei montierten Docks.
+Es erweitert den Befund zudem ein wenig. Die neuen Meldungen beschreiben ein anderes
+Erscheinungsbild — Werkzeuge, die in ihren Docks gestört werden, statt einer Platte, die
+sichtbar nicht passt —, und eine betrifft eine Platte, die niemand als übergroß
+beschrieb. Der Mechanismus ist derselbe; die Bandbreite der Symptome und der betroffenen
+Platten ist größer, als der ursprüngliche Thread zeigte.
+
+Weiterhin ungeprüft: wie viel Überstand entfernt werden muss, wozu keine Quelle einen
+Wert nennt, und ob eine bestimmte Drittanbieterplatte bei montierten Docks unbedenklich
+ist.
 
 ## Verwandte Themen
 

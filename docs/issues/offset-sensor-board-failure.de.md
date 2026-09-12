@@ -1,21 +1,23 @@
 ---
 title:        Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 confidence:   reported
-updated:      2026-09-05
+updated:      2026-09-12
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0 for the calibration regression; the board fault is not version-specific
+firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta; the board fault is not version-specific
 sources:
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/offset-sensor-failure/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   8c9bdfbe979efe54e082302409c9ff5920c9a8ff9b64c855c1f3795717da5724
+source_sha:   437911e3887a190fed590368706ca658de41ef1176ceae243a7e61a5c274f2bd
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 
@@ -56,14 +58,19 @@ einzigen berichteten Fall behoben.
     hatte. Sind Ihre die neuen, ist ein Downgrade nicht die Abhilfe — es tauscht einen
     Kalibrierfehler gegen eine Mechanik, die die Firmware nicht abbildet.
 
-    Eine Ursache zeichnet sich im Thread ab, ist aber nicht bestätigt. Die
-    Offset-Kalibrierung erwärmt das Werkzeug, die Düse sickert, und die Ablagerung
-    reicht aus, um die Messung zu verderben — weshalb die Meldung auf dem Bildschirm
-    dazu auffordert, die Düse auf Sauberkeit zu prüfen. Trifft das zu, ist es derselbe
-    Mechanismus wie bei
+    **Ein Teil der Ursache ist durch die Behebung des Herstellers nun bestätigt.** Die
+    Versionshinweise der Beta nennen zwei Änderungen, die genau auf diesen Fehler zielen:
+    Die Werkzeug-Offset-Kalibrierung läuft bei niedrigerer Temperatur, und die
+    Kommunikation zwischen Offset-Sensor und Hauptplatine wurde neu konfiguriert, um
+    Aussetzer zu verhindern. Das Erste ist die Sicker-Erklärung, auf die sich die
+    Besitzer geeinigt hatten — die Düse sickert, während sie für die Kalibrierung erwärmt
+    wird, und die Ablagerung verdirbt die Messung, weshalb die Meldung auf dem Bildschirm
+    dazu auffordert, die Düse auf Sauberkeit zu prüfen. Das Zweite hatte der Thread nicht
+    erkannt. Die Sicker-Hälfte ist derselbe Mechanismus wie bei
     [Nachsickern beim Abtasten](oozing-during-probing-and-calibration.md), mit dem dort
-    genannten wichtigen Unterschied: Die Kalibriertemperatur ist in der Firmware fest
-    hinterlegt, sodass die slicerseitigen Workarounds jener Seite hier nicht greifen.
+    genannten Unterschied: Die Kalibriertemperatur ist in der Firmware fest hinterlegt,
+    sodass die slicerseitigen Workarounds jener Seite sie nie erreichen konnten. Es
+    brauchte eine Firmware-Änderung.
 
     **Eine Konfigurationsfalle, die zuerst auszuräumen ist.** 6.9.0 brachte
     Unterstützung für die neueren 1.5-GT-Riemen. Wenn Ihre Maschine sie nicht hat, muss
@@ -71,13 +78,53 @@ einzigen berichteten Fall behoben.
     Besitzer prüften das und fanden ihre Einstellungen bereits korrekt; es ist also
     nicht die ganze Erklärung, aber kostenlos auszuschließen.
 
-    Ein Entwickler des Herstellers ist an dem Bericht beteiligt und hat Besitzer um
-    Druckerprotokolle gebeten — das ist das Nützlichste, was Sie beitragen können, wenn
-    Sie betroffen sind. Der Bericht bleibt offen und unbehoben; es gibt also nichts
-    außer erneuten Versuchen und einem Downgrade. Prüfen Sie den aktuellen Stand des
-    Issues, bevor Sie eine RMA anstoßen. Die Firmware verweist auf einen offiziellen
-    Hilfeartikel zu diesem Fehlercode, der ihn laut Besitzern nicht behoben hat.
+    **Es gibt eine Behebung des Herstellers, als Beta.** Nach Untersuchungen mit
+    Hinweisen von Besitzern aus dem Bericht und interner Verfolgung des Fehlers
+    veröffentlichte der Hersteller am 10. September 2026
+    [6.9.1-beta](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta)
+    für die Core One INDX. Neben den Änderungen an Temperatur und Kommunikation erhöht
+    sie die Zahl der Z-Antastversuche bei der Werkzeug-Offset-Kalibrierung von 3 auf 10
+    und führt eine Behebung für die Wiederaufnahme der Offset-Messung auf. Die
+    Kalibriertemperaturen selbst stehen in den Versionshinweisen und werden hier nicht
+    wiederholt. Mehrere Besitzer im Bericht sagen, die Kalibrierung gelinge nun beim
+    ersten Versuch, wo sie zuvor jedes Mal gescheitert war.
 
+    Es ist eine Beta und noch nicht bei allen fehlerfrei. Ein Besitzer berichtet von einem
+    Thermal Runaway nach dem ersten Filamentwechsel damit, den der Entwickler als eigenen
+    Fehlerbericht erbeten hat; ein anderer stellt fest, dass die Kalibrierung zuverlässig
+    gelingt, die Düsen aber merklich schmutziger herauskommen. Beides ist über den
+    jeweiligen Melder hinaus nicht bestätigt.
+
+    Für Besitzer mit den neueren Riemen löst sie außerdem das oben beschriebene Dilemma:
+    Die Beta ist INDX-Firmware, die die 1.5-GT-Unterstützung behält, sodass der Schritt
+    nach vorn den Downgrade als Ausweg ersetzt. Prüfen Sie im Bericht, ob eine stabile
+    6.9.1 erschienen ist, bevor Sie eine Beta installieren. Die Firmware verweist auf
+    einen offiziellen Hilfeartikel zu diesem Fehlercode, der ihn laut Besitzern nicht
+    behoben hat.
+
+!!! note "Ein Hinweis: Manche Ausfälle der Offset-Sensorplatine könnten eine Takteinstellung sein"
+    `provisional` — ein einzelner Bericht, und sein Verfasser sagt, er sei noch nicht bewiesen.
+
+    Ein Besitzer, bei dem der Sensorfehler beim ersten Messwert unter 6.6.3 wie unter
+    6.9.0 auftrat, tauschte nahezu alles im Signalweg, ohne ihn zu beseitigen: zwei
+    Offset-Sensorplatinen, mehrere Kabel, darunter eines außerhalb des Druckers verlegt,
+    zwei Hauptplatinen, die Motoren, den Schlitten und das Netzteil. Beseitigt wurde er
+    ganz ohne Hardware. Ein Firmware-Build, der den Teiler des Referenztakts am
+    LDC1612-Chip des Offset-Sensors halbierte — womit die Referenzfrequenz von 40 MHz auf
+    20 MHz sank —, brachte alle acht Werkzeuge beim ersten Versuch durch die Kalibrierung.
+
+    Die Begründung lässt sich am Datenblatt des Chips prüfen, das die Referenzfrequenz im
+    Einkanalbetrieb, den der INDX nutzt, auf 35 MHz begrenzt — unter dem, was die
+    Standard-Firmware einstellt. Ist das die Ursache, würden Exemplare mit etwas weniger
+    Reserve sporadisch ausfallen, während die meisten weiterlaufen; das würde auch
+    erklären, warum eine Ersatzplatine denselben Fehler bei manchen Besitzern behebt, ohne
+    dass der Fehler je weit verbreitet war.
+
+    Behandeln Sie es als Hinweis, nicht als Behebung: eine Maschine, ein eigener Build,
+    ein Ergebnis, das der Melder noch wiederholte, und eine Darstellung, die nach eigener
+    Angabe mit einem KI-Assistenten verfasst wurde. Keine Quelle verbindet es mit der
+    Kommunikationsbehebung in 6.9.1-beta, obwohl beide dieselbe Sensorverbindung
+    betreffen. Siehe [Firmware-Issue 5473](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473).
 
 ## Fehlercodes, die hierher führen
 
@@ -198,11 +245,18 @@ durch ein Downgrade gelöst haben. Dieser wechselseitige Test — scheitert unte
 funktioniert unter 6.6.3, scheitert erneut unter 6.9.0 — ist es, was die Regression selbst
 gut belegt macht.
 
-Die *Ursache* ist es nicht. Die Sicker-Erklärung ist eine Annäherung der Besitzer im
-Thread und kein Befund des Herstellers; weder eine Diagnose noch eine Behebung wurde
-veröffentlicht. Es ist ein offenes Issue und kann noch neu eingeordnet werden; behandeln
-Sie den Mechanismus als derzeit beste Vermutung und die Regression als den gesicherten
-Teil.
+Die *Ursache* ist nun teilweise geklärt. Wo diese Seite zuvor nur die Annäherung der
+Besitzer an die Sicker-Erklärung hatte, nennen die Versionshinweise der Beta eine
+niedrigere Kalibriertemperatur und eine Behebung von Kommunikationsaussetzern des
+Offset-Sensors, und der Entwickler im Bericht sagte, beides habe eine Rolle gespielt.
+Das ist der Hersteller, der beitragende Ursachen benennt, keine veröffentlichte
+Ursachenanalyse, und die Behebung ist noch eine Beta. Bis eine stabile Version erscheint
+und der Bericht geschlossen wird, behandeln Sie sie als derzeitige Behebung des
+Herstellers, nicht als endgültige.
+
+Der Hinweis auf die Referenzfrequenz des LDC1612 ist ein separater Einzelbericht eines
+anderen Besitzers, vom Hersteller nicht bestätigt, und ist dort, wo er erscheint, als
+`provisional` markiert.
 
 ## Verwandte Seiten
 
