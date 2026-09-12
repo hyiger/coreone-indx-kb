@@ -1,7 +1,7 @@
 ---
 title:        Toolhead collides with finished parts — "Complete individual objects"
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-09-12
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -10,6 +10,8 @@ nozzle:       unknown
 firmware:     unknown
 sources:
   - https://github.com/prusa3d/PrusaSlicer/issues/14298
+  - https://github.com/prusa3d/PrusaSlicer/issues/15672
+  - https://github.com/prusa3d/PrusaSlicer/issues/15778
   - https://kb.nomadsgalaxy.com/topics/core-one/indx/issues/2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy
 superseded_by:
@@ -258,20 +260,25 @@ hardware findings from an XL would not transfer to an INDX. This one does, becau
 limitation is in the slicer rather than the machine — the same feature, in the same
 slicer, failing to account for tool-change travel. What the XL thread corroborates is
 the mechanism and the fact that it goes unfixed, not anything about INDX hardware. The
-INDX sighting remains a single report; what is no longer single-source is the fault
-itself.
+fault itself is no longer single-source, and the INDX side is covered below.
 
-No versions are recorded. The thread names neither a firmware nor a slicer version,
-which matters here: without one, nobody reading later can tell whether a fix has landed.
+**It has now reached the INDX's own slicer tracker, twice.** In September 2026 an INDX
+owner opened [PrusaSlicer issue 15672](https://github.com/prusa3d/PrusaSlicer/issues/15672) describing the
+toolhead crashing into multi-material objects, and reproduced it on a PrusaSlicer 3.0
+alpha — so the next major slicer version does not fix it yet. Days later a different
+owner opened [PrusaSlicer issue 15778](https://github.com/prusa3d/PrusaSlicer/issues/15778) after the
+toolhead struck a finished part at the first tool change of a four-object job on
+PrusaSlicer 2.9.6, with the project file attached.
 
-What would strengthen it further: a second INDX owner reporting the collision, or an
-INDX-specific ticket on the slicer tracker. The existing XL issue is the natural place
-to add one — it already has Prusa's attention and an internal ticket, and a report
-showing the same fault on a second toolchanger is more useful to them than a fresh
-thread. The mechanism being verifiable means such a report can point at the exact
-parameter rather than describing symptoms. Note that
-the Prusa firmware tracker has nothing on it under this description — the entries there
-matching the feature name concern other printers and predate the INDX.
+Only the second of those is new evidence. The first points back to the same community
+write-up this page already cites, so it is that source being carried to the tracker
+rather than an independent sighting. The second comes from an unrelated owner, and it is
+what finally makes the INDX side more than a single report.
+
+Versions are now on record — 2.9.6, and a 3.0 alpha — so a later reader can tell whether
+a fix has landed. The Prusa firmware tracker still has nothing on this for the INDX; the
+entries there matching the feature name concern the XL and predate the INDX, which fits
+the fault living in the slicer.
 
 ## Related
 

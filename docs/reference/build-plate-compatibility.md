@@ -1,7 +1,7 @@
 ---
 title:        Build plate compatibility after the INDX conversion
-confidence:   provisional
-updated:      2026-08-24
+confidence:   reported
+updated:      2026-09-12
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -10,15 +10,11 @@ nozzle:       unknown
 firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kind-of/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/sometimes-tools-dont-stay-in-dock/
 superseded_by:
 ---
 
 # Build plate compatibility after the INDX conversion
-
-!!! warning "Single thread — read the caveat"
-    Several owners report this independently and two posted photographs, but all of it
-    comes from one forum thread. That is not enough to call it `reported` under this
-    site's rules. The physical evidence is good; the sample is narrow.
 
 ## Summary
 
@@ -27,6 +23,11 @@ stop fitting once the INDX tool docks are installed. The plate's front overhang 
 into the parts mounted on the docks. The trap is that these sheets fit a stock Core One
 perfectly well, so if you are converting a printer you already use, your everyday sheet
 may quietly stop being usable on the day you finish the build.
+
+It does not always look like a fit problem. The same interference can nudge tools out of
+their docks once a print is under way while every calibration passes, which reads as a
+docking fault rather than a plate that is too big — and it is not confined to oversized
+sheets, because a plate with a different edge profile can do it as well.
 
 ## Detail
 
@@ -41,6 +42,21 @@ This is geometry, not firmware. No update will retire it.
 affected, and the sheet in question has been fitting the same printer without complaint.
 Owners describe these as their go-to plates, which is precisely why the incompatibility
 is worth knowing about before you start rather than after.
+
+### It can look like a docking fault
+
+In a separate thread, an owner whose tools were not staying put in their docks — with
+dock calibration passing — got two unrelated answers, both pointing at the plate. One
+owner had traced that symptom to a larger-than-stock plate catching the wipers carried
+on the docks, and added that bent or upside-down wipers are worth checking too.
+Another had watched tools get knocked out of their docks after a print started on a
+third-party plate whose profile differs from the stock one, again with calibration
+passing.
+
+The second case is the one to notice, because that plate was never described as
+oversized. What matters is what sits under the docks, not only the footprint. If tools
+are being disturbed in their docks, rule the plate out before suspecting magnets or dock
+calibration — see [tool detection and park failures](../issues/tool-detection-ringdown-decay.md).
 
 ### What owners did about it
 
@@ -72,23 +88,26 @@ Two routes, both reported first-hand:
 
 ## Verification
 
-`provisional` — multiple independent reporters, but a single thread.
+`reported` — independent owners, across two different threads.
 
-Within that thread the evidence is better than the tier suggests. One owner first
-raised the interference as a suspicion, and it was then supported by a photograph of a
-plate touching the docks, by a second owner who had already cut theirs and posted the
-result, and by a third who confirmed the same method and added the technique of using
-the plate's holes to guide a straight cut. A fourth sidestepped it by buying a plate in
-the Prusa size. That is four owners converging, which would ordinarily read as solid.
+The [original thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kind-of/)
+established the interference: one owner raised it, a photograph showed a plate
+touching the docks, and two more owners had already trimmed theirs, while a fourth
+bought a correctly sized plate. That was held at `provisional`, because every one of
+those reports sat in the same discussion.
 
-What holds it at `provisional` is that this site requires corroboration across
-*different* threads, and every one of these reports sits in the same discussion. It is
-also worth noting the thread in question is overwhelmingly shipping and order chatter —
-this finding surfaced only by reading all of it, and it was one of just two durable
-technical items to survive review out of that entire thread.
+A second, unrelated [thread about tools not staying docked](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/sometimes-tools-dont-stay-in-dock/)
+has since supplied the cross-thread corroboration this page said it was waiting for.
+Two owners there independently put the symptom down to a non-stock plate interfering
+with the dock area. That meets this site's bar for `reported`.
 
-What would move it to `reported`: a single report from any other thread, or a vendor
-statement about plate clearance with the docks fitted.
+It also widens the finding a little. The new reports describe a different presentation
+— tools disturbed in their docks, rather than a plate that visibly will not fit — and
+one involves a plate nobody described as oversized. The mechanism is unchanged; the
+range of symptoms and of affected plates is broader than the original thread showed.
+
+Still unverified: how much of an overhang has to come off, which no source gives, and
+whether any particular third-party plate is safe with the docks fitted.
 
 ## Related
 

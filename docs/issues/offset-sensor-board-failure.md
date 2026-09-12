@@ -1,16 +1,18 @@
 ---
 title:        Tool offset calibration fails — contactless offset sensor
 confidence:   reported
-updated:      2026-09-05
+updated:      2026-09-12
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0 for the calibration regression; the board fault is not version-specific
+firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta; the board fault is not version-specific
 sources:
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/offset-sensor-failure/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
@@ -53,25 +55,67 @@ tension, which support may suggest, has not fixed a single reported case.
     the workaround — it trades a calibration failure for a motion system the firmware
     does not model.
 
-    A cause is converging in the thread, though it is not confirmed. Offset calibration
-    heats the tool, the nozzle oozes, and the deposit is enough to spoil the
-    measurement — which is why the on-screen message asks you to check the nozzle is
-    clean. If that is right it is the same mechanism as
+    **Part of the cause is now confirmed by the vendor's own fix.** The beta release
+    notes name two changes aimed at exactly this failure: tool offset calibration runs
+    at a lower temperature, and the communication between the offset sensor and the
+    main board was reconfigured to stop dropouts. The first is the ooze explanation
+    owners had converged on — the nozzle oozes while it is heated for calibration and
+    the deposit spoils the measurement, which is why the on-screen message asks you to
+    check the nozzle is clean. The second is something the thread had not identified.
+    The ooze half is the same mechanism as
     [oozing during probing](oozing-during-probing-and-calibration.md), with the
-    important difference noted there: the calibration temperature is fixed in firmware,
-    so the slicer-side workarounds on that page do not reach it.
+    difference noted there: the calibration temperature is fixed in firmware, so that
+    page's slicer-side workarounds could never reach it. It needed a firmware change.
 
     **One configuration trap worth clearing first.** 6.9.0 added support for the newer
     1.5 GT belts. If your machine does not have them, that option must be off — it
     changes the geometry enough to matter. Several owners checked and found their
     settings already correct, so it is not the whole story, but it is free to rule out.
 
-    A vendor developer is engaged on the report and has asked owners for printer logs,
-    which is the single most useful thing you can contribute if you are affected. It
-    remains open and unfixed, so there is nothing to point at beyond retrying and
-    downgrading. Check the issue for the current state before starting an RMA. The
-    firmware links an official help article for this error code, which owners say did
-    not resolve it.
+    **There is a vendor fix, in beta.** After investigating with input from owners on
+    the report and tracking the fault internally, the vendor published
+    [6.9.1-beta](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta)
+    for the Core One INDX on 10 September 2026. Alongside the temperature and
+    communication changes it lets calibration retry
+    its Z probing up to 10 times instead of 3, and lists a fix for tool offset recovery. The calibration
+    temperatures themselves are in the release notes and are not repeated here. Several
+    owners on the report say calibration now passes first time where it had been failing
+    every time.
+
+    It is a beta, and not yet clean for everyone. One owner reports a thermal runaway
+    after the first filament change on it, which the developer asked to be filed as a
+    separate bug; another finds calibration passing reliably but nozzles coming out
+    noticeably dirtier. Neither is confirmed beyond its reporter.
+
+    For owners with the newer belts it also removes the dilemma above: the beta is INDX
+    firmware that keeps 1.5 GT support, so moving forward replaces downgrading as the
+    way out. Check the report for whether a stable 6.9.1 has shipped before installing a
+    beta. The firmware links an official help article for this error code, which owners
+    say did not resolve it.
+
+!!! note "A lead: some offset sensor board failures may be a clock setting"
+    `provisional` — one report, and its author says it is not yet proven.
+
+    An owner who hit the sensor's first-sample failure on both 6.6.3 and 6.9.0 replaced
+    nearly everything in the signal path without clearing it: two offset sensor boards,
+    several cables including one run outside the printer, two main boards, the motors,
+    the carriage and the power supply. What cleared it involved no hardware at all. A
+    firmware build that doubled the reference clock divider on the offset sensor's LDC1612
+    chip — taking its reference frequency from 40 MHz to 20 MHz — got all eight tools
+    through calibration at the first try.
+
+    The reasoning can be checked against the chip's datasheet, which caps the reference
+    frequency at 35 MHz in the single-channel mode the INDX uses — below what the stock
+    firmware sets. If that is the cause, units with a little less margin would fail
+    intermittently while most carry on working, which would also account for a
+    replacement board curing the same error for some owners without the fault ever
+    being widespread.
+
+    Treat it as a lead rather than a fix: one machine, a custom build, a result the
+    reporter was still repeating, and a write-up they disclosed was drafted with an AI
+    assistant. No source connects it to the communication fix in 6.9.1-beta, although
+    both concern the same sensor link. See
+    [firmware issue 5473](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473).
 
 ## Error codes that lead here
 
@@ -180,10 +224,16 @@ thread of independent reporters on both machine sizes, several of whom resolved 
 downgrading. That reciprocal test — fails on 6.9.0, works on 6.6.3, fails again on
 6.9.0 — is what makes the regression itself well supported.
 
-The *cause* is not. The oozing explanation is owners converging in the thread, not a
-vendor finding, and no fix or diagnosis has been published. It is an open issue, so it
-may still be reclassified; treat the mechanism as the current best guess and the
-regression as the established part.
+The *cause* is now partly established. Where this page previously had only owners
+converging on ooze, the vendor's beta release notes name a lower calibration
+temperature and a fix for offset sensor communication dropouts, and the developer on
+the report said both mattered. That is the vendor naming contributing causes, not a
+published root-cause analysis, and the fix is still a beta. Until a stable release
+ships and the report closes, treat it as the vendor's current fix rather than a
+settled one.
+
+The LDC1612 reference-frequency lead is a separate single report from a different
+owner, unconfirmed by the vendor, and is marked `provisional` where it appears.
 
 ## Related
 
