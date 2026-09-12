@@ -17,7 +17,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   437911e3887a190fed590368706ca658de41ef1176ceae243a7e61a5c274f2bd
+source_sha:   b897be113052f30c85235278e088ed9a4c102bf7096b852daf03c80e3dfd4468
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 
@@ -110,7 +110,7 @@ einzigen berichteten Fall behoben.
     Offset-Sensorplatinen, mehrere Kabel, darunter eines außerhalb des Druckers verlegt,
     zwei Hauptplatinen, die Motoren, den Schlitten und das Netzteil. Beseitigt wurde er
     ganz ohne Hardware. Ein Firmware-Build, der den Teiler des Referenztakts am
-    LDC1612-Chip des Offset-Sensors halbierte — womit die Referenzfrequenz von 40 MHz auf
+    LDC1612-Chip des Offset-Sensors verdoppelte — womit die Referenzfrequenz von 40 MHz auf
     20 MHz sank —, brachte alle acht Werkzeuge beim ersten Versuch durch die Kalibrierung.
 
     Die Begründung lässt sich am Datenblatt des Chips prüfen, das die Referenzfrequenz im

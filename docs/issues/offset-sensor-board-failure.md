@@ -100,7 +100,7 @@ tension, which support may suggest, has not fixed a single reported case.
     nearly everything in the signal path without clearing it: two offset sensor boards,
     several cables including one run outside the printer, two main boards, the motors,
     the carriage and the power supply. What cleared it involved no hardware at all. A
-    firmware build that halved the reference clock divider on the offset sensor's LDC1612
+    firmware build that doubled the reference clock divider on the offset sensor's LDC1612
     chip — taking its reference frequency from 40 MHz to 20 MHz — got all eight tools
     through calibration at the first try.
 
