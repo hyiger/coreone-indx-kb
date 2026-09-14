@@ -14,7 +14,7 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/common/probe_analysis.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/marlin_stubs/G162.cpp
 superseded_by:
-source_sha:   0f73100723fc1e5ba3450bde34d65e2a54d0973cac04e4e74799a2ca627fe719
+source_sha:   43e4b53440f6a0d9282e32d8723e1319d1516b34e705f143233c3ebdbde6f206
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl: Bett in Z nicht ausgerichtet
 
@@ -25,11 +25,10 @@ Offsetsensor-Platine fehlschlagen, obwohl die Düsenspitzen sauber sind, der Sen
 sauber ist und kein Filament geladen ist, weil das Bett in Z nicht ausgerichtet ist.
 Bei einem Besitzer auf 6.9.1-beta schlug die Kalibrierung von einem Durchlauf zum
 nächsten an einem anderen Werkzeug fehl, und ein Ferritkern am Werkzeugkopfkabel
-änderte nichts. Das Ausführen von Z Alignment Calibration, das das Bett bis an das
-untere Ende seines Verfahrwegs fährt, um den Schlitten auf seinen Gewindespindeln
-gerade zu stellen, beseitigte den Fehler beim ersten Versuch. Es kostet nichts und kann
-nichts verschlimmern; führen Sie es also aus, bevor Sie die Sensorplatine oder die
-Wägezelle verdächtigen.
+änderte nichts. Der Besitzer fuhr das Bett an das untere Ende seines Verfahrwegs, um
+seine Ebene zurückzusetzen, was genau Z Alignment Calibration tut, und der Fehler
+verschwand. Z Alignment Calibration kostet nichts und kann nichts verschlimmern;
+führen Sie es also aus, bevor Sie die Sensorplatine oder die Wägezelle verdächtigen.
 
 ## Fehlercodes, die hierher führen
 
@@ -90,13 +89,13 @@ Was diesen Fehler leicht fehldeuten lässt:
 
 1. **Führen Sie Z Alignment Calibration aus**, unter Control, dann Calibrations &
    tests. Der Vorgang referenziert Z, fährt das Bett bis an das untere Ende seines
-   Verfahrwegs und drückt ein kurzes Stück über den mechanischen Anschlag hinaus, sodass
-   der Z-Antrieb am Rahmen Schritte überspringt, bis der Schlitten gerade sitzt. Das
-   ist es, was die Ausrichtung zurücksetzt. Der Besitzer beschrieb es so, dass er das
-   Bett an den Boden des Druckers gefahren hat, um die Ebene zurückzusetzen, was
-   dasselbe ist, nur über das Menü.
+   Verfahrwegs und drückt ein kurzes Stück über den mechanischen Anschlag hinaus,
+   sodass der Z-Antrieb am Rahmen Schritte überspringt, bis der Schlitten gerade
+   sitzt. Das ist es, was die Ausrichtung zurücksetzt. Der Besitzer beschrieb das
+   eigene Vorgehen als das Fahren des Betts an den Boden des Druckers, um die Ebene
+   zurückzusetzen; genau diesen Schritt führt der Vorgang aus.
 2. **Führen Sie die Werkzeug-Offset-Kalibrierung erneut aus.** An der gemeldeten
-   Maschine bestand sie danach beim ersten Versuch.
+   Maschine war der Fehler danach verschwunden.
 3. **Wenn sie weiterhin fehlschlägt**, empfiehlt der Artikel des Herstellers zum
    unebenen Bett, das Bett nach unten zu fahren, die Trapezmuttern zu lösen und zu
    prüfen, ob sie frei auf den Gewindespindeln laufen. Zeichnen Sie danach ein
@@ -121,7 +120,8 @@ die Werkzeug-Offset-Kalibrierung wiederholt fehl, wobei das fehlschlagende Werkz
 zwischen den Durchläufen wechselte, mit sauberen Düsenspitzen, sauberer Sensorplatine
 und ohne geladenes Filament. Das Log zeigte Berührungen, die erfasst und mit
 `angle_after` verworfen wurden. Ein Ferritkern am Werkzeugkopfkabel machte keinen
-Unterschied. Nach Z Alignment Calibration bestand dieselbe Kalibrierung.
+Unterschied. Nachdem der Besitzer das Bett an das untere Ende seines Verfahrwegs
+gefahren hatte, um seine Ebene zurückzusetzen, war der Fehler verschwunden.
 
 Der obige Mechanismus ist die Lesart des Autors vom Abtast-Klassifizierer der Firmware,
 abgeglichen mit diesem Log. Er passt, ist aber weder vom Hersteller bestätigt noch an
