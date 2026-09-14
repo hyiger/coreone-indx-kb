@@ -1,7 +1,7 @@
 ---
 title:        Tool offset calibration fails — contactless offset sensor
 confidence:   reported
-updated:      2026-09-12
+updated:      2026-09-14
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -237,6 +237,9 @@ owner, unconfirmed by the vendor, and is marked `provisional` where it appears.
 
 ## Related
 
+- [Bed not aligned in Z](tool-offset-bed-z-alignment.md) — the same error code on a
+  clean machine with nothing loaded; a free calibration to run before suspecting the
+  board
 - [Probing fails or nozzle never touches the bed](loadcell-emi-noise.md) — the other
   sensor, frequently confused with this one
 - [Assembly notes](../reference/assembly-notes.md) — if this is failing on a

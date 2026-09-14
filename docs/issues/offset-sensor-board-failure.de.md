@@ -1,7 +1,7 @@
 ---
 title:        Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 confidence:   reported
-updated:      2026-09-12
+updated:      2026-09-14
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -17,7 +17,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   b897be113052f30c85235278e088ed9a4c102bf7096b852daf03c80e3dfd4468
+source_sha:   4a0dec7807cf477e90a0c598b6ea9b884965e2842f7629066861885e1caea9a6
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 
@@ -260,6 +260,9 @@ anderen Besitzers, vom Hersteller nicht bestätigt, und ist dort, wo er erschein
 
 ## Verwandte Seiten
 
+- [Bett in Z nicht ausgerichtet](tool-offset-bed-z-alignment.md) — derselbe Fehlercode
+  an einer sauberen Maschine ohne geladenes Filament; eine kostenlose Kalibrierung, die
+  vor dem Verdacht auf die Platine auszuführen ist
 - [Probing schlägt fehl oder die Düse berührt das Bett nie](loadcell-emi-noise.md) — der
   andere Sensor, häufig mit diesem verwechselt
 - [Montagehinweise](../reference/assembly-notes.md) — wenn dies an einer frisch

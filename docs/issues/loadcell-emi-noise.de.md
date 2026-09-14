@@ -1,7 +1,7 @@
 ---
 title:        Probing schlägt fehl oder die Düse berührt das Bett nie — Rauschen im Wägezellensignal
 confidence:   reported
-updated:      2026-08-25
+updated:      2026-09-14
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -14,7 +14,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
 superseded_by:
-source_sha:   296bf4c0bd31f2aa1f0b3144ae416aec8e3d0617b1a14f2ec730e8f23bfa905e
+source_sha:   d3cb6c10df7849ff1b2ac35e0d74d5d18d077364391eec06456bb67ac48ad357
 ---
 # Probing schlägt fehl oder die Düse berührt das Bett nie — Rauschen im Wägezellensignal
 
@@ -149,6 +149,9 @@ oben zurückgehalten.
 - [Oozing verdirbt Bettabtastung und Werkzeugkalibrierung](oozing-during-probing-and-calibration.md)
   — eine völlig andere Ursache mit überlappendem Symptom, die auszuschließen sich lohnt.
   Wenn sich vor dem Kontakt Material an der Düse ansammelt, ist es die andere.
+- [Werkzeug-Offset-Kalibrierung schlägt fehl: Bett in Z nicht ausgerichtet](tool-offset-bed-z-alignment.md)
+  — ein mechanischer Fehler, der an einer Maschine für Wägezellen-Störungen gehalten
+  wurde; ein Ferritkern hat dagegen nichts ausgerichtet
 - [Wen Sie kontaktieren](support-and-warranty-path.md) — falls es zu einer
   Ersatzteilanfrage kommt: zuerst Diagnose von Prusa, dann die Hardware von Bondtech.
 - [Montagehinweise](../reference/assembly-notes.md) — wenn der Wägezellentest seit dem

@@ -1,7 +1,7 @@
 ---
 title:        Probleme
 confidence:   unknown
-updated:      2026-08-24
+updated:      2026-09-14
 author:       hyiger
 printer:      unknown
 toolhead:     unknown
@@ -10,7 +10,7 @@ nozzle:       unknown
 firmware:     unknown
 sources:      []
 superseded_by:
-source_sha:   a3bfa0859145e13f23967b56c19bb8011997e1b96469f983a5782d44c4184c2c
+source_sha:   c59756536289bc40767cca89a515214e15750feda22d7f9c6c86de63a8d5bc59
 ---
 # Probleme
 
@@ -56,6 +56,10 @@ falscher Wert kostet den Leser ein Bauteil, einen Druck oder eine Gewährleistun
 - [Werkzeug-Offset-Kalibrierung schlägt fehl](offset-sensor-board-failure.md) — der
   berührungslose Offsetsensor liefert keine Messwerte, sodass die Kalibrierung keine
   Grundlage hat. Meist die Sensorplatine.
+- [Werkzeug-Offset-Kalibrierung schlägt bei sauberer Düse und ohne Filament fehl](tool-offset-bed-z-alignment.md)
+  — das Bett ist in Z nicht ausgerichtet und gibt bei der Z-Berührung unter der Düse
+  nach. Führen Sie Z Alignment Calibration aus, bevor Sie die Platine verdächtigen.
+  *Einzelquelle.*
 - [Oozing verdirbt Bettabtastung und Werkzeugkalibrierung](oozing-during-probing-and-calibration.md)
   — Material dort, wo die Maschine eine Messung vornehmen will. Beginnen Sie damit, das
   Fenster des Offsetsensors zu reinigen.
@@ -101,7 +105,7 @@ abgebildet werden:
 | `36125` | Tool pickup failed | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
 | `36127` | Tool park failed | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
 | `36128` | Retry tool park | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
-| `36130` | Tool offset failed | [Werkzeug-Offset-Kalibrierung](offset-sensor-board-failure.md) |
+| `36130` | Tool offset failed | [Werkzeug-Offset-Kalibrierung](offset-sensor-board-failure.md), oder [Bettausrichtung](tool-offset-bed-z-alignment.md) bei sauberer Düse und ohne geladenes Filament |
 | `36135` | Toolchanger error | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
 | `36136` | Calibrate dock from menu | [Werkzeug-Offset-Kalibrierung](offset-sensor-board-failure.md) |
 | `36202` | Hotend preheat error | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
@@ -122,6 +126,7 @@ schnellsten Unterscheidungsmerkmale:
 |---|---|
 | Das Abtasten stoppt, während die Düse **sichtbar** weit vom Druckblech entfernt ist | [Störungen der Wägezelle](loadcell-emi-noise.md) |
 | Die Bettabtastung funktioniert, aber die **Werkzeug-Offset-Kalibrierung** schlägt fehl | [Offsetsensor](offset-sensor-board-failure.md) |
+| Die Werkzeug-Offset-Kalibrierung schlägt an einer **sauberen, entladenen** Maschine fehl, bei jedem Durchlauf an einem anderen Werkzeug | [Bettausrichtung](tool-offset-bed-z-alignment.md) |
 | Material sammelt sich an der Düse, Ablagerungen bleiben auf dem Druckblech zurück | [Oozing](oozing-during-probing-and-calibration.md) |
 | Die Fehler folgen auf ein **Firmware-Update**, statt allmählich aufzutreten | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
 

@@ -1,7 +1,7 @@
 ---
 title:        Probing fails or nozzle never touches the bed — loadcell noise
 confidence:   reported
-updated:      2026-08-25
+updated:      2026-09-14
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -135,6 +135,9 @@ value bands and ferrite specifications are single-source and withheld above.
 - [Oozing spoils bed probing and tool calibration](oozing-during-probing-and-calibration.md)
   — a completely different cause with an overlapping symptom, worth ruling out. If
   material is accumulating on the nozzle before contact, that is the other one.
+- [Tool offset calibration fails: bed not aligned in Z](tool-offset-bed-z-alignment.md)
+  — a mechanical fault that was taken for loadcell noise on one machine; a ferrite
+  core did nothing for it
 - [Who to contact](support-and-warranty-path.md) — if it comes to a parts request:
   diagnosis from Prusa first, then the hardware from Bondtech.
 - [Assembly notes](../reference/assembly-notes.md) — if the loadcell test has been

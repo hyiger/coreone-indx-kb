@@ -1,7 +1,7 @@
 ---
 title:        Issues
 confidence:   unknown
-updated:      2026-08-24
+updated:      2026-09-14
 author:       hyiger
 printer:      unknown
 toolhead:     unknown
@@ -54,6 +54,9 @@ reader a part, a print, or a warranty window.
 - [Tool offset calibration fails](offset-sensor-board-failure.md) — the contactless
   offset sensor returns no samples, so calibration has nothing to work with. Usually
   the sensor board.
+- [Tool offset calibration fails with a clean nozzle and nothing loaded](tool-offset-bed-z-alignment.md)
+  — the bed is out of alignment in Z and gives way under the nozzle during the Z
+  touch. Run Z Alignment Calibration before suspecting the board. *Single source.*
 - [Oozing spoils bed probing and tool calibration](oozing-during-probing-and-calibration.md)
   — material where the machine is trying to take a measurement. Start by cleaning the
   offset sensor window.
@@ -96,7 +99,7 @@ The `361xx` block is the toolchanger family. These are the codes that map onto a
 | `36125` | Tool pickup failed | [Tool detection](tool-detection-ringdown-decay.md) |
 | `36127` | Tool park failed | [Tool detection](tool-detection-ringdown-decay.md) |
 | `36128` | Retry tool park | [Tool detection](tool-detection-ringdown-decay.md) |
-| `36130` | Tool offset failed | [Tool offset calibration](offset-sensor-board-failure.md) |
+| `36130` | Tool offset failed | [Tool offset calibration](offset-sensor-board-failure.md), or [bed alignment](tool-offset-bed-z-alignment.md) with a clean nozzle and nothing loaded |
 | `36135` | Toolchanger error | [Tool detection](tool-detection-ringdown-decay.md) |
 | `36136` | Calibrate dock from menu | [Tool offset calibration](offset-sensor-board-failure.md) |
 | `36202` | Hotend preheat error | [Tool detection](tool-detection-ringdown-decay.md) |
@@ -115,6 +118,7 @@ unrelated causes present through the same two error paths. The quickest discrimi
 |---|---|
 | Probing stops with the nozzle **visibly** nowhere near the sheet | [Loadcell noise](loadcell-emi-noise.md) |
 | Bed probing is fine, but **tool offset calibration** fails | [Offset sensor](offset-sensor-board-failure.md) |
+| Tool offset calibration fails on a **clean, unloaded** machine, on a different tool each run | [Bed alignment](tool-offset-bed-z-alignment.md) |
 | Material is building on the nozzle, deposits left on the sheet | [Oozing](oozing-during-probing-and-calibration.md) |
 | Failures follow a **firmware update** rather than appearing gradually | [Tool detection](tool-detection-ringdown-decay.md) |
 

@@ -44,6 +44,7 @@ plugins:
             Tool detection and park failures: Werkzeugerkennung und Parkfehler
             Probing and loadcell noise: Abtastung und Wägezellen-Störungen
             Tool offset calibration: Werkzeug-Offset-Kalibrierung
+            Bed not aligned in Z: Bett in Z nicht ausgerichtet
             Oozing during probing: Nachsickern beim Abtasten
             Wiper, purge and blobs: Abstreifer, Spülen und Blobs
             Diagonal banding: Diagonale Streifenbildung
@@ -79,6 +80,7 @@ nav:
       - Tool detection and park failures: issues/tool-detection-ringdown-decay.md
       - Probing and loadcell noise: issues/loadcell-emi-noise.md
       - Tool offset calibration: issues/offset-sensor-board-failure.md
+      - Bed not aligned in Z: issues/tool-offset-bed-z-alignment.md
       - Oozing during probing: issues/oozing-during-probing-and-calibration.md
       - Wiper, purge and blobs: issues/stringing-and-wiper-calibration.md
       - Diagonal banding: issues/diagonal-banding.md
