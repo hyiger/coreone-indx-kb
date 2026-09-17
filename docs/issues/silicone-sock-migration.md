@@ -1,7 +1,7 @@
 ---
 title:        Silicone sock migration over the temperature sensor
 confidence:   provisional
-updated:      2026-09-12
+updated:      2026-09-16
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -12,6 +12,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-maintenance/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/filament-blobs-can-tear-the-silicon-sock-on-indx-nozzles/
 superseded_by:
 ---
 
@@ -99,17 +100,26 @@ seconds and it is reversible.
 **Seat it back down.** Every account of migration describes simply pushing the sock
 back into position, and none needed a replacement part to do it.
 
-**Do not remove the sock to stop it migrating.** It is the tempting fix and the wrong
-one. This page's author read the firmware source and concluded that the nozzle's
-temperature measurement assumes a sock is fitted, so running without one is likely to
-throw the reading far enough off to risk a thermal runaway error. That is an inference
-from source rather than a test, but the downside is serious enough to respect.
+**Running briefly without a sock is fine, per the vendor — but it is not a fix.** The
+vendor's after-sales support, answering this page's author directly, says a tool can run
+without its sock for a short while without any problem. That takes precedence over an
+earlier warning on this page, which rested on the author's own reading of the firmware
+source: that the nozzle's temperature measurement assumes a sock is fitted, so running
+bare could push the reading far enough off to trip a thermal runaway error. The two are
+not far apart. The vendor's answer covers a short while, and the concern was never
+tested — so treat a missing sock as a stopgap until a replacement arrives, not as a way
+to stop migration or a permanent state.
 
 **Inspect the socks from time to time.** With no known trigger and no fix, looking is
 the only defense. It is worth a look after a blob in particular: on the author's
 machine a lump of PCTG stuck to a nozzle tip was dragged through the wiper hard enough
-to tear the sock. Spares were not included in the kit and could not be found in the
-vendor's shop at the time of writing, so a torn sock may mean a wait.
+to tear the sock. Spares were not included in the kit. The vendor has since told this page's author
+that socks will soon be sold on its store as a five-pack, at 4.90 USD when announced in
+September 2026; another owner was told by Prusa's support that socks will be stocked
+there later too; other INDX spares such as sensor boards and silicone
+wipers are reportedly already in Prusa's shop. For this page's author, shipping and import
+charges came to several times the price of the sock itself, so until a nearer source has
+them a torn sock may still mean a wait and a bill.
 
 **Clean the tip if material has already baked on.** See
 [oozing during probing](oozing-during-probing-and-calibration.md) for the
@@ -141,8 +151,16 @@ inferred.
 
 The suggestion that the nozzle or sock needs a design revision is this author's
 conclusion, not a vendor position, and is recorded as opinion rather than finding. So
-are three later additions, all the author's own and each from a single machine: the
-advice not to remove the sock, the sock torn by a blob, and spares being unavailable.
+are two later additions, the author's own and from a single machine: the sock torn by a
+blob, and what spares cost to ship.
+
+The guidance on running without a sock, and the coming five-pack, are the vendor's —
+but they arrived as a private reply to this page's author, so they are first-party yet
+uncheckable by a reader, and are marked `provisional` here for that reason. They replace
+an earlier warning against removing the sock that was the author's inference from
+firmware source and never tested. What Prusa's support said about stocking socks is
+relayed from another owner's replies in a [thread the author started](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/filament-blobs-can-tear-the-silicon-sock-on-indx-nozzles/), and is
+not published by either company.
 
 What would move this to `reported`: a second owner describing the full sequence —
 displaced sock, then overheating, then caking, then failed calibration — in a citable

@@ -1,7 +1,7 @@
 ---
 title:        Build plate compatibility after the INDX conversion
 confidence:   reported
-updated:      2026-09-12
+updated:      2026-09-16
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -57,6 +57,8 @@ The second case is the one to notice, because that plate was never described as
 oversized. What matters is what sits under the docks, not only the footprint. If tools
 are being disturbed in their docks, rule the plate out before suspecting magnets or dock
 calibration — see [tool detection and park failures](../issues/tool-detection-ringdown-decay.md).
+The owner who asked has since confirmed the plate was the main cause, and trimmed theirs
+to stock size.
 
 ### What owners did about it
 

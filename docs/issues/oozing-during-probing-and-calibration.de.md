@@ -1,7 +1,7 @@
 ---
 title:        Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 confidence:   reported
-updated:      2026-09-05
+updated:      2026-09-16
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -11,10 +11,12 @@ firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/petg-oozing-and-impeding-bed-probing/
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-pc-on-indx-oozing-at-bed-probing-leveling/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/psa-if-you-are-struggling-with-tool-offset-calibration-failing-non-stop-at-the-start-of-a-print-get-firmware-6-9-1/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5483
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   a3c7a01fe916419b28eae798e715cf63f285966e2d9552c4bd3e8d593cf16fbc
+source_sha:   22f0b4020536ed34446dcb15576162c159173ddc4ae3d621cef680b31c8f685e
 ---
 # Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 
@@ -93,8 +95,10 @@ davon, was anderswo geladen ist.
 Der berichtete Workaround ist elegant, sofern er trägt: Es genügt, im Slicer für T1 ein
 Niedertemperatur-Filament zu *deklarieren* — das physische Filament muss gar nicht
 vorhanden sein —, was erklären würde, warum Aufträge, die aus Profilen mit einem
-angenommenen Niedertemperaturmaterial gesliced wurden, das Problem nie zeigten. Es gibt
-außerdem einen Ansatz über den Start-G-Code, der die Abtasttemperatur vor dem Block für
+angenommenen Niedertemperaturmaterial gesliced wurden, das Problem nie zeigten. Im Standardprofil, das diese
+Website wiedergibt, ist die Regel allerdings an das Startwerkzeug des Drucks gebunden und
+nicht an T1 — lesen Sie den PC-Abschnitt weiter unten, bevor Sie sich darauf verlassen. Es
+gibt außerdem einen Ansatz über den Start-G-Code, der die Abtasttemperatur vor dem Block für
 das Mesh Bed Leveling erzwingt, indem der erzeugte Temperaturbefehl durch einen festen
 ersetzt wird.
 
@@ -116,23 +120,50 @@ aus einer einzigen Quelle. Es gibt zudem eine verwandte Slicer-Falle, bei der di
 **Das Konstruktionsmaterial ist PC.** Ein [zweiter Besitzer](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-pc-on-indx-oozing-at-bed-probing-leveling/) geriet damit an
 PC Blend und beschrieb es von der anderen Seite: Die Abtastung lief heiß genug, um auf
 das Blech zu sickern und das Leveling scheitern zu lassen, und ein händisches Absenken
-der Düsentemperatur beim nächsten Versuch behob es vollständig. Damit steht „mindestens
+der Düsentemperatur beim nächsten Versuch behob es vollständig. Damit stand „mindestens
 ein Konstruktionsmaterial tastet weiterhin heiß ab“ nicht mehr auf einem einzigen
-Bericht und hat einen Namen.
+Bericht und bekam einen Namen, und es ist seither nicht bei einem Besitzer geblieben. Ein
+weiterer Besitzer im selben Thread, einer in einem [anderen Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/psa-if-you-are-struggling-with-tool-offset-calibration-failing-non-stop-at-the-start-of-a-print-get-firmware-6-9-1/) und ein
+[Firmware-Issue](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5483) beschreiben alle, dass PC Blend beim Abtasten des Betts
+scheitert, bis die Temperatur sinkt.
 
-Zwei Punkte aus diesem Bericht schärfen das Bild. Es gibt **kein eigenes Feld für die
-Abtasttemperatur** im Slicer — der Besitzer suchte die Temperaturen für die erste und
-die weiteren Schichten durch und fand nichts, was die Phase vor dem Druck steuert. Das
-heißt nicht, dass keine Einstellung sie beeinflusst: Die oben beschriebene Ableitung
-über T1 ist genau ein solcher Hebel, weshalb die Workarounds hier indirekt sind statt
-ein Häkchen namens „Abtasttemperatur“. Und die slicereigene **Option zur
-Sickerverhinderung half nicht**, sodass es einen Druck kostet, zuerst danach zu greifen.
+**Woher die Temperatur kommt.** Es gibt **kein eigenes Feld für die Abtasttemperatur** im
+Slicer, wohl aber eine Regel. Der Standard-Start-G-Code des Druckers ermittelt die
+Abtasttemperatur aus dem Filament des **Startwerkzeugs** des Drucks — des ersten
+Werkzeugs, das der Druck tatsächlich nutzt — und behandelt PC und PA gesondert:
+mit einem festen Abstand unter der Temperatur der ersten Schicht. Das kommentierte Profil
+gibt diesen Ausdruck in seinem Abschnitt zu den globalen Variablen und der
+Abtasttemperatur wieder — siehe [kommentiertes Profil](../gcode/indx-profile-gcode.md). An
+diese Regel stoßen diese Besitzer immer wieder.
 
-TODO(verify): Jener Bericht nennt sowohl die Temperatur, mit der abgetastet wurde, als
-auch die niedrigere, die funktionierte. Keine von beiden wird hier veröffentlicht. Ein
-einzelner Forenbericht ist nicht die Hardware-Bestätigung, die diese Seite verlangt,
-bevor eine Temperatur auf ihr erscheint — aber er ist ein Hinweis, und es ist dieselbe
-Angabe, nach der die Markierung weiter oben fragt.
+**Startwerkzeug, nicht T1.** Dieser Ausdruck liest das Filament von `initial_tool`, und
+das ist nicht das weiter oben berichtete T1-Verhalten. Beide wählen nur dann dasselbe
+Filament, wenn ein Druck auf T1 beginnt. Bei einem Druck, der auf einem anderen Werkzeug
+beginnt, zeigen sie auf verschiedene Presets — in diesem Profil hilft es also nicht, für
+T1 ein Niedertemperatur-Filament zu deklarieren, wenn der Druck auf T3 beginnt;
+maßgeblich ist das Filament, mit dem Ihr Druck startet. Ob der frühere T1-Bericht ein
+älteres Profil oder einen anderen Maschinenzustand beschreibt, ist nicht geklärt.
+
+**6.9.1-beta ändert daran nichts.** Die Beta senkte die Temperatur für die
+*Werkzeug-Offset-Kalibrierung*, einen eigenen Firmware-Schritt. Die Temperatur beim
+Abtasten des Betts stammt aus dem Slicer-Profil, weshalb PC Blend auch unter der Beta
+weiterhin heiß abtastet.
+
+**Anpassen.** Ein Besitzer vergrößerte den PC-Abstand im Start-G-Code des Druckers, und
+die Fehlschläge hörten auf. Der Haken, auf den er selbst hinwies: Ein
+Konfigurationsupdate des Druckers ersetzt den Start-G-Code, sodass die Änderung nach
+jedem Update neu vorgenommen werden muss. Derselbe Ausdruck prüft außerdem die
+Filamentnotizen des Startwerkzeugs auf eine Überschreibungsmarke, bevor er überhaupt
+den PC-Fall erreicht; das deutet auf einen Weg je Filament hin, der solche Updates
+überstehen würde — doch das ist eine Lesart des Profils und nichts, das ein Besitzer als
+getestet berichtet hat. Und die slicereigene **Option zur Sickerverhinderung half
+nicht**, sodass es einen Druck kostet, zuerst danach zu greifen.
+
+TODO(verify): Diese Berichte nennen die Temperatur, mit der PC abgetastet wurde, die
+niedrigeren, die funktionierten, und den angepassten Abstand. Nichts davon wird hier
+veröffentlicht. Forenbeiträge und ein Fehlerbericht sind nicht die Hardware-Bestätigung,
+die diese Seite verlangt, bevor eine Temperatur auf ihr erscheint — aber sie sind
+Hinweise, und es ist dieselbe Angabe, nach der die Markierung weiter oben fragt.
 
 ### Wenn nichts davon hilft
 

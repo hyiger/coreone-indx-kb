@@ -24,9 +24,9 @@ Tool offset calibration can fail with the same error code as a faulty offset sen
 board on a machine where the nozzle tips are clean, the sensor is clean and no
 filament is loaded, because the bed is out of alignment in Z. One owner on 6.9.1-beta
 had calibration fail on a different tool from one run to the next, and a ferrite core
-on the toolhead cable changed nothing. Running Z Alignment Calibration, which drives
-the bed to the bottom of its travel to square the carriage on its lead screws, cleared
-the failure at the first attempt. It costs nothing and cannot make anything worse, so
+on the toolhead cable changed nothing. The owner moved the bed to the bottom of its
+travel to reset its level, which is what Z Alignment Calibration does, and the failure
+went away. Z Alignment Calibration costs nothing and cannot make anything worse, so
 run it before you suspect the sensor board or the loadcell.
 
 ## Error codes that lead here
@@ -83,11 +83,11 @@ What makes this fault easy to misread:
 1. **Run Z Alignment Calibration**, under Control, then Calibrations & tests. The
    procedure homes Z, drives the bed to the bottom of its travel and pushes a short
    distance past the hard stop, so that the Z drive skips against the frame until the
-   carriage sits square. That is what resets the alignment. The owner described it as
-   moving the bed to the bottom of the printer to reset the level, which is the same
-   thing done through the menu.
-2. **Run tool offset calibration again.** On the reported machine it passed at the
-   first attempt afterwards.
+   carriage sits square. That is what resets the alignment. The owner described what
+   they did as moving the bed to the bottom of the printer to reset the level, which
+   is the step this procedure performs.
+2. **Run tool offset calibration again.** On the reported machine the failure was gone
+   afterwards.
 3. **If it still fails**, the vendor's uneven bed article says to move the bed down,
    loosen the trapezoid nuts and check that they travel freely on the lead screws.
    After that, capture a serial log and go to the
@@ -109,7 +109,8 @@ link for the report itself. What is on record: on 6.9.1-beta, tool offset calibr
 failed repeatedly with the failing tool changing between runs, with clean nozzle tips,
 a clean sensor board and no filament loaded. The log showed touches being taken and
 rejected with `angle_after`. A ferrite core on the toolhead cable made no difference.
-After Z Alignment Calibration the same calibration passed.
+After the owner moved the bed to the bottom of its travel to reset its level, the
+failure went away.
 
 The mechanism above is the author's reading of the firmware's probe classifier against
 that log. It fits, but it has not been confirmed by the vendor or reproduced on another

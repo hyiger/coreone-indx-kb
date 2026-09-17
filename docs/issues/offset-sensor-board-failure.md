@@ -1,7 +1,7 @@
 ---
 title:        Tool offset calibration fails — contactless offset sensor
 confidence:   reported
-updated:      2026-09-14
+updated:      2026-09-16
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -13,6 +13,7 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/offset-sensor-failure/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
@@ -80,12 +81,18 @@ tension, which support may suggest, has not fixed a single reported case.
     its Z probing up to 10 times instead of 3, and lists a fix for tool offset recovery. The calibration
     temperatures themselves are in the release notes and are not repeated here. Several
     owners on the report say calibration now passes first time where it had been failing
-    every time.
+    every time, and the owner who opened it has since said the beta fixes it for them and
+    that it could be closed. It does not touch the temperature used for bed probing,
+    which comes from the slicer profile rather than firmware — see
+    [oozing during probing](oozing-during-probing-and-calibration.md).
 
     It is a beta, and not yet clean for everyone. One owner reports a thermal runaway
     after the first filament change on it, which the developer asked to be filed as a
     separate bug; another finds calibration passing reliably but nozzles coming out
-    noticeably dirtier. Neither is confirmed beyond its reporter.
+    noticeably dirtier. Since then one owner reports failures continuing, less often than
+    before, and [another](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/) found the beta dragging strings of filament onto the
+    nozzle and failing Z probing, and did better going back — though they suspect their
+    own wiper setup. None of these is confirmed beyond its reporter.
 
     For owners with the newer belts it also removes the dilemma above: the beta is INDX
     firmware that keeps 1.5 GT support, so moving forward replaces downgrading as the

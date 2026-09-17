@@ -1,7 +1,7 @@
 ---
 title:        Kompatibilität der Druckplatten nach dem INDX-Umbau
 confidence:   reported
-updated:      2026-09-12
+updated:      2026-09-16
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -12,7 +12,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kind-of/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/sometimes-tools-dont-stay-in-dock/
 superseded_by:
-source_sha:   50da9cb601731a272dbee2a8ca31bff8bb9047137ab07357601a80b1718ca475
+source_sha:   c3c7ad0586d07d6a72a1529c8b86a147301fd8d9b65e5537a4757e0ec24e4317
 ---
 # Kompatibilität der Druckplatten nach dem INDX-Umbau
 
@@ -62,6 +62,8 @@ beschrieben. Entscheidend ist, was unter den Docks liegt, nicht nur die Grundfl�
 Wenn Werkzeuge in ihren Docks gestört werden, schließen Sie die Platte aus, bevor Sie
 Magnete oder die Dock-Kalibrierung verdächtigen — siehe
 [Werkzeugerkennung und Parkfehler](../issues/tool-detection-ringdown-decay.md).
+Der Besitzer, der gefragt hatte, hat inzwischen bestätigt, dass die Platte die
+Hauptursache war, und seine auf Serienmaß zugeschnitten.
 
 ### Was Besitzer dagegen unternommen haben
 

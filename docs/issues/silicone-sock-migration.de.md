@@ -1,7 +1,7 @@
 ---
 title:        Verrutschen der Silikonsocke über den Temperatursensor
 confidence:   provisional
-updated:      2026-09-12
+updated:      2026-09-16
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -12,8 +12,9 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-maintenance/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/filament-blobs-can-tear-the-silicon-sock-on-indx-nozzles/
 superseded_by:
-source_sha:   6f43d5a6696b2b04a80b5dd51decaae7e043729d2926fd1634a592ae672dbb4c
+source_sha:   d99bdc2f1c0f38790dd2a29216b062c3f75b46a01bed23dedcfa1f00e17512dc
 ---
 # Verrutschen der Silikonsocke über den Temperatursensor
 
@@ -107,19 +108,28 @@ die Düse oder das Filament untersuchen. Das kostet Sekunden und ist umkehrbar.
 die Socke einfach wieder in Position geschoben wurde, und keiner brauchte dafür ein
 Ersatzteil.
 
-**Entfernen Sie die Socke nicht, um das Wandern zu verhindern.** Das ist die naheliegende
-Lösung und die falsche. Der Autor dieser Seite hat den Firmware-Quellcode gelesen und
-geschlossen, dass die Temperaturmessung der Düse eine montierte Socke voraussetzt; ohne
-sie dürfte der Messwert so weit abweichen, dass ein Thermal-Runaway-Fehler droht. Das
-ist eine Schlussfolgerung aus dem Quellcode und kein Test, aber die Folgen sind ernst
-genug, um sie zu beachten.
+**Kurz ohne Socke zu drucken ist laut Hersteller unbedenklich — eine Lösung ist es
+nicht.** Der After-Sales-Support des Herstellers teilte dem Autor dieser Seite direkt
+mit, dass ein Werkzeug eine kurze Zeit ohne Socke laufen kann, ohne dass es ein Problem
+gibt. Das geht einer früheren Warnung auf dieser Seite vor, die auf der eigenen Lesart
+des Firmware-Quellcodes durch den Autor beruhte: dass die Temperaturmessung der Düse eine
+montierte Socke voraussetzt und der Messwert ohne sie so weit abweichen könnte, dass ein
+Thermal-Runaway-Fehler ausgelöst wird. Weit auseinander liegen beide nicht. Die Antwort
+des Herstellers gilt für eine kurze Zeit, und die Befürchtung wurde nie getestet —
+behandeln Sie eine fehlende Socke also als Notbehelf, bis Ersatz da ist, nicht als
+Mittel gegen das Wandern oder als Dauerzustand.
 
 **Prüfen Sie die Socken von Zeit zu Zeit.** Ohne bekannten Auslöser und ohne Behebung
 ist Nachsehen der einzige Schutz. Nach einem Klumpen lohnt es sich besonders: An der
 Maschine des Autors wurde ein an der Düsenspitze haftender PCTG-Klumpen so fest durch
-den Abstreifer gezogen, dass die Socke riss. Ersatzsocken lagen dem Bausatz nicht bei und
-waren zum Zeitpunkt der Abfassung im Shop des Herstellers nicht zu finden; eine
-gerissene Socke kann also Wartezeit bedeuten.
+den Abstreifer gezogen, dass die Socke riss. Ersatzsocken lagen dem Bausatz nicht bei. Der Hersteller teilte dem Autor
+dieser Seite inzwischen mit, dass Socken bald als Fünferpack in seinem Shop erhältlich
+sein werden, zu 4,90 USD laut Angabe vom September 2026; ein anderer Besitzer erhielt vom
+Prusa-Support die Auskunft, dass Socken auch dort später ins Sortiment kommen; andere INDX-Ersatzteile wie
+Sensorplatinen und Silikonabstreifer sind Berichten zufolge bereits im Prusa-Shop
+erhältlich. Beim Autor dieser Seite kosteten Versand und Einfuhrabgaben ein Mehrfaches der
+Socke selbst; solange keine nähere Bezugsquelle sie führt, kann eine gerissene Socke also
+weiterhin Wartezeit und Kosten bedeuten.
 
 **Reinigen Sie die Spitze, wenn bereits Material festgebacken ist.** Siehe
 [Nachsickern beim Abtasten](oozing-during-probing-and-calibration.md) für die
@@ -152,9 +162,18 @@ Verbindung dazwischen ist erschlossen.
 
 Die Einschätzung, dass Düse oder Socke überarbeitet werden müssten, ist die
 Schlussfolgerung dieses Autors und keine Herstellerposition; sie wird als Meinung
-festgehalten, nicht als Befund. Ebenso drei spätere Ergänzungen, alle vom Autor selbst
-und jeweils von einer einzigen Maschine: der Rat, die Socke nicht zu entfernen, die von
-einem Klumpen zerrissene Socke und die nicht erhältlichen Ersatzteile.
+festgehalten, nicht als Befund. Ebenso zwei spätere Ergänzungen, beide vom Autor selbst
+und von einer einzigen Maschine: die von einem Klumpen zerrissene Socke und die
+Versandkosten für Ersatzteile.
+
+Die Hinweise zum Betrieb ohne Socke und zum kommenden Fünferpack stammen vom Hersteller —
+sie kamen jedoch als private Antwort an den Autor dieser Seite, sind also aus erster Hand
+und für Leser dennoch nicht überprüfbar, und sind deshalb hier als `provisional`
+markiert. Sie ersetzen eine frühere Warnung davor, die Socke zu entfernen, die eine nie
+getestete Schlussfolgerung des Autors aus dem Firmware-Quellcode war. Was der
+Prusa-Support zur Aufnahme von Socken ins Sortiment sagte, ist aus Antworten eines
+anderen Besitzers in einem [vom Autor eröffneten Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/filament-blobs-can-tear-the-silicon-sock-on-indx-nozzles/) weitergegeben und von
+keinem der Unternehmen veröffentlicht.
 
 Was diese Seite auf `reported` heben würde: ein zweiter Besitzer, der die vollständige
 Abfolge — verschobene Socke, dann Überhitzung, dann Anbackungen, dann fehlgeschlagene
