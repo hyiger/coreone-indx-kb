@@ -16,7 +16,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   fcf1aceb5036271f7d0c5dbe7faca38545ac3c4af4792959b34896c7ff1c8dee
+source_sha:   22f0b4020536ed34446dcb15576162c159173ddc4ae3d621cef680b31c8f685e
 ---
 # Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 
@@ -95,8 +95,10 @@ davon, was anderswo geladen ist.
 Der berichtete Workaround ist elegant, sofern er trägt: Es genügt, im Slicer für T1 ein
 Niedertemperatur-Filament zu *deklarieren* — das physische Filament muss gar nicht
 vorhanden sein —, was erklären würde, warum Aufträge, die aus Profilen mit einem
-angenommenen Niedertemperaturmaterial gesliced wurden, das Problem nie zeigten. Es gibt
-außerdem einen Ansatz über den Start-G-Code, der die Abtasttemperatur vor dem Block für
+angenommenen Niedertemperaturmaterial gesliced wurden, das Problem nie zeigten. Im Standardprofil, das diese
+Website wiedergibt, ist die Regel allerdings an das Startwerkzeug des Drucks gebunden und
+nicht an T1 — lesen Sie den PC-Abschnitt weiter unten, bevor Sie sich darauf verlassen. Es
+gibt außerdem einen Ansatz über den Start-G-Code, der die Abtasttemperatur vor dem Block für
 das Mesh Bed Leveling erzwingt, indem der erzeugte Temperaturbefehl durch einen festen
 ersetzt wird.
 
@@ -127,12 +129,20 @@ scheitert, bis die Temperatur sinkt.
 
 **Woher die Temperatur kommt.** Es gibt **kein eigenes Feld für die Abtasttemperatur** im
 Slicer, wohl aber eine Regel. Der Standard-Start-G-Code des Druckers ermittelt die
-Abtasttemperatur aus dem Filament des ersten Werkzeugs und behandelt PC und PA gesondert:
+Abtasttemperatur aus dem Filament des **Startwerkzeugs** des Drucks — des ersten
+Werkzeugs, das der Druck tatsächlich nutzt — und behandelt PC und PA gesondert:
 mit einem festen Abstand unter der Temperatur der ersten Schicht. Das kommentierte Profil
 gibt diesen Ausdruck in seinem Abschnitt zu den globalen Variablen und der
 Abtasttemperatur wieder — siehe [kommentiertes Profil](../gcode/indx-profile-gcode.md). An
-diese Regel stoßen diese Besitzer immer wieder, und sie ist dieselbe Ableitung über das
-erste Werkzeug wie oben beschrieben.
+diese Regel stoßen diese Besitzer immer wieder.
+
+**Startwerkzeug, nicht T1.** Dieser Ausdruck liest das Filament von `initial_tool`, und
+das ist nicht das weiter oben berichtete T1-Verhalten. Beide wählen nur dann dasselbe
+Filament, wenn ein Druck auf T1 beginnt. Bei einem Druck, der auf einem anderen Werkzeug
+beginnt, zeigen sie auf verschiedene Presets — in diesem Profil hilft es also nicht, für
+T1 ein Niedertemperatur-Filament zu deklarieren, wenn der Druck auf T3 beginnt;
+maßgeblich ist das Filament, mit dem Ihr Druck startet. Ob der frühere T1-Bericht ein
+älteres Profil oder einen anderen Maschinenzustand beschreibt, ist nicht geklärt.
 
 **6.9.1-beta ändert daran nichts.** Die Beta senkte die Temperatur für die
 *Werkzeug-Offset-Kalibrierung*, einen eigenen Firmware-Schritt. Die Temperatur beim
@@ -143,7 +153,7 @@ weiterhin heiß abtastet.
 die Fehlschläge hörten auf. Der Haken, auf den er selbst hinwies: Ein
 Konfigurationsupdate des Druckers ersetzt den Start-G-Code, sodass die Änderung nach
 jedem Update neu vorgenommen werden muss. Derselbe Ausdruck prüft außerdem die
-Filamentnotizen des ersten Werkzeugs auf eine Überschreibungsmarke, bevor er überhaupt
+Filamentnotizen des Startwerkzeugs auf eine Überschreibungsmarke, bevor er überhaupt
 den PC-Fall erreicht; das deutet auf einen Weg je Filament hin, der solche Updates
 überstehen würde — doch das ist eine Lesart des Profils und nichts, das ein Besitzer als
 getestet berichtet hat. Und die slicereigene **Option zur Sickerverhinderung half

@@ -88,7 +88,9 @@ T1, everything probes hot and oozes, regardless of what is loaded elsewhere.
 The reported workaround is elegant if it holds: it is enough to *declare* a
 low-temperature filament in T1 in the slicer — the physical filament does not have to
 be there — which would explain why jobs sliced from profiles that assume a
-low-temperature material never showed the problem. There is also a start-G-code
+low-temperature material never showed the problem. On the stock profile this site
+reproduces, though, the rule is keyed to the print's initial tool rather than to T1 — see
+the PC section below before relying on it. There is also a start-G-code
 approach that forces the probing temperature before the mesh bed leveling block, by
 replacing the generated temperature command with a fixed one.
 
@@ -115,11 +117,20 @@ temperature comes down.
 
 **Where the temperature comes from.** There is **no dedicated probing-temperature field**
 in the slicer, but there is a rule. The stock printer start G-code works out the probing
-temperature from the first tool's filament and gives PC and PA a case of their own: a
+temperature from the filament of the print's **initial tool** — the first tool the print
+actually uses — and gives PC and PA a case of their own: a
 fixed offset below the first-layer temperature. The annotated profile reproduces that
 expression in its section on globals and the probe temperature — see
 [annotated profile G-code](../gcode/indx-profile-gcode.md). It is the rule these owners
-keep running into, and the same first-tool derivation described above.
+keep running into.
+
+**Initial tool, not T1.** That expression reads the filament of `initial_tool`, which is
+not the T1 behavior reported further up. The two select the same filament only when a
+print starts on T1. On a print that starts on another tool they point at different
+presets — so on this profile, declaring a low-temperature filament in T1 will not help a
+print that begins on T3; the filament to look at is the one your print starts with.
+Whether the earlier T1 report describes an older profile or a different machine state is
+not established.
 
 **6.9.1-beta does not change it.** The beta lowered the temperature used for *tool offset
 calibration* — a different step, and one that firmware controls. The bed-probing temperature comes from
@@ -128,7 +139,7 @@ the slicer profile, so owners on the beta still see PC Blend probe hot.
 **Adjusting it.** One owner widened the PC offset in the printer's start G-code and the
 failures stopped. The catch, which they pointed out themselves, is that a printer
 configuration update replaces the start G-code, so the edit has to be redone after each
-one. The same expression also checks the first tool's filament notes for an override
+one. The same expression also checks the initial tool's filament notes for an override
 marker before it ever reaches the PC case, which suggests a per-filament route that would
 survive those updates — but that is a reading of the profile, not something an owner has
 reported testing. And the slicer's own **oozing-prevention option did not help**, so
