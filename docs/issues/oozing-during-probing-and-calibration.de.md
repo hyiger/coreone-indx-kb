@@ -16,7 +16,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   83aa994b59c38aec842d3ce8a7eeeb10277f6d79f0c1ccefb467e015483856b8
+source_sha:   fcf1aceb5036271f7d0c5dbe7faca38545ac3c4af4792959b34896c7ff1c8dee
 ---
 # Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 

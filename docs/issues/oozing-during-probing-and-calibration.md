@@ -122,7 +122,7 @@ expression in its section on globals and the probe temperature — see
 keep running into, and the same first-tool derivation described above.
 
 **6.9.1-beta does not change it.** The beta lowered the temperature used for *tool offset
-calibration*, which is a separate firmware step. The bed-probing temperature comes from
+calibration* — a different step, and one that firmware controls. The bed-probing temperature comes from
 the slicer profile, so owners on the beta still see PC Blend probe hot.
 
 **Adjusting it.** One owner widened the PC offset in the printer's start G-code and the
