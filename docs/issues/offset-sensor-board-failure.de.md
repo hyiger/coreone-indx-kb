@@ -1,7 +1,7 @@
 ---
 title:        Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 confidence:   reported
-updated:      2026-09-14
+updated:      2026-09-16
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -13,11 +13,12 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/offset-sensor-failure/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   4a0dec7807cf477e90a0c598b6ea9b884965e2842f7629066861885e1caea9a6
+source_sha:   880996ea150b2bd89ecbbd2e135204a3a35e5d037103eb73e67ba9d795da4977
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 
@@ -87,13 +88,21 @@ einzigen berichteten Fall behoben.
     und führt eine Behebung für die Wiederaufnahme der Offset-Messung auf. Die
     Kalibriertemperaturen selbst stehen in den Versionshinweisen und werden hier nicht
     wiederholt. Mehrere Besitzer im Bericht sagen, die Kalibrierung gelinge nun beim
-    ersten Versuch, wo sie zuvor jedes Mal gescheitert war.
+    ersten Versuch, wo sie zuvor jedes Mal gescheitert war, und der Besitzer, der ihn
+    eröffnet hat, sagt inzwischen, die Beta behebe es bei ihm und der Bericht könne
+    geschlossen werden. Die Temperatur beim Abtasten des Betts berührt sie nicht; die
+    stammt aus dem Slicer-Profil und nicht aus der Firmware — siehe
+    [Nachsickern beim Abtasten](oozing-during-probing-and-calibration.md).
 
     Es ist eine Beta und noch nicht bei allen fehlerfrei. Ein Besitzer berichtet von einem
     Thermal Runaway nach dem ersten Filamentwechsel damit, den der Entwickler als eigenen
     Fehlerbericht erbeten hat; ein anderer stellt fest, dass die Kalibrierung zuverlässig
-    gelingt, die Düsen aber merklich schmutziger herauskommen. Beides ist über den
-    jeweiligen Melder hinaus nicht bestätigt.
+    gelingt, die Düsen aber merklich schmutziger herauskommen. Seitdem berichtet ein Besitzer von
+    weiterhin auftretenden, wenn auch selteneren Fehlschlägen, und [ein weiterer](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/)
+    stellte fest, dass die Beta Filamentfäden an die Düse zog und das Z-Antasten scheitern
+    ließ, und kam mit der Rückkehr besser zurecht — vermutet dahinter aber seine eigene
+    Abstreifer-Einstellung. Keiner dieser Berichte ist über den jeweiligen Melder hinaus
+    bestätigt.
 
     Für Besitzer mit den neueren Riemen löst sie außerdem das oben beschriebene Dilemma:
     Die Beta ist INDX-Firmware, die die 1.5-GT-Unterstützung behält, sodass der Schritt

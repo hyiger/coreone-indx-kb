@@ -1,7 +1,7 @@
 ---
 title:        Verrutschen der Silikonsocke über den Temperatursensor
 confidence:   provisional
-updated:      2026-09-12
+updated:      2026-09-16
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -12,8 +12,9 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-maintenance/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/filament-blobs-can-tear-the-silicon-sock-on-indx-nozzles/
 superseded_by:
-source_sha:   6f43d5a6696b2b04a80b5dd51decaae7e043729d2926fd1634a592ae672dbb4c
+source_sha:   71cc881f4e676ae31b7874957d5ca3ba06027f75c7066e7302fd49935ab5c2cd
 ---
 # Verrutschen der Silikonsocke über den Temperatursensor
 
@@ -117,9 +118,13 @@ genug, um sie zu beachten.
 **Prüfen Sie die Socken von Zeit zu Zeit.** Ohne bekannten Auslöser und ohne Behebung
 ist Nachsehen der einzige Schutz. Nach einem Klumpen lohnt es sich besonders: An der
 Maschine des Autors wurde ein an der Düsenspitze haftender PCTG-Klumpen so fest durch
-den Abstreifer gezogen, dass die Socke riss. Ersatzsocken lagen dem Bausatz nicht bei und
-waren zum Zeitpunkt der Abfassung im Shop des Herstellers nicht zu finden; eine
-gerissene Socke kann also Wartezeit bedeuten.
+den Abstreifer gezogen, dass die Socke riss. Ersatzsocken lagen dem Bausatz nicht bei. Ein anderer Besitzer erhielt
+inzwischen die Antwort des Herstellers, dass er sie verkauft, und vom Prusa-Support die
+Auskunft, dass Socken dort später ins Sortiment kommen; andere INDX-Ersatzteile wie
+Sensorplatinen und Silikonabstreifer sind Berichten zufolge bereits im Prusa-Shop
+erhältlich. Beim Autor dieser Seite kosteten Versand und Einfuhrabgaben ein Mehrfaches der
+Socke selbst; solange keine nähere Bezugsquelle sie führt, kann eine gerissene Socke also
+weiterhin Wartezeit und Kosten bedeuten.
 
 **Reinigen Sie die Spitze, wenn bereits Material festgebacken ist.** Siehe
 [Nachsickern beim Abtasten](oozing-during-probing-and-calibration.md) für die
@@ -154,7 +159,10 @@ Die Einschätzung, dass Düse oder Socke überarbeitet werden müssten, ist die
 Schlussfolgerung dieses Autors und keine Herstellerposition; sie wird als Meinung
 festgehalten, nicht als Befund. Ebenso drei spätere Ergänzungen, alle vom Autor selbst
 und jeweils von einer einzigen Maschine: der Rat, die Socke nicht zu entfernen, die von
-einem Klumpen zerrissene Socke und die nicht erhältlichen Ersatzteile.
+einem Klumpen zerrissene Socke und die Versandkosten für Ersatzteile. Wo sich Ersatzteile
+bestellen lassen, stammt aus Antworten eines anderen Besitzers in einem
+[vom Autor eröffneten Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/filament-blobs-can-tear-the-silicon-sock-on-indx-nozzles/); die Antwort des Herstellers und die Pläne des
+Prusa-Supports sind dort weitergegeben, nicht von einem der Unternehmen veröffentlicht.
 
 Was diese Seite auf `reported` heben würde: ein zweiter Besitzer, der die vollständige
 Abfolge — verschobene Socke, dann Überhitzung, dann Anbackungen, dann fehlgeschlagene

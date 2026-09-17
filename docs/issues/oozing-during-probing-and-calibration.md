@@ -1,7 +1,7 @@
 ---
 title:        Oozing spoils bed probing and tool calibration
 confidence:   reported
-updated:      2026-09-05
+updated:      2026-09-16
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -11,6 +11,8 @@ firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/petg-oozing-and-impeding-bed-probing/
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-pc-on-indx-oozing-at-bed-probing-leveling/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/psa-if-you-are-struggling-with-tool-offset-calibration-failing-non-stop-at-the-start-of-a-print-get-firmware-6-9-1/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5483
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
@@ -105,21 +107,37 @@ also a sibling slicer trap in which the **bed** temperature follows T1 in the sa
 **The engineering material is PC.** A [second owner](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-pc-on-indx-oozing-at-bed-probing-leveling/) hit this with PC Blend and
 described it from the other end: probing ran hot enough to ooze onto the sheet and fail
 leveling, and lowering the nozzle temperature by hand on the next attempt cured it
-outright. That moves "at least one engineering material still probes hot" off a single
-report and gives it a name.
+outright. That moved "at least one engineering material still probes hot" off a single
+report and gave it a name, and it has not stayed with one owner since. A further owner in
+the same thread, another in a [separate thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/psa-if-you-are-struggling-with-tool-offset-calibration-failing-non-stop-at-the-start-of-a-print-get-firmware-6-9-1/), and a
+[firmware issue](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5483) all describe PC Blend failing bed probing until the
+temperature comes down.
 
-Two things from that account sharpen the picture. There is **no dedicated
-probing-temperature field** in the slicer — the owner went looking through first-layer
-and other-layer temperatures and found nothing governing the pre-print stage. That is
-not the same as no setting influencing it: the T1 derivation above is exactly such a
-lever, which is why the workarounds here are indirect rather than a checkbox marked
-"probing temperature". And the slicer's own **oozing-prevention option did not help**,
-so reaching for it first will cost you a print.
+**Where the temperature comes from.** There is **no dedicated probing-temperature field**
+in the slicer, but there is a rule. The stock printer start G-code works out the probing
+temperature from the first tool's filament and gives PC and PA a case of their own: a
+fixed offset below the first-layer temperature. The annotated profile reproduces that
+expression in its section on globals and the probe temperature — see
+[annotated profile G-code](../gcode/indx-profile-gcode.md). It is the rule these owners
+keep running into, and the same first-tool derivation described above.
 
-TODO(verify): that account states both the temperature probing used and the lower one
-that worked. Neither is published here. A single forum report is not the hardware
-confirmation this page requires before a temperature goes on it — but it is a lead, and
-it is the same figure the marker above is asking for.
+**6.9.1-beta does not change it.** The beta lowered the temperature used for *tool offset
+calibration*, which is a separate firmware step. The bed-probing temperature comes from
+the slicer profile, so owners on the beta still see PC Blend probe hot.
+
+**Adjusting it.** One owner widened the PC offset in the printer's start G-code and the
+failures stopped. The catch, which they pointed out themselves, is that a printer
+configuration update replaces the start G-code, so the edit has to be redone after each
+one. The same expression also checks the first tool's filament notes for an override
+marker before it ever reaches the PC case, which suggests a per-filament route that would
+survive those updates — but that is a reading of the profile, not something an owner has
+reported testing. And the slicer's own **oozing-prevention option did not help**, so
+reaching for it first will cost you a print.
+
+TODO(verify): these accounts state the temperature PC probed at, the lower ones that
+worked, and the adjusted offset. None of them is published here. Forum posts and a bug
+report are not the hardware confirmation this page requires before a temperature goes on
+it — but they are leads, and they are the same figure the marker above is asking for.
 
 ### If none of that helps
 
