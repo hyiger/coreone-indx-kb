@@ -1,7 +1,7 @@
 ---
 title:        Montagehinweise — INDX-Umbausatz
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-09-19
 author:       hyiger
 printer:      Core One, Core One Plus
 toolhead:     INDX
@@ -15,7 +15,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/parts-list-for-screws-and-bolts/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kind-of/
 superseded_by:
-source_sha:   42305582293e9b681ff6d026e968b0f73396c5cb6c3b6219a3038453a4d462bf
+source_sha:   b4246b09a0e711b2304cdcfca2fd41892645060eb189b26ec845c3955a24b9ba
 ---
 # Montagehinweise — INDX-Umbausatz
 
@@ -201,6 +201,13 @@ werden zwei Federgrößen benötigt. Beachten Sie, dass die Sammlung der Druckte
 **zwei verschiedene Halter für die Düsendichtung** enthält — einen für die Founders
 Edition und einen für die Prusa-Version —, prüfen Sie also vor dem Drucken, welchen
 Sie brauchen.
+
+Die Beschaffung ist inzwischen einfacher geworden. Der Prusa-Shop führt INDX-Bauteile
+jetzt einzeln — darunter einen [Werkzeughalter mit Magneten](https://www.prusa3d.com/product/tool-holder-with-magnets-2/), einen seitlichen
+Filamentsensor und das [Filamentsensor-Kabel für den INDX](https://www.prusa3d.com/product/filament-sensor-cable-for-indx/) —, und passive
+Werkzeuge sollen im Shop des Herstellers vorrätig sein. Wenn Sie Docks ergänzen, prüfen
+Sie den fertigen Halter, bevor Sie Magnete einzeln suchen; was genau er enthält, sollten
+Sie anhand des Angebots klären.
 
 !!! warning "Eine Meldung über einen Wechsel der Magnetgüte"
     Ein Besitzer berichtet, die Originalmagnete durch eine stärkere Güte ersetzt zu

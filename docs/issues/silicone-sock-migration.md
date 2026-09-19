@@ -1,7 +1,7 @@
 ---
 title:        Silicone sock migration over the temperature sensor
 confidence:   provisional
-updated:      2026-09-16
+updated:      2026-09-19
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -115,9 +115,12 @@ the only defense. It is worth a look after a blob in particular: on the author's
 machine a lump of PCTG stuck to a nozzle tip was dragged through the wiper hard enough
 to tear the sock. Spares were not included in the kit. The vendor has since told this page's author
 that socks will soon be sold on its store as a five-pack, at 4.90 USD when announced in
-September 2026; another owner was told by Prusa's support that socks will be stocked
-there later too; other INDX spares such as sensor boards and silicone
-wipers are reportedly already in Prusa's shop. For this page's author, shipping and import
+September 2026, and within days they were listed there, though on backorder as of 19
+September; another owner was told by Prusa's support that socks will be stocked
+there later too; Prusa's shop now lists INDX parts individually,
+including a [tool holder with magnets](https://www.prusa3d.com/product/tool-holder-with-magnets-2/) and the
+[INDX filament sensor cable](https://www.prusa3d.com/product/filament-sensor-cable-for-indx/), and sensor boards and silicone wipers are
+reported there too. For this page's author, shipping and import
 charges came to several times the price of the sock itself, so until a nearer source has
 them a torn sock may still mean a wait and a bill.
 

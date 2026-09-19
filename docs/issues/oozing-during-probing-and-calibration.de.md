@@ -1,7 +1,7 @@
 ---
 title:        Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 confidence:   reported
-updated:      2026-09-16
+updated:      2026-09-19
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -16,7 +16,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   22f0b4020536ed34446dcb15576162c159173ddc4ae3d621cef680b31c8f685e
+source_sha:   0e115ec8a258f0a85bab804ab7f3ffa4a71ab7c2892904a494ddff12d9bc77f4
 ---
 # Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 
@@ -122,8 +122,8 @@ PC Blend und beschrieb es von der anderen Seite: Die Abtastung lief heiß genug,
 das Blech zu sickern und das Leveling scheitern zu lassen, und ein händisches Absenken
 der Düsentemperatur beim nächsten Versuch behob es vollständig. Damit stand „mindestens
 ein Konstruktionsmaterial tastet weiterhin heiß ab“ nicht mehr auf einem einzigen
-Bericht und bekam einen Namen, und es ist seither nicht bei einem Besitzer geblieben. Ein
-weiterer Besitzer im selben Thread, einer in einem [anderen Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/psa-if-you-are-struggling-with-tool-offset-calibration-failing-non-stop-at-the-start-of-a-print-get-firmware-6-9-1/) und ein
+Bericht und bekam einen Namen, und es ist seither nicht bei einem Besitzer geblieben. Zwei
+weitere Besitzer im selben Thread, einer in einem [anderen Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/psa-if-you-are-struggling-with-tool-offset-calibration-failing-non-stop-at-the-start-of-a-print-get-firmware-6-9-1/) und ein
 [Firmware-Issue](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5483) beschreiben alle, dass PC Blend beim Abtasten des Betts
 scheitert, bis die Temperatur sinkt.
 

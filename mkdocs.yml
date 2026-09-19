@@ -42,6 +42,7 @@ plugins:
             Overview: Übersicht
             Toolhead collisions (Complete individual objects): Werkzeugkopf-Kollisionen (Vollständige Einzelobjekte)
             Tool detection and park failures: Werkzeugerkennung und Parkfehler
+            Tool unlocks or ejects: Werkzeug löst sich oder fällt heraus
             Probing and loadcell noise: Abtastung und Wägezellen-Störungen
             Tool offset calibration: Werkzeug-Offset-Kalibrierung
             Bed not aligned in Z: Bett in Z nicht ausgerichtet
@@ -78,6 +79,7 @@ nav:
       - Overview: issues/index.md
       - Toolhead collisions (Complete individual objects): issues/complete-individual-objects-collision.md
       - Tool detection and park failures: issues/tool-detection-ringdown-decay.md
+      - Tool unlocks or ejects: issues/tool-unlocks-or-ejects.md
       - Probing and loadcell noise: issues/loadcell-emi-noise.md
       - Tool offset calibration: issues/offset-sensor-board-failure.md
       - Bed not aligned in Z: issues/tool-offset-bed-z-alignment.md
