@@ -1,7 +1,7 @@
 ---
 title:        Oozing spoils bed probing and tool calibration
 confidence:   reported
-updated:      2026-09-16
+updated:      2026-09-19
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -110,7 +110,7 @@ also a sibling slicer trap in which the **bed** temperature follows T1 in the sa
 described it from the other end: probing ran hot enough to ooze onto the sheet and fail
 leveling, and lowering the nozzle temperature by hand on the next attempt cured it
 outright. That moved "at least one engineering material still probes hot" off a single
-report and gave it a name, and it has not stayed with one owner since. A further owner in
+report and gave it a name, and it has not stayed with one owner since. Two further owners in
 the same thread, another in a [separate thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/psa-if-you-are-struggling-with-tool-offset-calibration-failing-non-stop-at-the-start-of-a-print-get-firmware-6-9-1/), and a
 [firmware issue](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5483) all describe PC Blend failing bed probing until the
 temperature comes down.

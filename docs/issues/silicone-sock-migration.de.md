@@ -1,7 +1,7 @@
 ---
 title:        Verrutschen der Silikonsocke über den Temperatursensor
 confidence:   provisional
-updated:      2026-09-16
+updated:      2026-09-19
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -14,7 +14,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/filament-blobs-can-tear-the-silicon-sock-on-indx-nozzles/
 superseded_by:
-source_sha:   d99bdc2f1c0f38790dd2a29216b062c3f75b46a01bed23dedcfa1f00e17512dc
+source_sha:   49c21bdb459d683614fd5a24e31f60daf7992487ca1a96d4d7e12b65c7b32127
 ---
 # Verrutschen der Silikonsocke über den Temperatursensor
 
@@ -124,10 +124,12 @@ ist Nachsehen der einzige Schutz. Nach einem Klumpen lohnt es sich besonders: An
 Maschine des Autors wurde ein an der Düsenspitze haftender PCTG-Klumpen so fest durch
 den Abstreifer gezogen, dass die Socke riss. Ersatzsocken lagen dem Bausatz nicht bei. Der Hersteller teilte dem Autor
 dieser Seite inzwischen mit, dass Socken bald als Fünferpack in seinem Shop erhältlich
-sein werden, zu 4,90 USD laut Angabe vom September 2026; ein anderer Besitzer erhielt vom
-Prusa-Support die Auskunft, dass Socken auch dort später ins Sortiment kommen; andere INDX-Ersatzteile wie
-Sensorplatinen und Silikonabstreifer sind Berichten zufolge bereits im Prusa-Shop
-erhältlich. Beim Autor dieser Seite kosteten Versand und Einfuhrabgaben ein Mehrfaches der
+sein werden, zu 4,90 USD laut Angabe vom September 2026; wenige Tage später waren sie
+dort gelistet, mit Stand 19. September allerdings nicht lieferbar; ein anderer Besitzer erhielt vom
+Prusa-Support die Auskunft, dass Socken auch dort später ins Sortiment kommen; der Prusa-Shop führt
+inzwischen einzelne INDX-Teile, darunter einen [Werkzeughalter mit Magneten](https://www.prusa3d.com/product/tool-holder-with-magnets-2/) und
+das [Filamentsensor-Kabel für den INDX](https://www.prusa3d.com/product/filament-sensor-cable-for-indx/); Sensorplatinen und Silikonabstreifer
+sollen dort ebenfalls erhältlich sein. Beim Autor dieser Seite kosteten Versand und Einfuhrabgaben ein Mehrfaches der
 Socke selbst; solange keine nähere Bezugsquelle sie führt, kann eine gerissene Socke also
 weiterhin Wartezeit und Kosten bedeuten.
 

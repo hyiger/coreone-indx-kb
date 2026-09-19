@@ -1,7 +1,7 @@
 ---
 title:        Assembly notes — INDX conversion kit
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-09-19
 author:       hyiger
 printer:      Core One, Core One Plus
 toolhead:     INDX
@@ -176,6 +176,13 @@ rod that appears to be available from very few suppliers. Two spring sizes are a
 needed. Note that the printed parts collection contains **two different nozzle seal
 holders** — one for the Founders Edition and one for the Prusa version — so check
 which you need before printing.
+
+Buying the parts has since become simpler. Prusa's shop now lists INDX components
+individually — among them a [tool holder with magnets](https://www.prusa3d.com/product/tool-holder-with-magnets-2/), a side filament sensor,
+and the [INDX filament sensor cable](https://www.prusa3d.com/product/filament-sensor-cable-for-indx/) — and passive tools have been reported in
+stock in the vendor's shop. If you are adding docks, check the ready-made holder before
+hunting down magnets separately; what exactly it includes is worth confirming on the
+listing.
 
 !!! warning "One report of a magnet grade substitution"
     An owner reports replacing the original magnets with a stronger grade and finding
