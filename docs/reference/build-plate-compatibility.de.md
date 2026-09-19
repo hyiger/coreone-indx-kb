@@ -1,7 +1,7 @@
 ---
 title:        Kompatibilität der Druckplatten nach dem INDX-Umbau
 confidence:   reported
-updated:      2026-09-16
+updated:      2026-09-19
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -12,7 +12,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kind-of/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/sometimes-tools-dont-stay-in-dock/
 superseded_by:
-source_sha:   c3c7ad0586d07d6a72a1529c8b86a147301fd8d9b65e5537a4757e0ec24e4317
+source_sha:   3b745429481ce686720fe4fe9b036fbd4bf39fe2853b4f6bc72e61de4411d22d
 ---
 # Kompatibilität der Druckplatten nach dem INDX-Umbau
 
@@ -128,3 +128,5 @@ ist.
 
 - [Hinweise zum Zusammenbau](assembly-notes.md) — vor dem Beginn des Umbaus lesenswert,
   da dies ein Problem der Sorte „am ersten Tag herausfinden“ ist
+- [Werkzeug entriegelt sich oder fällt aus dem Kopf](../issues/tool-unlocks-or-ejects.md) —
+  wenn sich ein Werkzeug aus einem anderen Grund als der Platte löst

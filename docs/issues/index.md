@@ -1,7 +1,7 @@
 ---
 title:        Issues
 confidence:   unknown
-updated:      2026-09-14
+updated:      2026-09-19
 author:       hyiger
 printer:      unknown
 toolhead:     unknown
@@ -45,6 +45,9 @@ reader a part, a print, or a warranty window.
 - [Phantom tools, "tool not detected" and park failures](tool-detection-ringdown-decay.md)
   — a tool that isn't there is reported present, a tool that is there is reported
   missing, or a tool that parked correctly is reported still attached.
+- [Tool unlocks or ejects from the head](tool-unlocks-or-ejects.md)
+  — the tool physically comes loose, often on the retraction after a filament load;
+  one owner traced it to a defective gear in the lock.
 
 **Probing or calibration fails**
 

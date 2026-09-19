@@ -1,7 +1,7 @@
 ---
 title:        Phantom-Werkzeuge, „Werkzeug nicht erkannt“ und Park-Fehler
 confidence:   reported
-updated:      2026-08-25
+updated:      2026-09-19
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -16,7 +16,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/will-the-prusa-indxs-wave1-ship-with-fixed-induction-coils/
 superseded_by:
-source_sha:   2001ea301d2a33dd066696784f3376fe28770209bc23e5f7e6990738c4cbef9c
+source_sha:   6650d28dce2863b8ec6909b93ae55620eaf68f794611d899d10c3cb22098d91f
 ---
 # Phantom-Werkzeuge, „Werkzeug nicht erkannt“ und Park-Fehler
 
@@ -281,5 +281,8 @@ statt mit einer Lösung.
   Bereich, den 6.9.0 überarbeitet hat. Besitzer berichten diese Änderung als klare
   Verbesserung, was gegen die oben beschriebene Regression der Park-Erkennung abzuwägen
   ist.
+- [Werkzeug entriegelt sich oder fällt aus dem Kopf](tool-unlocks-or-ejects.md) — das
+  Werkzeug löst sich tatsächlich, statt falsch erkannt zu werden; ein Besitzer fand ein
+  defektes Zahnrad der Verriegelung
 - [An wen Sie sich wenden](support-and-warranty-path.md) — für einen Austausch des
   Werkzeugkopfs

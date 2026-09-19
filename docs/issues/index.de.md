@@ -1,7 +1,7 @@
 ---
 title:        Probleme
 confidence:   unknown
-updated:      2026-09-14
+updated:      2026-09-19
 author:       hyiger
 printer:      unknown
 toolhead:     unknown
@@ -10,7 +10,7 @@ nozzle:       unknown
 firmware:     unknown
 sources:      []
 superseded_by:
-source_sha:   c59756536289bc40767cca89a515214e15750feda22d7f9c6c86de63a8d5bc59
+source_sha:   4e1f6ac925f75923def3e79092fb016f2bb983558af0c8343460e42104c3980f
 ---
 # Probleme
 
@@ -47,6 +47,9 @@ falscher Wert kostet den Leser ein Bauteil, einen Druck oder eine Gewährleistun
   — ein Werkzeug, das nicht da ist, wird als vorhanden gemeldet, ein Werkzeug, das da ist,
   wird als fehlend gemeldet, oder ein korrekt geparktes Werkzeug wird als weiterhin
   angedockt gemeldet.
+- [Werkzeug entriegelt sich oder fällt aus dem Kopf](tool-unlocks-or-ejects.md)
+  — das Werkzeug löst sich tatsächlich, oft beim Rückzug nach dem Laden von Filament;
+  ein Besitzer führte es auf ein defektes Zahnrad der Verriegelung zurück.
 
 **Abtasten oder Kalibrierung schlägt fehl**
 

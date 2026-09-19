@@ -1,7 +1,7 @@
 ---
 title:        Build plate compatibility after the INDX conversion
 confidence:   reported
-updated:      2026-09-16
+updated:      2026-09-19
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -115,3 +115,5 @@ whether any particular third-party plate is safe with the docks fitted.
 
 - [Assembly notes](assembly-notes.md) — worth reading before you start the conversion,
   since this is a "find out on day one" problem
+- [Tool unlocks or ejects from the head](../issues/tool-unlocks-or-ejects.md) — when a
+  tool comes loose for a reason other than the plate

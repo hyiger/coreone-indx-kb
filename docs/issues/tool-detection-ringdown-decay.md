@@ -1,7 +1,7 @@
 ---
 title:        Phantom tools, "tool not detected" and park failures
 confidence:   reported
-updated:      2026-08-25
+updated:      2026-09-19
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -257,4 +257,7 @@ different machines, which is why this page leads with the mechanism instead of a
 - [Blobs dragged into the print](stringing-and-wiper-calibration.md) — the other
   area 6.9.0 reworked. Owners report that change as a clear improvement, which is
   worth weighing against the park-detection regression described above.
+- [Tool unlocks or ejects from the head](tool-unlocks-or-ejects.md) — the tool
+  physically coming loose rather than being misdetected; one owner found a defective
+  gear in the lock
 - [Who to contact](support-and-warranty-path.md) — for a toolhead replacement
