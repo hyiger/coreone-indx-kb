@@ -1,7 +1,7 @@
 ---
 title:        Fehlercodes der Werkzeug-Offset-Kalibrierung
 confidence:   provisional
-updated:      2026-09-25
+updated:      2026-09-26
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -15,7 +15,7 @@ sources:
   - https://github.com/hyiger/Prusa-Firmware-Buddy/blob/master/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
 superseded_by:
-source_sha:   40c0783bd077b71700b28ac244ec34c7fbe91aac0a576442e8a9c7814240e1d2
+source_sha:   94166b9412eb848146505d183b5719db654a2bebc69b98969cabf606ada25dec
 ---
 # Fehlercodes der Werkzeug-Offset-Kalibrierung
 
@@ -33,7 +33,7 @@ Bildschirme öffnet den zugehörigen Abschnitt auf dieser Seite.
 Mit der Standard-Firmware sehen Sie immer nur 36130, aber das
 [serielle Log](#stock-firmware) sagt trotzdem, welcher dieser Fehler es war.
 
-Am Core One L beginnen die Codes mit 35 statt mit 36: 35130 und 35190 bis 35197.
+Am Core One L beginnen die Codes mit 37 statt mit 36: 37130 und 37190 bis 37197.
 Jeder Abschnitt unten gilt für beide.
 
 | Code | Der Bildschirm beginnt mit | Was fehlgeschlagen ist |
@@ -77,9 +77,9 @@ Retry nach einer fehlgeschlagenen Messung über dem Sensor reinigt das Werkzeug 
 und misst es noch einmal. Retry auf den anderen Bildschirmen beginnt wieder beim ersten
 Werkzeug. Abort bricht den Druck ab oder beendet die Kalibrierung aus dem Menü.
 
-## 36130 · 35130 · Werkzeug-Offset fehlgeschlagen {#36130}
+## 36130 · 37130 · Werkzeug-Offset fehlgeschlagen {#36130}
 
-<span id="35130"></span>
+<span id="37130"></span>
 
 **Was fehlgeschlagen ist.** Die Abtastfahrten liefen, und der Sensor lieferte Daten,
 aber keine Abtastfahrt fand die Düse mit ausreichender Konfidenz. Etwas stört die Sicht
@@ -104,9 +104,9 @@ Artikel.
 
 Mit der Standard-Firmware kann 36130 jeder der Codes unten sein.
 
-## 36190 · 35190 · Werkzeug nicht aufgenommen {#36190}
+## 36190 · 37190 · Werkzeug nicht aufgenommen {#36190}
 
-<span id="35190"></span>
+<span id="37190"></span>
 
 **Was fehlgeschlagen ist.** Bevor ein Werkzeug gereinigt und vermessen wird, prüft die
 Firmware, ob das gerade aufgenommene Werkzeug dasjenige ist, das sie als ausgewählt
@@ -123,9 +123,9 @@ nicht als aufgenommen.
 2. Wenn das Werkzeug am Kopf ist und richtig sitzt, liest der Kopf es falsch. Siehe
    [Phantom-Werkzeuge und Parkfehler](issues/tool-detection-ringdown-decay.md).
 
-## 36191 · 35191 · Düsenreinigung fehlgeschlagen {#36191}
+## 36191 · 37191 · Düsenreinigung fehlgeschlagen {#36191}
 
-<span id="35191"></span>
+<span id="37191"></span>
 
 **Was fehlgeschlagen ist.** Einer der Reinigungsabläufe vor der Messung wurde nicht
 abgeschlossen: das Auswerfen des letzten Blobs, das Spülen und Abstreifen oder die
@@ -144,9 +144,9 @@ Kalibriermenü nicht, das nicht reinigt.
    [Abstreifer, Spülen und Blobs](issues/stringing-and-wiper-calibration.md) dazu, wie
    der Reiniger kalibriert wird.
 
-## 36192 · 35192 · Abtasten des Betts fehlgeschlagen {#36192}
+## 36192 · 37192 · Abtasten des Betts fehlgeschlagen {#36192}
 
-<span id="35192"></span>
+<span id="37192"></span>
 
 **Was fehlgeschlagen ist.** Eine der Berührungen auf der Druckplatte wurde auch nach
 den eigenen Wiederholungen der Abtastung nicht akzeptiert. Das passiert nur zu Beginn
@@ -168,9 +168,9 @@ eines Drucks, der mehr als ein Werkzeug verwendet.
 4. Wenn die Düse sichtbar vor der Druckplatte stehen bleibt, siehe
    [Wägezellen-Störungen](issues/loadcell-emi-noise.md).
 
-## 36193 · 35193 · Abtasten des Sensors fehlgeschlagen {#36193}
+## 36193 · 37193 · Abtasten des Sensors fehlgeschlagen {#36193}
 
-<span id="35193"></span>
+<span id="37193"></span>
 
 **Was fehlgeschlagen ist.** Die Berührung auf der Sensorplatine, die vor den
 Abtastfahrten die Höhe der Sensoroberfläche findet, wurde auch nach den eigenen
@@ -186,9 +186,9 @@ Wiederholungen der Abtastung nicht akzeptiert.
 4. Wenn die Düse vor dem Sensor stehen bleibt, siehe
    [Wägezellen-Störungen](issues/loadcell-emi-noise.md).
 
-## 36194 · 35194 · Keine Daten vom Offsetsensor {#36194}
+## 36194 · 37194 · Keine Daten vom Offsetsensor {#36194}
 
-<span id="35194"></span>
+<span id="37194"></span>
 
 **Was fehlgeschlagen ist.** Der Drucker zeichnet bei jeder Abtastfahrt die Werte des
 Sensors auf, und eine Abtastfahrt zählt nur, wenn diese Aufzeichnung ausgewertet werden
@@ -207,9 +207,9 @@ Kabel und seine Stecker, zeichnen Sie ein serielles Log auf und prüfen Sie die 
 der Sensorplatine. Das Log nennt den Grund, aus dem jede Abtastfahrt fehlschlug, siehe
 [unten](#stock-firmware).
 
-## 36195 · 35195 · Werkzeugkopfplatine neu gestartet {#36195}
+## 36195 · 37195 · Werkzeugkopfplatine neu gestartet {#36195}
 
-<span id="35195"></span>
+<span id="37195"></span>
 
 **Was fehlgeschlagen ist.** Während der Abtastfahrten überwacht die Firmware den
 Neustartzähler der INDX-Kopfplatine. Eine Platine, die mitten in der Messung neu
@@ -223,9 +223,9 @@ startet, verdirbt jeden Messwert danach, daher wird die Messung abgebrochen.
 3. Wenn es erneut passiert, zeichnen Sie ein serielles Log auf und wenden Sie sich an
    den Support, siehe [an wen man sich wendet](issues/support-and-warranty-path.md).
 
-## 36196 · 35196 · Düse zu heiß {#36196}
+## 36196 · 37196 · Düse zu heiß {#36196}
 
-<span id="35196"></span>
+<span id="37196"></span>
 
 **Was fehlgeschlagen ist.** Die Abtastfahrten brauchen die Düse unter einer
 Temperaturgrenze für das Abtasten, die in der Firmware festgelegt ist. Vor den
@@ -238,9 +238,9 @@ mehr sinkt, und hier endete es, während die Düse noch über der Grenze lag.
 1. Prüfen Sie, ob sich der Bauteillüfter dreht.
 2. Lassen Sie die Düse abkühlen und drücken Sie dann Retry.
 
-## 36197 · 35197 · Referenzieren fehlgeschlagen {#36197}
+## 36197 · 37197 · Referenzieren fehlgeschlagen {#36197}
 
-<span id="35197"></span>
+<span id="37197"></span>
 
 **Was fehlgeschlagen ist.** Jede Messung beginnt damit, jede Achse zu referenzieren,
 die es braucht, und das Referenzieren schlug fehl. Ein fehlgeschlagenes Referenzieren

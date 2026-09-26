@@ -1,7 +1,7 @@
 ---
 title:        Tool offset calibration error codes
 confidence:   provisional
-updated:      2026-09-25
+updated:      2026-09-26
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -32,7 +32,7 @@ those screens opens its section on this page.
 On stock firmware you only ever see 36130, but the [serial log](#stock-firmware) still
 says which of these it was.
 
-On the Core One L the codes start with 35 instead of 36: 35130, and 35190 to 35197.
+On the Core One L the codes start with 37 instead of 36: 37130, and 37190 to 37197.
 Each section below covers both.
 
 | Code | The screen starts with | What failed |
@@ -73,9 +73,9 @@ Retry on a failed measurement over the sensor cleans the tool again and measures
 again. Retry on the other screens starts over from the first tool. Abort stops the
 print, or ends the calibration from the menu.
 
-## 36130 · 35130 · Tool offset failed {#36130}
+## 36130 · 37130 · Tool offset failed {#36130}
 
-<span id="35130"></span>
+<span id="37130"></span>
 
 **What failed.** The sweeps ran, and the sensor delivered data, but no sweep located
 the nozzle with enough confidence. Something is spoiling the sensor's view of the
@@ -96,9 +96,9 @@ this screen still goes to Prusa's own article.
 
 On stock firmware, 36130 can be any of the codes below.
 
-## 36190 · 35190 · Tool not picked {#36190}
+## 36190 · 37190 · Tool not picked {#36190}
 
-<span id="35190"></span>
+<span id="37190"></span>
 
 **What failed.** Before cleaning and measuring a tool, the firmware checks that the
 tool it has just picked is the one it considers selected. The measurement also needs
@@ -113,9 +113,9 @@ does not consider the tool picked.
 2. If the tool is on the head and seated, the head is misreading it. See
    [phantom tools and park failures](issues/tool-detection-ringdown-decay.md).
 
-## 36191 · 35191 · Nozzle cleaning failed {#36191}
+## 36191 · 37191 · Nozzle cleaning failed {#36191}
 
-<span id="35191"></span>
+<span id="37191"></span>
 
 **What failed.** One of the cleaning sequences before the measurement did not finish:
 ejecting the last blob, purging and wiping, or the final clean at the probing
@@ -131,9 +131,9 @@ neither does the calibration menu, which does not clean.
 3. If cleaning keeps failing, see [wiper, purge and blobs](issues/stringing-and-wiper-calibration.md)
    for how the cleaner is calibrated.
 
-## 36192 · 35192 · Bed probing failed {#36192}
+## 36192 · 37192 · Bed probing failed {#36192}
 
-<span id="35192"></span>
+<span id="37192"></span>
 
 **What failed.** One of the touches on the sheet was not accepted, even after the
 probe's own retries. This only happens at the start of a print that uses more than
@@ -153,9 +153,9 @@ one tool.
 4. If the nozzle stops short of the sheet where you can see the gap, see
    [loadcell noise](issues/loadcell-emi-noise.md).
 
-## 36193 · 35193 · Sensor probing failed {#36193}
+## 36193 · 37193 · Sensor probing failed {#36193}
 
-<span id="35193"></span>
+<span id="37193"></span>
 
 **What failed.** The touch on the sensor board, which finds the height of the sensor
 surface before the sweeps, was not accepted, even after the probe's own retries.
@@ -168,9 +168,9 @@ surface before the sweeps, was not accepted, even after the probe's own retries.
    failure described on [bed not aligned in Z](issues/tool-offset-bed-z-alignment.md).
 4. If the nozzle stops short of the sensor, see [loadcell noise](issues/loadcell-emi-noise.md).
 
-## 36194 · 35194 · No offset sensor data {#36194}
+## 36194 · 37194 · No offset sensor data {#36194}
 
-<span id="35194"></span>
+<span id="37194"></span>
 
 **What failed.** The printer records the sensor's readings during every sweep, and a
 sweep only counts if that recording can be analyzed: the sensor has to start
@@ -186,9 +186,9 @@ so a link that drops out now and then can still look like a dirty nozzle.
 and its connectors, capture a serial log, and check the LED on the sensor board. The
 log names the reason each sweep failed, see [below](#stock-firmware).
 
-## 36195 · 35195 · Toolhead board restarted {#36195}
+## 36195 · 37195 · Toolhead board restarted {#36195}
 
-<span id="35195"></span>
+<span id="37195"></span>
 
 **What failed.** While sweeping, the firmware watches the INDX head board's restart
 counter. A board that restarts mid-scan spoils every reading after it, so the scan is
@@ -202,9 +202,9 @@ abandoned.
 3. If it happens again, capture a serial log and contact support, see
    [who to contact](issues/support-and-warranty-path.md).
 
-## 36196 · 35196 · Nozzle too hot {#36196}
+## 36196 · 37196 · Nozzle too hot {#36196}
 
-<span id="35196"></span>
+<span id="37196"></span>
 
 **What failed.** The sweeps need the nozzle below a probing temperature limit that is
 fixed in firmware. Before sweeping, the printer lowers the nozzle target and waits for
@@ -216,9 +216,9 @@ stops falling, and here it gave up with the nozzle still above the limit.
 1. Check that the print fan spins.
 2. Let the nozzle cool, then press Retry.
 
-## 36197 · 35197 · Homing failed {#36197}
+## 36197 · 37197 · Homing failed {#36197}
 
-<span id="35197"></span>
+<span id="37197"></span>
 
 **What failed.** Each measurement starts by homing any axis that needs it, and homing
 failed. A failed homing usually stops the printer with its own homing error first.
