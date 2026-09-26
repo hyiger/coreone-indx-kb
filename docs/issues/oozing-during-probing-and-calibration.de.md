@@ -1,7 +1,7 @@
 ---
 title:        Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 confidence:   reported
-updated:      2026-09-19
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -10,13 +10,16 @@ nozzle:       0.25mm, 0.4mm, 0.8mm reported
 firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/petg-oozing-and-impeding-bed-probing/
-  - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-pc-on-indx-oozing-at-bed-probing-leveling/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/printing-pc-on-indx-oozing-at-bed-probing-leveling/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/psa-if-you-are-struggling-with-tool-offset-calibration-failing-non-stop-at-the-start-of-a-print-get-firmware-6-9-1/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5483
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5494
 superseded_by:
-source_sha:   0e115ec8a258f0a85bab804ab7f3ffa4a71ab7c2892904a494ddff12d9bc77f4
+source_sha:   df8452e3e103c2f5acbad183c19ded3672ce8a1bff204551645cdc85910dacc0
 ---
 # Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 
@@ -51,6 +54,11 @@ Reinigen des Sensorfensters an jeder Düse. Der Besitzer berichtete, dass die
 Wattestäbchen sichtbar schwarz wurden, obwohl er nicht glaubte, die Fenster berührt zu
 haben, und dass ein Testdruck danach funktionierte. Das kostet ein paar Minuten und ist
 der Punkt mit dem höchsten Nutzen.
+
+Zu welchem Sensor dieses Fenster gehört, ist umstritten. Antworten im selben Thread
+nennen es ein Temperaturfenster, und die [Seite zur Silikonsocke](silicone-sock-migration.md),
+nach der der auf Wirbelströmen beruhende Offset-Sensor überhaupt kein optisches Fenster
+hat, lässt die Zuordnung offen. Das Ergebnis der Reinigung gilt in beiden Fällen.
 
 !!! warning "Das Sensorfenster nicht mit IPA reinigen"
     Der im Thread weitergegebene Rat lautet, Seifenwasser und ein Wattestäbchen zu
@@ -117,7 +125,7 @@ Workaround gegen diesen Fehlerfall nicht hilft. Die zweite Einzelheit stammt wei
 aus einer einzigen Quelle. Es gibt zudem eine verwandte Slicer-Falle, bei der die
 **Bett**temperatur auf dieselbe Weise T1 folgt.
 
-**Das Konstruktionsmaterial ist PC.** Ein [zweiter Besitzer](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-pc-on-indx-oozing-at-bed-probing-leveling/) geriet damit an
+**Das Konstruktionsmaterial ist PC.** Ein [zweiter Besitzer](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/printing-pc-on-indx-oozing-at-bed-probing-leveling/) geriet damit an
 PC Blend und beschrieb es von der anderen Seite: Die Abtastung lief heiß genug, um auf
 das Blech zu sickern und das Leveling scheitern zu lassen, und ein händisches Absenken
 der Düsentemperatur beim nächsten Versuch behob es vollständig. Damit stand „mindestens
@@ -144,10 +152,22 @@ T1 ein Niedertemperatur-Filament zu deklarieren, wenn der Druck auf T3 beginnt;
 maßgeblich ist das Filament, mit dem Ihr Druck startet. Ob der frühere T1-Bericht ein
 älteres Profil oder einen anderen Maschinenzustand beschreibt, ist nicht geklärt.
 
-**6.9.1-beta ändert daran nichts.** Die Beta senkte die Temperatur für die
-*Werkzeug-Offset-Kalibrierung*, einen eigenen Firmware-Schritt. Die Temperatur beim
-Abtasten des Betts stammt aus dem Slicer-Profil, weshalb PC Blend auch unter der Beta
-weiterhin heiß abtastet.
+**Keine der beiden 6.9.1-Versionen nennt hier eine Änderung.** Die Beta senkte die
+Temperatur für die *Werkzeug-Offset-Kalibrierung*, einen eigenen Firmware-Schritt. Die
+Temperatur beim Abtasten des Betts stammt aus dem Slicer-Profil, weshalb PC Blend auch
+unter der Beta weiterhin heiß abtastet, und der gegen die Beta eröffnete
+[Fehlerbericht](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5483) ist
+noch immer offen und unbeantwortet. Die
+[stabile Version 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1),
+veröffentlicht am 2026-09-25, nennt einen Assistenten zum Ausrichten des Portals, Presets
+für PVA und BVOH sowie eine Korrektur beim Referenzieren — zur Abtasttemperatur nichts.
+Auch die Kalibrierungsänderungen der Beta tauchen in den Versionshinweisen der stabilen
+Version nicht wieder auf, enthalten sind sie trotzdem: Im Firmware-Repository ist die
+stabile Version das Beta-Tag plus
+[15 weitere Commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1),
+von denen keiner die Werkzeug-Offset-Kalibrierung berührt. Das ergibt sich aus der
+Release-Historie, nicht aus den Versionshinweisen. Wie PC Blend unter der stabilen
+Version abtastet, hat bislang kein Besitzer berichtet.
 
 **Anpassen.** Ein Besitzer vergrößerte den PC-Abstand im Start-G-Code des Druckers, und
 die Fehlschläge hörten auf. Der Haken, auf den er selbst hinwies: Ein
@@ -164,6 +184,26 @@ niedrigeren, die funktionierten, und den angepassten Abstand. Nichts davon wird 
 veröffentlicht. Forenbeiträge und ein Fehlerbericht sind nicht die Hardware-Bestätigung,
 die diese Seite verlangt, bevor eine Temperatur auf ihr erscheint — aber sie sind
 Hinweise, und es ist dieselbe Angabe, nach der die Markierung weiter oben fragt.
+
+### Wenn das Leveling scheitert und neu ansetzt
+
+`provisional` — wenige Berichte, und sie stimmen nicht überein. Ist das Bett-Leveling an
+einer verschmutzten Düse gescheitert, sollten Sie nicht darauf zählen, dass der nächste
+Versuch mit einer sauberen beginnt. Eine
+[Funktionsanfrage](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5494)
+beschreibt, wie der Kopf zum Abstreifer fährt und dann für einen weiteren Versuch zum
+Bett zurückkehrt, ohne die Düse zu säubern. Ein Besitzer mit der 6.9.1-Beta fand im
+[Thread zur Düsenreinigung](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/)
+das Werkzeug im Silikon-Abstreifblock geparkt vor, wo die Düse für eine Reinigung von
+Hand nicht erreichbar war; der Druck lief erst nach mehreren Wiederholungen an. Zwei
+weitere Besitzer dort beschreiben etwas anderes: einen neuen Versuch, der die Düse erneut
+aufheizt, spült und abstreift, selbst nachdem sie von Hand gereinigt wurde, und sie dabei
+so verschmutzt, dass es wieder scheitert. Einer von ihnen nutzte ebenfalls einen
+6.9.1-Build und hält es für möglich, dass seine eigene Abstreifer-Einstellung oder ein
+Fehler der Wägezelle schuld ist; der andere nennt keine Version, und die Funktionsanfrage
+ebenso wenig. Die Firmware-Version erklärt den Unterschied also nicht, und diese beiden
+Beiträge sagen nicht, ob das Bett-Leveling oder die Werkzeug-Offset-Kalibrierung der
+fehlschlagende Schritt war.
 
 ### Wenn nichts davon hilft
 

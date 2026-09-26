@@ -1,7 +1,7 @@
 ---
 title:        Assembly notes — INDX conversion kit
 confidence:   reported
-updated:      2026-09-19
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One, Core One Plus
 toolhead:     INDX
@@ -14,6 +14,12 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/removing-magnets-from-tool-docks-you-dont-need-to-destroy-them/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/parts-list-for-screws-and-bolts/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kind-of/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/no-tools-in-my-indx-upgrade-kit/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-to-core-onegen2-indx-upgrade-path/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-founders-edition-upgrade-path-to-core-one-gen-2/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/coreone-with-mmu-upgrade-to-indx/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/
 superseded_by:
 ---
 
@@ -69,6 +75,12 @@ downloads will not match the current guide.
   for the dock magnets.
 - A **large sheet of cardboard** to stand the printer on, so you can spin and tilt it
   freely during the awkward steps.
+- A **spare belt tensioner** or two, printed or bought while the printer still runs.
+  The build takes the belts off and tensions them again, and owners in two threads
+  report a tensioner part failing. One, whose printer has been through several
+  conversions ending with the INDX, broke one along the way and says plenty of others
+  have too. The other needed a new tensioner pulley part during the original Core One
+  build and, with no second printer, had to wait for support to send one.
 
 **Check your build plate now, not afterwards.** If you print on an oversized
 third-party flex sheet, it may stop clearing the tool docks once they are installed —
@@ -107,12 +119,40 @@ extracting that list yourself. An unofficial fastener PDF has circulated on the 
 but it was AI-generated and unverified by its own poster — treat it as a starting
 point to check against the guide, not as a bill of materials.
 
-**"All tools included" means something specific.** If there is already an assembled
-Core One on your bench, the tools you need came with it. Only the T10 driver ships in
-the kit box.
+**Do not expect tools in the box.** The conversion kit assumes the tools you need came
+with the Core One already on your bench. The Founders Edition build notes this page
+grew from list a single T10 driver in the kit. The Prusa-sold kit reportedly has none
+at all, and a Prusa representative has confirmed on the forum that this is by design:
+an upgrade kit relies on the set that shipped with the printer. If your Core One came
+assembled, you may not have that set. The same representative says every printer, kit or assembled,
+is meant to include tools, and that support will help if yours did not — yet one owner
+of an assembled machine never received any. Check before you start, not at the first
+screw.
 
 **MMU3 owners:** it must come off first, and the guide barely covers removal. Plan it
-as a separate task before you start the conversion proper.
+as a separate task before you start the conversion proper. It is less work than the
+guide's advice to reverse the MMU assembly suggests. One owner who converted from an
+MMU3 points out that the whole extruder is replaced — nothing survives except a few
+screws and the part-cooling fan — so there is no need to undo the MMU's changes to it
+one by one; they lifted the unit out with its cables and tubes. Owners in a separate
+thread describe the same conversion as straightforward.
+
+**Some kits arrive with a second upgrade inside.** Prusa included its Core One+ (Gen 2)
+upgrade — new belts, belt pulleys and thermal expansion joints — with the first batch
+of Prusa INDX conversion kit orders, intending it to go in during the INDX build, and
+pointed to its [Gen 2 upgrade guide](http://prusa.io/Prusa-INDX-GEN-2) for that.
+Owners, including one who found both in the box, have still been unsure of the order.
+Two owners in Prusa's announcement thread advise doing the two together, since both
+jobs involve the belts and the bed; one, who had built a Founders Edition kit, found that swapping the pulleys
+was all the Gen 2 work added. The exact point is this page author's own practice: the
+Gen 2 parts go in straight after the heat bed spacers in the INDX sequence, and the
+Gen 2 nozzle wiper stays out, since the INDX build has no use for it; a Founders
+Edition owner in a separate thread likewise says to skip that part. After the first
+flash, check the hardware configuration screen: one owner, on the INDX firmware
+current in mid-September 2026, before the stable 6.9.1 release, found it had assumed
+the Gen 2 belts were fitted — rightly, in that case, but it had no means of telling.
+*Single report* for the belt setting, and whether 6.9.1 behaves the same way has not
+been reported.
 
 ## Steps to slow down on
 
@@ -171,26 +211,63 @@ magnets, treating the old ones as consumed.
 ### Sourcing
 
 An owner adding docks to a four-tool kit compiled sources for the hardware. The dock
-magnets are 3 × 8 mm neodymium rods; the activation magnet is an unusual 5 × 8.47 mm
-rod that appears to be available from very few suppliers. Two spring sizes are also
-needed. Note that the printed parts collection contains **two different nozzle seal
-holders** — one for the Founders Edition and one for the Prusa version — so check
-which you need before printing.
+magnets are 3 × 8 mm neodymium rods. The activation magnet in the dock's thimble is
+where accounts disagree. The size first circulated, an unusual 5 × 8.47 mm rod that
+very few suppliers stock, came from a vendor chat channel rather than a measurement.
+The owner who compiled the list later measured the magnet in an installed dock at
+7 × 8 mm and settled on that size for the official printed parts, while a second owner
+wondered whether the smaller figure belongs to a different kit. A community thimble
+remix takes the 5 mm magnet, and worked in the compiling owner's dock. Measure one of
+your own docks before you order. Two spring sizes are also needed. Note that the
+printed parts collection contains **a separate nozzle seal holder for each edition**,
+Founders Edition and Prusa, so check which you need before printing. The seal itself
+has a known substitute: owners in two threads point to the Prusa XL's spare nozzle
+seal, whose blade is slightly shorter, in a remixed holder that compensates.
 
 Buying the parts has since become simpler. Prusa's shop now lists INDX components
 individually — among them a [tool holder with magnets](https://www.prusa3d.com/product/tool-holder-with-magnets-2/), a side filament sensor,
 and the [INDX filament sensor cable](https://www.prusa3d.com/product/filament-sensor-cable-for-indx/) — and passive tools have been reported in
 stock in the vendor's shop. If you are adding docks, check the ready-made holder before
 hunting down magnets separately; what exactly it includes is worth confirming on the
-listing.
+listing. Not everyone would buy it, though. One owner, who had two screws melt into the
+kit-supplied dock parts despite pre-threading them by hand, recommends printing a
+community variant that takes nyloc nuts and sourcing the magnets yourself. Whether the
+holder now sold on its own shares that weakness has not been reported.
 
-!!! warning "One report of a magnet grade substitution"
-    An owner reports replacing the original magnets with a stronger grade and finding
-    they hold the tools more firmly, also noting the original grade is unusually hard
-    to source outside Europe. This is a **single report**. Stronger magnets change the
-    force the mechanism has to overcome on every pickup and drop, and nobody has
-    reported long-term results. If you are only trying to source replacements, match
-    the original specification.
+**Going from four tools to eight.** No dedicated upgrade kit has been announced.
+Prusa's product listing describes the two kit sizes as sharing the Smart Head and
+docking hardware and differing only in the number of passive tools, which can be added
+later. Owners of four-tool Founders Edition kits report a further difference, from
+their own machines: tools five to eight run through a second, right-hand side filament
+sensor that their kit did not include, and adding them also takes its cable, more PTFE
+tubing and — if you want them — spool holders. That sensor was the one part nobody
+could source elsewhere, and it is now among the parts in Prusa's shop. That fits the
+one statement so far about Prusa's own four-tool kit, that it lacks the sensor as well,
+but does not confirm it: the statement is one owner's, second-hand, made before they
+had added any tools. The printed block that houses the sensor holds parts that are
+harder to find:
+
+- **Its countersunk magnets.** One owner measured them at 10 mm across and 5 mm thick
+  and found a match online, in a grade whose relation to the original is unknown; the
+  author of this page has not found a source and suspects they are custom; a third
+  owner is still looking. That first owner notes the sensor depends on magnet strength
+  more than the dock does, because it works by Hall effect.
+- **The plain plastic spacers inside the printed housing** — not the collets the PTFE
+  plugs into. No source is known. One owner went a different way, with a community
+  adapter that takes standard PC4-M10 push fittings and lets the PTFE tube pass
+  straight through. *Single report.*
+
+!!! warning "Reports of a magnet grade substitution"
+    The author of this page replaced the original dock magnets with a stronger grade
+    and found they hold the tools more firmly, and notes the original grade is
+    unusually hard to source outside Europe. A second owner, in a separate thread, runs
+    the stronger grade in self-printed docks without trouble and finds they grip
+    perhaps a little tighter — but those magnets were also slightly larger, set in a
+    pocket that owner had enlarged in the printed file, so the report does not isolate
+    the grade. There is **no independent like-for-like report**. Stronger magnets
+    change the force the mechanism has to overcome on every pickup and drop, and nobody
+    has reported long-term results. If you are only trying to source replacements,
+    match the original specification.
 
 ## Expectations to set before first boot
 
@@ -255,7 +332,7 @@ comments left on the official guide's own steps, plus forum reports. That compil
 is second-hand relative to the individual builders who reported each item, but it
 aggregates a much larger body of experience than any single thread here contains.
 
-Independently corroborated:
+The support for each claim, item by item:
 
 - **The absent fastener list** is confirmed by
   [Parts list for screws and bolts?](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/parts-list-for-screws-and-bolts/),
@@ -267,12 +344,50 @@ Independently corroborated:
 - **Hardware sourcing** comes from
   [Sourcing tool dock hardware](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/sourcing-tool-dock-hardware/),
   which is marked answered and compiled by an owner adding docks to a four-tool kit.
+  The second side filament sensor missing from four-tool Founders Edition kits, and the
+  XL nozzle seal as a stand-in, are both reported there and again in
+  [a thread on growing a four-tool kit to eight](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/).
+  Neither thread has a first-hand report of the sensor from an owner of Prusa's
+  four-tool kit.
+- **Kits without tools** rest on a single thread,
+  [one about the missing tools](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/no-tools-in-my-indx-upgrade-kit/),
+  but it carries the vendor's own statement: two owners report it there, and a Prusa
+  representative confirms the policy and gives the reasoning. No second thread repeats
+  it. The lone T10 driver in
+  the Founders Edition kit rests only on the compilation above, which this page's
+  author wrote, so it adds no independent support.
+- **The thin MMU3 removal step** is raised again in
+  [a thread on combining Gen 2 with the INDX](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-to-core-onegen2-indx-upgrade-path/),
+  and owners in
+  [another on swapping an MMU3 for the INDX](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/coreone-with-mmu-upgrade-to-indx/)
+  describe that conversion as uneventful.
+- **Gen 2 parts in the first kits** is Prusa's own statement, in its
+  [shipping announcement](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/),
+  which also says to fit them while installing the INDX. Two owners in the same thread
+  independently advise doing the two jobs together. An owner confirms in a separate
+  thread,
+  [the one on combining Gen 2 with the INDX](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-to-core-onegen2-indx-upgrade-path/),
+  that the Gen 2 upgrade was packed with their INDX kit.
+- **Spare belt tensioners** rest on two owners in separate threads, one in the thread
+  on swapping an MMU3 for the INDX linked above and one in Prusa's shipping
+  announcement thread. The same advice appears in the latter from this page's author,
+  and is not counted.
 
-Weaker: the magnet grade substitution and the MK4S bootloader lockout are each one
-owner's experience, and both are flagged as such in place. The lockout comes from the
-general discussion thread, which is overwhelmingly shipping and order chatter — it was
-found by reading all 1534 posts, and it is one of only two durable technical items that
-survived review out of that entire thread. The circulating unofficial fastener PDF was described by the person sharing
+Weaker: the MK4S bootloader lockout is one owner's experience, and is flagged as such
+in place. It comes from the general discussion thread, which is overwhelmingly
+shipping and order chatter — it was found by reading all 1534 posts, and it is one of
+only two durable technical items that survived review out of that entire thread. Also
+single reports, and marked in place: the belt setting after the first flash, the
+assembled printer that arrived without tools, the screws that melted into dock parts,
+the sensor-housing spacer workaround and the countersunk magnet measurement. The
+activation magnet size rests on one owner's measurement set against a figure nobody
+measured. The exact point in the INDX sequence where the Gen 2 parts go is this page
+author's own practice; fitting them during the INDX build has the support noted above,
+and leaving out the nozzle wiper has one independent voice, in
+[a separate thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-founders-edition-upgrade-path-to-core-one-gen-2/).
+The magnet grade substitution was first reported by this page's author, and there is
+no independent like-for-like account: the one other owner who reports it changed the
+magnet size as well as the grade. The circulating unofficial fastener PDF was described by the person sharing
 it as AI-generated and unverified, and is recorded here only as something you may
 encounter, not as a resource to rely on.
 

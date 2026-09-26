@@ -1,7 +1,7 @@
 ---
 title:        Oozing spoils bed probing and tool calibration
 confidence:   reported
-updated:      2026-09-19
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -10,11 +10,14 @@ nozzle:       0.25mm, 0.4mm, 0.8mm reported
 firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/petg-oozing-and-impeding-bed-probing/
-  - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-pc-on-indx-oozing-at-bed-probing-leveling/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/printing-pc-on-indx-oozing-at-bed-probing-leveling/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/psa-if-you-are-struggling-with-tool-offset-calibration-failing-non-stop-at-the-start-of-a-print-get-firmware-6-9-1/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5483
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5494
 superseded_by:
 ---
 
@@ -47,6 +50,11 @@ The resolution that actually closed the main thread on this was cleaning the sen
 window on each nozzle. The owner reported the swabs coming away visibly black even
 though they did not believe they had touched the windows, and a test print working
 afterwards. This costs a few minutes and it is the highest-value thing to check.
+
+Which sensor that window belongs to is disputed. Replies in the same thread call it a
+temperature window, and the [silicone sock page](silicone-sock-migration.md), which
+holds that the eddy-current offset sensor has no optical window at all, leaves the
+identification open. The cleaning result stands either way.
 
 !!! warning "Do not clean the sensor window with IPA"
     The advice relayed in the thread is to use soapy water and a cotton swab rather
@@ -106,7 +114,7 @@ calibration is fixed in firmware and cannot be changed from G-code, so this work
 does not help that failure mode. That second detail is still single-source. There is
 also a sibling slicer trap in which the **bed** temperature follows T1 in the same way.
 
-**The engineering material is PC.** A [second owner](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-pc-on-indx-oozing-at-bed-probing-leveling/) hit this with PC Blend and
+**The engineering material is PC.** A [second owner](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/printing-pc-on-indx-oozing-at-bed-probing-leveling/) hit this with PC Blend and
 described it from the other end: probing ran hot enough to ooze onto the sheet and fail
 leveling, and lowering the nozzle temperature by hand on the next attempt cured it
 outright. That moved "at least one engineering material still probes hot" off a single
@@ -132,9 +140,20 @@ print that begins on T3; the filament to look at is the one your print starts wi
 Whether the earlier T1 report describes an older profile or a different machine state is
 not established.
 
-**6.9.1-beta does not change it.** The beta lowered the temperature used for *tool offset
-calibration* — a different step, and one that firmware controls. The bed-probing temperature comes from
-the slicer profile, so owners on the beta still see PC Blend probe hot.
+**Neither 6.9.1 release lists a change here.** The beta lowered the temperature used
+for *tool offset calibration* — a different step, and one that firmware controls. The
+bed-probing temperature comes from the slicer profile, so owners on the beta still see
+PC Blend probe hot, and the
+[bug report](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5483) filed against
+the beta is still open and unanswered. The
+[stable 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1),
+published 2026-09-25, lists a gantry-squaring wizard, PVA and BVOH presets and a homing
+fix, and nothing about probing temperature. Its notes also do not repeat the beta's
+calibration changes, but the stable carries them all the same: in the firmware
+repository it is the beta tag plus
+[15 further commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1),
+none of which touches tool offset calibration. That comes from the release history, not
+the notes. No owner has yet reported how PC Blend probes on the stable.
 
 **Adjusting it.** One owner widened the PC offset in the printer's start G-code and the
 failures stopped. The catch, which they pointed out themselves, is that a printer
@@ -149,6 +168,23 @@ TODO(verify): these accounts state the temperature PC probed at, the lower ones 
 worked, and the adjusted offset. None of them is published here. Forum posts and a bug
 report are not the hardware confirmation this page requires before a temperature goes on
 it — but they are leads, and they are the same figure the marker above is asking for.
+
+### When leveling fails and retries
+
+`provisional` — a few reports, and they do not agree. Once bed leveling has failed on a
+fouled nozzle, do not count on the retry starting from a clean one. A
+[feature request](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5494)
+describes the head moving over to the wiper and then going back to the bed for another
+attempt without scrubbing the nozzle. An owner on the 6.9.1 beta, in the
+[nozzle cleaning thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/),
+found the tool left parked in the silicone wiper block, out of reach for cleaning by
+hand; the print went ahead only after several retries. Two other owners there describe
+something different: a retry that heats, purges and wipes the nozzle again even after it
+has been cleaned by hand, fouling it enough to fail once more. One of them was also on a
+6.9.1 build, and allows that their own wiper setting or a loadcell fault may be to blame;
+the other gives no version, and neither does the feature request. So firmware version
+does not explain the difference, and those two posts do not say whether bed leveling or
+tool offset calibration was the step failing.
 
 ### If none of that helps
 

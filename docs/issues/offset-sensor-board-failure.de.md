@@ -7,18 +7,21 @@ printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta; the board fault is not version-specific
+firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1; the board fault is not version-specific
 sources:
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/df2b2eb4b2e9161ff3ae50a364d3e389b17684a3
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/offset-sensor-failure/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   93945364b7eede8da317530de0a96f8bf7f157ab9d23aca1ad2bb0600a6e46a6
+source_sha:   98e21f4e953356e4e92517c2f639006279f1549b8d1d89a5dfbb2714df642489
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 
@@ -33,10 +36,10 @@ und die Riemenspannung, die der Support unter Umständen vorschlägt, hat keinen
 einzigen berichteten Fall behoben.
 
 !!! important "Bevor Sie die Platine verdächtigen: Läuft bei Ihnen 6.9.0?"
-    Ein offener [Fehlerbericht zur Firmware](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442) beschreibt, dass die
+    Ein inzwischen geschlossener [Fehlerbericht zur Firmware](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442) beschreibt, dass die
     Werkzeug-Offset-Kalibrierung **nach dem Upgrade auf 6.9.0** wiederholt fehlschlägt,
     an Maschinen, an denen sie zuvor funktioniert hat. Es sind längst nicht mehr zwei
-    Berichte: Der Bericht zieht einen stetigen Zustrom von Besitzern an, an Vier- wie
+    Berichte: Der Bericht zog einen stetigen Zustrom von Besitzern an, an Vier- wie
     an Achtwerkzeug-Maschinen, darunter neu aufgebaute Gen-2-Geräte, die bei der
     Montage jede Kalibrierung bestanden haben. Betroffen sind mehrere Werkzeuge und
     nicht nur eines, und der Kalibrierassistent gelingt oft, während die Prüfung beim
@@ -79,7 +82,7 @@ einzigen berichteten Fall behoben.
     Besitzer prüften das und fanden ihre Einstellungen bereits korrekt; es ist also
     nicht die ganze Erklärung, aber kostenlos auszuschließen.
 
-    **Es gibt eine Behebung des Herstellers, als Beta.** Nach Untersuchungen mit
+    **Es gibt eine Behebung des Herstellers.** Nach Untersuchungen mit
     Hinweisen von Besitzern aus dem Bericht und interner Verfolgung des Fehlers
     veröffentlichte der Hersteller am 10. September 2026
     [6.9.1-beta](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta)
@@ -90,26 +93,47 @@ einzigen berichteten Fall behoben.
     wiederholt. Mehrere Besitzer im Bericht sagen, die Kalibrierung gelinge nun beim
     ersten Versuch, wo sie zuvor jedes Mal gescheitert war, und der Besitzer, der ihn
     eröffnet hat, sagt inzwischen, die Beta behebe es bei ihm und der Bericht könne
-    geschlossen werden. Die Temperatur beim Abtasten des Betts berührt sie nicht; die
-    stammt aus dem Slicer-Profil und nicht aus der Firmware — siehe
+    geschlossen werden. Ein Prusa-Entwickler schloss ihn am 23. September 2026 mit der
+    Begründung, dass die meisten Besitzer, die den ursprünglichen Fehler hatten, ihn
+    offenbar los seien. Der abschließende Kommentar nennt keine Version und geht nicht auf
+    den unten erwähnten Besitzer ein, der mit der Beta weiterhin gelegentliche
+    Fehlschläge meldete; wer ein ähnliches Problem oder ein anderes Problem mit den
+    Werkzeug-Offsets hat, soll einen neuen Bericht eröffnen und dabei auf diesen
+    verweisen, falls er damit zusammenhängt. Die Temperatur beim Abtasten des Betts
+    berührt die Behebung nicht; die stammt aus dem Slicer-Profil und nicht aus der
+    Firmware — siehe
     [Nachsickern beim Abtasten](oozing-during-probing-and-calibration.md).
 
-    Es ist eine Beta und noch nicht bei allen fehlerfrei. Ein Besitzer berichtet von einem
-    Thermal Runaway nach dem ersten Filamentwechsel damit, den der Entwickler als eigenen
-    Fehlerbericht erbeten hat; ein anderer stellt fest, dass die Kalibrierung zuverlässig
-    gelingt, die Düsen aber merklich schmutziger herauskommen. Seitdem berichtet ein Besitzer von
-    weiterhin auftretenden, wenn auch selteneren Fehlschlägen, und [ein weiterer](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/)
+    **Sie ist jetzt in einer stabilen Version.** Der Hersteller veröffentlichte
+    [6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1) als
+    stabile Version am 25. September 2026. Deren Versionshinweise nennen einen
+    Assistenten zur Rechtwinkligkeit des Portals, Voreinstellungen für PVA und BVOH und
+    eine Behebung beim Referenzieren und sagen nichts zur Werkzeug-Offset-Kalibrierung.
+    Die Änderungen der Beta sind trotzdem enthalten: Im Firmware-Repository ist das Tag
+    der stabilen Version das Beta-Tag plus
+    [15 weitere Commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1),
+    und keiner davon berührt den Code der Werkzeug-Offset-Kalibrierung oder des
+    Offset-Sensors. Das stammt aus dem Repository, nicht aus den Versionshinweisen, und
+    nichts in der stabilen Version wird als weitere Behebung dieses Fehlers beschrieben.
+
+    Die Beta war nicht bei allen fehlerfrei, und die Hinweise zur stabilen Version
+    erwähnen nichts vom Folgenden. Ein Besitzer stellt fest, dass die Kalibrierung
+    zuverlässig gelingt, die Düsen aber merklich schmutziger herauskommen. Ein anderer
+    berichtet von weiterhin auftretenden, wenn auch selteneren Fehlschlägen, und
+    [ein dritter](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/)
     stellte fest, dass die Beta Filamentfäden an die Düse zog und das Z-Antasten scheitern
     ließ, und kam mit der Rückkehr besser zurecht — vermutet dahinter aber seine eigene
     Abstreifer-Einstellung. Keiner dieser Berichte ist über den jeweiligen Melder hinaus
-    bestätigt.
+    bestätigt. Ein mit der Beta gemeldeter Thermal Runaway wurde von seinem Melder
+    zurückgezogen, der angab, ihn mit denselben Dateien auch unter der älteren Version
+    reproduziert zu haben, und eher sein Modell als die Beta in Verdacht hatte.
 
-    Für Besitzer mit den neueren Riemen löst sie außerdem das oben beschriebene Dilemma:
-    Die Beta ist INDX-Firmware, die die 1.5-GT-Unterstützung behält, sodass der Schritt
-    nach vorn den Downgrade als Ausweg ersetzt. Prüfen Sie im Bericht, ob eine stabile
-    6.9.1 erschienen ist, bevor Sie eine Beta installieren. Die Firmware verweist auf
-    einen offiziellen Hilfeartikel zu diesem Fehlercode, der ihn laut Besitzern nicht
-    behoben hat.
+    Für Besitzer mit den neueren Riemen löst die Behebung außerdem das oben beschriebene
+    Dilemma: 6.9.1 ist INDX-Firmware, die die 1.5-GT-Unterstützung behält, sodass der
+    Schritt nach vorn den Downgrade als Ausweg ersetzt, und seit der stabilen Version
+    heißt das nicht mehr, eine Beta zu installieren. Die Firmware verweist auf einen
+    offiziellen Hilfeartikel zu diesem Fehlercode, der ihn laut Besitzern nicht behoben
+    hat.
 
 !!! note "Ein Hinweis: Manche Ausfälle der Offset-Sensorplatine könnten eine Takteinstellung sein"
     `provisional` — ein einzelner Bericht, und sein Verfasser sagt, er sei noch nicht bewiesen.
@@ -124,16 +148,35 @@ einzigen berichteten Fall behoben.
 
     Die Begründung lässt sich am Datenblatt des Chips prüfen, das die Referenzfrequenz im
     Einkanalbetrieb, den der INDX nutzt, auf 35 MHz begrenzt — unter dem, was die
-    Standard-Firmware einstellt. Ist das die Ursache, würden Exemplare mit etwas weniger
-    Reserve sporadisch ausfallen, während die meisten weiterlaufen; das würde auch
+    Standard-Firmware bis einschließlich 6.9.0 einstellte. Ist das die Ursache, würden
+    Exemplare mit etwas weniger Reserve sporadisch ausfallen, während die meisten
+    weiterlaufen; das würde auch
     erklären, warum eine Ersatzplatine denselben Fehler bei manchen Besitzern behebt, ohne
     dass der Fehler je weit verbreitet war.
 
     Behandeln Sie es als Hinweis, nicht als Behebung: eine Maschine, ein eigener Build,
     ein Ergebnis, das der Melder noch wiederholte, und eine Darstellung, die nach eigener
-    Angabe mit einem KI-Assistenten verfasst wurde. Keine Quelle verbindet es mit der
-    Kommunikationsbehebung in 6.9.1-beta, obwohl beide dieselbe Sensorverbindung
-    betreffen. Siehe [Firmware-Issue 5473](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473).
+    Angabe mit einem KI-Assistenten verfasst wurde. Siehe
+    [Firmware-Issue 5473](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473).
+
+    **Der Hersteller hat dieselbe Taktänderung vorgenommen.** Der Quellcode von
+    6.9.1-beta, und damit die stabile 6.9.1, halbiert den Referenztakt des Sensors. Der
+    [Commit](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/df2b2eb4b2e9161ff3ae50a364d3e389b17684a3)
+    nennt als Grund die Einkanal-Grenze aus dem Datenblatt und ist auf einen Zeitpunkt
+    vor der Eröffnung von Firmware-Issue 5473 datiert; 6.6.3 und 6.9.0 betrieben den
+    Chip beide mit 40 MHz. Die
+    Versionshinweise erwähnen die Änderung nicht, ob sie also das ist, was dort
+    Kommunikationsbehebung heißt, ist nicht angegeben. Damit ist die Prämisse geklärt,
+    nicht die Heilung: Noch kein Besitzer hat berichtet, ob die Standard-Firmware 6.9.1
+    den Fehler beim ersten Messwert an einer Maschine beseitigt, die ihn hatte. Ein
+    solcher Bericht würde den Takt auch nicht eindeutig als Ursache ausweisen. Der Build
+    des Melders änderte nur den Referenzteiler, der Commit des Herstellers dagegen teilt
+    zusätzlich den Eingangstakt des Sensors, betreibt die Spule mit einem festen,
+    niedrigeren Strom bei abgeschalteter automatischer Amplitudenkorrektur und ändert,
+    welche Amplituden- und Schwingungsabriss-Fehler gemeldet werden. Beseitigt die
+    Standard-Firmware 6.9.1 den Fehler, kann jede dieser Änderungen der Grund sein. Wenn
+    Ihre Platine unter 6.9.0 oder älter auf diese Weise ausfällt, kostet ein Update
+    nichts und lohnt sich, bevor Sie sie austauschen.
 
 ## Fehlercodes, die hierher führen
 
@@ -265,13 +308,19 @@ Besitzer an die Sicker-Erklärung hatte, nennen die Versionshinweise der Beta ei
 niedrigere Kalibriertemperatur und eine Behebung von Kommunikationsaussetzern des
 Offset-Sensors, und der Entwickler im Bericht sagte, beides habe eine Rolle gespielt.
 Das ist der Hersteller, der beitragende Ursachen benennt, keine veröffentlichte
-Ursachenanalyse, und die Behebung ist noch eine Beta. Bis eine stabile Version erscheint
-und der Bericht geschlossen wird, behandeln Sie sie als derzeitige Behebung des
-Herstellers, nicht als endgültige.
+Ursachenanalyse. Die Behebung ist inzwischen keine Beta mehr. Der Bericht wurde am 23.
+September 2026 aufgrund der Rückmeldungen von Besitzern zur Beta geschlossen, und die
+stabile 6.9.1 enthält denselben Code, was die Release-Tags zeigen und die
+Versionshinweise nicht sagen. Damit ist sie die veröffentlichte Behebung des
+Herstellers, keine nachgewiesene Heilung: Ein Besitzer im Bericht sah mit der Beta
+weiterhin gelegentliche Fehlschläge, und zur stabilen Version hat noch kein Besitzer
+berichtet.
 
 Der Hinweis auf die Referenzfrequenz des LDC1612 ist ein separater Einzelbericht eines
-anderen Besitzers, vom Hersteller nicht bestätigt, und ist dort, wo er erscheint, als
-`provisional` markiert.
+anderen Besitzers und ist dort, wo er erscheint, als `provisional` markiert. Der eigene
+Commit des Herstellers bestätigt, dass der Takt über der Grenze des Chips lag, und
+ändert ihn zusammen mit mehreren anderen Sensoreinstellungen, sagt aber nichts darüber,
+ob das die Fehlschläge dieses Besitzers verursacht hat.
 
 ## Verwandte Seiten
 

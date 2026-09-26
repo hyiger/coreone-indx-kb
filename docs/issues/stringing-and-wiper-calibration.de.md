@@ -1,24 +1,29 @@
 ---
 title:        In den Druck geschleppte Blobs — Düsenwischer und Spülvorgang
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       0.4mm reported
-firmware:     6.9.0; earlier behavior noted throughout
+firmware:     6.9.0, re-checked against 6.9.1; earlier behavior noted throughout
 sources:
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5391
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5496
 superseded_by:
-source_sha:   e4d6558aac0aac18bb1aadef8fb6ee98b53954ff554b9ed098abbae81c1aeab0
+source_sha:   bdb833895697dfc21ea46c578ca2c428d3d2e464f5afe3e2df3e7f16659ac7e5
 ---
 # In den Druck geschleppte Blobs — Düsenwischer und Spülvorgang
 
-!!! tip "Vor allem anderen auf 6.9.0 aktualisieren"
+!!! tip "Vor allem anderen auf 6.9.0 oder neuer aktualisieren"
     Firmware 6.9.0 hat die **automatische Kalibrierung des Düsenreinigers** eingeführt —
     das ist in Prusas eigenen Release Notes bestätigt und nicht nur aus Anwenderberichten
     abgeleitet. Dieselbe Version hat den Spülpunkt in Y verschoben und lässt die Düse im
@@ -30,12 +35,37 @@ source_sha:   e4d6558aac0aac18bb1aadef8fb6ee98b53954ff554b9ed098abbae81c1aeab0
     keinen Brim mehr, um Verunreinigungen in der ersten Schicht aufzufangen, und — am
     aussagekräftigsten — der Anwender, der den ursprünglichen Beschwerde-Thread eröffnet
     hat, berichtet, dass 6.9.0 sowohl das Ausschwitzen als auch die Reinigung weitgehend
-    beruhigt hat.
+    beruhigt hat. Dabei blieb es nicht. Wochen später, noch auf 6.9.0, schlug beim
+    selben Anwender ein Druck mit einem anderen Filament fehl, und danach ließ sich die
+    Werkzeugkalibrierung nicht mehr bestehen, was für ihn neu war; nachdem er die
+    Maschine zurückgesetzt und jedes Werkzeug neu kalibriert hatte, war auch das
+    Ausschwitzen wieder da. Anschließend bestanden nach seinem Bericht alle
+    Kalibrierungen auf einem 6.9.1-Build, ohne dass klar wurde, auf welchem; Prusas 6.9.1
+    lag zu diesem Zeitpunkt nur als Beta vor. Siehe
+    [Werkzeug-Offset-Kalibrierung](offset-sensor-board-failure.md).
 
     Der größte Teil des unten beschriebenen manuellen Vorgehens existiert nur, weil diese
     Kalibrierung früher von Hand erledigt wurde, schlecht und ohne jede Möglichkeit zu
-    sehen, was man tut. Wenn Sie 6.9.0 oder neuer einsetzen, aktualisieren Sie und testen
-    Sie erneut, bevor Sie Zeit in manuelle Ausrichtung investieren.
+    sehen, was man tut. Wenn Sie etwas Älteres als 6.9.0 einsetzen, aktualisieren Sie und
+    testen Sie erneut, bevor Sie Zeit in manuelle Ausrichtung investieren.
+
+    Die Release Notes der stabilen Version 6.9.1 nennen keine Änderung am Wischer oder am
+    Spülvorgang. Die Beta hat für den Reiniger eine Sache geändert: Das Bett fährt während
+    der Nozzle-Cleaner-Kalibrierung gegebenenfalls nach unten und lässt Platz für eine
+    Hand oder einen Schraubenschlüssel. Die Notes der stabilen Version wiederholen das
+    nicht, aber die stabile Version baut auf der Beta auf: Im Firmware-Repository fügt sie
+    dem Beta-Tag
+    [15 Commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1)
+    hinzu, von denen keiner den Düsenreiniger betrifft. Das ergibt sich aus der
+    Release-Historie, nicht aus den Notes. Auf einem 6.9.1-Build fand ein Anwender PLA,
+    das zu langen Fäden ausgezogen an der Düse hing, woraufhin das Antasten der Düsen
+    scheiterte; mit 6.9.0 lief es anscheinend besser, er vermutete aber seine
+    eigene Wischereinstellung oder einen Fehler der Wägezelle. Ein zweiter Anwender, auf
+    der Beta, fand nach dem Wischen noch PETG an der Düse, genug, um die
+    Bettnivellierung scheitern zu lassen, rechnet der Beta aber an, die meisten seiner
+    PETG-Kalibrierprobleme behoben zu haben. Beides sind Einzelberichte. Zu Fehlern beim
+    Antasten allgemein siehe
+    [Ausschwitzen beim Antasten und Kalibrieren](oozing-during-probing-and-calibration.md).
 
 ## Zusammenfassung
 
@@ -86,9 +116,12 @@ Zielwert veröffentlicht.
     Forum-Thread argumentierte später gegenteilig — Würmer könnten Absicht gewesen sein,
     weil ein Wurm die Düse davon abhält, sich in die Oberseite eines Blobs zu setzen,
     sich leichter löst und weniger Schaden anrichtet, wenn er doch auf den Druck gelangt.
-    Beide Lesarten stehen in den Quellen. Behandeln Sie die Pelletform als *empfindlichen
-    Hinweis darauf, dass sich Ihre Ausrichtung verändert hat*, was sie mit Sicherheit
-    ist, und nicht als Zielgröße, auf die hin optimiert wird.
+    Beide Lesarten stehen in den Quellen. Ein späterer Bericht liefert einen weiteren
+    Datenpunkt, ohne die Frage zu entscheiden: Bei demselben Anwender, der im Warnkasten
+    weiter unten zitiert wird, kam das Spülmaterial als aneinandergereihte Würmer heraus,
+    und einige davon landeten auf dem Bett. Behandeln Sie
+    die Pelletform als *empfindlichen Hinweis darauf, dass sich Ihre Ausrichtung verändert
+    hat*, was sie mit Sicherheit ist, und nicht als Zielgröße, auf die hin optimiert wird.
 
 ### Die eigentliche Schwierigkeit ist, dass man es nicht sehen kann
 
@@ -141,6 +174,16 @@ eine Richtungsangabe („tiefer als nur berührend“), die keine Zahl benötigt
     zurückkehrt, nachdem sie zuvor durch mehr Tiefe behoben war, ist das der erste
     Verdacht.
 
+    Ein späterer Anwender, Firmware nicht angegeben, berichtet von Problemen durch zu wenig
+    Kontakt. Beim Vorspülen blieb Material an der Rückseite seiner Düse hängen und fiel
+    während des Drucks auf das Bett; nachdem er die Höhe des Wischers so eingestellt hatte,
+    dass er die Düse sicher berührte, verlief zumindest das Vorspülen sauber, und jede neue
+    Kalibrierung des Wischers brachte ihm ein anderes Spülergebnis. Sein Wischer hatte
+    die Düse zuvor nicht zuverlässig berührt, was nicht dasselbe ist wie ein auf gerade
+    eben berührend eingestellter Wischer; das ist also ein einzelner Bericht dafür, dass
+    mehr Kontakt hilft. Er sagt nichts darüber aus, ob die automatische Routine zu kurz
+    greift.
+
 ### Behelfslösungen ohne Kalibrierung
 
 - **Drucken Sie einen Skirt oder Brim.** Mehrere Anwender berichten, dass das die
@@ -179,6 +222,13 @@ eine Richtungsangabe („tiefer als nur berührend“), die keine Zahl benötigt
   [Werkzeug-Offset-Kalibrierung](offset-sensor-board-failure.md).
 - **Trocknen Sie das Filament.** Der INDX gilt Berichten zufolge als
   feuchtigkeitsempfindlicher als der Nextruder, den er ersetzt.
+- **Ein einzelner Blob an der Stelle, an der ein Druck fortgesetzt wurde,** hat eine
+  andere Ursache. Ein Anwender auf 6.6.3 führte Blobs nach einem Spool Join darauf
+  zurück, dass die Düse ausschwitzte, während das Bett auf Druckhöhe zurückfuhr, und
+  meldete das dem Hersteller
+  ([#5391](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5391)). 6.9.0 heizt
+  die Düse beim Fortsetzen nun im Reiniger wieder auf, was damit zusammenhängen könnte;
+  ob es das Problem behebt, hat niemand berichtet. Einzelbericht, `provisional`.
 
 ### Temperaturen, Retraktion und Fluss
 
@@ -202,7 +252,7 @@ bewusst leer ist.
 ## Verifizierung
 
 `reported` (gemeldet) — mehrere unabhängige Anwender, in zwei eigenen Threads, über rund
-einen Monat Firmware-Änderungen hinweg, wobei das Firmware-Verhalten selbst
+zwei Monate Firmware-Änderungen hinweg, wobei das Firmware-Verhalten selbst
 herstellerseitig bestätigt ist.
 
 Die Änderungen in 6.9.0 sind in
@@ -214,9 +264,20 @@ dokumentierte Tatsache.
 
 Die Hauptquelle ist
 [Probleme bei Düsenreinigung und -kalibrierung](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/),
-ein Thread mit 58 Beiträgen und neun Teilnehmern von Ende Juli bis Ende August 2026. Er
-enthält die Symptomberichte, die Klagen über die fehlende Sicht, die Anpassungen im
-Tune-Menü, das Reinigungsturm-Experiment und das Ergebnis unter 6.9.0.
+ein Thread mit 87 Beiträgen und sechzehn Teilnehmern von Ende Juli bis Mitte September
+2026. Er enthält die Symptomberichte, die Klagen über die fehlende Sicht, die Anpassungen
+im Tune-Menü, das Reinigungsturm-Experiment, das Ergebnis unter 6.9.0 sowie die späteren
+Einzelberichte zur Wischerhöhe und zu 6.9.1. Ein großer Teil der späteren
+Beiträge dreht sich um die Werkzeug-Offset-Kalibrierung, die
+[eine eigene Seite](offset-sensor-board-failure.md) hat.
+
+Die Nachprüfung gegen 6.9.1: Die
+[Notes der stabilen Version](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
+nennen einen Assistenten zum Rechtwinkligstellen der Gantry, Voreinstellungen für PVA
+und BVOH sowie eine Korrektur beim Referenzieren, und nichts davon betrifft den Reiniger.
+Dass das Bett während der Nozzle-Cleaner-Kalibrierung nach unten fährt, steht nur in den
+[Notes der Beta](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta).
+Keine der beiden widerspricht etwas auf dieser Seite.
 
 Die Verbesserung durch 6.9.0 ist von drei Anwendern **unabhängig bestätigt**: Einer
 berichtet von sauberen Werkzeugwechseln bei einem gemischten TPU/PETG-Druck und erneut
@@ -226,7 +287,11 @@ der Anwender, der den Thread eröffnet hat — die Person mit dem schwersten Fal
 seither bestätigt, dass 6.9.0 das Ausschwitzen und die Reinigung für ihn weitgehend
 gelöst hat. Der letzte davon ist der stärkste einzelne Datenpunkt auf dieser Seite, weil
 hier der ursprüngliche Beschwerdeführer seinen eigenen Bericht abschließt. Das ist die
-stärkste Aussage auf dieser Seite.
+stärkste Aussage auf dieser Seite. Sie hat eine Einschränkung, die im Hinweis ganz oben
+steht: Wochen später, nach einem fehlgeschlagenen Druck, traten beim selben Anwender
+unter 6.9.0 Fehler bei der Werkzeugkalibrierung auf, die bei ihm neu waren, und das
+Ausschwitzen kehrte zurück, nachdem er die Maschine zurückgesetzt und jedes Werkzeug
+neu kalibriert hatte.
 
 Die Erkenntnis „die Düse vergraben“ stammt aus
 [Düsenwischer vs. INDX-Offset-Sensor](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/),
@@ -251,6 +316,14 @@ Ebenfalls nicht übernommen: ein Problem mit dem dynamischen Lüfterprofil für 
 das in der Community-Wissensdatenbank beschrieben wird. Es taucht in keinem anderen
 Thread des Forum-Korpus auf, und es ist ein Kühlungsproblem und keines des Wischers — es
 gehört auf eine eigene Seite mit `provisional`, wenn jemand es bestätigen kann.
+
+Ebenso wenig ein Bericht an den Hersteller, wonach der Wischpfad der Firmware in Y
+durchgehend neben der Mitte des Silikonpads landet
+([#5496](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5496)). Er klingt nach
+der Frage zum Nozzle Cleaner Y Offset weiter oben, betrifft aber einen Core One+ (Gen 2)
+ohne INDX mit eigenem Wischer-Zubehör, auf der Nicht-INDX-Firmware 6.8.1. Er belegt
+keinen systematischen Y-Fehler am INDX, und die Lesart, dass der Y-Offset
+maschinenspezifisch ist, bleibt bestehen.
 
 ## Verwandte Seiten
 

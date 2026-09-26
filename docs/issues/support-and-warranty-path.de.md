@@ -1,7 +1,7 @@
 ---
 title:        Wen Sie kontaktieren — Support vs. Gewährleistung bei einem INDX-Kit
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -13,7 +13,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/
 superseded_by:
-source_sha:   8be570c219550b7c52cf598e07fc530f9a42a33508ce3d00e6f8de97e0ca6edd
+source_sha:   57864c521601e86b97e92f55a95fbe42e027cddd5b8aca2d19d0655eca6078c7
 ---
 # Wen Sie kontaktieren — Support vs. Gewährleistung bei einem INDX-Kit
 
@@ -59,6 +59,18 @@ Supportteam ist klein im Verhältnis zur Zahl der Kits im Feld; die berichtete
 Bearbeitungsdauer reichte von über Nacht bis zu mehreren Wochen Funkstille, eine langsame
 Antwort ist also nicht zwangsläufig ein verlorenes Ticket.
 
+Gleich, bei welchem Unternehmen Ihr Fall liegt: Fragen Sie, mit welcher Bearbeitungszeit
+zu rechnen ist, und haken Sie nach, wenn sie verstrichen ist. Einem Besitzer sagte
+Prusas Support, ein eskalierter Fall dauere normalerweise einige Tage, und knapp eine
+Woche nach der ersten Meldung wartete er noch immer.
+
+Ein Besitzer, bei dem sich Werkzeuge am Dock wiederholt nicht aus dem Kopf lösten — siehe
+[Werkzeug entriegelt sich oder fällt aus dem Kopf](tool-unlocks-or-ejects.md) — berichtet,
+dass Prusas Live-Chat angeboten habe, einen kompletten Ersatz-Werkzeugkopf zu schicken.
+Der Beitrag nennt weder die Edition des Kits noch, wo es gekauft wurde, und beschreibt
+eine Zusage, kein erhaltenes Teil; er bestätigt das oben beschriebene Muster der Founders
+Edition also weder, noch widerlegt er es. Behandeln Sie ihn als Einzelbericht.
+
 ### Zur Dauer der Gewährleistung — prüfen Sie das selbst
 
 Die Gewährleistungsdauer wird im Forum uneinheitlich angegeben und hängt von der Region
@@ -91,6 +103,11 @@ Ersatzteilen beim anderen Unternehmen unabhängig bestätigt. Erfahrungen mit Es
 und Bearbeitungszeiten werden in den beiden großen
 [nozzlegate](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/)-Threads
 berichtet.
+
+Schwächer: Das Ersatzangebot über den Live-Chat und die genannte Eskalationsdauer beruhen
+jeweils auf dem Bericht eines einzelnen Besitzers im Thread mit der Zusammenfassung
+häufiger Probleme, und der erste davon nennt nicht, um welche Edition es sich beim Kit
+handelt.
 
 Wo die Quellen sich widersprechen: bei der Gewährleistungsdauer. Der UK-Thread kommt zu
 keinem Ergebnis, und seine Teilnehmer sagen das deutlich. Behandeln Sie jede Dauerangabe

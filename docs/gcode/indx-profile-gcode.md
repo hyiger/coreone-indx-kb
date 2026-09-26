@@ -1,7 +1,7 @@
 ---
 title:        Annotated start, layer and toolchange G-code
 confidence:   measured
-updated:      2026-08-30
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -15,6 +15,9 @@ sources:
   - https://docs.duet3d.com/User_manual/Reference/Gcodes
   - https://blog.prusa3d.com/better-prints-easier-use-prusa-xl-core-one-l-and-core-one-gen-2-our-big-product-update_137539/
   - https://github.com/SimplyPrint/slicer-profiles-db
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.10.ini
 superseded_by:
 ---
 
@@ -33,6 +36,27 @@ superseded_by:
     The command behavior is verified against the Prusa firmware source. The profile
     itself changes between firmware releases, so check the version above against yours —
     the 6.6.3 profile differed from this one in several places.
+
+!!! warning "Written for 6.9.0 and not yet re-checked against 6.9.1"
+    Firmware 6.9.1 went stable on 25 September 2026. The blocks on this page are still
+    the 6.9.0 profile, and they have deliberately not been edited to match the 6.9.1
+    release notes. Prusa's newest profile bundle, 2.5.10 of 17 September, still ships
+    these blocks unchanged and its `M115` line still declares 6.9.0. A bundle published
+    after the stable release may change them, so if the profile in your slicer differs
+    from what is shown here, yours is the current one.
+
+    The firmware side has been checked against the public source, comparing
+    [the 6.9.0 and 6.9.1 release tags](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1).
+    No command annotated here changed meaning, and `M574` still has no handler. Two
+    behave differently underneath:
+
+    - `G427` probes cooler, with the temperature now capped in firmware, and allows
+      more attempts at a valid reading when it probes the offset sensor. That attempt
+      count is compiled in. It is not the `P` argument, which still sets how many
+      probes are averaged, and the handler that reads `R` and `P` is unchanged.
+    - The parking routine behind `G27` lifts Z faster when moving away from the bed,
+      and there is a fix to how `W3` picks which tool's park position to use, which
+      the release notes do not mention.
 
 ## What this is
 

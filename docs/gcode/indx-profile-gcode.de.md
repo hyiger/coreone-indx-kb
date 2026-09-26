@@ -1,7 +1,7 @@
 ---
 title:        Kommentierter G-Code für Start, Schichtwechsel und Werkzeugwechsel
 confidence:   measured
-updated:      2026-08-30
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -15,8 +15,11 @@ sources:
   - https://docs.duet3d.com/User_manual/Reference/Gcodes
   - https://blog.prusa3d.com/better-prints-easier-use-prusa-xl-core-one-l-and-core-one-gen-2-our-big-product-update_137539/
   - https://github.com/SimplyPrint/slicer-profiles-db
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.10.ini
 superseded_by:
-source_sha:   2dfdbc29fcaa7015acd9accb81aa1645e3260b33a8b91cdac89b4b312685f250
+source_sha:   cb2d654b1c96a0a178ce9435ca92f8862de6575ac49bac5256da177dae02441d
 ---
 # Kommentierter G-Code für Start, Schichtwechsel und Werkzeugwechsel
 
@@ -34,6 +37,28 @@ source_sha:   2dfdbc29fcaa7015acd9accb81aa1645e3260b33a8b91cdac89b4b312685f250
     Profil selbst ändert sich zwischen Firmware-Versionen, prüfen Sie also die oben
     genannte Version gegen Ihre — das Profil von 6.6.3 wich an mehreren Stellen von
     diesem ab.
+
+!!! warning "Für 6.9.0 geschrieben und noch nicht gegen 6.9.1 geprüft"
+    Firmware 6.9.1 erschien am 25. September 2026 als stabile Version. Die Blöcke auf
+    dieser Seite sind weiterhin das Profil von 6.9.0 und wurden bewusst nicht anhand der
+    Release Notes von 6.9.1 angepasst. Prusas neuestes Profilpaket, 2.5.10 vom 17.
+    September, liefert diese Blöcke unverändert aus, und seine `M115`-Zeile nennt
+    weiterhin 6.9.0. Ein nach der stabilen Version veröffentlichtes Paket kann sie ändern;
+    weicht das Profil in Ihrem Slicer von dem hier gezeigten ab, ist Ihres das aktuelle.
+
+    Die Firmware-Seite wurde gegen den öffentlichen Quellcode geprüft, durch einen
+    Vergleich [der Release-Tags 6.9.0 und 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1).
+    Kein hier kommentierter Befehl hat seine Bedeutung geändert, und `M574` hat weiterhin
+    keinen Handler. Zwei verhalten sich intern anders:
+
+    - `G427` tastet kühler an, die Temperatur ist jetzt in der Firmware nach oben
+      begrenzt, und beim Antasten des Offset-Sensors sind mehr Versuche für einen
+      gültigen Messwert erlaubt. Diese Versuchszahl ist fest einkompiliert. Sie ist nicht
+      das Argument `P`, das weiterhin festlegt, wie viele Antastungen gemittelt werden,
+      und der Handler, der `R` und `P` ausliest, ist unverändert.
+    - Die Park-Routine hinter `G27` hebt Z schneller an, wenn sie sich vom Bett
+      wegbewegt, und es gibt eine Korrektur daran, wie `W3` auswählt, welche
+      Werkzeug-Parkposition verwendet wird — die Release Notes erwähnen sie nicht.
 
 ## Worum es sich handelt
 

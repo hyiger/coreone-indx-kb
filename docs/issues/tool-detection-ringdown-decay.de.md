@@ -1,7 +1,7 @@
 ---
 title:        Phantom-Werkzeuge, „Werkzeug nicht erkannt“ und Park-Fehler
 confidence:   reported
-updated:      2026-09-19
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -12,11 +12,14 @@ sources:
   - https://help.prusa3d.com/article/tool-park-failed-36127-core-one-indx_1073624
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5392
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/6-9-0-firmware-tool-docking/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/will-the-prusa-indxs-wave1-ship-with-fixed-induction-coils/
 superseded_by:
-source_sha:   6650d28dce2863b8ec6909b93ae55620eaf68f794611d899d10c3cb22098d91f
+source_sha:   28c48c5bc9d6794e261fd9a5b5594aca0d01884b065fefb71f8412c8394c39da
 ---
 # Phantom-Werkzeuge, „Werkzeug nicht erkannt“ und Park-Fehler
 
@@ -217,6 +220,18 @@ Schwellwertproblem vereinbaren.
 TODO(verify): die Zeitüberschreitung, die die Firmware für die Prüfung zulässt, und wie
 lange der Messwert tatsächlich zum Einpendeln braucht. Beides wird im verlinkten Issue
 genannt, das zum Zeitpunkt des Schreibens offen und ungelöst ist.
+
+**Firmware 6.9.1 ändert daran nichts.** 6.9.1 erschien am 25. September 2026 als stabile
+Version, nach einer Beta am 10. September. Keine der beiden Release Notes erwähnt die
+Düsenerkennung oder die Park-Prüfung, und der öffentliche Quellcode bestätigt das: Zwischen
+den [Release-Tags 6.9.0 und 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1)
+betreffen die Änderungen die Werkzeug-Offset-Kalibrierung, Park- und Kalibrierbewegungen, die
+Referenzfahrt, eine WLAN-Korrektur, einen neuen Assistenten zur Rechtwinkligkeit der Gantry und
+Filament-Voreinstellungen, während der Code, der die Spule ausliest und den Abklingwert als
+vorhanden, abwesend oder unbekannt einordnet, unberührt bleibt. Der Schwellwert aus 6.9.0
+gilt weiterhin, und der Fehlerbericht ist weiterhin offen, ohne neue Aktivität seit Juli.
+Noch hat kein Besitzer über das Park-Verhalten auf 6.9.1 berichtet; dies ist also eine
+Lesart des Quellcodes und kein Ergebnis von einer Maschine.
 
 ## Überprüfung
 

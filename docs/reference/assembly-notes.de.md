@@ -1,7 +1,7 @@
 ---
 title:        Montagehinweise — INDX-Umbausatz
 confidence:   reported
-updated:      2026-09-19
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One, Core One Plus
 toolhead:     INDX
@@ -14,8 +14,14 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/removing-magnets-from-tool-docks-you-dont-need-to-destroy-them/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/parts-list-for-screws-and-bolts/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kind-of/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/no-tools-in-my-indx-upgrade-kit/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-to-core-onegen2-indx-upgrade-path/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-founders-edition-upgrade-path-to-core-one-gen-2/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/coreone-with-mmu-upgrade-to-indx/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/
 superseded_by:
-source_sha:   b4246b09a0e711b2304cdcfca2fd41892645060eb189b26ec845c3955a24b9ba
+source_sha:   12b0e44abb64f9689f8ce981f4c6da6bb4f298e7953bb713ccd5642b03feca79
 ---
 # Montagehinweise — INDX-Umbausatz
 
@@ -77,6 +83,13 @@ also nicht zur aktuellen Anleitung.
   Einpresslehre für die Dock-Magnete.
 - Ein **großes Stück Karton**, auf das Sie den Drucker stellen, damit Sie ihn während
   der unhandlichen Schritte frei drehen und kippen können.
+- Einen oder zwei **Ersatz-Riemenspanner**, gedruckt oder gekauft, solange der Drucker
+  noch läuft. Beim Aufbau werden die Riemen abgenommen und wieder gespannt, und
+  Besitzer in zwei Threads berichten, dass ein Teil des Spanners versagt hat. Einer,
+  dessen Drucker mehrere Umbauten hinter sich hat, zuletzt den auf den INDX, hat dabei
+  einen zerbrochen und sagt, das sei vielen anderen ebenfalls passiert. Der andere
+  brauchte beim ursprünglichen Aufbau des Core One ein neues Teil für die
+  Spannrolle und musste, ohne zweiten Drucker, warten, bis der Support eines schickte.
 
 **Prüfen Sie Ihre Druckplatte jetzt, nicht hinterher.** Wenn Sie auf einer
 übergroßen Federstahlplatte eines Drittanbieters drucken, kann es sein, dass sie die
@@ -121,13 +134,47 @@ Forum kursiert ein inoffizielles PDF zu den Verbindungselementen, es war jedoch
 KI-generiert und von seinem eigenen Verfasser nicht überprüft — behandeln Sie es als
 Ausgangspunkt für den Abgleich mit der Anleitung, nicht als Stückliste.
 
-**„Alle Werkzeuge enthalten“ bedeutet etwas Bestimmtes.** Wenn auf Ihrem Tisch bereits
-ein fertig aufgebauter Core One steht, kamen die benötigten Werkzeuge mit ihm. Im
-Karton des Umbausatzes liegt nur der T10-Schraubendreher.
+**Erwarten Sie kein Werkzeug im Karton.** Der Umbausatz geht davon aus, dass das
+benötigte Werkzeug mit dem Core One gekommen ist, der bereits auf Ihrem Tisch steht.
+Die Aufbaunotizen zur Founders Edition, aus denen diese Seite hervorgegangen ist, nennen
+einen einzelnen T10-Schraubendreher im Satz. Der von Prusa verkaufte Satz enthält
+Berichten zufolge gar keines, und ein Vertreter von Prusa hat im Forum bestätigt, dass
+das so gewollt ist: Ein Upgrade-Satz setzt auf das Werkzeug, das mit dem Drucker
+geliefert wurde. Wenn Ihr Core One fertig montiert kam, haben Sie dieses Werkzeug
+womöglich nicht. Derselbe Vertreter sagt, jeder
+Drucker, ob Bausatz oder montiert, solle mit Werkzeug ausgeliefert werden, und der
+Support helfe, falls es bei Ihnen fehlte — dennoch hat ein Besitzer eines montierten
+Geräts nie welches erhalten. Prüfen Sie das vor dem Beginn, nicht erst bei der ersten
+Schraube.
 
 **MMU3-Besitzer:** Die Einheit muss zuerst herunter, und die Anleitung behandelt den
 Ausbau kaum. Planen Sie ihn als eigene Aufgabe ein, bevor Sie den eigentlichen Umbau
-beginnen.
+beginnen. Er macht weniger Arbeit, als der Rat der Anleitung, die MMU-Montage rückwärts
+durchzugehen, vermuten lässt. Ein Besitzer, der von einer MMU3 umgebaut hat, weist
+darauf hin, dass der gesamte Extruder ersetzt wird — erhalten bleiben nur ein paar
+Schrauben und der Bauteillüfter —, sodass man die Änderungen der MMU daran nicht
+einzeln zurückbauen muss; die Einheit wurde samt Kabeln und Schläuchen herausgehoben.
+Besitzer in einem anderen Thread beschreiben denselben Umbau als unkompliziert.
+
+**Manche Sätze enthalten ein zweites Upgrade.** Prusa hat der ersten Charge der
+Bestellungen des Prusa-INDX-Umbausatzes sein Core One+ (Gen 2)-Upgrade beigelegt — neue
+Riemen, Riemenscheiben und Ausgleichselemente für die Wärmeausdehnung —, mit der
+Absicht, dass es während des INDX-Aufbaus eingebaut wird, und dafür auf seine
+[Gen-2-Upgrade-Anleitung](http://prusa.io/Prusa-INDX-GEN-2) verwiesen. Besitzer,
+darunter einer, der beides im Karton fand, waren sich dennoch über die Reihenfolge
+unsicher. Zwei Besitzer im Ankündigungs-Thread von Prusa raten, beides zusammen zu
+erledigen, da beide Arbeiten die Riemen und das Bett betreffen; einer, der einen Satz der Founders Edition
+gebaut hatte, stellte fest, dass die Gen-2-Arbeit nur den Tausch der Riemenscheiben
+hinzufügte. Die genaue Stelle ist die eigene Praxis des Autors dieser Seite: Die
+Gen-2-Teile kommen in der INDX-Abfolge direkt nach den Heizbett-Abstandshaltern hinein,
+und der Gen-2-Düsenabstreifer bleibt weg, da der INDX-Aufbau keine Verwendung für ihn
+hat; ein Besitzer der Founders Edition rät in einem anderen Thread ebenfalls dazu,
+dieses Teil wegzulassen. Prüfen Sie nach dem ersten Flashen den Bildschirm der
+Hardwarekonfiguration: Ein Besitzer stellte mit der INDX-Firmware, die Mitte September
+2026 aktuell war, also vor dem stabilen Release 6.9.1, fest, dass sie angenommen hatte,
+die Gen-2-Riemen seien verbaut — in seinem Fall zu Recht, aber sie hatte keine
+Möglichkeit, das zu erkennen. *Einzelmeldung* zur Riemeneinstellung, und ob sich 6.9.1
+ebenso verhält, wurde nicht berichtet.
 
 ## Schritte, bei denen man langsamer machen sollte
 
@@ -195,28 +242,73 @@ frische Magnete zu kaufen und die alten als verbraucht zu betrachten.
 
 Ein Besitzer, der einen Vier-Werkzeug-Satz um weitere Docks ergänzt hat, hat
 Bezugsquellen für die Hardware zusammengetragen. Die Dock-Magnete sind
-Neodym-Stäbchen mit 3 × 8 mm; der Aktivierungsmagnet ist ein ungewöhnliches Stäbchen
-mit 5 × 8,47 mm, das offenbar nur von sehr wenigen Anbietern zu bekommen ist. Zudem
-werden zwei Federgrößen benötigt. Beachten Sie, dass die Sammlung der Druckteile
-**zwei verschiedene Halter für die Düsendichtung** enthält — einen für die Founders
-Edition und einen für die Prusa-Version —, prüfen Sie also vor dem Drucken, welchen
-Sie brauchen.
+Neodym-Stäbchen mit 3 × 8 mm. Beim Aktivierungsmagneten im Fingerhut des Docks gehen
+die Angaben auseinander. Die zuerst kursierende Größe, ein ungewöhnliches Stäbchen mit
+5 × 8,47 mm, das nur sehr wenige Anbieter führen, stammte aus einem Chat-Kanal des
+Herstellers und nicht aus einer Messung. Der Besitzer, der die Liste zusammengestellt
+hat, maß den Magneten später in einem eingebauten Dock mit 7 × 8 mm und legte sich für
+die offiziellen Druckteile auf diese Größe fest, während ein zweiter Besitzer
+vermutete, der kleinere Wert gehöre zu einem anderen Satz. Ein Remix des Fingerhuts aus
+der Community nimmt den 5-mm-Magneten auf und hat im Dock des Zusammenstellers
+funktioniert. Messen Sie eines Ihrer eigenen Docks nach, bevor Sie bestellen. Zudem
+werden zwei Federgrößen benötigt. Beachten Sie, dass die Sammlung der Druckteile **für
+jede Edition einen eigenen Halter für die Düsendichtung** enthält, Founders Edition und
+Prusa, prüfen Sie also vor dem Drucken, welchen Sie brauchen. Für die Dichtung selbst
+gibt es einen bekannten Ersatz: Besitzer in zwei Threads verweisen auf die
+Ersatz-Düsendichtung des Prusa XL, deren Blatt etwas kürzer ist, in einem umgestalteten
+Halter, der das ausgleicht.
 
 Die Beschaffung ist inzwischen einfacher geworden. Der Prusa-Shop führt INDX-Bauteile
 jetzt einzeln — darunter einen [Werkzeughalter mit Magneten](https://www.prusa3d.com/product/tool-holder-with-magnets-2/), einen seitlichen
 Filamentsensor und das [Filamentsensor-Kabel für den INDX](https://www.prusa3d.com/product/filament-sensor-cable-for-indx/) —, und passive
 Werkzeuge sollen im Shop des Herstellers vorrätig sein. Wenn Sie Docks ergänzen, prüfen
 Sie den fertigen Halter, bevor Sie Magnete einzeln suchen; was genau er enthält, sollten
-Sie anhand des Angebots klären.
+Sie anhand des Angebots klären. Nicht jeder würde ihn allerdings kaufen. Ein Besitzer,
+bei dem sich trotz Vorschneidens von Hand zwei Schrauben in die mitgelieferten
+Dock-Teile geschmolzen haben, empfiehlt, eine Community-Variante zu drucken, die
+Nyloc-Muttern aufnimmt, und die Magnete selbst zu beschaffen. Ob der jetzt einzeln
+verkaufte Halter dieselbe Schwäche hat, wurde nicht berichtet.
 
-!!! warning "Eine Meldung über einen Wechsel der Magnetgüte"
-    Ein Besitzer berichtet, die Originalmagnete durch eine stärkere Güte ersetzt zu
-    haben, und dass diese die Werkzeuge fester halten; er merkt außerdem an, dass die
-    ursprüngliche Güte außerhalb Europas ungewöhnlich schwer zu beschaffen sei. Das
-    ist eine **Einzelmeldung**. Stärkere Magnete verändern die Kraft, die der
-    Mechanismus bei jedem Aufnehmen und Ablegen überwinden muss, und
-    Langzeitergebnisse hat niemand berichtet. Wenn Sie lediglich Ersatz beschaffen
-    wollen, halten Sie sich an die Originalspezifikation.
+**Von vier auf acht Werkzeuge.** Ein eigener Upgrade-Satz ist nicht angekündigt. Prusas
+Produktseite beschreibt die beiden Satzgrößen so, dass sie sich Smart Head und
+Docking-Hardware teilen und sich nur in der Zahl der passiven Werkzeuge unterscheiden,
+die sich später ergänzen lassen. Besitzer von Vier-Werkzeug-Sätzen der Founders
+Edition berichten von ihren eigenen Maschinen einen weiteren Unterschied: Die Werkzeuge
+fünf bis acht laufen über einen zweiten, rechten seitlichen Filamentsensor, der ihrem
+Satz nicht beilag, und für die Erweiterung braucht es außerdem dessen Kabel, mehr
+PTFE-Schlauch und — falls gewünscht — Spulenhalter. Dieser Sensor war das einzige
+Teil, das niemand anderswo beschaffen konnte, und er gehört inzwischen zu den Teilen im
+Prusa-Shop. Das passt zu der bisher einzigen Aussage über Prusas eigenen
+Vier-Werkzeug-Satz, dass auch ihm der Sensor fehle, bestätigt sie aber nicht: Die
+Aussage stammt von einem einzelnen Besitzer, aus zweiter Hand, gemacht, bevor er selbst
+Werkzeuge ergänzt hatte. Der gedruckte Block, in dem der Sensor sitzt, enthält Teile,
+die schwerer zu finden sind:
+
+- **Seine Senkkopf-Magnete.** Ein Besitzer hat sie mit 10 mm Durchmesser und 5 mm
+  Dicke gemessen und online ein passendes Gegenstück gefunden, in einer Güte, deren
+  Verhältnis zum Original unbekannt ist; der Autor dieser Seite hat keine Bezugsquelle
+  gefunden und vermutet Sonderanfertigungen; ein dritter Besitzer sucht noch. Der
+  erste Besitzer merkt an, dass der Sensor stärker von der Magnetstärke abhängt als
+  das Dock, weil er mit dem Hall-Effekt arbeitet.
+- **Die schlichten Kunststoff-Abstandshalter im gedruckten Gehäuse** — nicht die
+  Spannzangen, in die der PTFE-Schlauch gesteckt wird. Eine Bezugsquelle ist nicht
+  bekannt. Ein Besitzer ist einen anderen Weg gegangen, mit einem Community-Adapter, der
+  handelsübliche PC4-M10-Steckverbinder aufnimmt und den PTFE-Schlauch direkt
+  hindurchführt. *Einzelmeldung.*
+
+!!! warning "Meldungen über einen Wechsel der Magnetgüte"
+    Der Autor dieser Seite hat die ursprünglichen Dock-Magnete durch eine stärkere Güte
+    ersetzt und festgestellt, dass diese die Werkzeuge fester halten; er merkt außerdem
+    an, dass die ursprüngliche Güte außerhalb Europas ungewöhnlich schwer zu beschaffen
+    ist. Ein zweiter Besitzer setzt die stärkere Güte, wie er in einem anderen Thread
+    berichtet, in selbst gedruckten Docks ohne Probleme ein und findet, dass sie
+    vielleicht etwas fester greifen — diese Magnete waren allerdings auch etwas größer
+    und sitzen in einer Aufnahme, die er in der Druckdatei vergrößert hat, sodass sich
+    die Wirkung der Güte aus dieser Meldung nicht herauslösen lässt. Eine
+    **unabhängige Meldung unter gleichen Bedingungen gibt es nicht**. Stärkere Magnete
+    verändern die Kraft, die der Mechanismus bei jedem Aufnehmen und Ablegen überwinden
+    muss, und Langzeitergebnisse hat niemand berichtet. Wenn Sie lediglich Ersatz
+    beschaffen wollen, halten Sie sich an die Originalspezifikation.
 
 ## Erwartungen, die vor dem ersten Start zu klären sind
 
@@ -291,7 +383,7 @@ aus Forenberichten ist. Diese Zusammenstellung ist gegenüber den einzelnen Erba
 die die einzelnen Punkte gemeldet haben, aus zweiter Hand, bündelt aber einen weit
 größeren Erfahrungsbestand, als ihn irgendein einzelner Thread hier enthält.
 
-Unabhängig bestätigt:
+Die Belege für jede Aussage, Punkt für Punkt:
 
 - **Die fehlende Liste der Verbindungselemente** wird bestätigt durch
   [Parts list for screws and bolts?](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/parts-list-for-screws-and-bolts/),
@@ -305,14 +397,55 @@ Unabhängig bestätigt:
 - **Die Beschaffung der Hardware** stammt aus
   [Sourcing tool dock hardware](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/sourcing-tool-dock-hardware/),
   das als beantwortet markiert und von einem Besitzer zusammengestellt ist, der einen
-  Vier-Werkzeug-Satz um weitere Docks ergänzt hat.
+  Vier-Werkzeug-Satz um weitere Docks ergänzt hat. Der zweite seitliche
+  Filamentsensor, der Vier-Werkzeug-Sätzen der Founders Edition fehlt, und die
+  XL-Düsendichtung als Ersatz werden dort und erneut in
+  [einem Thread über die Erweiterung eines Vier-Werkzeug-Satzes auf acht](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/)
+  berichtet. Keiner der beiden Threads enthält eine Meldung aus erster Hand zum Sensor
+  von einem Besitzer des Vier-Werkzeug-Satzes von Prusa.
+- **Sätze ohne Werkzeug** stützen sich auf einen einzigen Thread,
+  [einen über das fehlende Werkzeug](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/no-tools-in-my-indx-upgrade-kit/),
+  der aber die eigene Aussage des Herstellers enthält: Zwei Besitzer berichten es dort,
+  und ein Vertreter von Prusa bestätigt das Vorgehen und liefert die Begründung. Kein
+  zweiter Thread greift es auf. Der einzelne
+  T10-Schraubendreher im Satz der Founders Edition stützt sich nur auf die
+  Zusammenstellung oben, die der Autor dieser Seite verfasst hat, und liefert daher
+  keine unabhängige Bestätigung.
+- **Die knappe Anleitung zum Ausbau der MMU3** wird erneut angesprochen in
+  [einem Thread über die Kombination von Gen 2 und INDX](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-to-core-onegen2-indx-upgrade-path/),
+  und Besitzer in
+  [einem weiteren über den Tausch einer MMU3 gegen den INDX](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/coreone-with-mmu-upgrade-to-indx/)
+  beschreiben diesen Umbau als ereignislos.
+- **Gen-2-Teile in den ersten Sätzen** sind eine eigene Aussage von Prusa, in seiner
+  [Versandankündigung](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/),
+  die zudem sagt, sie beim Einbau des INDX mit einzubauen. Zwei Besitzer im selben
+  Thread raten unabhängig davon, beide Arbeiten zusammen zu erledigen. Ein Besitzer
+  bestätigt in einem getrennten Thread,
+  [dem über die Kombination von Gen 2 und INDX](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-to-core-onegen2-indx-upgrade-path/),
+  dass das Gen-2-Upgrade seinem INDX-Satz beilag.
+- **Ersatz-Riemenspanner** stützen sich auf zwei Besitzer in getrennten Threads, einen
+  im oben verlinkten Thread über den Tausch einer MMU3 gegen den INDX und einen im
+  Thread zur Versandankündigung von Prusa. Derselbe Rat erscheint in letzterem auch vom
+  Autor dieser Seite und wird nicht mitgezählt.
 
-Schwächer: Der Wechsel der Magnetgüte und die Bootloader-Sperre des MK4S sind jeweils
-die Erfahrung eines einzelnen Besitzers, und beide sind an Ort und Stelle als solche
-gekennzeichnet. Die Sperre stammt aus dem allgemeinen Diskussions-Thread, in dem es
-überwiegend um Versand und Bestellungen geht — sie wurde beim Lesen aller 1534
-Beiträge gefunden und ist einer von nur zwei belastbaren technischen Punkten, die aus
-diesem gesamten Thread die Prüfung überstanden haben. Das kursierende inoffizielle PDF
+Schwächer: Die Bootloader-Sperre des MK4S ist die Erfahrung eines einzelnen Besitzers
+und an Ort und Stelle als solche gekennzeichnet. Sie stammt aus dem allgemeinen
+Diskussions-Thread, in dem es überwiegend um Versand und Bestellungen geht — sie wurde
+beim Lesen aller 1534 Beiträge gefunden und ist einer von nur zwei belastbaren
+technischen Punkten, die aus diesem gesamten Thread die Prüfung überstanden haben.
+Ebenfalls Einzelmeldungen und an Ort und Stelle gekennzeichnet: die Riemeneinstellung
+nach dem ersten Flashen, der montiert gelieferte Drucker ohne Werkzeug, die in
+Dock-Teile geschmolzenen Schrauben, der Behelf für die Abstandshalter im Sensorgehäuse
+und die Messung der Senkkopf-Magnete. Die Größe des Aktivierungsmagneten beruht auf der
+Messung eines Besitzers gegenüber einem Wert, den niemand gemessen hat. An welcher
+genauen Stelle der INDX-Abfolge die Gen-2-Teile hingehören, ist die eigene Praxis des
+Autors dieser Seite; der Einbau während des INDX-Aufbaus hat die oben genannte
+Unterstützung, und das Weglassen des Düsenabstreifers hat eine unabhängige Stimme, in
+[einem anderen Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-founders-edition-upgrade-path-to-core-one-gen-2/).
+Der Wechsel der Magnetgüte wurde zuerst vom Autor dieser Seite gemeldet, und eine
+unabhängige Schilderung unter gleichen Bedingungen gibt es nicht: Der einzige weitere
+Besitzer, der ihn meldet, hat neben der Güte auch die Magnetgröße geändert. Das
+kursierende inoffizielle PDF
 zu den Verbindungselementen wurde von der Person, die es geteilt hat, als KI-generiert
 und ungeprüft beschrieben und ist hier nur als etwas festgehalten, dem Sie begegnen
 können, nicht als Quelle, auf die man sich stützen sollte.
