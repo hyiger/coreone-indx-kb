@@ -1,7 +1,7 @@
 ---
 title:        Werkzeug-Offset-Kalibrierung schlägt fehl: Bett in Z nicht ausgerichtet
 confidence:   provisional
-updated:      2026-09-14
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -14,7 +14,7 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/common/probe_analysis.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/marlin_stubs/G162.cpp
 superseded_by:
-source_sha:   43e4b53440f6a0d9282e32d8723e1319d1516b34e705f143233c3ebdbde6f206
+source_sha:   c27ab4c116ef6b05637d85e13fd95ee51e95c16981090a93b60e69ee9712b727
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl: Bett in Z nicht ausgerichtet
 
@@ -35,11 +35,16 @@ führen Sie es also aus, bevor Sie die Sensorplatine oder die Wägezelle verdäc
 | Code | Anzeige am Drucker |
 |---|---|
 | [`36130`](https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016) | Tool offset failed |
+| [`36193`](../codes.md#36193) | Probing the tool offset sensor failed |
 
 Es ist derselbe Code wie beim [Fehler der Offsetsensor-Platine](offset-sensor-board-failure.md).
 Die Meldung am Bildschirm fordert Sie auf zu prüfen, ob die Düse sauber ist. Wenn Sie
 das getan haben und nichts geladen ist, ist diese Seite das Nächste, was auszuschließen
 ist.
+
+Firmware, die aus hyiger/Prusa-Firmware-Buddy gebaut ist, meldet eine verworfene
+Berührung auf dem Sensor stattdessen als `36193`, dort teilt sich dieser Fehler also
+keinen Code mehr mit der Sensorplatine.
 
 ## Details
 

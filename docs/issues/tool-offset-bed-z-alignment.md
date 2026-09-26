@@ -1,7 +1,7 @@
 ---
 title:        Tool offset calibration fails: bed not aligned in Z
 confidence:   provisional
-updated:      2026-09-14
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -34,10 +34,14 @@ run it before you suspect the sensor board or the loadcell.
 | Code | What the printer shows |
 |---|---|
 | [`36130`](https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016) | Tool offset failed |
+| [`36193`](../codes.md#36193) | Probing the tool offset sensor failed |
 
 It is the same code as the [offset sensor board fault](offset-sensor-board-failure.md).
 The on-screen message tells you to check that the nozzle is clean. If you have done
 that and nothing is loaded, this page is the next thing to rule out.
+
+Firmware built from hyiger/Prusa-Firmware-Buddy reports a rejected touch on the sensor
+as `36193` instead, so there this fault no longer shares a code with the sensor board.
 
 ## Detail
 

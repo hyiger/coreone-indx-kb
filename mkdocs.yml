@@ -40,6 +40,7 @@ plugins:
             Calibration: Kalibrierung
             Issues: Probleme
             Overview: Übersicht
+            Tool offset error codes: Fehlercodes der Werkzeug-Offset-Kalibrierung
             Toolhead collisions (Complete individual objects): Werkzeugkopf-Kollisionen (Vollständige Einzelobjekte)
             Tool detection and park failures: Werkzeugerkennung und Parkfehler
             Tool unlocks or ejects: Werkzeug löst sich oder fällt heraus
@@ -77,6 +78,7 @@ nav:
   - Calibration: calibration/index.md
   - Issues:
       - Overview: issues/index.md
+      - Tool offset error codes: codes.md
       - Toolhead collisions (Complete individual objects): issues/complete-individual-objects-collision.md
       - Tool detection and park failures: issues/tool-detection-ringdown-decay.md
       - Tool unlocks or ejects: issues/tool-unlocks-or-ejects.md

@@ -1,7 +1,7 @@
 ---
 title:        Probleme
 confidence:   unknown
-updated:      2026-09-19
+updated:      2026-09-25
 author:       hyiger
 printer:      unknown
 toolhead:     unknown
@@ -10,7 +10,7 @@ nozzle:       unknown
 firmware:     unknown
 sources:      []
 superseded_by:
-source_sha:   4e1f6ac925f75923def3e79092fb016f2bb983558af0c8343460e42104c3980f
+source_sha:   af0c89640accef092bb35d88a30e1d602968f998fb95f146f507e05fa4751971
 ---
 # Probleme
 
@@ -56,6 +56,10 @@ falscher Wert kostet den Leser ein Bauteil, einen Druck oder eine Gewährleistun
 - [Abtasten schlägt fehl oder die Düse berührt das Bett nie](loadcell-emi-noise.md) —
   elektrische Störungen im Signal der Wägezelle lassen den Drucker glauben, er habe
   aufgesetzt, während die Düse noch deutlich frei steht.
+- [Fehlercodes der Werkzeug-Offset-Kalibrierung](../codes.md) — welcher Schritt der
+  Kalibrierung bei welchem Code fehlgeschlagen ist, und wie man das im seriellen Log
+  abliest, wenn der Drucker immer nur 36130 zeigt. Beginnen Sie hier bei jedem Fehler
+  der Werkzeug-Offset-Kalibrierung.
 - [Werkzeug-Offset-Kalibrierung schlägt fehl](offset-sensor-board-failure.md) — der
   berührungslose Offsetsensor liefert keine Messwerte, sodass die Kalibrierung keine
   Grundlage hat. Meist die Sensorplatine.
@@ -108,7 +112,8 @@ abgebildet werden:
 | `36125` | Tool pickup failed | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
 | `36127` | Tool park failed | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
 | `36128` | Retry tool park | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
-| `36130` | Tool offset failed | [Werkzeug-Offset-Kalibrierung](offset-sensor-board-failure.md), oder [Bettausrichtung](tool-offset-bed-z-alignment.md) bei sauberer Düse und ohne geladenes Filament |
+| `36130` | Tool offset failed | [Fehlercodes](../codes.md#stock-firmware), um den fehlgeschlagenen Schritt zu finden, dann [Werkzeug-Offset-Kalibrierung](offset-sensor-board-failure.md), oder [Bettausrichtung](tool-offset-bed-z-alignment.md) bei sauberer Düse und ohne geladenes Filament |
+| `36190` bis `36197` | Der fehlgeschlagene Schritt der Werkzeug-Offset-Kalibrierung | [Fehlercodes](../codes.md) |
 | `36135` | Toolchanger error | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
 | `36136` | Calibrate dock from menu | [Werkzeug-Offset-Kalibrierung](offset-sensor-board-failure.md) |
 | `36202` | Hotend preheat error | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
@@ -117,7 +122,9 @@ abgebildet werden:
 Prusa veröffentlicht zu jedem Code einen Artikel, der von der jeweiligen Seite aus
 verlinkt ist. Es gibt rund 104 verschiedene INDX-Codes; die obigen sind diejenigen, zu
 denen diese Wissensdatenbank etwas beizutragen hat. Für alles andere ist Prusas eigener
-Artikel die bessere Antwort.
+Artikel die bessere Antwort. Die Ausnahme sind 36190 bis 36197: Es gibt sie nur in
+Firmware, die aus hyiger/Prusa-Firmware-Buddy gebaut ist, und der QR-Code auf diesen
+Bildschirmen verweist auf diese Wissensdatenbank.
 
 ## Drei Fehler, die sich gleich zeigen
 
