@@ -1,7 +1,7 @@
 ---
 title:        Diagonale Bänderung auf den Druckwänden
 confidence:   reported
-updated:      2026-08-29
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -13,7 +13,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   92511049e052ed339e72a112c91cc4ec0acf32098c45210be84d01aaafeca03d
+source_sha:   a3165a1d3e91ab88684dc481d0d9cdd4de1049b02109a786623f54636a6e6399
 ---
 # Diagonale Bänderung auf den Druckwänden
 
@@ -78,6 +78,15 @@ Sie sonst nichts.
 Liegt dieser Fehler vor, **verschieben sich Abstand und Winkel der Bänderung** — subtil,
 aber unverkennbar.
 
+Der Verfasser des Protokolls erwartet eine leichte Verschiebung. Der einzige andere
+Besitzer, der bisher von beiden Drucken berichtet hat, sah eine weit größere: Auf Druck
+zwei rückten die Diagonalen eng zusammen, zwischen je zwei Linien von Druck eins
+erschienen zwei neue, und das Muster war schwerer zu erkennen und zu fotografieren.
+Werten Sie einen schwächer gebänderten Druck zwei also nicht als Heilung. Entscheidend
+ist, dass sich das Muster überhaupt ändert — auch eine große Änderung deutet auf die
+Extrusion. Das ist ein einzelner Durchlauf; wie groß die Verschiebung ausfallen sollte,
+ist daher offen.
+
 TODO(verify): die Standardbreite des äußeren Perimeters und der Wert, auf den sie zu
 ändern ist. Jede moderate Erhöhung erfüllt den Zweck, da der Test darauf beruht, dass sich
 das Muster *ändert*, und nicht auf einer bestimmten Breite; die oben beschriebene Methode
@@ -123,6 +132,12 @@ es einmal bemerkt hat. Der Konsens unter ihnen ist, dass Dual-Drive-Extruder in 
 Preisklasse generell eine gewisse periodische Extrusionssignatur zeigen, und dass die
 Single-Drive-Bauweise des Nextruders der Grund dafür ist, dass Besitzer sie dort nicht
 gesehen haben.
+
+Der Hersteller scheint es ähnlich zu sehen. Der Besitzer hinter dem unten beschriebenen
+Behelf mit dem Distanzstück gab eine Support-Antwort wieder, die seinen Fall zwar als
+schlimm anerkannte, aber festhielt, ein gewisses Maß an Ungleichmäßigkeit gehöre zur
+Funktionsweise eines Dual-Drive-Extruders. Das ist die Wiedergabe einer privaten Antwort
+durch einen einzelnen Besitzer, keine veröffentlichte Stellungnahme.
 
 Die Frage ist also nicht, *ob* das Artefakt existiert, sondern *wie stark* es ausgeprägt
 ist. Schwach und nur auf glänzendem Filament im richtigen Winkel sichtbar ist zu erwarten.
@@ -190,6 +205,16 @@ Werkzeugkopfs** über den Hersteller, da der Fehler zum Zeitpunkt der Abfassung 
 ein einzeln austauschbares Teil eingegrenzt war. Siehe
 [wen Sie kontaktieren](support-and-warranty-path.md).
 
+Dieser Weg kann dauern. Mitte September berichtete ein anderer Besitzer, ihm sei
+mitgeteilt worden, der Hersteller untersuche zurückgesandte Werkzeugköpfe, um den Fehler
+zu verstehen, bevor er diesem Besitzer eine neue Einheit schickt — damit nicht erneut
+eine mit demselben Problem hinausgeht. Das legt nahe, dass die Ursache noch nicht
+eingegrenzt war. Der Besitzer hinter dem unten beschriebenen Behelf mit dem Distanzstück
+berichtete von drei Wochen ohne Rückmeldung, nachdem ihm ein Austausch angeboten worden
+war; der parallel eingeschaltete Prusa-Support habe zunächst eine Ursache in der
+Bewegungsmechanik gesucht und dann eine Werksreparatur angeboten. Jeder dieser Berichte
+stammt von einem einzelnen Besitzer über seinen eigenen Support-Fall.
+
 #### Der Behelf mit dem Distanzstück
 
 Ein Besitzer korrigierte die Fehlausrichtung, indem er den Motor unterlegte: die
@@ -253,14 +278,23 @@ danach suchte.
 `reported` (gemeldet) — aber lesen Sie die Einschränkung, denn die Belege sind über die
 Aussagen dieser Seite hinweg ungleich verteilt.
 
-**Gut belegt.** Das Artefakt selbst wird von fünf verschiedenen Teilnehmern im
+**Gut belegt.** Das Artefakt selbst war bei der ersten Abfassung dieser Seite von fünf
+verschiedenen Teilnehmern im
 [Thread zur diagonalen Bänderung](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/)
-beschrieben, von massiv bis kaum wahrnehmbar auf glänzendem Filament; das Phänomen ist
-also nicht die Einbildung einer einzelnen Person. Der Thread ist als beantwortet markiert
-und umfasst 79 Beiträge. Das Zwei-Druck-Protokoll ist seine als Lösung markierte Antwort,
-verfasst von dem Besitzer, der das Problem unter Beteiligung des Herstellers und des
-Prusa-Supports bearbeitet hat, und die Begründung, warum es Extrusion von Bewegung trennt,
-ist in sich schlüssig.
+beschrieben worden, seitdem von mehreren weiteren, von massiv bis kaum wahrnehmbar auf
+glänzendem Filament; das Phänomen ist also nicht die Einbildung einer einzelnen Person.
+Der Thread ist als beantwortet markiert und umfasst 117 Beiträge. Das
+Zwei-Druck-Protokoll ist seine als Lösung markierte Antwort, verfasst von dem Besitzer,
+der das Problem unter Beteiligung des Herstellers und des Prusa-Supports bearbeitet hat,
+und die Begründung, warum es Extrusion von Bewegung trennt, ist in sich schlüssig.
+
+**Das Protokoll, von einem zweiten Besitzer durchgeführt.** Am 20. September 2026 druckte
+ein anderer Besitzer beide Würfel und erhielt, was das Protokoll vorhersagt: deutliche
+Bänderung auf dem ersten, ein verändertes Muster auf dem zweiten. Es ist der erste
+berichtete Durchlauf von jemand anderem als dem Verfasser des Protokolls. Es ist ein
+einzelner Durchlauf. Er bestätigt die Kernaussage (das Muster ändert sich zwischen den
+beiden Drucken), zählt aber, da im selben Thread, nicht als zweite Quelle; das Ausmaß
+der beobachteten Änderung wird beim Test selbst behandelt.
 
 **Einzelquelle.** Der schwere Fall, das Ergebnis mit dem Austausch-Werkzeugkopf und der
 nachfolgende Wägezellenfehler sind allesamt die Erfahrung eines einzelnen Besitzers. Die
@@ -284,9 +318,12 @@ mit dem anhaftenden Filamentbruchstück, der im gesamten Material die klarste Er
 dafür ist, warum die Bänderung diagonal verläuft, und aus dem sich die billige Prüfung
 durch Zahnradreinigung ergibt.
 
-Was diese Seite stärken würde: ein zweiter Besitzer, der das Zwei-Druck-Protokoll
-durchführt und das Ergebnis meldet, sowie eine Aussage des Herstellers, die das konkrete
-Teil benennt.
+Was diese Seite stärken würde: weitere Besitzer, die das Zwei-Druck-Protokoll durchführen
+und das Ergebnis melden, ein Distanzstück, das auch an einem zweiten Werkzeugkopf wirkt,
+und eine Aussage des Herstellers, die das konkrete Teil benennt. Zum Zeitpunkt dieser
+Aktualisierung hat niemand ein Ergebnis mit Distanzstück an einem anderen Werkzeugkopf
+gemeldet, und die im Thread wiedergegebenen Antworten des Herstellers erkennen den Fehler
+an, ohne ein Teil zu benennen.
 
 ## Verwandte Seiten
 

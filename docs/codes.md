@@ -271,7 +271,10 @@ tier. See [contributing](contributing.md).
 
 The split codes exist only in firmware built from the fork. Reporting the failing step
 instead of one generic dialog was proposed upstream in
-[firmware issue 5482](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5482).
+[firmware issue 5482](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5482). A
+Prusa developer replied on 23 September 2026 that the vendor is already working on it,
+with no delivery date. Whatever stock firmware ends up showing need not match the codes
+on this page.
 
 ## Related
 

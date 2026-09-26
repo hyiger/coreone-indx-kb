@@ -1,7 +1,7 @@
 ---
 title:        Nozzle hardness and abrasive filaments
 confidence:   reported
-updated:      2026-08-30
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -145,6 +145,28 @@ your own record of what you asked for, and do not read silence as refusal.
 You can also ask for a **mix** of credit and cash rather than all of one. At least one
 owner did, wanting enough credit to buy a genuinely hardened nozzle once one exists.
 
+**Read the voucher conditions before you settle on credit.** The store credit offered
+to Founders Edition owners is issued as a voucher, and on 24 September the vendor set
+out the conditions attached to it by email to at least two owners — provisional: those
+two relay their private emails in one thread, and no published statement of these terms
+has been found. The voucher does not pay for shipping. It is redeemed in a single order,
+and any part of it that order leaves unspent is forfeited. One of the two adds that it
+comes off the price before VAT, so that, as that owner understands it, tax falls only on
+what remains, and that it lapses after a fixed period. Those conditions cut against the
+mixed plan above: credit held back for a hardened nozzle has to be spent in one go,
+before it lapses, on a part that has no release date yet.
+
+TODO(verify): the voucher's validity period — relayed by one owner in the nozzlegate
+communications thread as the vendor's answer; no published statement of it has been
+found.
+
+One owner asked for cash after these conditions came out and says the vendor agreed at
+once; others in the thread say they will now ask for cash too. That post does not say
+whether the owner had already filed for credit, so whether a credit choice already
+submitted can still be changed has not been established. Two questions raised there
+went unanswered: whether the same conditions apply to credit on kits bought from
+Prusa, and whether a cash refund returns to the original payment method.
+
 !!! note "Store credit buys nozzles you may not be able to use yet"
     Worth knowing before you choose credit over cash: PrusaSlicer currently offers the
     INDX only a single nozzle variant, so other sizes have no profile to print with.
@@ -208,7 +230,9 @@ material in the threads rather than as owner inference.
 
 Weaker: the hardness figure a buyer "should" have expected is a community norm rather
 than a published standard. The compensation-adequacy arithmetic is one owner's
-calculation. The diamond-nozzle timeline is a third-party statement of intent.
+calculation. The voucher conditions are second-hand, relayed from vendor emails by
+two owners in a single thread, the VAT treatment and expiry from only one of them. The
+diamond-nozzle timeline is a third-party statement of intent.
 
 Where the sources disagree: owners differ sharply on whether the remediation is
 adequate, and on how much practical impact the hardness actually has for someone who

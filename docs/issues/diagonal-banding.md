@@ -1,7 +1,7 @@
 ---
 title:        Diagonal banding across print walls
 confidence:   reported
-updated:      2026-08-29
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -30,7 +30,7 @@ pronounced one is a hardware fault, and the reported remedy is a replacement too
 
 ### Why the banding is diagonal
 
-This is the part that makes the fault recognisable, and it is worth understanding
+This is the part that makes the fault recognizable, and it is worth understanding
 before you test anything.
 
 If something in the extruder varies the amount of filament delivered once per gear
@@ -75,6 +75,13 @@ else.
 If you have this fault, the **pitch and angle of the banding will shift** — subtly,
 but unmistakably.
 
+The protocol's author expects a slight shift. The one other owner who has reported
+running both prints saw a far larger one: on print two the diagonals crowded together,
+with two new lines appearing between each pair seen on print one, and the pattern
+became harder to see and to photograph. So do not read a fainter print two as a cure.
+Any change in the pattern is the result that counts, and it still points at extrusion.
+That is a single run, so how large the shift should be remains unsettled.
+
 TODO(verify): the stock external perimeter width and the value to change it to. Any
 modest increase serves the purpose, since the test depends on the pattern *changing*
 rather than on a particular width, so the method above is complete without them. The
@@ -115,6 +122,11 @@ describing it as the sort of thing you cannot unsee once noticed. The consensus 
 them is that dual-drive extruders at this price point generally show some periodic
 extrusion signature, and that the single-drive design of the Nextruder is why owners
 did not see it there.
+
+The vendor appears to take a similar line. The owner behind the shim workaround below
+relayed a support reply that agreed their case was bad, yet said a certain amount of
+unevenness comes with how a dual-drive extruder works. That is one owner's secondhand
+account of a private reply, not a published position.
 
 So the question is not *whether* the artifact exists but *how pronounced* it is.
 Faint and only visible on glossy filament at the right angle is expected. Clearly
@@ -172,6 +184,15 @@ For a pronounced case the reported route is a **toolhead replacement** through t
 vendor, since at the time of writing the fault had not been narrowed to an
 individually replaceable part. See [who to contact](support-and-warranty-path.md).
 
+That route may be slow. In mid-September another owner reported being told that the
+vendor was examining returned toolheads to understand the fault before sending that
+owner a new unit, so as not to ship one with the same problem — which
+suggests the cause had not yet been pinned down. The owner behind the shim workaround
+below reported three weeks without a follow-up after being offered a replacement, and
+said Prusa support, approached in parallel, first looked for a motion-system cause
+before offering a factory repair. Each is one owner's account of their own support
+case.
+
 #### The shim workaround
 
 One owner corrected the misalignment by shimming the motor: unscrew the standoffs that
@@ -228,13 +249,21 @@ result still showed the faintest banding if you went looking for it.
 `reported` — but read the qualification, because the evidence is uneven across the
 claims on this page.
 
-**Well supported.** The artifact itself is described by five different participants in
-[the diagonal banding thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/),
-ranging from severe to barely perceptible on glossy filament, so the phenomenon is not
-one person's imagination. The thread is marked answered and runs to 79 posts. The
-two-print protocol is its accepted answer, written by the owner who worked the problem
-with vendor and Prusa support involvement, and the reasoning for why it isolates
-extrusion from motion is sound on its own terms.
+**Well supported.** The artifact itself was described by five different participants in
+[the diagonal banding thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/)
+when this page was first written, and by several more since, ranging from severe to
+barely perceptible on glossy filament, so the phenomenon is not one person's
+imagination. The thread is marked answered and runs to 117 posts. The two-print
+protocol is its accepted answer, written by the owner who worked the problem with
+vendor and Prusa support involvement, and the reasoning for why it isolates extrusion
+from motion is sound on its own terms.
+
+**The protocol, run by a second owner.** On 20 September 2026 another owner printed
+both cubes and got what the protocol predicts: obvious banding on the first, a changed
+pattern on the second. It is the first run reported by anyone other than the protocol's
+author. It is one run. It confirms the core prediction (the pattern changes between the
+two prints) but, being in the same thread, does not count toward a second source; the
+size of the change it saw is discussed under the test itself.
 
 **Single-source.** The severe case, the replacement-toolhead outcome, and the
 follow-on loadcell fault are all one owner's experience. The
@@ -256,8 +285,11 @@ another owner supplied the stuck-filament-fragment mechanism from prior Nextrude
 experience, which is the clearest explanation in the corpus of why the banding is
 diagonal, and which yields the cheap gear-cleaning check.
 
-What would strengthen this page: a second owner running the two-print protocol and
-reporting the result, and any vendor statement identifying the specific part.
+What would strengthen this page: more owners running the two-print protocol and
+reporting the result, the shim working on a second toolhead, and a vendor statement
+naming the specific part. At this update nobody has reported a shim result on another
+toolhead, and the vendor replies relayed in the thread acknowledge the fault without
+naming one.
 
 ## Related
 

@@ -1,7 +1,7 @@
 ---
 title:        Phantom tools, "tool not detected" and park failures
 confidence:   reported
-updated:      2026-09-19
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -12,6 +12,9 @@ sources:
   - https://help.prusa3d.com/article/tool-park-failed-36127-core-one-indx_1073624
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5392
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/6-9-0-firmware-tool-docking/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/will-the-prusa-indxs-wave1-ship-with-fixed-induction-coils/
@@ -200,6 +203,17 @@ with a threshold one.
 TODO(verify): the verification timeout the firmware allows, and how long the reading
 actually takes to settle. Both are quoted in the linked issue, which is open and
 unresolved at the time of writing.
+
+**Firmware 6.9.1 does not change this.** 6.9.1 went stable on 25 September 2026, after a
+beta on 10 September. Neither set of release notes mentions nozzle-presence detection or
+the park check, and the public source bears that out: between the
+[6.9.0 and 6.9.1 release tags](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1)
+the work is in tool offset calibration, parking and calibration moves, homing, a Wi-Fi
+fix, a new gantry squareness wizard and filament presets, and the code that reads the coil and
+sorts the decay into present, absent or unknown is untouched. The 6.9.0 threshold still
+stands, and the bug report is still open, with nothing new on it since July. No owner has
+yet reported park behavior on 6.9.1, so this is a reading of the source rather than a
+result from a machine.
 
 ## Verification
 

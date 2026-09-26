@@ -1,7 +1,7 @@
 ---
 title:        Probing fails or nozzle never touches the bed — loadcell noise
 confidence:   reported
-updated:      2026-09-14
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -13,6 +13,10 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-not-touching-bed-during-probing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5468
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
 superseded_by:
 ---
 
@@ -64,6 +68,17 @@ Symptoms reported in this family:
 - A first layer that does not stick, or that drags filament up into a blob, because
   the machine believes the bed is higher than it is
 
+Not every self-test failure is interference. In one report
+([#5468](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5468)), the loadcell
+test in the first calibration after a C1 was upgraded to a C1+ (Gen 2) with INDX, on
+6.9.0, never sounded its beeps and rejected the press, reporting either a premature
+press or a noisy signal; once the owner aborted the wizard and started it again, it
+passed straight away. The owner suspected that silent mode, set on the pre-INDX
+firmware, had carried over. Prusa replied that, as far as it knew, the conversion
+factory-resets the printer, and that it could not reproduce the fault. That is one
+unexplained report, `provisional`, but a retry costs nothing: if the self-test fails on
+the first run after a conversion, run it once more before treating it as interference.
+
 ### What to try
 
 1. **Fit a clamp-on ferrite core to the main toolhead cable**, positioned near the
@@ -93,6 +108,22 @@ Symptoms reported in this family:
     described. If your board is recent and the fault moves with the head, go to the
     vendor rather than buying ferrites.
 
+!!! note "A third cause: homing that fails after the calibration passed"
+    Firmware 6.9.1, released as stable on 2026-09-25, lists a homing fix for
+    printers that passed their first homing calibration but failed when homing again
+    later. The change Prusa describes is to motor currents. The
+    [release notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
+    name no axis, but the only motor-current change in the firmware repository
+    between the beta and the stable
+    ([compare](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1))
+    is to the diagonal XY homing, not to the loadcell's Z probing. The notes also say
+    nothing about the loadcell or the heater, so this is a separate fault from the one
+    on this page, not a fix for it. If your homing failures match that description
+    rather than the pattern above — failing only once hot, the nozzle stopping visibly
+    short of the sheet — update the firmware before fitting a ferrite. This rests on
+    the vendor's release notes and firmware repository alone, `provisional`: no owner
+    has yet reported the fix curing their homing failures.
+
 If none of that helps, particularly if the failure happens only with the heater on
 and you are on an early board revision, the path is hardware replacement through the
 vendor. One owner reported success wrapping the wiring at the controller connector in
@@ -106,9 +137,19 @@ their machine is faulty.
 
 !!! note "This is a mitigation, not a cure"
     The vendor has described the ferrite as a stopgap rather than a fix, and a
-    firmware-side improvement to loadcell handling is reportedly in progress. If you
-    are reading this well after the date above, check whether a newer firmware has
-    addressed it before adding hardware.
+    firmware-side improvement to loadcell handling is reportedly in progress. Neither
+    the 6.9.0 nor the 6.9.1 release notes describe any change to how the loadcell
+    signal is filtered or judged. The
+    [6.9.1-beta notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta)
+    do give tool offset calibration more Z probe attempts. The stable notes do not
+    restate it, but the stable 6.9.1 is built on that beta: in the firmware repository
+    it adds
+    [15 commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1)
+    to the beta tag, none of them in the tool offset calibration code. That comes from
+    the release history, not from the notes. More retries give a noisy tap more
+    chances to pass; they do nothing about the noise. If you are reading this well
+    after the date above, check whether a newer firmware has addressed it before
+    adding hardware.
 
 ## Verification
 
@@ -126,7 +167,10 @@ which is a condensation of a now-offline community knowledge base.
 Where the sources are weaker: the controlled A/B test described in the summary
 (failing without a core, working with one, failing again on removal) is reported
 second-hand there and is not separately visible in the forum corpus. The loadcell
-value bands and ferrite specifications are single-source and withheld above.
+value bands and ferrite specifications are single-source and withheld above. The
+first-run self-test report is a single issue that Prusa could not reproduce, and the
+homing fix rests on the vendor's release notes and firmware repository, not on owner
+reports.
 
 ## Related
 

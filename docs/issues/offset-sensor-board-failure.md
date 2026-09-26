@@ -7,12 +7,15 @@ printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta; the board fault is not version-specific
+firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1; the board fault is not version-specific
 sources:
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/df2b2eb4b2e9161ff3ae50a364d3e389b17684a3
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/offset-sensor-failure/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
@@ -32,9 +35,9 @@ resolution reported by multiple owners is a replacement sensor board — and bel
 tension, which support may suggest, has not fixed a single reported case.
 
 !!! important "Before you suspect the board: are you on 6.9.0?"
-    An open [bug report against the firmware](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442) describes tool offset calibration
+    A [bug report against the firmware](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442), now closed, describes tool offset calibration
     failing repeatedly **after upgrading to 6.9.0**, on machines where it had been
-    working. It is no longer a couple of accounts: the report has drawn a steady stream
+    working. It is no longer a couple of accounts: the report drew a steady stream
     of owners across both four- and eight-tool machines, including new Gen 2 builds
     that passed every calibration during assembly. It affects multiple tools rather
     than one, and the calibration wizard often succeeds while the check at print start
@@ -73,7 +76,7 @@ tension, which support may suggest, has not fixed a single reported case.
     changes the geometry enough to matter. Several owners checked and found their
     settings already correct, so it is not the whole story, but it is free to rule out.
 
-    **There is a vendor fix, in beta.** After investigating with input from owners on
+    **There is a vendor fix.** After investigating with input from owners on
     the report and tracking the fault internally, the vendor published
     [6.9.1-beta](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta)
     for the Core One INDX on 10 September 2026. Alongside the temperature and
@@ -82,23 +85,40 @@ tension, which support may suggest, has not fixed a single reported case.
     temperatures themselves are in the release notes and are not repeated here. Several
     owners on the report say calibration now passes first time where it had been failing
     every time, and the owner who opened it has since said the beta fixes it for them and
-    that it could be closed. It does not touch the temperature used for bed probing,
-    which comes from the slicer profile rather than firmware — see
+    that it could be closed. A Prusa developer closed it on 23 September 2026, on the
+    grounds that most owners who had the original failure appeared to be rid of it. The
+    closing comment names no release and does not answer the owner below who reported
+    occasional failures continuing on the beta; anyone with a similar problem, or any
+    other tool offset problem, is asked to file a new issue and to cite this one where it
+    is related. The fix does not touch the temperature used for bed probing, which comes
+    from the slicer profile rather than firmware — see
     [oozing during probing](oozing-during-probing-and-calibration.md).
 
-    It is a beta, and not yet clean for everyone. One owner reports a thermal runaway
-    after the first filament change on it, which the developer asked to be filed as a
-    separate bug; another finds calibration passing reliably but nozzles coming out
-    noticeably dirtier. Since then one owner reports failures continuing, less often than
-    before, and [another](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/) found the beta dragging strings of filament onto the
-    nozzle and failing Z probing, and did better going back — though they suspect their
-    own wiper setup. None of these is confirmed beyond its reporter.
+    **It is now in a stable release.** The vendor published
+    [6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1) as
+    stable on 25 September 2026. Its release notes list a gantry squareness wizard, PVA
+    and BVOH presets and a homing fix, and say nothing about tool offset calibration.
+    The beta's changes are in it all the same: in the firmware repository the stable tag
+    is the beta tag plus
+    [15 further commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1),
+    and none of them touches the tool offset calibration or offset sensor code. That
+    comes from reading the repository, not from the notes, and nothing in the stable is
+    described as a further fix for this failure.
 
-    For owners with the newer belts it also removes the dilemma above: the beta is INDX
+    The beta was not clean for everyone, and the stable notes mention none of what
+    follows. One owner finds calibration passing reliably but nozzles coming out
+    noticeably dirtier. Another reports failures continuing, less often than before, and
+    [a third](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/) found the beta dragging strings of filament onto the
+    nozzle and failing Z probing, and did better going back — though they suspect their
+    own wiper setup. None of these is confirmed beyond its reporter. A thermal runaway
+    reported on the beta was withdrawn by its reporter, who said the same files
+    reproduced it on the earlier release and suspected their model rather than the beta.
+
+    For owners with the newer belts the fix also removes the dilemma above: 6.9.1 is INDX
     firmware that keeps 1.5 GT support, so moving forward replaces downgrading as the
-    way out. Check the report for whether a stable 6.9.1 has shipped before installing a
-    beta. The firmware links an official help article for this error code, which owners
-    say did not resolve it.
+    way out, and with the stable release out that no longer means installing a beta.
+    The firmware links an official help article for this error code, which owners say
+    did not resolve it.
 
 !!! note "A lead: some offset sensor board failures may be a clock setting"
     `provisional` — one report, and its author says it is not yet proven.
@@ -112,17 +132,31 @@ tension, which support may suggest, has not fixed a single reported case.
     through calibration at the first try.
 
     The reasoning can be checked against the chip's datasheet, which caps the reference
-    frequency at 35 MHz in the single-channel mode the INDX uses — below what the stock
-    firmware sets. If that is the cause, units with a little less margin would fail
-    intermittently while most carry on working, which would also account for a
+    frequency at 35 MHz in the single-channel mode the INDX uses — below what stock
+    firmware set through 6.9.0. If that is the cause, units with a little less margin
+    would fail intermittently while most carry on working, which would also account for a
     replacement board curing the same error for some owners without the fault ever
     being widespread.
 
     Treat it as a lead rather than a fix: one machine, a custom build, a result the
     reporter was still repeating, and a write-up they disclosed was drafted with an AI
-    assistant. No source connects it to the communication fix in 6.9.1-beta, although
-    both concern the same sensor link. See
+    assistant. See
     [firmware issue 5473](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473).
+
+    **The vendor made the same clock change.** The 6.9.1-beta source, and so the
+    stable 6.9.1, halves the sensor's reference clock. The
+    [commit](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/df2b2eb4b2e9161ff3ae50a364d3e389b17684a3)
+    gives the datasheet's single-channel limit as its reason and is dated before issue
+    5473 was filed; 6.6.3 and 6.9.0 both ran the chip at 40 MHz. The release notes do
+    not mention it, so whether it is what they call the communication fix is not stated.
+    That settles the premise, not the cure: no owner has yet reported whether stock 6.9.1
+    clears the first-sample failure on a machine that had it. Nor would such a report
+    single out the clock. The reporter's build changed only the reference divider, but
+    the vendor's commit also divides the sensor's input clock, drives the coil at a
+    fixed, lower current with automatic amplitude correction off, and changes which
+    amplitude and stalled-oscillation errors get reported. If stock 6.9.1 clears the
+    failure, any of those could be why. If your board fails this way on 6.9.0 or
+    earlier, updating costs nothing and is worth doing before you replace it.
 
 ## Error codes that lead here
 
@@ -241,12 +275,17 @@ The *cause* is now partly established. Where this page previously had only owner
 converging on ooze, the vendor's beta release notes name a lower calibration
 temperature and a fix for offset sensor communication dropouts, and the developer on
 the report said both mattered. That is the vendor naming contributing causes, not a
-published root-cause analysis, and the fix is still a beta. Until a stable release
-ships and the report closes, treat it as the vendor's current fix rather than a
-settled one.
+published root-cause analysis. The fix has since left beta. The report was closed on
+23 September 2026 on the strength of owner feedback on the beta, and the stable 6.9.1
+carries the same code, which the release tags show and the notes do not say. That
+makes it the vendor's released fix, not a verified cure: one owner on the report still
+saw occasional failures on the beta, and no owner has yet reported on the stable.
 
 The LDC1612 reference-frequency lead is a separate single report from a different
-owner, unconfirmed by the vendor, and is marked `provisional` where it appears.
+owner, and is marked `provisional` where it appears. The vendor's own commit confirms
+that the clock exceeded the chip's limit and changes it, alongside several other
+sensor settings, but says nothing about whether that caused the failures that owner
+saw.
 
 ## Related
 

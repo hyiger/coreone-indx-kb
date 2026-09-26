@@ -1,24 +1,29 @@
 ---
 title:        Blobs dragged into the print — nozzle wiper and purge
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       0.4mm reported
-firmware:     6.9.0; earlier behavior noted throughout
+firmware:     6.9.0, re-checked against 6.9.1; earlier behavior noted throughout
 sources:
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5391
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5496
 superseded_by:
 ---
 
 # Blobs dragged into the print — nozzle wiper and purge
 
-!!! tip "Update to 6.9.0 before doing anything else"
+!!! tip "Update to 6.9.0 or later before doing anything else"
     Firmware 6.9.0 introduced **automatic calibration of the nozzle cleaner** — this
     is confirmed in Prusa's own release notes, not just inferred from owner reports.
     The same release moved the purge point in Y and made the nozzle reheat in the
@@ -29,10 +34,31 @@ superseded_by:
     across mixed-material prints, one no longer needing a brim to catch debris on the
     first layer, and — most tellingly — the owner who opened the original complaint
     thread reporting that 6.9.0 has largely settled both the oozing and the cleaning.
+    That did not hold for good. Weeks later the same owner, still on 6.9.0, had a print
+    fail on a different filament and then could not get tool calibration to pass, which
+    was new for them; after resetting the machine and recalibrating every tool, they had
+    the oozing back as well. They then reported every calibration passing on a 6.9.1
+    build, without making clear which one; Prusa's 6.9.1 was at that point out only as a
+    beta. See [tool offset calibration](offset-sensor-board-failure.md).
 
     Most of the manual procedure below exists because that calibration used to be
-    done by hand, badly, with no way to see what you were doing. If you are on 6.9.0
-    or later, update and re-test before investing any time in manual alignment.
+    done by hand, badly, with no way to see what you were doing. If you are on anything
+    older than 6.9.0, update and re-test before investing any time in manual alignment.
+
+    The stable 6.9.1 notes name no change to the wiper or the purge. The beta did one
+    thing for the cleaner: where appropriate, the bed now moves down during Nozzle
+    Cleaner calibration, leaving room for a hand or a wrench. The stable notes do not
+    repeat it, but the stable is built on the beta: in the firmware repository it adds
+    [15 commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1)
+    to the beta tag, none of them about the nozzle cleaner. That comes from the release
+    history, not from the notes.
+    On a 6.9.1 build, one owner found PLA drawn out into long strings and left clinging
+    to the nozzle, after which nozzle probing failed; going back to 6.9.0 seemed better,
+    though they suspected their own wiper setting or a load cell fault. A second owner,
+    on the beta, found PETG left on the nozzle after the wipe, enough to fail bed
+    leveling, while crediting the beta with fixing most of their PETG calibration
+    trouble. Both are single reports. For probing failures in general, see
+    [oozing during probing and calibration](oozing-during-probing-and-calibration.md).
 
 ## Summary
 
@@ -81,9 +107,11 @@ machine-specific, so it is withheld here rather than published as a target.
     stringy tails as a regression. An owner in the forum thread later argued the
     opposite — that worms may have been deliberate, because a worm keeps the nozzle
     from nestling into the top of a blob, detaches more readily, and does less damage
-    if it does reach the print. Both readings are in the sources. Treat pellet shape
-    as a *sensitive indicator that your alignment changed*, which it certainly is,
-    rather than as a target to optimize toward.
+    if it does reach the print. Both readings are in the sources. A later report adds a
+    data point without settling it: the same owner cited in the warning box below found
+    their purge coming out as worms joined end to end, some of which landed on the bed.
+    Treat pellet shape as a *sensitive indicator that your alignment changed*, which it
+    certainly is, rather than as a target to optimize toward.
 
 ### The real difficulty is that you cannot see it
 
@@ -132,6 +160,14 @@ just touching"), which needs no number.
     you update and blobbing returns having previously been fixed by going deep, this
     is the first thing to suspect.
 
+    One later owner, firmware not stated, reports trouble from too little contact.
+    Primed material was clinging to the back of their nozzle and dropping onto the
+    bed mid-print; after they adjusted the wiper height until it definitely touched the
+    nozzle, the priming at least went well, and each recalibration of the wiper left
+    them with a different purge. Their wiper had not been reliably touching, which is
+    not the same as one set to just touching, so this is a single report that more
+    contact helps. It says nothing about whether the automatic routine stops short.
+
 ### Workarounds that do not involve calibration
 
 - **Print a skirt or brim.** Several owners report this catching the initial debris
@@ -167,6 +203,12 @@ just touching"), which needs no number.
   [tool offset calibration](offset-sensor-board-failure.md).
 - **Dry the filament.** The INDX is reported to be more moisture-sensitive than the
   Nextruder it replaces.
+- **A lone blob where a print resumed** has a different cause. One owner on 6.6.3
+  traced blobs after a spool join to the nozzle oozing while the bed traveled back
+  to printing height, and reported it upstream
+  ([#5391](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5391)). 6.9.0 now
+  reheats the nozzle in the cleaner on resume, which may bear on it; nobody has said
+  whether it does. Single report, `provisional`.
 
 ### Temperatures, retraction and flow
 
@@ -189,7 +231,7 @@ section is deliberately empty.
 ## Verification
 
 `reported` — multiple independent owners, across two dedicated threads, over roughly
-a month of firmware changes, with the firmware behavior itself confirmed first-party.
+two months of firmware changes, with the firmware behavior itself confirmed first-party.
 
 The 6.9.0 changes are documented in
 [Prusa's own release notes](https://help.prusa3d.com/downloads/core-one-indx), which
@@ -199,9 +241,18 @@ vendor-documented fact.
 
 The primary source is
 [Nozzle cleaning/calibration issues](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/),
-a 58-post thread with nine participants running from late July to late August 2026. It
-contains the symptom reports, the visibility complaints, the Tune-menu adjustments,
-the wipe-tower experiment, and the 6.9.0 outcome.
+an 87-post thread with sixteen participants running from late July to mid-September
+2026. It contains the symptom reports, the visibility complaints, the Tune-menu
+adjustments, the wipe-tower experiment, the 6.9.0 outcome, and the later single reports
+on wiper height and on 6.9.1. Much of its later traffic is about tool offset
+calibration, which belongs to [its own page](offset-sensor-board-failure.md).
+
+The 6.9.1 re-check: the
+[stable notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
+list a gantry squaring wizard, PVA and BVOH presets and a homing fix, none of which
+touches the cleaner. The bed dropping during Nozzle Cleaner calibration comes from the
+[beta notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta)
+only. Nothing on this page is contradicted by either.
 
 The 6.9.0 improvement is **independently confirmed** by three owners: one reports clean
 tool changes on a mixed TPU/PETG print and again on a four-color PETG print; a second
@@ -210,6 +261,9 @@ catch debris; and the owner who started the thread — the person with the worst
 problem — has since confirmed that 6.9.0 has mostly resolved the oozing and cleaning
 for them. The last of those is the strongest single data point on this page, because it
 is the original complainant closing their own report. That is the strongest claim on this page.
+It carries one qualification, set out in the tip at the top: weeks later, after a failed
+print, the same owner hit tool calibration failures on 6.9.0 that were new to them, and
+saw the oozing return once they had reset the machine and recalibrated every tool.
 
 The "bury the nozzle" finding comes from
 [Nozzle wiper vs. INDX offset sensor](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/),
@@ -233,6 +287,14 @@ Also not carried over: a dynamic overhang-fan profile issue described in the
 community knowledge base. It appears in no other thread in the forum corpus, and it is
 a cooling problem rather than a wiper one — it belongs on its own page, at
 `provisional`, if someone can corroborate it.
+
+Nor is an upstream report that the firmware's wipe path consistently lands off-center
+in Y on the silicone pad
+([#5496](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5496)). It reads like
+the Nozzle Cleaner Y Offset question above, but it was filed against a non-INDX
+Core One+ (Gen 2) with its own wiper accessory, on the non-INDX 6.8.1 firmware. It is
+not evidence of a systematic Y error on the INDX, and the per-machine reading of the
+Y offset stands.
 
 ## Related
 

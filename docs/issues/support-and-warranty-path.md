@@ -1,7 +1,7 @@
 ---
 title:        Who to contact — support vs warranty on an INDX kit
 confidence:   reported
-updated:      2026-08-24
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -56,6 +56,17 @@ when they agree the part is faulty. And Bondtech's support team is small relativ
 the number of kits in the field; reported turnaround has ranged from overnight to
 several weeks of silence, so a slow reply is not necessarily a lost ticket.
 
+Whichever company holds your case, ask what turnaround to expect and chase it once
+that has passed. One owner was told by Prusa's support that an escalated case normally
+takes a few days, and was still waiting close to a week after first reporting the fault.
+
+One owner whose tools repeatedly failed to release at the dock — see
+[tools unlocking or ejecting](tool-unlocks-or-ejects.md) — reports that Prusa's live
+chat offered to send a whole replacement toolhead. The post does not say which edition
+the kit is or where it was bought, and it describes a promise rather than a part
+received, so it neither confirms nor contradicts the Founders Edition pattern above.
+Treat it as a single report.
+
 ### On warranty length — verify this yourself
 
 Warranty duration is stated inconsistently across the forum and varies by region and
@@ -86,6 +97,10 @@ company and parts replacement from the other. Escalation experience and turnarou
 times are reported across the two large
 [nozzlegate](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/)
 threads.
+
+Weaker: the live-chat replacement offer and the quoted escalation time each rest on a
+single owner's report in the common problems summary thread, and the first of them does
+not say which edition the kit is.
 
 Where the sources disagree: warranty duration. The UK thread reaches no conclusion
 and its participants say so plainly. Treat every duration figure on the forum as

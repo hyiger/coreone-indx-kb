@@ -1,7 +1,7 @@
 ---
 title:        Unload and eject failures — undersized filament guide bore
 confidence:   provisional
-updated:      2026-08-25
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -10,16 +10,18 @@ nozzle:       unknown
 firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-stuck-with-filament/
 superseded_by:
 ---
 
 # Unload and eject failures — undersized filament guide bore
 
-!!! warning "Single source — treat as a lead, not a procedure"
-    Everything on this page comes from one thread, which is itself a condensation of a
-    community knowledge base that is now offline. Nothing here has been independently
-    reproduced by another owner in the forum. It is published because the symptom is
-    distinctive enough to be worth recognizing, not because the fix is established.
+!!! warning "Single source for the cause — treat as a lead, not a procedure"
+    The explanation on this page comes from one thread, which is itself a condensation
+    of a community knowledge base that is now offline. One other owner has since
+    described a similar symptom in a separate thread, but nobody in the forum has
+    confirmed the cause. It is published because the symptom is distinctive enough to
+    be worth recognizing, not because the fix is established.
 
 ## Summary
 
@@ -79,14 +81,32 @@ reported to have worked on every tracked attempt.
 
 ## Verification
 
-`provisional` — one source, not reproduced.
+`provisional` — one source for the cause, not reproduced; one further report of the
+symptom, with the cause unconfirmed.
 
-The sole source is the [common problems summary](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/).
-A search of the full forum corpus for unload and eject failures returns no other
-thread discussing this, so there is no second owner account to compare against. The
-account there is specific and internally plausible — it names a measured range, an
+The source for the cause is the [common problems summary](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/).
+The account there is specific and internally plausible — it names a measured range, an
 intended diameter, a vendor confirmation, and a success rate — but specificity is not
 corroboration.
+
+A search of the full forum corpus for unload and eject failures turns up one other
+thread that fits, in
+[the first-prints troubleshooting board](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-stuck-with-filament/).
+An owner describes a single tool on which every unload fails and the strand has to be
+pulled free by hand, while a print that uses only that tool runs normally and the
+machine's other tools are fine. That resembles the signature this page describes, but it
+stops short of corroboration. The owner reported no measurement of the bore and never said
+what fixed it, although the thread was later marked solved. The undersized-bore
+explanation offered in that thread came from this site's author, so it is not an
+independent diagnosis. And the account departs from this page in one respect: the
+Summary here says printing through an affected tool is unaffected, whereas there the
+tool printed normally only when no tool changes were involved — with changes, its
+filament jammed or got through only after several attempts.
+
+Another owner in the same thread could never load one of their tools at all. A load
+that never succeeds is not what this mechanism predicts, and a nozzle blocked from the
+factory (see [nozzle hardness](nozzle-hardness.md)) would explain it as well, so it is
+not counted here.
 
 A second account has since been relayed from the vendor's Discord, independent of the
 forum thread. It agrees on the mechanism — a finishing pass that brings the sintered
@@ -96,9 +116,11 @@ and this site does not cite Discord, so it is recorded here as corroboration **a
 cannot check**, and the tier does not move. Two agreeing accounts in two venues
 strengthen the mechanism; they are not the two linkable sources `reported` requires.
 
-What would still move this to `reported`: a second owner describing unload failures on a
-tool that prints normally, in a citable venue, ideally with their own measurement of the
-bore. If you have that, it is the most useful thing you could add to this page.
+What would still move this to `reported`: a second owner, in a citable venue, who ties
+unload failures on a tool that prints normally to the bore itself — by measuring it, or
+by the fault clearing once the bore is finished or the part replaced. A similar symptom
+alone, like the one above, is not enough. If you have that, it is the most useful thing
+you could add to this page.
 
 ## Related
 
