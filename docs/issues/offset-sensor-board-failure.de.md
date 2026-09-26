@@ -1,7 +1,7 @@
 ---
 title:        Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 confidence:   reported
-updated:      2026-09-16
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -18,7 +18,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   880996ea150b2bd89ecbbd2e135204a3a35e5d037103eb73e67ba9d795da4977
+source_sha:   93945364b7eede8da317530de0a96f8bf7f157ab9d23aca1ad2bb0600a6e46a6
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 
@@ -141,10 +141,16 @@ einzigen berichteten Fall behoben.
 |---|---|
 | [`36130`](https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016) | Tool offset failed |
 | [`36136`](https://help.prusa3d.com/article/calibrate-dock-from-menu-17136-xl-36136-core-one-indx_1037195) | Calibrate dock from menu |
+| [`36194`](../codes.md#36194) | The tool offset sensor sent no usable data |
 
 `36130` behandelt diese Seite. Es ist auch der Code, zu dem die Firmware ihren eigenen
 Hilfeartikel verlinkt — jenen Artikel, der dem Besitzer, der die 6.9.0-Regression
 meldet, nach eigener Aussage nicht weitergeholfen hat.
+
+`36194` gibt es nur in Firmware, die aus hyiger/Prusa-Firmware-Buddy gebaut ist; sie
+meldet diesen Fehler mit einem eigenen Code, wenn keine Abtastfahrt brauchbare Daten
+vom Sensor erhalten hat. Mit der Standard-Firmware ist derselbe Fehler `36130`; unter
+[Fehlercodes](../codes.md#stock-firmware) steht, wie man ihn im seriellen Log erkennt.
 
 ## Details
 

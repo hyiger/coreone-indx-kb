@@ -1,7 +1,7 @@
 ---
 title:        Issues
 confidence:   unknown
-updated:      2026-09-19
+updated:      2026-09-25
 author:       hyiger
 printer:      unknown
 toolhead:     unknown
@@ -54,6 +54,9 @@ reader a part, a print, or a warranty window.
 - [Probing fails or nozzle never touches the bed](loadcell-emi-noise.md) —
   electrical interference in the loadcell signal makes the printer believe it has
   touched down while the nozzle is still well clear.
+- [Tool offset calibration error codes](../codes.md) — which step of the
+  calibration failed, for each code, and how to read it from the serial log when the
+  printer only ever shows 36130. Start here for any tool offset calibration failure.
 - [Tool offset calibration fails](offset-sensor-board-failure.md) — the contactless
   offset sensor returns no samples, so calibration has nothing to work with. Usually
   the sensor board.
@@ -102,7 +105,8 @@ The `361xx` block is the toolchanger family. These are the codes that map onto a
 | `36125` | Tool pickup failed | [Tool detection](tool-detection-ringdown-decay.md) |
 | `36127` | Tool park failed | [Tool detection](tool-detection-ringdown-decay.md) |
 | `36128` | Retry tool park | [Tool detection](tool-detection-ringdown-decay.md) |
-| `36130` | Tool offset failed | [Tool offset calibration](offset-sensor-board-failure.md), or [bed alignment](tool-offset-bed-z-alignment.md) with a clean nozzle and nothing loaded |
+| `36130` | Tool offset failed | [Error codes](../codes.md#stock-firmware) to find which step failed, then [tool offset calibration](offset-sensor-board-failure.md), or [bed alignment](tool-offset-bed-z-alignment.md) with a clean nozzle and nothing loaded |
+| `36190` to `36197` | The step of tool offset calibration that failed | [Error codes](../codes.md) |
 | `36135` | Toolchanger error | [Tool detection](tool-detection-ringdown-decay.md) |
 | `36136` | Calibrate dock from menu | [Tool offset calibration](offset-sensor-board-failure.md) |
 | `36202` | Hotend preheat error | [Tool detection](tool-detection-ringdown-decay.md) |
@@ -110,7 +114,9 @@ The `361xx` block is the toolchanger family. These are the codes that map onto a
 
 Prusa publishes an article for every code, linked from each page. Around 104 distinct
 INDX codes exist; the ones above are those this knowledge base has something to add to.
-For anything else, Prusa's own article is the better answer.
+For anything else, Prusa's own article is the better answer. The exception is 36190 to
+36197: they exist only in firmware built from hyiger/Prusa-Firmware-Buddy, and the QR
+code on those screens links to this knowledge base.
 
 ## Three faults that look alike
 

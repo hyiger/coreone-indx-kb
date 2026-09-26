@@ -1,7 +1,7 @@
 ---
 title:        Tool offset calibration fails — contactless offset sensor
 confidence:   reported
-updated:      2026-09-16
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -130,10 +130,16 @@ tension, which support may suggest, has not fixed a single reported case.
 |---|---|
 | [`36130`](https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016) | Tool offset failed |
 | [`36136`](https://help.prusa3d.com/article/calibrate-dock-from-menu-17136-xl-36136-core-one-indx_1037195) | Calibrate dock from menu |
+| [`36194`](../codes.md#36194) | The tool offset sensor sent no usable data |
 
 `36130` is this page. It is also the code the firmware links its own help
 article for, which the owner reporting the 6.9.0 regression says did not resolve
 their case.
+
+`36194` exists only in firmware built from hyiger/Prusa-Firmware-Buddy, which reports
+this fault as its own code when no sweep got usable data from the sensor. On stock
+firmware the same fault is `36130`; [error codes](../codes.md#stock-firmware) shows how
+to recognize it in the serial log.
 
 ## Detail
 
