@@ -1,7 +1,7 @@
 ---
 title:        Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -19,7 +19,7 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5494
 superseded_by:
-source_sha:   df8452e3e103c2f5acbad183c19ded3672ce8a1bff204551645cdc85910dacc0
+source_sha:   71442d2bfa74b65e7d438c874d5799274bae77ab57f5d648c1c133fc8d2030ee
 ---
 # Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 
@@ -159,8 +159,8 @@ unter der Beta weiterhin heiß abtastet, und der gegen die Beta eröffnete
 [Fehlerbericht](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5483) ist
 noch immer offen und unbeantwortet. Die
 [stabile Version 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1),
-veröffentlicht am 2026-09-25, nennt einen Assistenten zum Ausrichten des Portals, Presets
-für PVA und BVOH sowie eine Korrektur beim Referenzieren — zur Abtasttemperatur nichts.
+veröffentlicht am 2026-09-25, nennt einen Assistenten zum Ausrichten des Portals und eine
+Korrektur beim Referenzieren — zur Abtasttemperatur nichts.
 Auch die Kalibrierungsänderungen der Beta tauchen in den Versionshinweisen der stabilen
 Version nicht wieder auf, enthalten sind sie trotzdem: Im Firmware-Repository ist die
 stabile Version das Beta-Tag plus

@@ -1,7 +1,7 @@
 ---
 title:        Oozing spoils bed probing and tool calibration
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -147,8 +147,7 @@ PC Blend probe hot, and the
 [bug report](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5483) filed against
 the beta is still open and unanswered. The
 [stable 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1),
-published 2026-09-25, lists a gantry-squaring wizard, PVA and BVOH presets and a homing
-fix, and nothing about probing temperature. Its notes also do not repeat the beta's
+published 2026-09-25, lists a gantry-squaring wizard and a homing fix, and nothing about probing temperature. Its notes also do not repeat the beta's
 calibration changes, but the stable carries them all the same: in the firmware
 repository it is the beta tag plus
 [15 further commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1),

@@ -1,7 +1,7 @@
 ---
 title:        Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -21,7 +21,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   98e21f4e953356e4e92517c2f639006279f1549b8d1d89a5dfbb2714df642489
+source_sha:   f3442ec16bbac2ad32772172a59b85dfa5d4336c287a84e2c3edbfacdcb23aba
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 
@@ -107,8 +107,8 @@ einzigen berichteten Fall behoben.
     **Sie ist jetzt in einer stabilen Version.** Der Hersteller veröffentlichte
     [6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1) als
     stabile Version am 25. September 2026. Deren Versionshinweise nennen einen
-    Assistenten zur Rechtwinkligkeit des Portals, Voreinstellungen für PVA und BVOH und
-    eine Behebung beim Referenzieren und sagen nichts zur Werkzeug-Offset-Kalibrierung.
+    Assistenten zur Rechtwinkligkeit des Portals und eine Behebung beim Referenzieren
+    und sagen nichts zur Werkzeug-Offset-Kalibrierung.
     Die Änderungen der Beta sind trotzdem enthalten: Im Firmware-Repository ist das Tag
     der stabilen Version das Beta-Tag plus
     [15 weitere Commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1),

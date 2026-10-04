@@ -1,7 +1,7 @@
 ---
 title:        Only one nozzle size has a slicer profile
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -32,8 +32,9 @@ latest profile bundle, 2.5.10 of 17 September 2026, still declares only that one
 variant.
 
 The material side has moved since this page was first written: flexible filament and
-BVOH gained INDX slicer presets in September. HIPS and PVA still have none; the PVA and
-BVOH presets new in firmware 6.9.1 live on the printer and are not slicer profiles.
+BVOH gained INDX slicer presets in September. HIPS and PVA still have none. Printer-side PVA and
+BVOH presets were announced for firmware 6.9.1 but left out of it, and they would not be
+slicer profiles in any case.
 
 Variable nozzle sizes across tools was a headline capability for this toolchanger, so
 it is worth knowing before you buy nozzles, and particularly before you take store
@@ -118,12 +119,13 @@ usual PLA and PETG family, which understated it even in August. As of 2.5.10 it 
 in PLA, PETG, ASA, the PC Blends and Woodfill, and since 2.5.9 TPU 95A, all at the one
 available variant.
 
-**Firmware 6.9.1 adds PVA and BVOH on the printer, which is not the same thing.** The
-[stable release](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
-of 25 September lists PVA and BVOH filament presets as new. Those are the printer's own
-filament entries, used when you load a spool at the machine; they do not add a print
-profile to PrusaSlicer. So BVOH is now covered at both ends, while PVA can be loaded on
-the printer but still has no INDX preset to slice it with.
+**Printer-side PVA and BVOH presets are a different thing, and not here yet.** The
+[stable 6.9.1 release](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
+of 25 September at first listed PVA and BVOH filament presets as new. Prusa has since
+struck that item from the notes: the presets were left out of the build by mistake, and
+a further release is promised. Presets of that kind are the printer's own filament
+entries, used when you load a spool at the machine, and would not add a print profile to
+PrusaSlicer anyway. For now BVOH is covered only in the slicer, and PVA at neither end.
 
 That matters beyond convenience: HIPS and the soluble materials are what you would reach
 for to print support interfaces on a toolchanger, which is a large part of why someone

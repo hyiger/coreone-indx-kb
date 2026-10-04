@@ -1,7 +1,7 @@
 ---
 title:        Blobs dragged into the print — nozzle wiper and purge
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -249,8 +249,7 @@ calibration, which belongs to [its own page](offset-sensor-board-failure.md).
 
 The 6.9.1 re-check: the
 [stable notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
-list a gantry squaring wizard, PVA and BVOH presets and a homing fix, none of which
-touches the cleaner. The bed dropping during Nozzle Cleaner calibration comes from the
+list a gantry squaring wizard and a homing fix, and neither touches the cleaner. The bed dropping during Nozzle Cleaner calibration comes from the
 [beta notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta)
 only. Nothing on this page is contradicted by either.
 

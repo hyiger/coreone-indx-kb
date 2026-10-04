@@ -1,7 +1,7 @@
 ---
 title:        In den Druck geschleppte Blobs — Düsenwischer und Spülvorgang
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -19,7 +19,7 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5391
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5496
 superseded_by:
-source_sha:   bdb833895697dfc21ea46c578ca2c428d3d2e464f5afe3e2df3e7f16659ac7e5
+source_sha:   6a0520d6fb030d42dace59e4c0e9f0f474eaac903a1f26bfbd38ff8188071f8a
 ---
 # In den Druck geschleppte Blobs — Düsenwischer und Spülvorgang
 
@@ -273,8 +273,8 @@ Beiträge dreht sich um die Werkzeug-Offset-Kalibrierung, die
 
 Die Nachprüfung gegen 6.9.1: Die
 [Notes der stabilen Version](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
-nennen einen Assistenten zum Rechtwinkligstellen der Gantry, Voreinstellungen für PVA
-und BVOH sowie eine Korrektur beim Referenzieren, und nichts davon betrifft den Reiniger.
+nennen einen Assistenten zum Rechtwinkligstellen der Gantry und eine Korrektur beim
+Referenzieren, und keines von beiden betrifft den Reiniger.
 Dass das Bett während der Nozzle-Cleaner-Kalibrierung nach unten fährt, steht nur in den
 [Notes der Beta](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta).
 Keine der beiden widerspricht etwas auf dieser Seite.

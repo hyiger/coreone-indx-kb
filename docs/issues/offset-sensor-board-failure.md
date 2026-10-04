@@ -1,7 +1,7 @@
 ---
 title:        Tool offset calibration fails — contactless offset sensor
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -96,8 +96,8 @@ tension, which support may suggest, has not fixed a single reported case.
 
     **It is now in a stable release.** The vendor published
     [6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1) as
-    stable on 25 September 2026. Its release notes list a gantry squareness wizard, PVA
-    and BVOH presets and a homing fix, and say nothing about tool offset calibration.
+    stable on 25 September 2026. Its release notes list a gantry squareness wizard and a
+    homing fix, and say nothing about tool offset calibration.
     The beta's changes are in it all the same: in the firmware repository the stable tag
     is the beta tag plus
     [15 further commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1),

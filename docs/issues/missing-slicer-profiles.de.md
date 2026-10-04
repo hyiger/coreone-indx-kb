@@ -1,7 +1,7 @@
 ---
 title:        Nur eine Düsengröße hat ein Slicer-Profil
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -18,7 +18,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-flex-material-on-indx-prusa-core-one-2-generation/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
 superseded_by:
-source_sha:   ed651c9098ba1b4e1eb012e12b31b03e7748c452f39b8878ba73a697cba2c82f
+source_sha:   09af7b22a34e7cb1705cc958f46ba90daec044a4507447f7425cbebfbdeabc6a
 ---
 # Nur eine Düsengröße hat ein Slicer-Profil
 
@@ -33,8 +33,8 @@ upstream seit Juli 2026 offen, ohne Reaktion. Prusas neuestes Profil-Bundle, 2.5
 
 Bei den Materialien hat sich seit der ersten Fassung dieser Seite etwas bewegt: Flexible
 Filamente und BVOH haben im September INDX-Slicer-Presets erhalten. HIPS und PVA haben
-weiterhin keine; die in Firmware 6.9.1 neuen PVA- und BVOH-Presets liegen auf dem Drucker
-und sind keine Slicer-Profile.
+weiterhin keine. Druckerseitige PVA- und BVOH-Presets waren für Firmware 6.9.1
+angekündigt, fehlen darin aber, und Slicer-Profile wären sie ohnehin nicht.
 
 Unterschiedliche Düsengrößen über die Werkzeuge hinweg waren ein beworbenes
 Hauptmerkmal dieses Werkzeugwechslers; man sollte das also wissen, bevor man Düsen
@@ -128,13 +128,14 @@ Die für Anwender sichtbare Standard-Materialliste beider INDX-Modelle wurde hie
 2.5.10 umfasst sie PLA, PETG, ASA, die PC Blends und Woodfill sowie seit 2.5.9 TPU 95A,
 alle für die eine verfügbare Variante.
 
-**Firmware 6.9.1 bringt PVA und BVOH auf den Drucker, und das ist nicht dasselbe.** Die
-[stabile Version](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
-vom 25. September führt Filament-Presets für PVA und BVOH als neu auf. Das sind die
-eigenen Filamenteinträge des Druckers, die man beim Laden einer Spule an der Maschine
-verwendet; sie fügen PrusaSlicer kein Druckprofil hinzu. BVOH ist damit an beiden Enden
-abgedeckt, während sich PVA zwar am Drucker laden lässt, aber weiterhin kein INDX-Preset
-hat, mit dem man es slicen könnte.
+**Druckerseitige PVA- und BVOH-Presets sind etwas anderes, und es gibt sie noch nicht.**
+Die [stabile Version 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
+vom 25. September führte Filament-Presets für PVA und BVOH zunächst als neu auf. Prusa
+hat diesen Punkt inzwischen aus den Versionshinweisen gestrichen: Die Presets fehlen
+versehentlich im Build, und eine weitere Version ist angekündigt. Solche Presets sind
+die eigenen Filamenteinträge des Druckers, die man beim Laden einer Spule an der
+Maschine verwendet, und würden PrusaSlicer ohnehin kein Druckprofil hinzufügen. Vorerst
+ist BVOH also nur im Slicer abgedeckt und PVA an keinem Ende.
 
 Das ist mehr als eine Frage der Bequemlichkeit: HIPS und die löslichen Materialien sind
 das, wozu man greift, um auf einem Werkzeugwechsler Kontaktflächen von Stützstrukturen
