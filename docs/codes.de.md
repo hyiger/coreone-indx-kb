@@ -1,7 +1,7 @@
 ---
 title:        Fehlercodes der Werkzeug-Offset-Kalibrierung
 confidence:   provisional
-updated:      2026-09-26
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -14,8 +14,12 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5482
   - https://github.com/hyiger/Prusa-Firmware-Buddy/blob/master/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.6.3/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
 superseded_by:
-source_sha:   ad9db8edbf7cdf04385cf4ea4d26cb944fcea8e6944010d868e7a7fce783e5c3
+source_sha:   10dc57fe7bdd0b7fc1a6fc1192ad8919d7e899acf412ee65964177afd6044e80
 ---
 # Fehlercodes der Werkzeug-Offset-Kalibrierung
 
@@ -30,7 +34,7 @@ zu dem seine Meldung passt, nämlich dass die Abtastfahrten über den Sensor die
 nicht finden, und 36190 bis 36197 benennen den Rest. Der QR-Code auf jedem dieser
 Bildschirme öffnet den zugehörigen Abschnitt auf dieser Seite.
 
-Mit der Standard-Firmware sehen Sie immer nur 36130, aber das
+Bei den Fehlern auf dieser Seite zeigt die Standard-Firmware immer nur 36130, aber das
 [serielle Log](#stock-firmware) sagt trotzdem, welcher dieser Fehler es war.
 
 Am Core One L beginnen die Codes mit 37 statt mit 36: 37130 und 37190 bis 37197.
@@ -76,6 +80,50 @@ Seite und versucht es erneut.
 Retry nach einer fehlgeschlagenen Messung über dem Sensor reinigt das Werkzeug erneut
 und misst es noch einmal. Retry auf den anderen Bildschirmen beginnt wieder beim ersten
 Werkzeug. Abort bricht den Druck ab oder beendet die Kalibrierung aus dem Menü.
+
+Nach dem letzten Werkzeug vergleicht der Drucker die Offsets der Werkzeuge
+miteinander und hält an, wenn die Z-Offsets, die XY-Offsets oder die daraus folgende
+Sensorposition aus dem Rahmen fallen. Die Standard-Firmware gibt diesen Prüfungen
+eigene Codes: 36131 Unsafe Z Tool Offset, 36133 Unsafe XY Tool Offset und 36134 Unsafe
+Sensor Position, am Core One L 37131, 37133 und 37134. Diese Seite behandelt sie nicht.
+Retry beginnt bei ihnen wieder beim ersten Werkzeug.
+
+**Welches Werkzeug am Kopf ist.** Im Standard-Quellcode parkt jeder Fehlerbildschirm
+der Kalibrierung den Kopf zuerst vorne, wo die Düse in Reichweite ist. Ein Fehler
+während der Schritte eines Werkzeugs erscheint, während dieses Werkzeug noch am Kopf
+ist, es sei denn, der Fehler besteht gerade darin, dass der Drucker nicht sicher weiß,
+welches Werkzeug er hält (36130 mit der Standard-Firmware, 36190 mit den aufgeteilten
+Codes). Die Vergleichsprüfungen kommen nach dem letzten Werkzeug, daher ist das
+Werkzeug am Kopf dann das zuletzt vermessene, und das muss nicht dasjenige sein, dessen
+Offset aus dem Rahmen fiel. Ein Besitzer meldet mit der Standard-Firmware 6.9.1, dass
+der Bildschirm mit einem sauberen Werkzeug am Kopf erscheint, während das davor
+kalibrierte Werkzeug dasjenige mit Material daran war, und sagt, ältere Firmware habe
+das verschmutzte Werkzeug präsentiert
+([Firmware-Issue 5500](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500)).
+Der Bericht nennt keinen Code. Der Besitzer spricht von einem Z-Offset-Fehler, und wäre
+es 36131, würde die Reihenfolge oben das erklären. Ebenso würde es Material erklären,
+das das vorige Werkzeug auf der Sensorplatine hinterlassen hat, wo jedes Werkzeug
+aufsetzt. Keine der beiden Lesarten ist bestätigt.
+
+Im
+[Quellcode von 6.6.3](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.6.3/src/feature/tool_offset_calibration/tool_offset_calibration.cpp)
+laufen Schritte und Prüfungen in derselben Reihenfolge. Eine dokumentierte Änderung
+betrifft den Bericht aber durchaus. Seit
+[6.9.1-beta](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta)
+macht die Kalibrierung laut den Versionshinweisen bis zu 10 Versuche für ihr
+Z-Abtasten statt 3. Im
+[Quellcode von 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/feature/contactless_offset/contactless_offset.cpp)
+ist das die Berührung auf der Sensorplatine. Die Berührungen auf der Druckplatte, aus
+denen die Z-Offsets hervorgehen, gehören nicht zu dieser Änderung, und die zusätzlichen
+Versuche wiederholen nur: Eine Berührung, die die Abtastung verwirft, wird weiterhin
+nicht akzeptiert. Ein Werkzeug mit Material daran bekommt also mehr Gelegenheiten für
+eine akzeptierte Berührung auf der Sensorplatine und damit dafür, seine eigenen
+Schritte abzuschließen, wo ihm früher eher die Versuche ausgingen und es auf seinem
+eigenen Bildschirm stehen blieb. Hatte das Material auch seine Berührung auf der
+Druckplatte verfälscht, würde sich das dann erst beim Z-Vergleich zeigen, mit dem
+zuletzt vermessenen Werkzeug am Kopf. Das ist eine Lesart des Quellcodes, keine bestätigte
+Ursache. Steht beim Fehlerbildschirm ein sauberes Werkzeug am Kopf, prüfen Sie auch die
+davor vermessenen Werkzeuge.
 
 ## 36130 · 37130 · Werkzeug-Offset fehlgeschlagen {#36130}
 
@@ -288,7 +336,14 @@ jede Abtastfahrt so fehlschlug, stattdessen
 Jeder Abschnitt nennt eine Prüfung, die die Firmware vornimmt, und den Code, den diese
 Firmware zeigt, wenn diese Prüfung fehlschlägt, und die Log-Zeilen stammen aus dem
 Standard-Quellcode beim Tag 6.9.1. Dieser Teil ist nur so verlässlich wie die Lesart
-des Quellcodes, der oben verlinkt ist.
+des Quellcodes, der oben verlinkt ist. Codes und Titel der Vergleichsprüfungen stammen
+aus der
+[Fehlercode-Liste](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml)
+der Standard-Firmware beim selben Tag. Die Meldung eines sauberen Werkzeugs am Kopf
+stammt von einem einzelnen Besitzer, in einem Issue, das offen ist und auf das der
+Hersteller nicht geantwortet hat. Die Anzahl der Versuche stammt aus den
+Versionshinweisen zu 6.9.1-beta, und für welche Berührung sie gilt, ist aus dem
+Quellcode beim Tag 6.9.1 gelesen.
 
 Was bei jedem Code zu tun ist, ist die Lesart dieser Prüfungen durch den Autor. Wo ein
 Abschnitt Sie auf eine andere Seite schickt, gilt deren eigene Stufe. Der Rest wurde

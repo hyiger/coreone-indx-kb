@@ -1,7 +1,7 @@
 ---
 title:        Nozzle hardness and abrasive filaments
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -15,6 +15,8 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/missing-profiles-in-slicer-for-non-0-4-nozzles-and-other-materials/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-nozzles/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/hardened-nozzle/
 superseded_by:
 ---
 
@@ -27,7 +29,8 @@ filaments. The shipped nozzles are surface-treated rather than through-hardened,
 hardness well below what the trade normally means by "hardened". If you bought an
 INDX expecting to run abrasive filament from day one, you cannot, and the vendor has
 published a remediation offer that includes a full return. Treat abrasive filament on
-the current nozzles as consuming them.
+the current nozzles as consuming them. No abrasive-resistant replacement is on sale
+yet: E3D has announced one, but it has not shipped — see *What is coming* below.
 
 ## Error codes that lead here
 
@@ -59,6 +62,8 @@ low thirties is much closer to untreated stainless than to a hardened nozzle.
 Compounding it, the high-flow insert is plain brass. So even setting the body
 treatment aside, filled filaments will erode the flow geometry. And retail packaging
 and product pages still carried the original hardened claim when this became public.
+One owner whose spare nozzles, ordered from the vendor's shop in mid-July, arrived in
+late September reports that they were still described as hardened.
 
 ### Why fully hardened nozzles are genuinely hard here
 
@@ -176,6 +181,11 @@ Prusa, and whether a cash refund returns to the original payment method.
     variant in Prusa's published profile bundle, so no other size is selectable. See
     [missing slicer profiles](missing-slicer-profiles.md).
 
+    Delivery has been slow as well. Two owners who ordered spare nozzles from the
+    vendor's shop in mid-July report them shipping or arriving only in late September — provisional,
+    both in a single thread, the
+    [spare nozzles thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-nozzles/).
+
 Be aware the adequacy of the compensation is disputed. At least one owner worked
 through the arithmetic and found the offered credit represents a substantially
 smaller uplift than the hardened-over-standard premium in the vendor's own store and
@@ -184,11 +194,43 @@ but it is a reasonable thing to check for yourself before accepting an option.
 
 ### What is coming
 
-A third-party diamond-nozzle manufacturer has confirmed an INDX-compatible variant.
-Notably, the diamond is doped to keep it detectable by the eddy-current offset sensor
-— a fully non-conductive tip would be invisible to that sensor, which is a real
-design constraint on any replacement nozzle. Timing was described in months
-rather than weeks.
+Two replacements from outside Bondtech are in the works. Neither is on sale, and
+neither has a published price.
+
+**E3D.** E3D's involvement was public by the end of July 2026: an owner in the
+[nozzle hardening debacle thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/)
+linked a post from E3D's own account, and others there took it to mean that Bondtech
+was now working with E3D on the nozzles. In late August E3D made it official: it is
+developing an abrasive-resistant variant for the INDX, and could not yet give a
+release date. An owner relayed that statement in the nozzlegate thread, and in a
+[separate thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/hardened-nozzle/)
+another owner notes Bondtech posting about the same collaboration. At a US trade show
+in late September one owner spoke with an E3D engineer and reported back the
+following. It is provisional — a single owner's notes from a conversation, in one
+thread, not a published specification:
+
+- a possible January timeframe (presumably 2027), offered tentatively;
+- 0.4mm and 0.6mm high-flow CHT nozzles first;
+- all-steel construction, assembled from several steel alloys so that induction
+  heating still works, with a titanium heat break and a coating the owner noted as
+  "obsidian", presumably E3D's Obxidian (the owner was unsure whether that name
+  referred to the coating or the nozzle itself);
+- on release, simultaneous availability from E3D itself, from Prusa and from Bondtech;
+- no problem with the eddy-current offset sensor, according to the engineer. The
+  owner's first post said the opposite and was corrected the same day as a
+  dictation error, so if you see that first version quoted, it is the retracted one.
+
+The same owner reports that, according to E3D staff, Bondtech's own INDX
+demonstration printer at the show was fitted with the E3D nozzle. If accurate, the
+part exists in working form, but it has not shipped. The first sizes reported are
+high-flow only; no plain-bore variant was mentioned.
+
+**Diamond.** A third-party diamond-nozzle manufacturer has confirmed an
+INDX-compatible variant. Notably, the diamond is doped to keep it detectable by the
+eddy-current offset sensor — a fully non-conductive tip would be invisible to that
+sensor, which is a real design constraint on any replacement nozzle. Timing was
+described in months rather than weeks, and nothing firmer has surfaced in the threads
+since.
 
 !!! note "Two separate defects are often discussed alongside this"
     A number of nozzles have shipped already obstructed, and independent teardowns
@@ -232,7 +274,11 @@ Weaker: the hardness figure a buyer "should" have expected is a community norm r
 than a published standard. The compensation-adequacy arithmetic is one owner's
 calculation. The voucher conditions are second-hand, relayed from vendor emails by
 two owners in a single thread, the VAT treatment and expiry from only one of them. The
-diamond-nozzle timeline is a third-party statement of intent.
+diamond-nozzle timeline is a third-party statement of intent. That E3D is developing an
+INDX nozzle is corroborated in three threads, but every detail of it — timeframe, sizes,
+construction, sensor compatibility, where it will be sold, the booth demonstration —
+rests on one owner's notes from a trade-show conversation. The spare-nozzle delivery
+times and the "hardened" description on delivered spares come from a single thread.
 
 Where the sources disagree: owners differ sharply on whether the remediation is
 adequate, and on how much practical impact the hardness actually has for someone who

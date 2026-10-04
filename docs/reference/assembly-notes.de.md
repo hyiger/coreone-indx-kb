@@ -1,7 +1,7 @@
 ---
 title:        Montagehinweise — INDX-Umbausatz
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One, Core One Plus
 toolhead:     INDX
@@ -20,8 +20,10 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-founders-edition-upgrade-path-to-core-one-gen-2/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/coreone-with-mmu-upgrade-to-indx/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/how-many-types-of-fasteners-etc-come-with-indx-gen2-upgrade/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-fe-upgrading-to-gen2/
 superseded_by:
-source_sha:   12b0e44abb64f9689f8ce981f4c6da6bb4f298e7953bb713ccd5642b03feca79
+source_sha:   3dfcd17eb204d8097ff19c46b4cd5e62f6d2b592d903b651567673c468bf9fce
 ---
 # Montagehinweise — INDX-Umbausatz
 
@@ -129,10 +131,17 @@ zwischen einem Abend und einem Wochenende.
 
 **Es gibt keine zusammengefasste Liste der Verbindungselemente.** Verbindungselemente
 sind in der Anleitung Schritt für Schritt aufgeführt und sonst nirgends; wer gern in
-beschriftete Fächer vorsortiert, muss sich diese Liste selbst herausschreiben. Im
+beschriftete Fächer vorsortiert, muss sich diese Liste selbst herausschreiben. Prusas
+[Spickzettel zum Core One INDX](https://www.prusa3d.com/downloads/others/C1_INDX_cheatsheet_EN_1_0.pdf)
+ist nicht unbedingt diese Liste: Ein Besitzer fragte, ob jedes Verbindungselement und
+jeder Clip auf seiner Übersicht im Satz enthalten sei, und die einzige Antwort lautete,
+die Übersicht sei allgemein gehalten. *Einzelne Antwort.* Im
 Forum kursiert ein inoffizielles PDF zu den Verbindungselementen, es war jedoch
 KI-generiert und von seinem eigenen Verfasser nicht überprüft — behandeln Sie es als
-Ausgangspunkt für den Abgleich mit der Anleitung, nicht als Stückliste.
+Ausgangspunkt für den Abgleich mit der Anleitung, nicht als Stückliste. Dasselbe gilt
+für eine spätere, KI-erstellte Liste der Typen von Verbindungselementen in INDX- und
+Gen-2-Satz zusammen, bei der ihr Verfasser selbst einräumte, dass sie falsch sein
+könnte, und ankündigte, sie nach Eintreffen der Teile zu überprüfen.
 
 **Erwarten Sie kein Werkzeug im Karton.** Der Umbausatz geht davon aus, dass das
 benötigte Werkzeug mit dem Core One gekommen ist, der bereits auf Ihrem Tisch steht.
@@ -286,9 +295,10 @@ die schwerer zu finden sind:
 
 - **Seine Senkkopf-Magnete.** Ein Besitzer hat sie mit 10 mm Durchmesser und 5 mm
   Dicke gemessen und online ein passendes Gegenstück gefunden, in einer Güte, deren
-  Verhältnis zum Original unbekannt ist; der Autor dieser Seite hat keine Bezugsquelle
-  gefunden und vermutet Sonderanfertigungen; ein dritter Besitzer sucht noch. Der
-  erste Besitzer merkt an, dass der Sensor stärker von der Magnetstärke abhängt als
+  Verhältnis zum Original unbekannt ist; ein zweiter Besitzer hat seither ein weiteres
+  Angebot in dieser Größe gefunden, das überhaupt keine Güte angibt. Der Autor dieser
+  Seite hat keine Bezugsquelle gefunden und vermutet Sonderanfertigungen; ein weiterer
+  Besitzer sucht noch. Der erste Besitzer merkt an, dass der Sensor stärker von der Magnetstärke abhängt als
   das Dock, weil er mit dem Hall-Effekt arbeitet.
 - **Die schlichten Kunststoff-Abstandshalter im gedruckten Gehäuse** — nicht die
   Spannzangen, in die der PTFE-Schlauch gesteckt wird. Eine Bezugsquelle ist nicht
@@ -354,6 +364,44 @@ mit dem vollständigen Log den Support einzuschalten, statt jedes Mal einen neue
 darum herum zu finden. Die Maschine ist darauf angewiesen, dass diese Kalibrierungen
 stimmen; ein Behelf an dieser Stelle rächt sich später umso mehr.
 
+## Gen 2 an einem fertigen Aufbau der Founders Edition nachrüsten
+
+Besitzer der Founders Edition bekommen die Gen-2-Teile getrennt statt im INDX-Karton,
+und manche bauen sie an eine Maschine, die schon eine Weile mit dem INDX druckt. Ein
+Besitzer, der das Gen-2-Upgrade für eine solche Maschine gerade erhalten hatte, fand
+keine Prusa-Anleitung, die von einem bereits umgebauten Drucker ausgeht. Was Besitzer
+berichten, die diesem Besitzer geantwortet haben:
+
+- **Der Kopf lässt sich abnehmen, ohne ihn abzustecken.** Nach dem Abnehmen des Gebläses der
+  Bauteilkühlung liegen die vier Schrauben frei, die den Druckkopf halten, und das
+  Hauptkabel kann angeschlossen bleiben. Das beruht allein auf der Schilderung des
+  Autors dieser Seite.
+- **Die Motorkabel können am Board bleiben.** Der Autor dieser Seite und ein weiterer
+  Besitzer haben beide die Riemenscheiben getauscht, während die Kabel der X- und
+  Y-Motoren am Board angeschlossen blieben, und beide fanden, dass die Kabel dafür genug
+  Spiel haben. Der Autor legte jeden Motor dabei auf einer Stange ab; der andere
+  Besitzer ließ die hintere Abdeckung montiert.
+- **Die Seitenverkleidungen sind optional.** Der Autor dieser Seite weist darauf hin,
+  dass eine flexible Schraubendreher-Verlängerung die Motorschrauben auch bei
+  montierten Verkleidungen erreicht; ein Besitzer hat sie trotzdem abgenommen.
+- **Die neuen Riemen mit den alten einziehen.** Ein Besitzer befestigte jeden neuen
+  Riemen mit Klebeband am jeweils alten und zog ihn auf dem Weg des alten Riemens
+  durch, solange die Motoren noch festgeschraubt waren. Derselbe Besitzer schraubte
+  die Spanner vollständig heraus, um Spiel für das Befestigen der Riemenenden an der
+  Montageplatte des Kopfes zu bekommen, ließ Schrauben in den losen Vierkantmuttern
+  stecken — in den Spannern und in den Halterungen der Luftführung am Kopf —, damit
+  keine herausfallen konnte, und fettete vor dem Wiedereinbau der Spanner deren
+  Muttern, damit die Gewinde nicht fressen.
+- **Die Spulenhalter wieder anbringen.** Bei abgenommenen Seitenverkleidungen lassen
+  sich die Muttern für die hinteren Halter nur schwer ansetzen. Der Autor dieser Seite
+  hielt jede Mutter mit einem Stück stark klebendem doppelseitigem Klebeband auf der
+  Fingerspitze; zwei andere Besitzer schlugen stattdessen gedruckte Einsetzhilfen für
+  Muttern vor.
+
+*Vorläufig.* All das stammt aus einem einzigen Thread. Der Schritt zum Abnehmen des
+Kopfes, der Weg mit der flexiblen Verlängerung und der Trick mit dem Klebeband beruhen
+allein auf der Schilderung des Autors dieser Seite.
+
 ## Woher Dateien und Hilfe kommen
 
 Prusa veröffentlicht die offiziellen Druckteile auf Printables. Bondtech veröffentlicht
@@ -388,7 +436,10 @@ Die Belege für jede Aussage, Punkt für Punkt:
 - **Die fehlende Liste der Verbindungselemente** wird bestätigt durch
   [Parts list for screws and bolts?](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/parts-list-for-screws-and-bolts/),
   wo ein Erbauer danach fragt und die Auskunft erhält, dass die Anleitung
-  Verbindungselemente Schritt für Schritt und sonst nirgends aufführt.
+  Verbindungselemente Schritt für Schritt und sonst nirgends aufführt. Die Frage zum
+  Spickzettel, die einzige Antwort darauf und die KI-erstellte Liste der Typen stehen
+  alle in
+  [einem Thread über die Verbindungselemente in INDX- und Gen-2-Satz](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/how-many-types-of-fasteners-etc-come-with-indx-gen2-upgrade/).
 - **Die Presspassung und das Herausdrücken der Magnete** sind aus erster Hand und mit
   Fotos behandelt in
   [Removing magnets from Tool docks](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/removing-magnets-from-tool-docks-you-dont-need-to-destroy-them/),
@@ -436,12 +487,23 @@ technischen Punkten, die aus diesem gesamten Thread die Prüfung überstanden ha
 Ebenfalls Einzelmeldungen und an Ort und Stelle gekennzeichnet: die Riemeneinstellung
 nach dem ersten Flashen, der montiert gelieferte Drucker ohne Werkzeug, die in
 Dock-Teile geschmolzenen Schrauben, der Behelf für die Abstandshalter im Sensorgehäuse
-und die Messung der Senkkopf-Magnete. Die Größe des Aktivierungsmagneten beruht auf der
+und die Messung der Senkkopf-Magnete, zusammen mit den beiden Angeboten, die in dieser
+Größe gefunden wurden. Die Größe des Aktivierungsmagneten beruht auf der
 Messung eines Besitzers gegenüber einem Wert, den niemand gemessen hat. An welcher
 genauen Stelle der INDX-Abfolge die Gen-2-Teile hingehören, ist die eigene Praxis des
 Autors dieser Seite; der Einbau während des INDX-Aufbaus hat die oben genannte
 Unterstützung, und das Weglassen des Düsenabstreifers hat eine unabhängige Stimme, in
 [einem anderen Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-founders-edition-upgrade-path-to-core-one-gen-2/).
+Die Hinweise zum Nachrüsten von Gen 2 an einem fertigen Aufbau der Founders Edition
+stammen alle aus
+[einem Thread über diese Nachrüstung](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-fe-upgrading-to-gen2/):
+Der Schritt zum Abnehmen des Kopfes, der Weg mit der flexiblen Verlängerung bei
+montierten Seitenverkleidungen und der Klebeband-Trick für die Muttern der Spulenhalter
+stammen allein vom Autor dieser Seite, das Spiel der
+Motorkabel hat neben dem Autor einen unabhängigen Besitzer, und die Hinweise zu Riemen,
+Vierkantmuttern und Spannern stammen von einem einzelnen Besitzer. Dass Besitzer der
+Founders Edition die Gen-2-Teile getrennt kaufen, steht dort und in dem unmittelbar
+zuvor verlinkten Thread.
 Der Wechsel der Magnetgüte wurde zuerst vom Autor dieser Seite gemeldet, und eine
 unabhängige Schilderung unter gleichen Bedingungen gibt es nicht: Der einzige weitere
 Besitzer, der ihn meldet, hat neben der Güte auch die Magnetgröße geändert. Das

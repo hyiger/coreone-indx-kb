@@ -20,8 +20,10 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/offset-sensor-failure/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/
 superseded_by:
-source_sha:   f3442ec16bbac2ad32772172a59b85dfa5d4336c287a84e2c3edbfacdcb23aba
+source_sha:   d010a731cb3baf62c3ef2f6a6bc5f4e29297b7c033063741e550e0f4e9dc907d
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 
@@ -128,6 +130,20 @@ einzigen berichteten Fall behoben.
     zurückgezogen, der angab, ihn mit denselben Dateien auch unter der älteren Version
     reproduziert zu haben, und eher sein Modell als die Beta in Verdacht hatte.
 
+    **Auch die stabile Version läuft laut dem ersten Bericht nicht fehlerfrei.** Ein
+    Besitzer einer Maschine mit acht Werkzeugen meldet in
+    [Firmware-Issue 5500](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500),
+    dass die Kalibrierung beim Druckstart unter 6.9.1 bei Drucken mit mehreren
+    Werkzeugen weiterhin oft fehlschlägt, so oft, dass jedem solchen Druck langes
+    Reinigen der Düsen von Hand vorausgeht. Er führt das auf Material zurück, das das
+    Spülen an den Düsen hinterlässt; nach seiner Aussage ist es unter 6.9.0 wie unter
+    6.9.1 zu viel, und es haftet nach dem Abstreifen oft noch an der Düse. Das ist Material an der
+    Spitze, die Ursache, die die Meldung auf dem Bildschirm nennt; über die
+    Sensoraussetzer oder eine defekte Platine sagt es nichts. Er meldet außerdem, dass
+    der Fehlerbildschirm das falsche Werkzeug zum Reinigen präsentiert, siehe
+    [Fehlercodes](../codes.md). Es ist ein einzelner Bericht, und das Issue ist offen,
+    ohne Antwort des Herstellers.
+
     Für Besitzer mit den neueren Riemen löst die Behebung außerdem das oben beschriebene
     Dilemma: 6.9.1 ist INDX-Firmware, die die 1.5-GT-Unterstützung behält, sodass der
     Schritt nach vorn den Downgrade als Ausweg ersetzt, und seit der stabilen Version
@@ -228,6 +244,18 @@ Was diesen Fehler verwirrend macht:
 - **Ein bestandener Durchgangstest des Kabels entlastet den Sensor nicht.** Ein Besitzer
   prüfte das Kabel, fand es elektrisch einwandfrei — und die Platine war dennoch die
   Ursache. Ein bloßer Kabeltausch hat in den berichteten Fällen nichts behoben.
+- **Nicht jeder Hardwarefall endet bei der Sensorplatine.** `provisional`, ein
+  einzelner Bericht.
+  [Ein Besitzer](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/)
+  hatte unter 6.6.0 und 6.6.1 bei jedem Start eines Drucks 36130, obwohl die
+  Kalibrierung selbst durchlaufen konnte, und sein Wägezellentest zeigte instabile
+  Werte, registrierte nach dem Wegklicken der Warnung aber weiterhin einen Druck auf die
+  Düse. Riemenspannung und wiederholte Kalibrierung halfen nicht. Der Fehler lag
+  schließlich in dem Teil, das er Werkzeughalter nennt; er reklamierte es beim
+  Hersteller, und seitdem funktioniert alles. Welches Teil das ist, sagt der Beitrag
+  nicht. Dieselbe Aufteilung, bei der die Kalibrierung gelingt und der Druckstart
+  scheitert, ist oben als Zeichen der 6.9.0-Regression genannt; hier trat sie vor
+  dieser Version auf und war Hardware.
 
 ### Vorgehen, der Reihe nach
 
@@ -292,7 +320,10 @@ Einzelheiten haben nur eine Quelle und wurden im Forumsbestand nicht gesondert b
 
 Wo die Quellen sich widersprechen: Die ersten Vorschläge des Supports schwankten zwischen
 Kabel und Platine, und in einem Fall wurde die Riemenspannung angeführt. Die Erfahrung
-der Besitzer weist durchgängig auf die Platine.
+der Besitzer weist durchgängig auf die Platine, mit einer Ausnahme: ein einzelner
+Besitzer, bei dem der Fehler in dem lag, was er Werkzeughalter nennt
+([Thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/)),
+dort, wo er erscheint, als `provisional` markiert.
 
 **Seit der Erstveröffentlichung ergänzt.** Die Kalibrierungsregression unter 6.9.0 stammt
 aus dem [Firmware-Issue-Tracker](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442),
@@ -313,8 +344,9 @@ September 2026 aufgrund der Rückmeldungen von Besitzern zur Beta geschlossen, u
 stabile 6.9.1 enthält denselben Code, was die Release-Tags zeigen und die
 Versionshinweise nicht sagen. Damit ist sie die veröffentlichte Behebung des
 Herstellers, keine nachgewiesene Heilung: Ein Besitzer im Bericht sah mit der Beta
-weiterhin gelegentliche Fehlschläge, und zur stabilen Version hat noch kein Besitzer
-berichtet.
+weiterhin gelegentliche Fehlschläge, und der erste Besitzer, der zur stabilen Version
+berichtet, in einem eigenen Issue, sieht die Kalibrierung bei Drucken mit mehreren
+Werkzeugen weiterhin oft scheitern und führt das auf Spülmaterial an den Düsen zurück.
 
 Der Hinweis auf die Referenzfrequenz des LDC1612 ist ein separater Einzelbericht eines
 anderen Besitzers und ist dort, wo er erscheint, als `provisional` markiert. Der eigene

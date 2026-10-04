@@ -20,6 +20,8 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/offset-sensor-failure/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/
 superseded_by:
 ---
 
@@ -114,6 +116,18 @@ tension, which support may suggest, has not fixed a single reported case.
     reported on the beta was withdrawn by its reporter, who said the same files
     reproduced it on the earlier release and suspected their model rather than the beta.
 
+    **The first report on the stable is not clean either.** One owner with an
+    eight-tool machine reports on
+    [firmware issue 5500](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500)
+    that on 6.9.1 the calibration at print start still fails often on prints that use
+    several tools, often enough that starting one means a long spell of cleaning
+    nozzles by hand. They put it down to material the purge leaves on the nozzles,
+    which they say is too much on both 6.9.0 and 6.9.1 and is often still on the
+    nozzle after wiping. That is material on the tip, the cause the on-screen message names;
+    it says nothing about the sensor dropouts or a failing board. They also report the
+    failure screen presenting the wrong tool to clean, see [error codes](../codes.md).
+    It is a single report, and the issue is open with no reply from the vendor.
+
     For owners with the newer belts the fix also removes the dilemma above: 6.9.1 is INDX
     firmware that keeps 1.5 GT support, so moving forward replaces downgrading as the
     way out, and with the stable release out that no longer means installing a beta.
@@ -203,6 +217,16 @@ What makes this fault confusing:
 - **Cable continuity testing good does not clear the sensor.** One owner checked the
   cable, found it electrically fine, and the board was still the fault. Cable
   replacements on their own have not fixed reported cases.
+- **Not every hardware case ends at the sensor board.** `provisional`, one report.
+  [One owner](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/)
+  on 6.6.0 and 6.6.1 had 36130 whenever a print started, although the calibration
+  itself could complete, and their loadcell test showed unstable readings, though a
+  press on the nozzle still registered once the warning was dismissed. Belt tension
+  and repeated calibration did not help. The fault turned out to be in the part they
+  call the tool holder, which they took up with the manufacturer under warranty, and
+  everything has worked since. The post does not say which part that is. The same
+  split, calibration completing while the print start fails, is listed above as a
+  sign of the 6.9.0 regression; here it came before that release and was hardware.
 
 ### What to do, in order
 
@@ -261,7 +285,10 @@ single-source and have not been separately confirmed in the forum corpus.
 
 Where the sources disagree: support's own first suggestions varied between cable and
 board, and in one case belt tension was raised. Owner experience points consistently
-at the board.
+at the board, with one exception: a single owner whose fault was in what they call the
+tool holder
+([thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/)),
+marked `provisional` where it appears.
 
 **Added since first publication.** The 6.9.0 calibration regression comes from the
 [firmware issue tracker](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442),
@@ -279,7 +306,9 @@ published root-cause analysis. The fix has since left beta. The report was close
 23 September 2026 on the strength of owner feedback on the beta, and the stable 6.9.1
 carries the same code, which the release tags show and the notes do not say. That
 makes it the vendor's released fix, not a verified cure: one owner on the report still
-saw occasional failures on the beta, and no owner has yet reported on the stable.
+saw occasional failures on the beta, and the first owner to report on the stable, in a
+separate issue, still sees calibration fail often on prints that use several tools,
+which they put down to purge material left on the nozzles.
 
 The LDC1612 reference-frequency lead is a separate single report from a different
 owner, and is marked `provisional` where it appears. The vendor's own commit confirms

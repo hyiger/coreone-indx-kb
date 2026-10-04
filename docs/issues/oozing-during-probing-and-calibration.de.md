@@ -18,8 +18,12 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5494
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5505
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/gcode/bedlevel/ubl/G29.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/
 superseded_by:
-source_sha:   71442d2bfa74b65e7d438c874d5799274bae77ab57f5d648c1c133fc8d2030ee
+source_sha:   680e50c58ad90641fc8ca1b3e0731c60f367d46ab8d3091d90b60babe88e06c2
 ---
 # Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 
@@ -187,8 +191,10 @@ Hinweise, und es ist dieselbe Angabe, nach der die Markierung weiter oben fragt.
 
 ### Wenn das Leveling scheitert und neu ansetzt
 
-`provisional` — wenige Berichte, und sie stimmen nicht überein. Ist das Bett-Leveling an
-einer verschmutzten Düse gescheitert, sollten Sie nicht darauf zählen, dass der nächste
+`provisional` für die Berichte der Besitzer — es sind wenige, und auf den ersten Blick
+stimmen sie nicht überein. Der Firmware-Quellcode, weiter unten, ordnet jeden dem
+Schritt zu, der fehlschlug. Ist das Bett-Leveling an einer verschmutzten Düse
+gescheitert, sollten Sie nicht darauf zählen, dass der nächste
 Versuch mit einer sauberen beginnt. Eine
 [Funktionsanfrage](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5494)
 beschreibt, wie der Kopf zum Abstreifer fährt und dann für einen weiteren Versuch zum
@@ -205,7 +211,45 @@ ebenso wenig. Die Firmware-Version erklärt den Unterschied also nicht, und dies
 Beiträge sagen nicht, ob das Bett-Leveling oder die Werkzeug-Offset-Kalibrierung der
 fehlschlagende Schritt war.
 
+**Zwei Schritte, zwei Wiederholungen.** Gegen den Firmware-Quellcode gelesen,
+widersprechen sich die Berichte nicht mehr: Sie beschreiben verschiedene Schritte.
+Bekommt das Bett-Leveling keinen Messwert, parkt der Drucker den Kopf an seiner
+Parkposition, die der Code innerhalb des Bereichs des Düsenreinigers verortet, fragt,
+ob erneut versucht werden soll, und verlässt bei Ja den Reiniger und tastet erneut ab,
+ohne dazwischen zu reinigen. Das sind die Funktionsanfrage und der Besitzer mit der
+Beta. Scheitert die Werkzeug-Offset-Kalibrierung während eines Drucks, parkt der Drucker
+den Kopf vorn bei abgesenktem Bett, wo die Düse erreichbar ist, und führt bei Retry die
+Vorbereitung je Werkzeug erneut aus — aufheizen, spülen, abkühlen, abstreifen —, bevor
+er abtastet. Nach einem gescheiterten XY-Scan betrifft das nur das fehlgeschlagene
+Werkzeug; nach einer gescheiterten Z-Antastung beginnt die Wiederholung die Kalibrierung
+wieder beim ersten Werkzeug, sodass jedes Werkzeug erneut spült. Das ist das erneute
+Verschmutzen, das die beiden anderen Besitzer beschreiben, und es geschieht, ganz
+gleich, wie gründlich die Düse gerade gereinigt wurde. Beide Pfade durchlaufen in 6.9.0,
+der 6.9.1-Beta und der stabilen 6.9.1 dieselben Schritte (an der Vorbereitung hat die
+Beta nur die Temperatur geändert, auf die sie abkühlt), weshalb die Version die Berichte
+nicht trennte. Das gilt für Prusas eigene Builds; der Besitzer mit einem 6.9.1-Build
+schrieb vor der stabilen Version und sagte nicht, welcher Build es war. Der Code für das
+Bett-Leveling hat zwar einen Zweig, der abstreift und es erneut versucht, doch er gehört
+zu einem Reinigungsdurchgang beim Abtasten, den der Standard-Start-G-Code des INDX nicht
+aufruft.
+
+In der Praxis: Ein gescheitertes Bett-Leveling reinigt die Düse nicht für Sie, und nach
+einer gescheiterten Werkzeug-Offset-Kalibrierung folgt auf die Reinigung von Hand ein
+erneutes Spülen. Ein
+[Bericht an den Hersteller](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5505)
+zur Beta bittet darum, dass die Wiederholung der Kalibrierung das Spülen auslässt und
+nur wieder aufheizt und abstreift, da erneutes Spülen das Problem wieder einspeist; er
+ist offen und unbeantwortet. Dies ist eine Lesart des Codes im Stand des Git-Tags v6.9.1, nicht etwas,
+das ein Besitzer bestätigt hat, indem er beide Fehlschläge an einer Maschine beobachtet
+hätte.
+
 ### Wenn nichts davon hilft
+
+Um herauszufinden, ob Oozing überhaupt beteiligt ist, ließ ein Besitzer den Drucker mit
+einem leeren Werkzeug abtasten, sodass nichts austreten konnte; die Abtastung schlug
+genauso fehl, was Oozing für ihn ausschloss
+([Thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/)).
+Einzelbericht, und sein Fehler war weiterhin ungelöst.
 
 Wenn die Abtastung fehlschlägt, während die Düse offensichtlich nirgends in der Nähe
 des Druckblechs ist — ein Abstand, den man sieht und nicht misst —, dann ist das ein
@@ -235,6 +279,19 @@ stammen sämtlich aus der
 einer Verdichtung einer inzwischen offline genommenen Community-Wissensdatenbank.
 Nichts davon ist im Forumsbestand gesondert bestätigt, und es werden hier keine Zahlen
 daraus wiedergegeben.
+
+Das Verhalten bei Wiederholungen ist aus dem Firmware-Quellcode im Stand des Git-Tags v6.9.1 gelesen —
+aus dem
+[Befehl für das Bett-Leveling](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/gcode/bedlevel/ubl/G29.cpp)
+und der
+[Werkzeug-Offset-Kalibrierung](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp)
+—, und die Tags 6.9.0 und 6.9.1-Beta nehmen dieselben Wiederholungspfade. Die Beta hat
+geändert, wie sie ablaufen, nicht welche Schritte sie umfassen: Die Vorbereitung je
+Werkzeug kühlt weiter ab, der XY-Scan läuft kühler, und das Antasten auf der Sensorplatine
+bekommt mehr Versuche, bevor es als gescheitert gilt (siehe
+[Fehlercodes](../codes.md)). Es wird
+festgehalten, weil es jeden Besitzerbericht in jenem Abschnitt erklärt, ohne einem davon
+zu widersprechen, zeigt aber, was der Code tut, nicht was ein Besitzer beobachtet hat.
 
 Wo die Quellen sich widersprechen: Das Trocknen wurde mit Nachdruck als wahrscheinliche
 Ursache für PETG genannt, doch der Fall, der tatsächlich gelöst wurde, wurde durch

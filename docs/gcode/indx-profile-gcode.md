@@ -1,7 +1,7 @@
 ---
 title:        Annotated start, layer and toolchange G-code
 confidence:   measured
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -18,6 +18,9 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1
   - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.10.ini
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.11.ini
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5508
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
 superseded_by:
 ---
 
@@ -40,10 +43,11 @@ superseded_by:
 !!! warning "Written for 6.9.0 and not yet re-checked against 6.9.1"
     Firmware 6.9.1 went stable on 25 September 2026. The blocks on this page are still
     the 6.9.0 profile, and they have deliberately not been edited to match the 6.9.1
-    release notes. Prusa's newest profile bundle, 2.5.10 of 17 September, still ships
-    these blocks unchanged and its `M115` line still declares 6.9.0. A bundle published
-    after the stable release may change them, so if the profile in your slicer differs
-    from what is shown here, yours is the current one.
+    release notes. Prusa's profile bundle 2.5.10, of 17 September, ships these blocks
+    unchanged. So does 2.5.11, which reached Prusa's profile repository on 2 October, a
+    week after the stable release: all five INDX blocks are identical to 2.5.10's, and
+    the `M115` line still declares 6.9.0. A later bundle may change them, so if the
+    profile in your slicer differs from what is shown here, yours is the current one.
 
     The firmware side has been checked against the public source, comparing
     [the 6.9.0 and 6.9.1 release tags](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1).
@@ -303,7 +307,13 @@ T{initial_tool} S1 L0 D0
 
 `G427` runs the full tool offset calibration for every mapped tool: it works out which
 physical tools the print needs, calibrates each in XYZ, and writes the results to
-runtime variables and EEPROM.
+runtime variables and EEPROM. If the firmware has no record of which tools the print
+uses, `G427` falls back to calibrating every enabled tool
+([firmware source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp),
+unchanged from 6.9.0). One open feature request says this is the case for prints a
+host such as OctoPrint sends over USB or serial, so even a print that uses one tool
+calibrates them all
+([#5508](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5508)).
 
 Its two parameters are both about accuracy. `R` is millimeters of random jitter applied
 to X and Y while Z-probing each tool, which stops every probe landing on exactly the

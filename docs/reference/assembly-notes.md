@@ -1,7 +1,7 @@
 ---
 title:        Assembly notes — INDX conversion kit
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One, Core One Plus
 toolhead:     INDX
@@ -20,6 +20,8 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-founders-edition-upgrade-path-to-core-one-gen-2/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/coreone-with-mmu-upgrade-to-indx/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/how-many-types-of-fasteners-etc-come-with-indx-gen2-upgrade/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-fe-upgrading-to-gen2/
 superseded_by:
 ---
 
@@ -115,9 +117,15 @@ between an evening and a weekend.
 
 **There is no consolidated fastener list.** Fasteners are itemized step by step in the
 guide and nowhere else, so if you like to pre-sort into labeled bins you will be
-extracting that list yourself. An unofficial fastener PDF has circulated on the forum,
+extracting that list yourself. Prusa's
+[Core One INDX cheat sheet](https://www.prusa3d.com/downloads/others/C1_INDX_cheatsheet_EN_1_0.pdf)
+is not necessarily that list: an owner asked whether every fastener and clip on its
+chart comes in the kit, and the one reply said the chart is generic. *Single reply.*
+An unofficial fastener PDF has circulated on the forum,
 but it was AI-generated and unverified by its own poster — treat it as a starting
-point to check against the guide, not as a bill of materials.
+point to check against the guide, not as a bill of materials. The same goes for a later
+AI-derived list of the fastener types in the INDX and Gen 2 kits together, which its
+poster cautioned might be wrong and planned to check once the parts arrived.
 
 **Do not expect tools in the box.** The conversion kit assumes the tools you need came
 with the Core One already on your bench. The Founders Edition build notes this page
@@ -248,9 +256,10 @@ had added any tools. The printed block that houses the sensor holds parts that a
 harder to find:
 
 - **Its countersunk magnets.** One owner measured them at 10 mm across and 5 mm thick
-  and found a match online, in a grade whose relation to the original is unknown; the
-  author of this page has not found a source and suspects they are custom; a third
-  owner is still looking. That first owner notes the sensor depends on magnet strength
+  and found a match online, in a grade whose relation to the original is unknown; a
+  second owner has since found another listing at that size, which states no grade at
+  all. The author of this page has not found a source and suspects they are custom; a
+  further owner is still looking. That first owner notes the sensor depends on magnet strength
   more than the dock does, because it works by Hall effect.
 - **The plain plastic spacers inside the printed housing** — not the collets the PTFE
   plugs into. No source is known. One owner went a different way, with a community
@@ -306,6 +315,38 @@ loaded, and — if it still fails — to take the full log to support rather tha
 fresh way around it each time. The machine depends on those calibrations being right,
 so a workaround here only compounds later.
 
+## Adding Gen 2 to a finished Founders Edition build
+
+Founders Edition owners get the Gen 2 parts separately rather than in the INDX box, and
+some fit them to a machine that has been printing with the INDX for a while. One owner
+who had just received the Gen 2 upgrade for such a machine could not find a Prusa guide
+that starts from a converted printer. What owners who replied to that owner report:
+
+- **The head comes off without unplugging it.** Removing the part-cooling blower
+  exposes the four screws that hold the print head, and the main cable can stay
+  connected. This rests on the page author's account alone.
+- **The motor cables can stay on the board.** This page's author and one other owner
+  both swapped the pulleys with the X and Y motor cables still connected to the board,
+  and both found the cables had enough slack for it. The author rested each motor on a
+  bar while working on it; the other owner left the back cover on.
+- **The side panels are optional.** This page's author points out that a flexible
+  driver extension reaches the motor screws with the panels in place; one owner took
+  them off regardless.
+- **Draw the new belts in with the old ones.** One owner fixed each new belt to its
+  old one with tape and drew it through along the old belt's route, all while the
+  motors were still bolted in place. The same owner unscrewed the tensioners all the
+  way out to get slack for attaching the belt ends at the head's mounting plate, kept
+  screws in the loose square nuts — in the tensioners and in the fan-duct mounts on
+  the head — so none could drop out, and greased the tensioner nuts before putting the
+  tensioners back so the threads would not gall.
+- **Refitting the spool holders.** With the side panels off, the nuts for the rear
+  holders are hard to start. This page's author held each nut on a fingertip with a
+  scrap of strong double-sided tape; two other owners suggested printed nut-helper
+  tools instead.
+
+*Provisional.* All of this comes from a single thread. The head-removal step, the
+flexible-extension route and the tape trick rest on this page author's account alone.
+
 ## Where files and help come from
 
 Prusa publishes the official printed parts to Printables. Bondtech publishes the INDX
@@ -337,7 +378,9 @@ The support for each claim, item by item:
 - **The absent fastener list** is confirmed by
   [Parts list for screws and bolts?](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/parts-list-for-screws-and-bolts/),
   where a builder asks for one and is told the guide itemizes fasteners step by step
-  and nowhere else.
+  and nowhere else. The cheat sheet question, its one reply and the AI-derived list
+  of types are all in
+  [a thread on the fasteners in the INDX and Gen 2 kits](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/how-many-types-of-fasteners-etc-come-with-indx-gen2-upgrade/).
 - **The magnet press fit and extraction** are covered first-hand with photographs in
   [Removing magnets from Tool docks](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/removing-magnets-from-tool-docks-you-dont-need-to-destroy-them/),
   by a builder who did it, with two further owners describing alternative approaches.
@@ -379,12 +422,20 @@ shipping and order chatter — it was found by reading all 1534 posts, and it is
 only two durable technical items that survived review out of that entire thread. Also
 single reports, and marked in place: the belt setting after the first flash, the
 assembled printer that arrived without tools, the screws that melted into dock parts,
-the sensor-housing spacer workaround and the countersunk magnet measurement. The
+the sensor-housing spacer workaround and the countersunk magnet measurement, along
+with the two listings found at that size. The
 activation magnet size rests on one owner's measurement set against a figure nobody
 measured. The exact point in the INDX sequence where the Gen 2 parts go is this page
 author's own practice; fitting them during the INDX build has the support noted above,
 and leaving out the nozzle wiper has one independent voice, in
 [a separate thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-founders-edition-upgrade-path-to-core-one-gen-2/).
+The notes on adding Gen 2 to a finished Founders Edition build all come from
+[one thread on that retrofit](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-fe-upgrading-to-gen2/):
+the head-removal step, the flexible-extension route with the side panels on and the tape
+trick for the spool-holder nuts are this page author's alone, the motor-cable slack has one
+independent owner beside the author, and the belt, square-nut and tensioner tips are
+one owner's. That Founders Edition owners buy the Gen 2 parts separately is said there
+and in the thread linked just above.
 The magnet grade substitution was first reported by this page's author, and there is
 no independent like-for-like account: the one other owner who reports it changed the
 magnet size as well as the grade. The circulating unofficial fastener PDF was described by the person sharing

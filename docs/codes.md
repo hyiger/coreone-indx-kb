@@ -1,7 +1,7 @@
 ---
 title:        Tool offset calibration error codes
 confidence:   provisional
-updated:      2026-09-26
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -14,6 +14,10 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5482
   - https://github.com/hyiger/Prusa-Firmware-Buddy/blob/master/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.6.3/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
 superseded_by:
 ---
 
@@ -29,8 +33,8 @@ the eleven into nine screens. 36130 keeps the one failure its message fits, the 
 sweep not finding the nozzle, and 36190 to 36197 name the rest. The QR code on each of
 those screens opens its section on this page.
 
-On stock firmware you only ever see 36130, but the [serial log](#stock-firmware) still
-says which of these it was.
+For the failures on this page, stock firmware only ever shows 36130, but the
+[serial log](#stock-firmware) still says which of these it was.
 
 On the Core One L the codes start with 37 instead of 36: 37130, and 37190 to 37197.
 Each section below covers both.
@@ -72,6 +76,44 @@ again.
 Retry on a failed measurement over the sensor cleans the tool again and measures it
 again. Retry on the other screens starts over from the first tool. Abort stops the
 print, or ends the calibration from the menu.
+
+After the last tool, the printer compares the tools' offsets with one another, and
+stops if the Z offsets, the XY offsets or the sensor position they imply are out of
+line. Stock firmware gives those checks codes of their own: 36131 Unsafe Z Tool Offset,
+36133 Unsafe XY Tool Offset and 36134 Unsafe Sensor Position, or 37131, 37133 and 37134
+on the Core One L. This page does not cover them. Retry on them starts over from the
+first tool.
+
+**Which tool is on the head.** In the stock source, every calibration failure screen
+first parks the head at the front, with the nozzle within reach. A failure during one
+tool's steps comes up with that tool still on the head, unless the failure is that the
+printer is unsure which tool it holds (36130 on stock firmware, 36190 with the split
+codes). The comparison checks come after the last tool, so
+the tool on the head is then the last one measured, which need not be the one whose
+offset was out of line. One owner on stock 6.9.1 reports the screen coming up with a
+clean tool on the head while the tool calibrated before it was the one carrying
+material, and says earlier firmware presented the dirty tool
+([firmware issue 5500](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500)).
+The report gives no code. The owner calls it a Z offset error, and if it was 36131 the
+order above would explain it. So would material the earlier tool left on the sensor
+board, where each tool touches down. Neither reading has been confirmed.
+
+The order of the steps and checks is the same in the
+[6.6.3 source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.6.3/src/feature/tool_offset_calibration/tool_offset_calibration.cpp).
+One documented change does bear on the report. Since
+[6.9.1-beta](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta),
+the release notes say, calibration makes up to 10 attempts at its Z probing instead
+of 3. In the
+[6.9.1 source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/feature/contactless_offset/contactless_offset.cpp)
+that is the touch on the sensor board. The touches on the sheet, which give the Z
+offsets, are not part of that change, and the extra attempts only try again: a touch
+the probe rejects is still not accepted. A tool with material on it therefore gets
+more chances at an accepted touch on the sensor board, and so at finishing its own
+steps, where before it was likelier to run out of attempts and stop on its own screen.
+If the material had also thrown off its touch on the sheet, that would then show only
+in the Z comparison, with the last tool measured on the head. That is a reading of
+the source, not a confirmed cause. If a screen leaves you looking at a clean tool,
+check the tools measured before it too.
 
 ## 36130 · 37130 · Tool offset failed {#36130}
 
@@ -261,7 +303,12 @@ when every sweep failed like that, the last line reads
 `provisional`. What each code means is read from the firmware source: each section
 names a check the firmware makes and the code this firmware shows when that check
 fails, and the log lines are taken from the stock source at the 6.9.1 tag. That part
-is only as reliable as the reading of the source, which is linked above.
+is only as reliable as the reading of the source, which is linked above. The codes and
+titles of the comparison checks are from the stock
+[error code list](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml)
+at the same tag. The report of a clean tool on the head is a single owner's, on an issue
+that is open with no reply from the vendor. The attempt counts are from the 6.9.1-beta
+release notes, and which touch they apply to is read from the source at the 6.9.1 tag.
 
 What to do about each code is the author's reading of those checks. Where a section
 sends you to another page, that page's own tier applies. The rest has not been tested
