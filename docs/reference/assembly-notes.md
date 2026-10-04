@@ -322,6 +322,9 @@ some fit them to a machine that has been printing with the INDX for a while. One
 who had just received the Gen 2 upgrade for such a machine could not find a Prusa guide
 that starts from a converted printer. What owners who replied to that owner report:
 
+- **Switch off and unplug first.** None of the replies says whether the printer was
+  powered down, but every step below leaves the head and motor cables connected to the
+  board, so do this work with the printer off and disconnected from the mains.
 - **The head comes off without unplugging it.** Removing the part-cooling blower
   exposes the four screws that hold the print head, and the main cable can stay
   connected. This rests on the page author's account alone.

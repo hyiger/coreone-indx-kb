@@ -23,7 +23,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/how-many-types-of-fasteners-etc-come-with-indx-gen2-upgrade/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-fe-upgrading-to-gen2/
 superseded_by:
-source_sha:   3dfcd17eb204d8097ff19c46b4cd5e62f6d2b592d903b651567673c468bf9fce
+source_sha:   926f1dffc9ff3e7b99f8e8772b6a62235da37d9216f664edd61c5291b58a9dda
 ---
 # Montagehinweise — INDX-Umbausatz
 
@@ -372,6 +372,10 @@ Besitzer, der das Gen-2-Upgrade für eine solche Maschine gerade erhalten hatte,
 keine Prusa-Anleitung, die von einem bereits umgebauten Drucker ausgeht. Was Besitzer
 berichten, die diesem Besitzer geantwortet haben:
 
+- **Zuerst ausschalten und vom Netz trennen.** Keine der Antworten sagt, ob der Drucker
+  ausgeschaltet war, aber bei jedem der folgenden Schritte bleiben Kopf- und Motorkabel
+  an der Platine angeschlossen. Arbeiten Sie daher nur bei ausgeschaltetem und vom
+  Stromnetz getrenntem Drucker.
 - **Der Kopf lässt sich abnehmen, ohne ihn abzustecken.** Nach dem Abnehmen des Gebläses der
   Bauteilkühlung liegen die vier Schrauben frei, die den Druckkopf halten, und das
   Hauptkabel kann angeschlossen bleiben. Das beruht allein auf der Schilderung des
