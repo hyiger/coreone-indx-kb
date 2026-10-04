@@ -21,16 +21,19 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-flex-material-on-indx-prusa-core-one-2-generation/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
 superseded_by:
-source_sha:   5a81d3bfd7801c41bb7076be519e217b258e48b2c0ec4a9db12327488d228a83
+source_sha:   9075501ecacd8e8fb07974b9471a87d5eea538224ea74ca36cace5c0d55662a1
 ---
 # Nur eine Düsengröße hat ein Slicer-Profil
 
 ## Zusammenfassung
 
-PrusaSlicer bietet für den INDX genau eine Düsenvariante an: High-Flow 0.4mm. Wer eine
-Düse mit 0.25, 0.5, 0.6, 0.8 oder 1.0mm kauft, findet kein Profil, das sich dafür
-auswählen ließe. Es geht nicht darum, dass Profile dünn oder unausgereift wären — die
-übrigen Größen werden überhaupt nicht angeboten. Zwei Anfragen, sie zu ergänzen, sind
+PrusaSlicer 2.9.6, die aktuelle stabile Version, bietet für den INDX genau eine
+Düsenvariante an: High-Flow 0.4mm. Wer eine Düse mit 0.25, 0.5, 0.6, 0.8 oder 1.0mm
+kauft, findet dort kein Profil, das sich dafür auswählen ließe. Es geht nicht darum, dass
+Profile dünn oder unausgereift wären — die übrigen Größen werden überhaupt nicht
+angeboten. Die 3.0-Alphas wählen Düsen auf andere Weise, und ihr INDX-Profil wurde hier
+nicht untersucht; Besitzer, die sie ausprobiert haben, fanden aber ebenfalls keine andere
+Größe (siehe unten). Zwei Anfragen, sie zu ergänzen, sind
 upstream offen, die erste seit Juli 2026, und keine hat bislang eine Reaktion erhalten.
 Prusas neuestes Profil-Bundle, 2.5.11 vom 2. Oktober 2026, deklariert weiterhin nur diese
 eine Variante, legt aber weitere abgeschaltete Vorarbeiten für eine 0.25mm-Düse an.
@@ -59,8 +62,8 @@ variants = HF0.4
 ```
 
 Diese eine Zeile ist die Einschränkung. Eine Variante ist das, was PrusaSlicer beim
-Hinzufügen des Druckers zur Auswahl stellt; ist nur eine deklariert, lässt sich keine
-andere Düsengröße auswählen, gleich welche Materialprofile dahinter vorhanden sein
+Hinzufügen des Druckers zur Auswahl stellt; ist nur eine deklariert, bietet PrusaSlicer
+2.9.6 keine andere Düsengröße an, gleich welche Materialprofile dahinter vorhanden sein
 mögen.
 
 Die Variante ist High-Flow; eine Standard-Flow-Düse hat also ebenfalls keine Variante,
@@ -250,7 +253,9 @@ Einstellung an Ihrer Maschine ändert.
   setzt PrusaSlicer 2.9.6 voraus, die aktuelle Version auf Prusas Download-Seite, und
   jedes neue Bundle erreicht sie als Konfigurations-Update statt als neue Slicer-Version.
 - **Kaufen Sie Düsen unter der Annahme, sie noch nicht nutzen zu können**, oder warten
-  Sie ab. Wenn Sie zwischen den Entschädigungsformen wählen, spricht das für Bargeld
+  Sie ab. Das gilt für PrusaSlicer 2.9.6; für die 3.0-Alphas beruht es auf Berichten von
+  Besitzern, nicht auf dem Profil selbst. Wenn Sie zwischen den Entschädigungsformen
+  wählen, spricht das für Bargeld
   statt Guthaben, sofern es Sie nicht stört, die Hardware ungenutzt zu halten.
 
 TODO(verify): ob sich ein eigenes Profil für eine andere Düsengröße von Hand zum Laufen

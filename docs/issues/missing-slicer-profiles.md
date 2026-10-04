@@ -27,9 +27,12 @@ superseded_by:
 
 ## Summary
 
-PrusaSlicer offers the INDX exactly one nozzle variant: high-flow 0.4mm. Buy a 0.25,
-0.5, 0.6, 0.8 or 1.0mm nozzle and there is no profile to select for it. This is not a
-case of profiles being thin or unpolished — the other sizes are not offered at all. Two
+PrusaSlicer 2.9.6, the current stable release, offers the INDX exactly one nozzle
+variant: high-flow 0.4mm. Buy a 0.25, 0.5, 0.6, 0.8 or 1.0mm nozzle and there is no
+profile to select for it there. This is not a case of profiles being thin or unpolished —
+the other sizes are not offered at all. The 3.0 alphas choose nozzles differently and
+their INDX profile has not been inspected here, though owners who tried them found no
+other size either (see below). Two
 requests to add them are open upstream, the first since July 2026, and neither has had a
 response. Prusa's latest profile bundle, 2.5.11 of 2 October 2026, still declares only
 that one variant, though it lays more switched-off groundwork for a 0.25mm nozzle.
@@ -58,8 +61,8 @@ variants = HF0.4
 ```
 
 That single line is the constraint. A variant is what PrusaSlicer offers you when you
-add the printer; with only one declared, no other nozzle size can be selected, whatever
-material profiles may exist behind it.
+add the printer; with only one declared, PrusaSlicer 2.9.6 offers no other nozzle size,
+whatever material profiles may exist behind it.
 
 The variant is high-flow, so a standard-flow nozzle has no variant either, even at
 0.4mm. That now matters in practice. In the original thread, one owner reported in
@@ -226,9 +229,10 @@ machine changes.
   with the slicer: the bundle series that carries them requires PrusaSlicer 2.9.6, the
   current release on Prusa's downloads page, and each new bundle reaches it as a
   configuration update rather than a new slicer version.
-- **Buy nozzles on the assumption you cannot use them yet**, or wait. If you are
-  choosing compensation, this is an argument for cash over credit unless you are content
-  to hold the hardware.
+- **Buy nozzles on the assumption you cannot use them yet**, or wait. That holds for
+  PrusaSlicer 2.9.6; for the 3.0 alphas it rests on owners' reports, not on the profile
+  itself. If you are choosing compensation, this is an argument for cash over credit
+  unless you are content to hold the hardware.
 
 TODO(verify): whether a custom profile can be made to work for another nozzle size by
 hand, and what breaks if you try. Nobody in the sources has reported the outcome of an
