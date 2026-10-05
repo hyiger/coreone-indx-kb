@@ -1,7 +1,7 @@
 ---
 title:        Düsenhärte und abrasive Filamente
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -15,8 +15,10 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/missing-profiles-in-slicer-for-non-0-4-nozzles-and-other-materials/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-nozzles/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/hardened-nozzle/
 superseded_by:
-source_sha:   e0cbf2d84f35081d64fd456544f98bca8c20b4b31c3e05b9f713cd40c37c03cf
+source_sha:   a2bbc701b4ff8f6854c67ae5c883b1f552920409735d0598528ac9efb994c89f
 ---
 # Düsenhärte und abrasive Filamente
 
@@ -28,7 +30,9 @@ durchgehärtet, mit einer Härte deutlich unterhalb dessen, was die Branche übl
 unter „gehärtet“ versteht. Wenn Sie einen INDX in der Erwartung gekauft haben, vom ersten
 Tag an abrasives Filament verarbeiten zu können, geht das nicht, und der Hersteller hat
 ein Entschädigungsangebot veröffentlicht, das auch eine vollständige Rückgabe umfasst.
-Betrachten Sie abrasives Filament auf den aktuellen Düsen als deren Verbrauch.
+Betrachten Sie abrasives Filament auf den aktuellen Düsen als deren Verbrauch. Eine
+abrasionsbeständige Ersatzdüse ist noch nicht im Handel: E3D hat eine angekündigt,
+ausgeliefert wird sie aber noch nicht — siehe *Was kommt* weiter unten.
 
 ## Fehlercodes, die hierher führen
 
@@ -61,7 +65,9 @@ weit näher als einer gehärteten.
 Erschwerend kommt hinzu, dass der High-Flow-Einsatz aus blankem Messing besteht. Selbst
 wenn man die Behandlung des Grundkörpers beiseitelässt, werden gefüllte Filamente also die
 Strömungsgeometrie erodieren. Und Verkaufsverpackung wie Produktseiten trugen die
-ursprüngliche Härte-Aussage noch, als dies öffentlich wurde.
+ursprüngliche Härte-Aussage noch, als dies öffentlich wurde. Ein Besitzer, dessen
+Mitte Juli im Shop des Herstellers bestellte Ersatzdüsen Ende September ankamen,
+berichtet, dass sie weiterhin als gehärtet bezeichnet waren.
 
 ### Warum vollständig gehärtete Düsen hier tatsächlich schwierig sind
 
@@ -194,6 +200,11 @@ Barerstattung auf das ursprüngliche Zahlungsmittel zurückfließt.
     Profilpaket eine einzige Düsenvariante, sodass keine andere Größe auswählbar ist. Siehe
     [fehlende Slicer-Profile](missing-slicer-profiles.md).
 
+    Auch die Lieferung zieht sich. Zwei Besitzer, die Mitte Juli Ersatzdüsen im Shop des
+    Herstellers bestellt hatten, berichten, dass diese erst Ende September versandt bzw. geliefert wurden —
+    vorläufig, beide in einem einzigen Thread, dem
+    [Thread zu Ersatzdüsen](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-nozzles/).
+
 Beachten Sie, dass die Angemessenheit der Entschädigung umstritten ist. Mindestens ein
 Besitzer hat die Rechnung durchgeführt und kam zu dem Ergebnis, dass das angebotene
 Guthaben einen deutlich geringeren Aufschlag darstellt als der Aufpreis für gehärtet
@@ -203,11 +214,48 @@ vernünftig, das vor der Annahme einer Option selbst zu prüfen.
 
 ### Was kommt
 
-Ein Drittanbieter von Diamantdüsen hat eine INDX-kompatible Variante bestätigt.
-Bemerkenswert ist, dass der Diamant dotiert wird, damit er für den
+Zwei Ersatzdüsen von anderen Herstellern als Bondtech sind in Arbeit. Keine ist im
+Handel, und für keine gibt es einen veröffentlichten Preis.
+
+**E3D.** Die Beteiligung von E3D war spätestens Ende Juli 2026 öffentlich: Ein Besitzer
+verlinkte im
+[Thread zum Härtungsdebakel der Düsen](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/)
+einen Beitrag vom eigenen Konto von E3D, und andere dort verstanden ihn so, dass
+Bondtech nun mit E3D an den Düsen arbeitet. Ende August machte E3D es offiziell: Das
+Unternehmen entwickelt eine abrasionsbeständige Variante für den INDX, kann aber noch
+keinen Erscheinungstermin nennen. Ein Besitzer gab diese Erklärung im nozzlegate-Thread
+wieder, und in einem
+[anderen Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/hardened-nozzle/)
+weist ein weiterer Besitzer darauf hin, dass Bondtech über dieselbe Zusammenarbeit
+berichtet. Auf einer Fachmesse in den USA Ende September sprach ein Besitzer mit einem
+Ingenieur von E3D und berichtete Folgendes. Das ist vorläufig — die Notizen eines
+einzelnen Besitzers aus einem Gespräch, in einem einzigen Thread, keine veröffentlichte
+Spezifikation:
+
+- ein möglicher Zeitrahmen von Januar (vermutlich 2027), nur vorsichtig in Aussicht
+  gestellt;
+- zunächst 0.4mm- und 0.6mm-High-Flow-CHT-Düsen;
+- eine Ganzstahlkonstruktion aus mehreren Stahllegierungen, damit das induktive Heizen
+  weiterhin funktioniert, mit einem Heatbreak aus Titan und einer Beschichtung, die der
+  Besitzer als „obsidian“ notierte, vermutlich Obxidian von E3D (der Besitzer war
+  unsicher, ob sich der Name auf die Beschichtung oder auf die Düse selbst bezog);
+- bei Erscheinen gleichzeitig erhältlich bei E3D selbst, bei Prusa und bei Bondtech;
+- laut dem Ingenieur kein Problem mit dem Wirbelstrom-Offsetsensor. Der erste Beitrag
+  des Besitzers sagte das Gegenteil und wurde noch am selben Tag als Diktierfehler
+  korrigiert; wenn Sie diese erste Fassung zitiert sehen, ist es die zurückgenommene.
+
+Derselbe Besitzer berichtet, dass laut Mitarbeitern von E3D Bondtechs eigener
+INDX-Vorführdrucker auf der Messe mit der Düse von E3D bestückt war. Trifft das zu,
+existiert das Teil in funktionsfähiger Form, ausgeliefert wird es aber noch nicht. Die
+zuerst genannten Größen sind ausschließlich High-Flow; eine Variante mit glatter Bohrung
+wurde nicht erwähnt.
+
+**Diamant.** Ein Drittanbieter von Diamantdüsen hat eine INDX-kompatible Variante
+bestätigt. Bemerkenswert ist, dass der Diamant dotiert wird, damit er für den
 Wirbelstrom-Offsetsensor erkennbar bleibt — eine vollständig nichtleitende Spitze wäre für
 diesen Sensor unsichtbar, was eine reale konstruktive Randbedingung für jede Ersatzdüse
-darstellt. Der Zeitrahmen wurde in Monaten und nicht in Wochen beschrieben.
+darstellt. Der Zeitrahmen wurde in Monaten und nicht in Wochen beschrieben, und
+Konkreteres ist in den Threads seither nicht aufgetaucht.
 
 !!! note "Zwei getrennte Defekte werden häufig zusammen mit diesem diskutiert"
     Eine Reihe von Düsen wurde bereits verstopft ausgeliefert, und unabhängige Zerlegungen
@@ -256,7 +304,11 @@ Entschädigung ist die Berechnung eines einzelnen Besitzers. Die Gutscheinbeding
 stammen aus zweiter Hand, von zwei Besitzern in einem einzigen Thread aus E-Mails des
 Herstellers wiedergegeben, die Behandlung der Mehrwertsteuer und der Verfall nur von
 einem der beiden. Der Zeitplan für die Diamantdüse ist eine Absichtserklärung eines
-Drittanbieters.
+Drittanbieters. Dass E3D eine INDX-Düse entwickelt, ist in drei Threads belegt, aber
+jedes Detail dazu — Zeitrahmen, Größen, Aufbau, Sensorverträglichkeit, Vertriebswege,
+die Vorführung am Messestand — beruht auf den Notizen eines einzelnen Besitzers aus
+einem Gespräch auf einer Messe. Die Lieferzeiten der Ersatzdüsen und die Bezeichnung
+„gehärtet“ an gelieferten Ersatzdüsen stammen aus einem einzigen Thread.
 
 Wo die Quellen sich widersprechen: Besitzer sind sich deutlich uneins darüber, ob die
 Entschädigung angemessen ist und wie groß die praktische Auswirkung der Härte für jemanden

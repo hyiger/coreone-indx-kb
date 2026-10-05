@@ -1,7 +1,7 @@
 ---
 title:        Diagonal banding across print walls
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -24,7 +24,9 @@ depending on whether perimeters run clockwise or counterclockwise, points at the
 rather than the motion system. There is a two-print test that settles it in about an
 hour without any disassembly, and it is worth running before you open a support case.
 A faint version of this artifact appears to be normal for a dual-gear extruder; a
-pronounced one is a hardware fault, and the reported remedy is a replacement toolhead.
+pronounced one is a hardware fault, and the reported remedy is a replacement toolhead —
+not yet a dependable one, since one owner's replacement arrived showing the same lines
+(a single report).
 
 ## Detail
 
@@ -182,7 +184,8 @@ tooth of the first reduction stage — is the reportable part and needs none of 
 
 For a pronounced case the reported route is a **toolhead replacement** through the
 vendor, since at the time of writing the fault had not been narrowed to an
-individually replaceable part. See [who to contact](support-and-warranty-path.md).
+individually replaceable part, and at this update it still has not been. See
+[who to contact](support-and-warranty-path.md).
 
 That route may be slow. In mid-September another owner reported being told that the
 vendor was examining returned toolheads to understand the fault before sending that
@@ -192,6 +195,20 @@ below reported three weeks without a follow-up after being offered a replacement
 said Prusa support, approached in parallel, first looked for a motion-system cause
 before offering a factory repair. Each is one owner's account of their own support
 case.
+
+By the end of September the two support routes were pulling in different directions.
+The owner who had been told the vendor was holding replacements back restated that
+earlier reply: the vendor acknowledged the fault, was still working on a fix, and would
+not ship a new unit until sure of one. Yet one owner did receive a replacement through
+Prusa — an injection-molded version, which they took to be from a newer batch — and it
+showed the diagonal lines again. The protocol's author suggested the difference may
+come from Prusa now handling most of these cases; that is a guess, and neither company
+has said so. A further owner with an open Prusa case had an email saying Prusa had seen a
+possible toolhead-side cause in comparable cases; it asked which firmware they ran and
+held out a fix without describing one. The next contact, at the end of September, was a
+round of routine motion-system troubleshooting questions that, in that owner's view,
+largely repeated the initial chat. Each of these is again one owner's account, and none
+names a part.
 
 #### The shim workaround
 
@@ -229,20 +246,24 @@ result still showed the faintest banding if you went looking for it.
     vase-mode test print rather than silently degrading later prints.
 
 !!! warning "Check the replacement before you celebrate"
-    The owner whose case drives this page received a replacement toolhead that cured
-    the banding but arrived with a **different fault** — an unreliable loadcell, with
-    homing and probing taking excessively long and most prints failing to start with a
-    prompt to recalibrate Z.
+    The owner whose case drives this page received a replacement toolhead that largely
+    cured the banding but arrived with a **different fault** — an unreliable loadcell,
+    with homing and probing taking excessively long and most prints failing to start
+    with a prompt to recalibrate Z. A further replacement followed. By the end of
+    September that owner described the head now fitted as much better but not flawless:
+    the lines can still be picked out faintly on glossy filament in the right light.
 
-    Two things make that case instructive. The fault **followed the toolhead** across
-    the swap while the original toolhead homed perfectly every time, and the machine's
-    controller board was recent. That combination is what distinguishes a genuine
-    hardware fault from the electrical-interference version of the same symptom — see
-    [loadcell noise](loadcell-emi-noise.md), where a ferrite core is the usual answer.
-    A ferrite treats interference; it will not fix a bad loadcell.
+    Two things make the loadcell case instructive. The fault **followed the toolhead**
+    across the swap while the original toolhead homed perfectly every time, and the
+    machine's controller board was recent. That combination is what distinguishes a
+    genuine hardware fault from the electrical-interference version of the same symptom
+    — see [loadcell noise](loadcell-emi-noise.md), where a ferrite core is the usual
+    answer. A ferrite treats interference; it will not fix a bad loadcell.
 
-    Run a probing and homing check on any replacement head before you commit a long
-    print to it.
+    Nor is the banding itself certain to be gone: one owner's replacement, covered
+    above, showed the diagonal lines again, severity not described (`provisional`, a
+    single report). Run a probing and homing check on any replacement head, and run the
+    first print of the two-print protocol on it, before you commit a long print to it.
 
 ## Verification
 
@@ -253,7 +274,7 @@ claims on this page.
 [the diagonal banding thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/)
 when this page was first written, and by several more since, ranging from severe to
 barely perceptible on glossy filament, so the phenomenon is not one person's
-imagination. The thread is marked answered and runs to 117 posts. The two-print
+imagination. The thread is marked answered and runs to 125 posts. The two-print
 protocol is its accepted answer, written by the owner who worked the problem with
 vendor and Prusa support involvement, and the reasoning for why it isolates extrusion
 from motion is sound on its own terms.
@@ -265,12 +286,15 @@ author. It is one run. It confirms the core prediction (the pattern changes betw
 two prints) but, being in the same thread, does not count toward a second source; the
 size of the change it saw is discussed under the test itself.
 
-**Single-source.** The severe case, the replacement-toolhead outcome, and the
-follow-on loadcell fault are all one owner's experience. The
+**Single-source.** The severe case, the replacement-toolhead outcomes, and the
+follow-on loadcell fault are all one owner's experience; that owner went through two
+replacements. The
 [common problems summary](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/)
 independently records a severe banding case as vendor-confirmed to be a defective
 extruder unit, which corroborates the conclusion but may well be describing the same
-case rather than a second one.
+case rather than a second one. The replacement that arrived with the lines is a second
+owner's experience, also single-source and in the same thread. The replacement outcomes
+on record point in opposite directions, and none rises above `provisional`.
 
 **Analysis, not measurement.** The gear-meshing explanation is one owner's calculation,
 posted shortly before this page was written, with the vendor not yet having responded.
@@ -286,10 +310,11 @@ experience, which is the clearest explanation in the corpus of why the banding i
 diagonal, and which yields the cheap gear-cleaning check.
 
 What would strengthen this page: more owners running the two-print protocol and
-reporting the result, the shim working on a second toolhead, and a vendor statement
-naming the specific part. At this update nobody has reported a shim result on another
-toolhead, and the vendor replies relayed in the thread acknowledge the fault without
-naming one.
+reporting the result, the shim working on a second toolhead, a vendor statement
+naming the specific part, and a replacement known to carry a fix. At this update nobody
+has reported a shim result on another toolhead or a further run of the protocol. The
+vendor replies relayed in the thread acknowledge the fault without naming a part, and
+Prusa's replies through the end of September likewise name none.
 
 ## Related
 

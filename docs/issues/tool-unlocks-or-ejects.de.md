@@ -1,7 +1,7 @@
 ---
 title:        Werkzeug entriegelt sich oder fällt aus dem Kopf
 confidence:   provisional
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -11,17 +11,20 @@ firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/postid/804782/
+  - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/filament-stuck-with-asa-pla-support/
 superseded_by:
-source_sha:   849ac77e18d6676492f397a2328a5737653545121bb837f0826da49a8efec225
+source_sha:   645eaf8dc0b96378ea3c12e876b4021c23dcf6997f13903bb18da4914fab9be8
 ---
 # Werkzeug entriegelt sich oder fällt aus dem Kopf
 
-!!! warning "Zwei Berichte über ausgeworfene Werkzeuge, ein Thread und eine Demontage"
+!!! warning "Zwei Berichte über ausgeworfene Werkzeuge, eine Demontage und zwei über festsitzende Werkzeuge mit unterschiedlich vermuteter Ursache"
     Zwei Besitzer beschreiben, dass sich das aktive Werkzeug aus dem Werkzeugkopf löst.
     Einer von ihnen öffnete den Kopf und fand an seiner eigenen Maschine eine physische
     Ursache. Das ist ein starker Beleg für dieses Exemplar und sagt noch nichts darüber,
     wie verbreitet der Defekt ist. Ein dritter Besitzer im selben Thread berichtet den
-    umgekehrten Fehler, ein Werkzeug, das sich nicht freigeben lässt. `provisional`.
+    umgekehrten Fehler, ein Werkzeug, das sich nicht freigeben lässt, und ein vierter, in
+    einem anderen Thread, hatte ein im Kopf festsitzendes Werkzeug und verdächtigt dabei
+    sein Filament, nicht die Verriegelung. `provisional`.
 
 ## Zusammenfassung
 
@@ -92,6 +95,27 @@ sie es nicht soll — also nicht das Symptom, das der Rest dieser Seite beschrei
 hier, weil es dasselbe Verriegelungsgetriebe betrifft — auch beim ersten Besitzer gab es
 neben herausfallenden Werkzeugen solche, die sich nicht freigeben ließen.
 
+### Ein anderer Thread: ein im Kopf festsitzendes Werkzeug, Filament unter Verdacht
+
+In einem [anderen Thread](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/filament-stuck-with-asa-pla-support/)
+berichtet ein Besitzer, der ASA mit PLA als Stützmaterial druckt, dass das PLA-Werkzeug
+nach ein paar Dutzend Werkzeugwechseln nicht mehr parkte, womit der Druck zu Ende war.
+Das Werkzeug blieb im Kopf, und der Besitzer nahm es von Hand mit einer leichten Drehung
+und etwas Kraft heraus. Der Strang steckte noch in der Düse, aber der Abschnitt, den der
+Extruderantrieb greift, war verknäuelt, wenn auch nicht geschmolzen. Der
+Besitzer führt das auf Wärme zurück: Die warme Kammer, die ASA braucht, und vielleicht die
+schnellen Werkzeugwechsel hätten das PLA weit oben im Werkzeug erweicht. Das PLA war
+bereits eine wärmebeständige Sorte. Der Besitzer fragte, ob PETG als Stützmaterial
+besser geeignet wäre, und die einzige Antwort stimmte zu; ein Ergebnis wurde nicht
+gemeldet.
+
+Das ist das Symptom des dritten Besitzers, ein Werkzeug, das den Kopf nicht verlässt,
+mit einem anderen Verdacht, und niemand hat den Kopf geöffnet. Ob der verknäuelte Strang
+das Werkzeug festgehalten hat oder die Folge einer Freigabe war, die aus anderem Grund
+scheiterte, ist nicht geklärt. Es steht hier, weil es auf eine Ursache außerhalb des
+Verriegelungsgetriebes hinweist, die sich leicht ausschließen lässt, besonders bei
+Drucken mit mehreren Materialien in einer warmen Kammer.
+
 ### Die Wiederherstellung kann in einer Schleife hängen
 
 Als ein Werkzeug im Kopf festsaß, fand der erste Besitzer den Drucker in einer Schleife
@@ -121,13 +145,17 @@ schließen Sie zuerst die einfacheren Gründe aus, aus denen sich ein Werkzeug l
 Platte oder ein Abstreifer, der die Docks stört, siehe
 [Druckbett-Kompatibilität](../reference/build-plate-compatibility.md), und die
 Dock-Kalibrierung, siehe
-[Werkzeugerkennung und Parkfehler](tool-detection-ringdown-decay.md).
+[Werkzeugerkennung und Parkfehler](tool-detection-ringdown-decay.md). Verlässt ein
+Werkzeug den Kopf nicht, sehen Sie sich das Filament dort an, wo der Extruderantrieb es
+greift, bevor Sie die Verriegelung verdächtigen; das stützt sich auf den einzelnen
+Bericht aus dem anderen Thread oben.
 
 ## Überprüfung
 
 `provisional` — drei Besitzer in einem Thread und eine physische Ursache, gefunden an
 nur einer Maschine; ein Besitzer berichtet nur den umgekehrten Fehler, ein Werkzeug, das
-sich nicht freigeben lässt.
+sich nicht freigeben lässt; ein vierter Besitzer in einem anderen Thread meldet ein
+festsitzendes Werkzeug und verdächtigt das Filament.
 
 Die Demontage ist ein Bericht aus erster Hand und konkret: ein benanntes Bauteil, ein
 beschriebener Fehler und eine Reproduktion, die den Mechanismus isoliert, indem der
@@ -143,6 +171,11 @@ Der Bericht des dritten Besitzers stammt aus demselben Thread, beschreibt den um
 Fehler und verdächtigt ein anderes Teil; auf die Stufe wirkt er sich daher nicht aus. Die
 Zusage eines Ersatzkopfs gibt er selbst wieder, nicht der Hersteller, und dabei wird kein
 Defekt benannt; es ist also nicht die unten verlangte Aussage des Herstellers.
+
+Der Bericht aus dem anderen Thread ist ein einzelner, ohne Demontage. Er beschreibt ein
+Werkzeug, das den Kopf nicht verließ, statt eines, das herausfiel, und macht erweichtes
+Filament statt eines Teils des Kopfs verantwortlich; er hebt die Stufe also nicht und
+zählt auch nicht als zweiter Bericht über den Fehler des dritten Besitzers.
 
 Der Beitrag mit der Demontage wartete noch auf Freigabe im Forum, als diese Seite zuerst
 geschrieben wurde; inzwischen ist er veröffentlicht, und der Link zeigt ihn. Das Video

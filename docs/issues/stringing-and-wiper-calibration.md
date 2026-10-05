@@ -18,6 +18,16 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5391
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5496
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5505
+  - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/nozzle-cleaning-strange-results/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_nozzle_cleaner_calibration/indx_nozzle_cleaner_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_nozzle_cleaner_calibration/screen_nozzle_cleaner_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/nozzle_cleaner/nozzle_cleaner.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/common/mapi/calibration_preamble.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5412
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5477
 superseded_by:
 ---
 
@@ -28,7 +38,10 @@ superseded_by:
     is confirmed in Prusa's own release notes, not just inferred from owner reports.
     The same release moved the purge point in Y and made the nozzle reheat in the
     cleaner when a print resumes. Owners additionally describe a revised wiping path
-    and changed purge amounts.
+    and changed purge amounts. In the firmware source, "automatic" means the cleaner's
+    position in X and Y, which the loadcell finds by touching it. The height of the
+    silicone is still set by hand with a screw — see the warning under *Deeper than you
+    would think*.
 
     Three owners independently report the difference as dramatic — clean tool changes
     across mixed-material prints, one no longer needing a brim to catch debris on the
@@ -44,6 +57,7 @@ superseded_by:
     Most of the manual procedure below exists because that calibration used to be
     done by hand, badly, with no way to see what you were doing. If you are on anything
     older than 6.9.0, update and re-test before investing any time in manual alignment.
+    Height is the exception: it is still a manual step in 6.9.0 and 6.9.1.
 
     The stable 6.9.1 notes name no change to the wiper or the purge. The beta did one
     thing for the cleaner: where appropriate, the bed now moves down during Nozzle
@@ -57,7 +71,29 @@ superseded_by:
     though they suspected their own wiper setting or a load cell fault. A second owner,
     on the beta, found PETG left on the nozzle after the wipe, enough to fail bed
     leveling, while crediting the beta with fixing most of their PETG calibration
-    trouble. Both are single reports. For probing failures in general, see
+    trouble. Both are single reports.
+
+    An upstream report against the beta, also with PETG, blames the order of the
+    per-tool clean that runs as a print begins
+    ([#5505](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5505)): the nozzle is
+    cooled after its purge and before its main wipe, so the purge has time to firm up
+    and is not fully cleared, and calibration then fails on what is left. The reporter
+    asks for the wipe to come before the cool-down. The firmware source does run that
+    sequence — purge hot, cool with the part fan on, then the full wipe — and the order
+    is the same in 6.9.0. What the beta changed is how far the nozzle cools before that
+    wipe: its notes lower the tool offset calibration temperature, and the source applies
+    that to this cool-down; stable 6.9.1 keeps it. Whether that made the residue worse is
+    not established. A different owner, commenting on a separate issue
+    ([#5500](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500)), objects to
+    the same order: the nozzle should not sit in its purge while it cools, but be cleaned
+    as it cools, because by the time the wipe comes the material has set on the tip. So
+    the complaint about the order rests on two reports in two issues. It has not been
+    checked whether the #5505 reporter is independent of the PETG account above, and
+    whether wiping first would help is untested. The reporter of #5500 adds that 6.9.0
+    and 6.9.1 both purge more than they need to, often leaving material on the nozzle
+    after the wipe, and that the firmware does not use the purge volume set in the
+    slicer. That is a single report, not checked against the source. For probing
+    failures in general, see
     [oozing during probing and calibration](oozing-during-probing-and-calibration.md).
 
 ## Summary
@@ -160,6 +196,26 @@ just touching"), which needs no number.
     you update and blobbing returns having previously been fixed by going deep, this
     is the first thing to suspect.
 
+    The firmware source narrows the question. The automatic part of the Nozzle Cleaner
+    Calibration wizard measures where the cleaner sits in X and Y; it does not set the
+    depth. Height is a one-time manual step in the same wizard, which asks you to rest
+    the nozzle in the center of the silicone V-groove and then shows: "Turn the
+    adjustment screw counterclockwise until it touches the silicone." The wizard's own
+    steps are the same in 6.9.0 and 6.9.1, so on both the depth is whatever that screw step
+    leaves, and the criterion the wizard states is contact, not burial. That is a
+    reading of the code; nobody has reported comparing the result against the deeper
+    setting on hardware, so the question stays open.
+
+    It matters because owners can read the 6.9.0 notes as meaning the cleaner now sets
+    itself up entirely. One owner who mentioned 6.9.0, whose purge was not coming out as
+    rice grains and was filling the bin fast, assumed just that and said calibration no
+    longer asked about the wiper; a reply told them to raise the wiper pad with its screw
+    ([thread](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/nozzle-cleaning-strange-results/)).
+    The reply was unsure which way to turn it, and the direction it guessed does not
+    obviously match the wizard's; go by the wizard and watch the block move. The owner has
+    not reported back,
+    and whether every setup path runs the wizard is not established.
+
     One later owner, firmware not stated, reports trouble from too little contact.
     Primed material was clinging to the back of their nozzle and dropping onto the
     bed mid-print; after they adjusted the wiper height until it definitely touched the
@@ -206,9 +262,22 @@ just touching"), which needs no number.
 - **A lone blob where a print resumed** has a different cause. One owner on 6.6.3
   traced blobs after a spool join to the nozzle oozing while the bed traveled back
   to printing height, and reported it upstream
-  ([#5391](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5391)). 6.9.0 now
-  reheats the nozzle in the cleaner on resume, which may bear on it; nobody has said
-  whether it does. Single report, `provisional`.
+  ([#5391](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5391)). The report was
+  closed automatically for inactivity in late September 2026, with no reply from Prusa
+  on it, so its closure says nothing about a fix. The same owner raised the same problem
+  for an ordinary pause and resume, also on 6.6.3, asking for the purge and wipe to come
+  after the bed is back in place
+  ([#5412](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5412)). 6.9.0 now
+  reheats the nozzle in the cleaner on resume. A second owner, filing after 6.9.0 was out
+  ([#5477](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5477)), describes a
+  resume that picks the tool and primes it over the silicone first and raises the bed
+  only afterwards, so the primed nozzle oozes during that wait and the blob ends up on
+  the part. They give no firmware version, so whether the 6.9.0 reheat helps is still
+  not established. They ask for the bed to go up before the tool is picked and primed,
+  and two more owners have added that they get blobs after a pause as well. Both
+  requests are open with no reply from Prusa. No workaround is confirmed: one commenter
+  suggested a small wipe tower for jobs with a pause, but had not tried it. `reported` —
+  two owners, in separate issues, trace the blob to ooze while the bed travels.
 
 ### Temperatures, retraction and flow
 
@@ -252,6 +321,23 @@ The 6.9.1 re-check: the
 list a gantry squaring wizard and a homing fix, and neither touches the cleaner. The bed dropping during Nozzle Cleaner calibration comes from the
 [beta notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta)
 only. Nothing on this page is contradicted by either.
+
+What the automatic calibration does and does not cover, and the order of purge,
+cool-down and wipe in the per-tool clean that runs as a print begins, are read from the
+firmware source at the v6.9.1 tag: the
+[calibration routine](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_nozzle_cleaner_calibration/indx_nozzle_cleaner_calibration.cpp),
+its [screens](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_nozzle_cleaner_calibration/screen_nozzle_cleaner_calibration.cpp),
+the [tool offset calibration](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp)
+that runs the clean, and the [cleaner's sequences](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/nozzle_cleaner/nozzle_cleaner.cpp).
+The wizard's own steps, the screw step among them, and the cleaner's wipe and purge
+moves are unchanged from the 6.9.0 tag. The lower bed during the wizard that the beta
+notes mention comes from a
+[calibration preamble](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/common/mapi/calibration_preamble.cpp)
+the wizard shares with other calibrations, not from the wizard itself. The tool offset
+calibration did change: the beta lowered the temperature the per-tool clean cools to
+before its main wipe, which is one of the two calibration temperatures its notes lower;
+the other is for the XY scan. The source shows what the firmware does, not how well the
+result works on any one machine.
 
 The 6.9.0 improvement is **independently confirmed** by three owners: one reports clean
 tool changes on a mixed TPU/PETG print and again on a four-color PETG print; a second

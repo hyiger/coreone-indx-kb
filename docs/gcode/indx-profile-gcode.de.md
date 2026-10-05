@@ -1,7 +1,7 @@
 ---
 title:        Kommentierter G-Code für Start, Schichtwechsel und Werkzeugwechsel
 confidence:   measured
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -18,8 +18,11 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1
   - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.10.ini
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.11.ini
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5508
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
 superseded_by:
-source_sha:   cb2d654b1c96a0a178ce9435ca92f8862de6575ac49bac5256da177dae02441d
+source_sha:   b0df521043de3594fa741536490a36b15af3573b9f48cc0960e3b62b7c1672ff
 ---
 # Kommentierter G-Code für Start, Schichtwechsel und Werkzeugwechsel
 
@@ -41,10 +44,12 @@ source_sha:   cb2d654b1c96a0a178ce9435ca92f8862de6575ac49bac5256da177dae02441d
 !!! warning "Für 6.9.0 geschrieben und noch nicht gegen 6.9.1 geprüft"
     Firmware 6.9.1 erschien am 25. September 2026 als stabile Version. Die Blöcke auf
     dieser Seite sind weiterhin das Profil von 6.9.0 und wurden bewusst nicht anhand der
-    Release Notes von 6.9.1 angepasst. Prusas neuestes Profilpaket, 2.5.10 vom 17.
-    September, liefert diese Blöcke unverändert aus, und seine `M115`-Zeile nennt
-    weiterhin 6.9.0. Ein nach der stabilen Version veröffentlichtes Paket kann sie ändern;
-    weicht das Profil in Ihrem Slicer von dem hier gezeigten ab, ist Ihres das aktuelle.
+    Release Notes von 6.9.1 angepasst. Prusas Profilpaket 2.5.10 vom 17. September
+    liefert diese Blöcke unverändert aus. Ebenso 2.5.11, das am 2. Oktober, eine Woche
+    nach der stabilen Version, in Prusas Profil-Repository erschien: Alle fünf INDX-Blöcke
+    sind mit denen aus 2.5.10 identisch, und die `M115`-Zeile nennt weiterhin 6.9.0. Ein
+    späteres Paket kann sie ändern; weicht das Profil in Ihrem Slicer von dem hier
+    gezeigten ab, ist Ihres das aktuelle.
 
     Die Firmware-Seite wurde gegen den öffentlichen Quellcode geprüft, durch einen
     Vergleich [der Release-Tags 6.9.0 und 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1).
@@ -319,7 +324,14 @@ T{initial_tool} S1 L0 D0
 
 `G427` führt die vollständige Werkzeug-Offset-Kalibrierung für jedes zugeordnete Werkzeug
 durch: Es ermittelt, welche physischen Werkzeuge der Druck benötigt, kalibriert jedes in
-XYZ und schreibt die Ergebnisse in Laufzeitvariablen und in das EEPROM.
+XYZ und schreibt die Ergebnisse in Laufzeitvariablen und in das EEPROM. Weiß die
+Firmware nicht, welche Werkzeuge der Druck verwendet, kalibriert `G427` ersatzweise jedes
+aktivierte Werkzeug
+([Firmware-Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp),
+gegenüber 6.9.0 unverändert). Laut einer offenen Funktionsanfrage ist das bei Drucken der
+Fall, die ein Host wie OctoPrint über USB bzw. seriell sendet, sodass selbst ein Druck
+mit nur einem Werkzeug alle kalibriert
+([#5508](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5508)).
 
 Beide Parameter dienen der Genauigkeit. `R` ist der zufällige Versatz in Millimetern, der
 beim Z-Antasten jedes Werkzeugs auf X und Y angewendet wird, damit nicht jeder

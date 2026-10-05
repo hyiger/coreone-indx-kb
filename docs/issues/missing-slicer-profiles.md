@@ -12,8 +12,11 @@ sources:
   - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/45
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/missing-profiles-in-slicer-for-non-0-4-nozzles-and-other-materials/
   - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.10.ini
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.11.ini
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/48
+  - https://github.com/prusa3d/PrusaSlicer/releases/tag/version_3.0.0-alpha11
   - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/index.idx
-  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/firmware-and-slicer-update-to-use-other-nozzles-than-0-4hf/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/firmware-and-slicer-update-to-use-other-nozzles-than-0-4hf/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/prusa-slicer-does-not-load-other-filaments/
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-flex-material-on-indx-prusa-core-one-2-generation/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
@@ -24,12 +27,15 @@ superseded_by:
 
 ## Summary
 
-PrusaSlicer offers the INDX exactly one nozzle variant: high-flow 0.4mm. Buy a 0.25,
-0.5, 0.6, 0.8 or 1.0mm nozzle and there is no profile to select for it. This is not a
-case of profiles being thin or unpolished — the other sizes are not offered at all. A
-request to add them has been open upstream since July 2026 with no response. Prusa's
-latest profile bundle, 2.5.10 of 17 September 2026, still declares only that one
-variant.
+PrusaSlicer 2.9.6, the current stable release, offers the INDX exactly one nozzle
+variant: high-flow 0.4mm. Buy a 0.25, 0.5, 0.6, 0.8 or 1.0mm nozzle and there is no
+profile to select for it there. This is not a case of profiles being thin or unpolished —
+the other sizes are not offered at all. The 3.0 alphas choose nozzles differently and
+their INDX profile has not been inspected here, though owners who tried them found no
+other size either (see below). Two
+requests to add them are open upstream, the first since July 2026, and neither has had a
+response. Prusa's latest profile bundle, 2.5.11 of 2 October 2026, still declares only
+that one variant, though it lays more switched-off groundwork for a 0.25mm nozzle.
 
 The material side has moved since this page was first written: flexible filament and
 BVOH gained INDX slicer presets in September. HIPS and PVA still have none. Printer-side PVA and
@@ -46,8 +52,8 @@ credit as nozzle compensation.
 
 This is checkable rather than a matter of report. Prusa publishes its profile bundle,
 and in the current release
-([2.5.10](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.10.ini),
-re-checked on 25 September 2026) both INDX printer models — the four-tool and the
+([2.5.11](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.11.ini),
+re-checked on 4 October 2026) both INDX printer models — the four-tool and the
 eight-tool — declare a single variant:
 
 ```ini
@@ -55,8 +61,8 @@ variants = HF0.4
 ```
 
 That single line is the constraint. A variant is what PrusaSlicer offers you when you
-add the printer; with only one declared, no other nozzle size can be selected, whatever
-material profiles may exist behind it.
+add the printer; with only one declared, PrusaSlicer 2.9.6 offers no other nozzle size,
+whatever material profiles may exist behind it.
 
 The variant is high-flow, so a standard-flow nozzle has no variant either, even at
 0.4mm. That now matters in practice. In the original thread, one owner reported in
@@ -67,18 +73,43 @@ standard-flow 0.4 and 0.25 INDX profiles appeared in one 3.0 alpha and were gone
 next, and another owner there found no way to change the nozzle size in the alpha at all.
 That the profiles appeared rests on the author's own report, not an independent one, and
 is unverified here, but it makes the 3.0 series worth checking as well as the 2.5.x bundle.
-Later that month, in a separate thread, another owner reported
+One thing narrows that report: the author placed those profiles in alpha 10, seen before public
+release, and Prusa's notes for alpha 11 of 1 September call it
+[the first public 3.0 alpha](https://github.com/prusa3d/PrusaSlicer/releases/tag/version_3.0.0-alpha11);
+no owner in the sources has found the profiles in a public alpha. Separately, in October a
+further owner in the thread, who holds both of those sizes and an HF0.6, agreed that the
+profiles are gone again, without saying whether they had seen them.
+
+Prusa's [alpha 11 notes](https://github.com/prusa3d/PrusaSlicer/releases/tag/version_3.0.0-alpha11)
+also describe a different mechanism in 3.0: the nozzle size and high-flow status are
+chosen per tool in the printer profile rather than declared as printer variants. What
+limits the INDX there is therefore which nozzle values its 3.0 profile accepts, not a
+`variants =` line; this page has not inspected that profile.
+
+Later in September, in a separate thread, another owner reported
 that the vendor now ships standard nozzles in 0.4 and 0.25mm and asked when firmware and
-PrusaSlicer would support them; nobody had answered at the time of writing. The
-standard 0.4mm part rests on that single report.
+PrusaSlicer would support them. The replies, all from other owners, added to the queue
+rather than answering it: the starter of the original thread said a number of Founders
+Edition buyers ordered 0.25 and 0.6mm nozzles with their kits and have yet to see
+profiles for them, or for HIPS; one owner holds 0.25 and 0.8mm nozzles; another, still
+assembling their kit, has four 0.25mm nozzles lined up for it. Neither Prusa nor the
+vendor had replied by 4 October. That the vendor sells a standard 0.4mm nozzle rests
+mainly on the opening report. In the original thread, one owner said in August they
+planned to spend vendor store credit on standard (non-CHT) 0.4 nozzles, and the October
+owner above holds one but does not say where it came from.
 
 The bundle does contain a large number of INDX-scoped filament entries, and some of the
 internal inheritance templates reference wider extrusion widths. So there is groundwork.
 Most of it is switched off, though. Over a thousand INDX filament entries sit in the
-file commented out, so PrusaSlicer never loads them: base entries tied to no nozzle,
-other materials and brands at HF0.4 (a few of them Prusament), copies for the high-flow
-0.5, 0.6 and 0.8, and copies for standard-flow 0.6 and 0.8 plus a single 0.25. There
-are none for a standard 0.4, not even switched off. Only nineteen INDX filament presets
+file commented out, so PrusaSlicer never loads them: base entries with no nozzle in their
+names, other materials and brands at HF0.4 (a few of them Prusament), copies for the
+high-flow 0.5, 0.6 and 0.8, copies for standard-flow 0.6 and 0.8, and two for 0.25,
+Prusament PLA and, since 2.5.11, Prusament PETG. None is named for a standard 0.4, but
+more than half of the base entries carry compatibility conditions that exclude high-flow
+nozzles, so they match a standard 0.4 among other standard sizes; since 2.5.11 about a
+hundred of them, all built on the PLA or PETG templates, match a standard 0.4 and no
+other size. (Until October this page said there were no standard
+0.4 entries at all; that held only for the names.) Only nineteen INDX filament presets
 are live, all named for HF0.4, though the two flexible presets' conditions check only for
 a 0.4 nozzle, not for high flow. Print presets are further along: since bundle 2.5.8, six
 live INDX print presets target 0.25 and 0.3mm nozzles with no high-flow condition, and
@@ -87,6 +118,17 @@ sit in the file commented out. None of it can be reached yet, since no
 live filament preset matches those sizes. For every size but HF0.4, what is missing
 first is the printer-side variant declaration; without it, switching those entries on would
 still leave nothing to select them with.
+
+Bundle 2.5.11, published on 2 October, is listed in the changelog only for the HT
+hotend on the Core One and the larger Core One L, and changes nothing selectable on the
+INDX: the same nineteen filament, ten print and two printer presets are live as in
+2.5.10. Its INDX changes are all internal or switched off: new filament templates for
+PLA and PETG at a 0.25mm nozzle, which the two 0.25 entries now build on; the narrowing
+to a standard 0.4 described above; filled-in Prusament PLA and PETG entries for HF0.6;
+and the print templates for high-flow 0.5, 0.6 and 0.8mm nozzles, renamed to mark them
+as high-flow (the names their commented-out print presets already pointed to) and with
+some values revised, though their conditions still check only the nozzle diameter. The
+printer-side declaration is still missing, so none of it can be reached either.
 
 ### Materials
 
@@ -111,11 +153,11 @@ and the file itself:
   G-code calls `M906 P2`, the FLEX extruder-current profile that firmware 6.9.0 added.
 - **BVOH** has two, both for third-party spools (Verbatim and Fiberlogy). Their start
   G-code calls `M906 P2` too.
-- **HIPS** and **PVA** are still absent as of 2.5.10. As in 2.5.7, INDX entries for
+- **HIPS** and **PVA** are still absent as of 2.5.11. As in 2.5.7, INDX entries for
   both exist, but only among the commented-out ones.
 
 The user-facing default material list for both INDX models was described here as the
-usual PLA and PETG family, which understated it even in August. As of 2.5.10 it takes
+usual PLA and PETG family, which understated it even in August. As of 2.5.11 it takes
 in PLA, PETG, ASA, the PC Blends and Woodfill, and since 2.5.9 TPU 95A, all at the one
 available variant.
 
@@ -171,25 +213,33 @@ resolved. Consider that when choosing. See [nozzle hardness](nozzle-hardness.md)
 Not much, directly — this is upstream configuration, not something a setting on your
 machine changes.
 
-- **Add your voice to the open request.** It is
+- **Add your voice to the open requests.** The first is
   [issue 45 in Prusa's FFF settings repository](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/45),
-  open since 31 July 2026 and still without a comment or response on 25 September. An
-  issue with one reporter and no engagement is easy to leave unattended; several owners
-  saying which sizes and materials they actually need is harder to. Note that the
-  September material presets arrived without the issue being touched, so its silence
-  says little about progress either way.
+  open since 31 July 2026 for sizes and materials, and still without a comment or
+  response on 4 October. The second,
+  [issue 48](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/48), was
+  filed on 29 September by someone else and asks for the nozzle sizes alone, listing
+  0.25, 0.5, 0.6, 0.8 and 1.0; it too had no response by 4 October. An issue with one
+  reporter and no engagement is easy to leave unattended; several owners saying which
+  sizes and materials they actually need is harder to. Note that the September material
+  presets arrived without issue 45 being touched, and the 0.25 groundwork in 2.5.11
+  without either issue being touched, so their silence says little about progress either
+  way.
 - **Take bundle updates as they come.** The INDX presets ship in the profile bundle, not
   with the slicer: the bundle series that carries them requires PrusaSlicer 2.9.6, the
   current release on Prusa's downloads page, and each new bundle reaches it as a
   configuration update rather than a new slicer version.
-- **Buy nozzles on the assumption you cannot use them yet**, or wait. If you are
-  choosing compensation, this is an argument for cash over credit unless you are content
-  to hold the hardware.
+- **Buy nozzles on the assumption you cannot use them yet**, or wait. That holds for
+  PrusaSlicer 2.9.6; for the 3.0 alphas it rests on owners' reports, not on the profile
+  itself. If you are choosing compensation, this is an argument for cash over credit
+  unless you are content to hold the hardware.
 
 TODO(verify): whether a custom profile can be made to work for another nozzle size by
-hand, and what breaks if you try. Nobody in the sources has reported attempting it, and
-this page will not speculate — the toolchanger's purge and calibration behavior is
-tied to the profile in ways that are not obvious.
+hand, and what breaks if you try. Nobody in the sources has reported the outcome of an
+attempt. At the end of September two owners said they meant to try, one for 0.25mm
+nozzles and one for 0.25 and 0.8mm nozzles and HIPS; neither had reported back by 4
+October. Until someone does, this page will not speculate — the toolchanger's purge and
+calibration behavior is tied to the profile in ways that are not obvious.
 
 ## Verification
 
@@ -198,21 +248,28 @@ tied to the profile in ways that are not obvious.
 **The central claim is verified, not reported.** That only `HF0.4` is offered comes from
 reading Prusa's own published profile bundle, where both INDX printer models declare that
 one variant. That is first-party published data, in the same class as a firmware release
-note — not somebody's account of their machine. It was re-read at 2.5.10 on 25 September
+note — not somebody's account of their machine. It was re-read at 2.5.11 on 4 October
 2026, as were the material presets, the commented-out entries and the compatibility
 conditions described above.
 
-**The impact is reported**, by four owners in
+**The impact is reported**, by six owners in
 [one forum thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/missing-profiles-in-slicer-for-non-0-4-nozzles-and-other-materials/),
-one of whom bought 0.5 and 1.0mm nozzles before discovering they could not be used, and
-another who raised it while weighing the nozzle compensation. The
-[upstream request](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/45)
+one of whom bought 0.5 and 1.0mm nozzles before discovering they could not be used,
+another who raised it while weighing the nozzle compensation, and two who hold 0.25mm
+nozzles with no preset to select. (This page said four until October; the two with
+0.25mm nozzles posted after it was first written.) The
+[first upstream request](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/45)
 is a second venue, though it was filed by the same person who started the forum thread,
-so it is a cross-post rather than independent corroboration. A
-[separate thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/firmware-and-slicer-update-to-use-other-nozzles-than-0-4hf/),
+so it is a cross-post rather than independent corroboration. The
+[second](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/48) comes from
+a different person; nothing in the sources ties it to anyone in either thread. A
+[separate thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/firmware-and-slicer-update-to-use-other-nozzles-than-0-4hf/),
 started in September by a different owner, asks when the standard-flow nozzles the
-vendor now ships will be supported. That is a question, not an account of hitting the
-gap on a machine, but it shows the same gap from a second, independent direction.
+vendor now ships will be supported. The opening post is a question rather than an
+account of hitting the gap on a machine. Of the three owners who replied, two had
+already posted in the original thread; the third, whose 0.25mm nozzles are waiting on
+profiles, is still building their kit. It shows the same gap from a second direction,
+but adds only two new owners: the one who asked, and the one still building.
 
 **The symptom is reported; the other-brands case is provisional.** Two owners in two
 threads found that filaments installed through the wizard could not be selected on the

@@ -1,7 +1,7 @@
 ---
 title:        Phantom-Werkzeuge, „Werkzeug nicht erkannt“ und Park-Fehler
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -19,7 +19,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/will-the-prusa-indxs-wave1-ship-with-fixed-induction-coils/
 superseded_by:
-source_sha:   28c48c5bc9d6794e261fd9a5b5594aca0d01884b065fefb71f8412c8394c39da
+source_sha:   8c0c450a09133bc431455639c2207bb5e71b531ee511254701194f2548264cd6
 ---
 # Phantom-Werkzeuge, „Werkzeug nicht erkannt“ und Park-Fehler
 
@@ -229,9 +229,12 @@ betreffen die Änderungen die Werkzeug-Offset-Kalibrierung, Park- und Kalibrierb
 Referenzfahrt, eine WLAN-Korrektur, einen neuen Assistenten zur Rechtwinkligkeit der Gantry und
 Filament-Voreinstellungen, während der Code, der die Spule ausliest und den Abklingwert als
 vorhanden, abwesend oder unbekannt einordnet, unberührt bleibt. Der Schwellwert aus 6.9.0
-gilt weiterhin, und der Fehlerbericht ist weiterhin offen, ohne neue Aktivität seit Juli.
-Noch hat kein Besitzer über das Park-Verhalten auf 6.9.1 berichtet; dies ist also eine
-Lesart des Quellcodes und kein Ergebnis von einer Maschine.
+gilt weiterhin. Der Fehlerbericht ist weiterhin offen, doch seit Juli hat niemand etwas
+ergänzt: Am 28. September 2026 warnte der Stale-Bot von GitHub, dass er geschlossen werden
+könnte, falls binnen einer Woche keine Rückmeldung folgt. Eine Schließung aus diesem Grund
+würde nicht bedeuten, dass der Fehler behoben ist. Noch hat kein Besitzer den Fehler
+„nach dem Parken weiterhin erkannt“ auf 6.9.1 gemeldet; dies ist also eine Lesart des
+Quellcodes und kein Ergebnis von einer Maschine.
 
 ## Überprüfung
 

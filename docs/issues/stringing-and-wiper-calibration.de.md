@@ -18,8 +18,18 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5391
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5496
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5505
+  - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/nozzle-cleaning-strange-results/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_nozzle_cleaner_calibration/indx_nozzle_cleaner_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_nozzle_cleaner_calibration/screen_nozzle_cleaner_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/nozzle_cleaner/nozzle_cleaner.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/common/mapi/calibration_preamble.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5412
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5477
 superseded_by:
-source_sha:   6a0520d6fb030d42dace59e4c0e9f0f474eaac903a1f26bfbd38ff8188071f8a
+source_sha:   1f8ec35b274577ba79b86f34b228d3964c7ae9039d695f3f817c7ff952541d11
 ---
 # In den Druck geschleppte Blobs — Düsenwischer und Spülvorgang
 
@@ -28,7 +38,10 @@ source_sha:   6a0520d6fb030d42dace59e4c0e9f0f474eaac903a1f26bfbd38ff8188071f8a
     das ist in Prusas eigenen Release Notes bestätigt und nicht nur aus Anwenderberichten
     abgeleitet. Dieselbe Version hat den Spülpunkt in Y verschoben und lässt die Düse im
     Reiniger wieder aufheizen, wenn ein Druck fortgesetzt wird. Anwender beschreiben
-    zusätzlich einen überarbeiteten Wischpfad und geänderte Spülmengen.
+    zusätzlich einen überarbeiteten Wischpfad und geänderte Spülmengen. Im
+    Firmware-Quellcode bedeutet „automatisch“ die Lage des Reinigers in X und Y, die die
+    Wägezelle durch Antasten ermittelt. Die Höhe des Silikons wird weiterhin von Hand mit
+    einer Schraube eingestellt — siehe den Warnhinweis unter *Tiefer als man denkt*.
 
     Drei Anwender berichten unabhängig voneinander von einem dramatischen Unterschied —
     saubere Werkzeugwechsel über Drucke mit gemischten Materialien hinweg, einer braucht
@@ -47,7 +60,8 @@ source_sha:   6a0520d6fb030d42dace59e4c0e9f0f474eaac903a1f26bfbd38ff8188071f8a
     Der größte Teil des unten beschriebenen manuellen Vorgehens existiert nur, weil diese
     Kalibrierung früher von Hand erledigt wurde, schlecht und ohne jede Möglichkeit zu
     sehen, was man tut. Wenn Sie etwas Älteres als 6.9.0 einsetzen, aktualisieren Sie und
-    testen Sie erneut, bevor Sie Zeit in manuelle Ausrichtung investieren.
+    testen Sie erneut, bevor Sie Zeit in manuelle Ausrichtung investieren. Die Höhe ist
+    die Ausnahme: Sie bleibt auch in 6.9.0 und 6.9.1 ein manueller Schritt.
 
     Die Release Notes der stabilen Version 6.9.1 nennen keine Änderung am Wischer oder am
     Spülvorgang. Die Beta hat für den Reiniger eine Sache geändert: Das Bett fährt während
@@ -63,8 +77,32 @@ source_sha:   6a0520d6fb030d42dace59e4c0e9f0f474eaac903a1f26bfbd38ff8188071f8a
     eigene Wischereinstellung oder einen Fehler der Wägezelle. Ein zweiter Anwender, auf
     der Beta, fand nach dem Wischen noch PETG an der Düse, genug, um die
     Bettnivellierung scheitern zu lassen, rechnet der Beta aber an, die meisten seiner
-    PETG-Kalibrierprobleme behoben zu haben. Beides sind Einzelberichte. Zu Fehlern beim
-    Antasten allgemein siehe
+    PETG-Kalibrierprobleme behoben zu haben. Beides sind Einzelberichte.
+
+    Ein Bericht an den Hersteller zur Beta, ebenfalls mit PETG, macht die Reihenfolge
+    der Reinigung je Werkzeug verantwortlich, die zu Beginn eines Drucks läuft
+    ([#5505](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5505)): Die Düse wird
+    nach dem Spülen und vor dem eigentlichen Wischen abgekühlt, sodass das Spülmaterial
+    Zeit hat, fest zu werden, und nicht vollständig entfernt wird; die Kalibrierung
+    scheitert dann an den Resten. Der Melder wünscht sich, dass das Wischen vor dem
+    Abkühlen kommt. Laut Quellcode läuft die Firmware tatsächlich in dieser Reihenfolge ab —
+    heiß spülen, mit eingeschaltetem Bauteillüfter abkühlen, dann vollständig wischen —,
+    und die Reihenfolge ist in 6.9.0 dieselbe. Geändert hat die Beta, wie weit die Düse
+    vor diesem Wischen abkühlt: Ihre Notes senken die Temperatur der
+    Werkzeug-Offset-Kalibrierung, und der Quellcode wendet das auf genau dieses Abkühlen
+    an; die stabile 6.9.1 behält das bei. Ob das die Reste verschlimmert hat, ist nicht
+    geklärt. Ein anderer Anwender wendet sich in einem separaten Issue
+    ([#5500](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500)) gegen dieselbe
+    Reihenfolge: Die Düse solle nicht in ihrem Spülmaterial sitzen, während sie abkühlt,
+    sondern schon beim Abkühlen gereinigt werden, weil das Material bis zum Wischen an der
+    Spitze fest geworden ist. Die Beschwerde über die Reihenfolge stützt sich damit auf
+    zwei Berichte in zwei Issues. Ob der Melder von #5505 unabhängig vom PETG-Bericht oben
+    ist, wurde nicht geprüft, und ob ein Wischen vor dem Abkühlen hilft, ist nicht
+    getestet. Der Melder von #5500 fügt hinzu, dass 6.9.0 und 6.9.1 beide mehr spülen als
+    nötig, sodass nach dem Wischen oft noch Material an der Düse hängt, und dass die
+    Firmware das im Slicer eingestellte Spülvolumen nicht verwendet. Das ist ein
+    Einzelbericht, nicht am Quellcode geprüft.
+    Zu Fehlern beim Antasten allgemein siehe
     [Ausschwitzen beim Antasten und Kalibrieren](oozing-during-probing-and-calibration.md).
 
 ## Zusammenfassung
@@ -174,6 +212,29 @@ eine Richtungsangabe („tiefer als nur berührend“), die keine Zahl benötigt
     zurückkehrt, nachdem sie zuvor durch mehr Tiefe behoben war, ist das der erste
     Verdacht.
 
+    Der Firmware-Quellcode grenzt die Frage ein. Der automatische Teil des Assistenten
+    Nozzle Cleaner Calibration misst, wo der Reiniger in X und Y sitzt; die Tiefe stellt
+    er nicht ein. Die Höhe ist ein einmaliger manueller Schritt im selben Assistenten,
+    der Sie auffordert, die Düse in die Mitte der V-Nut im Silikon zu setzen, und dann
+    anzeigt: „Turn the adjustment screw counterclockwise until it touches the silicone.“
+    Die eigenen Schritte des Assistenten sind in 6.9.0 und 6.9.1 dieselben, in beiden ist
+    die Tiefe also das,
+    was dieser Schraubenschritt hinterlässt, und das Kriterium, das der Assistent nennt,
+    ist Berührung, nicht Vergraben. Das ist eine Lesart des Codes; niemand hat berichtet,
+    das Ergebnis auf der Hardware mit der tieferen Einstellung verglichen zu haben, die
+    Frage bleibt also offen.
+
+    Das ist wichtig, weil man die Notes zu 6.9.0 so lesen kann, als richte sich der
+    Reiniger jetzt vollständig selbst ein. Ein Anwender, der 6.9.0 erwähnte und dessen
+    Spülmaterial nicht als Reiskörner herauskam und den Behälter schnell füllte, nahm
+    genau das an und sagte, die Kalibrierung frage nicht mehr nach dem Wischer; eine
+    Antwort riet, das Wischerpad mit seiner Schraube anzuheben
+    ([Thread](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/nozzle-cleaning-strange-results/)).
+    Die Antwort war unsicher, in welche Richtung zu drehen ist, und die vermutete Richtung
+    passt nicht erkennbar zu der des Assistenten; richten Sie sich nach dem Assistenten und
+    beobachten Sie, wie sich der Block bewegt. Der Anwender hat sich nicht wieder
+    gemeldet, und ob jeder Einrichtungsweg den Assistenten durchläuft, ist nicht geklärt.
+
     Ein späterer Anwender, Firmware nicht angegeben, berichtet von Problemen durch zu wenig
     Kontakt. Beim Vorspülen blieb Material an der Rückseite seiner Düse hängen und fiel
     während des Drucks auf das Bett; nachdem er die Höhe des Wischers so eingestellt hatte,
@@ -226,9 +287,27 @@ eine Richtungsangabe („tiefer als nur berührend“), die keine Zahl benötigt
   andere Ursache. Ein Anwender auf 6.6.3 führte Blobs nach einem Spool Join darauf
   zurück, dass die Düse ausschwitzte, während das Bett auf Druckhöhe zurückfuhr, und
   meldete das dem Hersteller
-  ([#5391](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5391)). 6.9.0 heizt
-  die Düse beim Fortsetzen nun im Reiniger wieder auf, was damit zusammenhängen könnte;
-  ob es das Problem behebt, hat niemand berichtet. Einzelbericht, `provisional`.
+  ([#5391](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5391)). Der Bericht
+  wurde Ende September 2026 automatisch wegen Inaktivität geschlossen, ohne eine Antwort
+  von Prusa darin; die Schließung sagt also nichts über eine Behebung aus. Derselbe
+  Anwender meldete dasselbe Problem für ein gewöhnliches Pausieren und Fortsetzen,
+  ebenfalls auf 6.6.3, und bat darum, dass Spülen und Wischen erst kommen, wenn das Bett
+  wieder an seinem Platz ist
+  ([#5412](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5412)). 6.9.0 heizt
+  die Düse beim Fortsetzen nun im Reiniger wieder auf. Ein zweiter Anwender, der seinen
+  Bericht nach dem Erscheinen von 6.9.0 einreichte
+  ([#5477](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5477)), beschreibt ein
+  Fortsetzen, das zuerst das Werkzeug aufnimmt und über dem Silikon vorspült und erst
+  danach das Bett hochfährt, sodass die vorgespülte Düse während dieser Wartezeit
+  ausschwitzt und der Blob auf dem Werkstück landet. Eine Firmware-Version nennt er
+  nicht; ob das Wiederaufheizen aus 6.9.0 hilft, ist also weiterhin nicht geklärt. Er
+  bittet darum, das Bett hochzufahren, bevor das Werkzeug aufgenommen und vorgespült
+  wird, und zwei weitere Anwender haben ergänzt, dass auch bei ihnen nach einer Pause
+  Blobs entstehen. Beide Anfragen sind offen und ohne Antwort von Prusa. Eine
+  Behelfslösung ist nicht bestätigt: Ein Kommentator schlug für Aufträge mit Pause einen
+  kleinen Reinigungsturm vor, hatte das aber nicht ausprobiert. `reported` — zwei
+  Anwender führen den Blob in separaten Issues auf das Ausschwitzen während der
+  Bettfahrt zurück.
 
 ### Temperaturen, Retraktion und Fluss
 
@@ -278,6 +357,24 @@ Referenzieren, und keines von beiden betrifft den Reiniger.
 Dass das Bett während der Nozzle-Cleaner-Kalibrierung nach unten fährt, steht nur in den
 [Notes der Beta](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta).
 Keine der beiden widerspricht etwas auf dieser Seite.
+
+Was die automatische Kalibrierung abdeckt und was nicht, sowie die Reihenfolge von
+Spülen, Abkühlen und Wischen bei der Reinigung je Werkzeug zu Beginn eines Drucks, sind
+aus dem Firmware-Quellcode im Stand des Git-Tags v6.9.1 gelesen: aus der
+[Kalibrierroutine](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_nozzle_cleaner_calibration/indx_nozzle_cleaner_calibration.cpp),
+ihren [Bildschirmen](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_nozzle_cleaner_calibration/screen_nozzle_cleaner_calibration.cpp),
+der [Werkzeug-Offset-Kalibrierung](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp),
+die die Reinigung ausführt, und den [Sequenzen des Reinigers](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/nozzle_cleaner/nozzle_cleaner.cpp).
+Die eigenen Schritte des Assistenten, darunter der Schraubenschritt, und die Wisch- und
+Spülbewegungen des Reinigers sind gegenüber dem Git-Tag 6.9.0 unverändert. Das weiter
+abgesenkte Bett während des Assistenten, das die Notes der Beta erwähnen, stammt aus einer
+[Kalibrier-Vorbereitung](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/common/mapi/calibration_preamble.cpp),
+die der Assistent mit anderen Kalibrierungen teilt, nicht aus dem Assistenten selbst. Die
+Werkzeug-Offset-Kalibrierung hat sich dagegen geändert: Die Beta hat die Temperatur
+gesenkt, auf die die Reinigung je Werkzeug vor dem eigentlichen Wischen abkühlt — das ist
+eine der beiden Kalibriertemperaturen, die ihre Notes senken; die andere gilt dem XY-Scan.
+Der Quellcode zeigt, was die Firmware tut, nicht wie gut das Ergebnis auf einer bestimmten
+Maschine funktioniert.
 
 Die Verbesserung durch 6.9.0 ist von drei Anwendern **unabhängig bestätigt**: Einer
 berichtet von sauberen Werkzeugwechseln bei einem gemischten TPU/PETG-Druck und erneut

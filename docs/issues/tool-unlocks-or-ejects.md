@@ -1,7 +1,7 @@
 ---
 title:        Tool unlocks or ejects from the head
 confidence:   provisional
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -11,17 +11,19 @@ firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/postid/804782/
+  - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/filament-stuck-with-asa-pla-support/
 superseded_by:
 ---
 
 # Tool unlocks or ejects from the head
 
-!!! warning "Two ejection reports, one thread, and one teardown"
+!!! warning "Two ejection reports, one teardown, and two stuck-tool reports with different suspects"
     Two owners describe the active tool coming loose from the toolhead. One of them
     opened the head and found a physical cause on their own machine. That is strong
     evidence for that unit and says nothing yet about how common the defect is. A third
-    owner in the same thread reports the opposite fault, a tool that will not release.
-    `provisional`.
+    owner in the same thread reports the opposite fault, a tool that will not release,
+    and a fourth, in a separate thread, had a tool stuck in the head with its filament,
+    not the lock, as the suspect. `provisional`.
 
 ## Summary
 
@@ -87,6 +89,24 @@ is not the symptom the rest of this page describes. It is recorded here because 
 involves the same locking train — the first owner, too, had tools that would not
 release as well as tools that fell out.
 
+### A separate thread: a tool stuck in the head, filament suspected
+
+In a [separate thread](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/filament-stuck-with-asa-pla-support/),
+an owner printing ASA with PLA as the support material reports that after a few dozen
+tool changes the PLA tool stopped parking, which ended the print. The tool stayed in
+the head, and the owner took it out by hand with a slight twist and some force. The
+strand remained in the nozzle; the stretch the extruder drive grips was tangled,
+though not melted. They put it down to heat: the warm chamber ASA needs, and perhaps the rapid tool
+changes, softening the PLA high up in the tool. The PLA was already a heat-resistant
+grade. The owner asked whether PETG would do better as the support, and the one reply
+agreed; no outcome has been posted.
+
+That is the third owner's symptom, a tool that will not leave the head, with a
+different suspect, and nobody opened the head. Whether the tangled strand is what held
+the tool in, or followed from a release that failed for another reason, is not
+established. It is recorded because it points to a cause outside the locking train
+that is cheap to rule out, particularly on mixed-material prints in a warm chamber.
+
 ### Recovery can loop
 
 When a tool jammed in the head, the first owner found the printer stuck retrying the
@@ -114,12 +134,15 @@ claim the vendor would otherwise honor. And rule out the simpler reasons a tool 
 loose first: a plate or wiper fouling the docks, covered under
 [build plate compatibility](../reference/build-plate-compatibility.md), and dock
 calibration, covered under
-[tool detection and park failures](tool-detection-ringdown-decay.md).
+[tool detection and park failures](tool-detection-ringdown-decay.md). If a tool will
+not leave the head, look at the filament where the extruder drive grips it before
+suspecting the lock; that rests on the single report from the separate thread above.
 
 ## Verification
 
 `provisional` — three owners in one thread, and a physical cause found on one machine
-only; one owner reports only the opposite fault, a tool that will not release.
+only; one owner reports only the opposite fault, a tool that will not release; a fourth
+owner, in a separate thread, reports a stuck tool and suspects the filament.
 
 The teardown is first-hand and specific: a named component, a described failure, and a
 reproduction that isolates the mechanism by driving the extruder by hand. For that one
@@ -133,6 +156,11 @@ The third owner's report comes from the same thread, describes the opposite faul
 suspects a different part, so it does not bear on the tier. The replacement head they
 say they were promised is their own account rather than the vendor's, and it names no
 defect, so it is not the vendor statement asked for below.
+
+The separate-thread report is a single account with no teardown. It describes a tool
+that would not leave the head rather than one that fell out, and blames softened
+filament rather than any part of the head, so it neither raises the tier nor counts as
+a second report of the third owner's fault.
 
 The teardown post was still awaiting moderation on the forum when this page was first
 written; it has since been published, and the link shows it. The owner's video and a set

@@ -18,6 +18,10 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5494
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5505
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/gcode/bedlevel/ubl/G29.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/
 superseded_by:
 ---
 
@@ -170,8 +174,10 @@ it — but they are leads, and they are the same figure the marker above is aski
 
 ### When leveling fails and retries
 
-`provisional` — a few reports, and they do not agree. Once bed leveling has failed on a
-fouled nozzle, do not count on the retry starting from a clean one. A
+`provisional` for the owner reports — a few of them, and on their face they do not
+agree. The firmware source, below, matches each to the step that failed. Once bed
+leveling has failed on a fouled nozzle, do not count on the retry starting from a clean
+one. A
 [feature request](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5494)
 describes the head moving over to the wiper and then going back to the bed for another
 attempt without scrubbing the nozzle. An owner on the 6.9.1 beta, in the
@@ -185,7 +191,38 @@ the other gives no version, and neither does the feature request. So firmware ve
 does not explain the difference, and those two posts do not say whether bed leveling or
 tool offset calibration was the step failing.
 
+**Two steps, two retries.** Read against the firmware source, the accounts stop
+conflicting: they describe different steps. When bed leveling cannot get a reading, the
+printer parks the head at its park position, which the code places inside the nozzle
+cleaner area, asks whether to retry, and on a yes leaves the cleaner and probes again
+with no cleaning in between. That is the feature request and the beta owner. When tool
+offset calibration fails during a print, the printer parks the head at the front with
+the bed lowered, where the nozzle can be reached, and on Retry runs the per-tool
+preparation again — heat, purge, cool, wipe — before it probes. After a failed XY scan
+that is the failing tool alone; after a failed Z probe the retry restarts calibration
+from the first tool, so every tool is purged again. That is the re-fouling the other two
+owners describe, and it happens however well the nozzle was just cleaned. Both paths
+take the same steps in 6.9.0, the 6.9.1 beta and stable 6.9.1 (in the preparation, the
+beta changed only the temperature it cools to), which is why version did not separate
+the reports. That holds for Prusa's own builds; the owner on a 6.9.1 build posted before
+the stable release and did not say which build it was. The bed-leveling code does have a branch that wipes and
+retries, but it belongs to a probe-cleanup pass that the stock INDX start G-code does
+not call.
+
+In practice: a failed bed leveling will not clean the nozzle for you, and after a failed
+tool offset calibration, cleaning by hand is followed by a fresh purge. An
+[upstream report](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5505) against
+the beta asks for the calibration retry to skip the purge and only reheat and wipe,
+since purging again feeds the problem back in; it is open and unanswered. This is a
+reading of the code at the v6.9.1 tag, not something an owner has confirmed by watching
+both failures on one machine.
+
 ### If none of that helps
+
+To find out whether ooze is involved at all, one owner had the printer probe with an
+empty tool, so that nothing could ooze; probing failed just the same, which ruled ooze
+out for them ([thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/)).
+Single report, and their fault was still unresolved.
 
 If probing fails with the nozzle plainly nowhere near the sheet — a gap you can see
 rather than one you would measure — that is a different fault entirely and ooze is
@@ -211,6 +248,17 @@ fix, and the hard-coded calibration temperature all come from the
 [common problems summary](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/),
 a condensation of a now-offline community knowledge base. None of it is separately
 confirmed in the forum corpus, and no numbers from it are reproduced here.
+
+The retry behavior is read from the firmware source at the v6.9.1 tag — the
+[bed leveling command](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/gcode/bedlevel/ubl/G29.cpp)
+and the
+[tool offset calibration](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp)
+— and the 6.9.0 and 6.9.1 beta tags take the same retry paths. The beta changed how they
+run, not which steps they take: the per-tool preparation cools further, the XY scan runs
+cooler, and the touch on the sensor board gets more attempts before it counts as failed
+(see [error codes](../codes.md)). It is recorded because
+it accounts for every owner report in that section without contradicting any of them,
+but it shows what the code does, not what an owner has watched happen.
 
 Where the sources disagree: drying was offered confidently as the likely cause for
 PETG, but the case that was actually resolved was resolved by cleaning, not drying.

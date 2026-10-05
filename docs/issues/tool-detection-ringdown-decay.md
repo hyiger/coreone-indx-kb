@@ -1,7 +1,7 @@
 ---
 title:        Phantom tools, "tool not detected" and park failures
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -211,9 +211,11 @@ the park check, and the public source bears that out: between the
 the work is in tool offset calibration, parking and calibration moves, homing, a Wi-Fi
 fix, a new gantry squareness wizard and filament presets, and the code that reads the coil and
 sorts the decay into present, absent or unknown is untouched. The 6.9.0 threshold still
-stands, and the bug report is still open, with nothing new on it since July. No owner has
-yet reported park behavior on 6.9.1, so this is a reading of the source rather than a
-result from a machine.
+stands. The bug report is still open, but nobody has added to it since July: on 28
+September 2026 GitHub's stale-issue bot warned that it may be closed if no update follows
+within a week. A closure on those grounds would not mean the fault had been fixed. No
+owner has yet reported the still-detected-after-park failure on 6.9.1, so this is a
+reading of the source rather than a result from a machine.
 
 ## Verification
 

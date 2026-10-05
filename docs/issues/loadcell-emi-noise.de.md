@@ -1,7 +1,7 @@
 ---
 title:        Probing schlägt fehl oder die Düse berührt das Bett nie — Rauschen im Wägezellensignal
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -17,8 +17,12 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/loadcell-noise-and-mesh-bed-levelling/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/loadcell-test-tool-crash-on-calibration/
 superseded_by:
-source_sha:   0eb57cb747bbdc4f583eadc68c8df3421543b18288b6a2c9dfba2a4c03039085
+source_sha:   8d35dfe06cc8431488fdbfba3fea1993824cf48c62b8ead634756d540b9c0d58
 ---
 # Probing schlägt fehl oder die Düse berührt das Bett nie — Rauschen im Wägezellensignal
 
@@ -81,10 +85,46 @@ als verfrühtes Drücken oder als verrauschtes Signal; nachdem der Besitzer den 
 abgebrochen und neu gestartet hatte, bestand er sofort. Der Besitzer vermutete, dass der
 in der Firmware vor INDX eingestellte Lautlos-Modus übernommen worden war. Prusa
 antwortete, der Umbau setze den Drucker nach eigenem Kenntnisstand auf
-Werkseinstellungen zurück, und der Fehler lasse sich nicht nachstellen. Das ist ein
-einzelner, ungeklärter Bericht, `provisional`, aber ein zweiter Versuch kostet nichts:
-Schlägt der Selbsttest beim ersten Durchlauf nach einem Umbau fehl, führen Sie ihn noch
-einmal aus, bevor Sie von einer Störung ausgehen.
+Werkseinstellungen zurück, und der Fehler lasse sich nicht nachstellen. Ein zweiter
+Besitzer, ebenfalls mit einem Gen-2-Umbau, beschreibt in
+[einem Forumsthread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/)
+denselben Ausgang — erst Fehlschlag, dann Erfolg beim zweiten Versuch: Der Selbsttest
+meldete immer wieder ein verrauschtes Signal, bis der Besitzer ihn abbrach, den Drucker
+eine Referenzfahrt (Homing) ausführen ließ und ihn erneut startete; dann bestand er.
+Gemeinsam ist den beiden nur dieser Ausgang. Der erste Bericht betraf nur den ersten Durchlauf nach dem Umbau, und
+die Pieptöne fehlten; der Fehlschlag beim zweiten Besitzer war nicht an einen ersten
+Durchlauf gebunden: Er trat sowohl im kompletten Kalibrierablauf auf als auch, wenn der
+Test allein an der kalten Maschine gestartet wurde, und der Besitzer beschreibt ein
+leises Brummen beim fehlschlagenden Versuch.
+Zwei Berichte an verschiedenen Stellen machen diesen Ausgang beim zweiten Versuch zu
+`reported`, aber keiner der beiden erklärt ihn. Ein zweiter Versuch kostet nichts:
+Schlägt der Selbsttest fehl, brechen Sie ab und führen Sie ihn noch einmal aus, bevor
+Sie von einer Störung ausgehen. Der zweite Besitzer ließ den Drucker vor dem zweiten
+Versuch außerdem eine Referenzfahrt ausführen; dieser Schritt stammt allein aus seinem
+Bericht, `provisional`.
+
+Ob ein verrauschter Selbsttest auch verrauschtes Abtasten bedeutet, ist nicht geklärt.
+Dieser zweite Besitzer und ein dritter, in
+[einem eigenen Thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/loadcell-noise-and-mesh-bed-levelling/),
+brachten beide die Rauschmeldungen des Selbsttests mit Problemen bei der ersten Schicht
+in Verbindung und fragten, ob das eine das andere verursacht. Der zweite Besitzer hat
+eine Stelle auf dem Bett, an der die erste Schicht durchgehend nicht haftet, und
+verdächtigt die Wägezelle, ohne Diagnose. Der dritte, dessen Selbsttest häufig Rauschen
+meldet, versuchte es zu prüfen: Er ließ dasselbe Mesh-Bed-Leveling zweimal
+hintereinander laufen, änderte dazwischen nichts außer der Reinigung der Druckplatte
+und las die abgetasteten Werte aus. Er fand die beiden Durchläufe an jedem Punkt nah
+beieinander, hielt das für innerhalb der Toleranz und fragte, ob die Rauschmeldungen
+damit kein Grund zur Sorge seien. TODO(verify): die Streuung zwischen den
+beiden Durchläufen, wie im Thread zu Wägezellenrauschen und Mesh-Bed-Leveling
+angegeben; ein Bereich, der eine gesunde Wiederholung von einer fehlerhaften trennt,
+ist hier nicht ermittelt. Jeder dieser Punkte ist ein einzelner Bericht,
+`provisional`, und keiner der drei Besitzer hat einen Ferrit angebracht; zur Abhilfe
+weiter unten sagen sie also weder etwas dafür noch dagegen. Ein wiederholtes Mesh kann
+trotzdem eine günstige Prüfung sein, bevor Sie Hardware kaufen, aber nur, wenn es so
+läuft, wie ein Druck abtastet, also mit heißem Hotend, weil die Arbeitshypothese auf
+dieser Seite eine Störung durch das Heizelement ist. Der Thread sagt nicht, ob die Düse bei diesen Durchläufen
+heiß war. Zwei übereinstimmende Durchläufe mit kalter Düse schließen eine Störung nicht
+aus. Das ist eine Schlussfolgerung, keine erprobte Regel.
 
 ### Was Sie versuchen können
 
@@ -119,6 +159,20 @@ einmal aus, bevor Sie von einer Störung ausgehen.
     Siehe [diagonale Streifenbildung](diagonal-banding.md), wo dieser Tausch beschrieben
     ist. Wenn Ihre Platine neueren Datums ist und der Fehler mit dem Kopf mitwandert,
     wenden Sie sich an den Hersteller, statt Ferrite zu kaufen.
+
+    Ein Bericht aus einem anderen Thread endete mit einer Hardwarelösung statt mit einer
+    Störung als Ursache. Ein Besitzer unter 6.6.0 und 6.6.1, dessen Wägezellentest immer wieder vor instabilen
+    Messwerten warnte — obwohl ein Druck auf die Düse nach dem Wegklicken der Warnung
+    trotzdem registriert wurde — und dessen Drucke mit dem Werkzeug-Offset-Fehler 36130
+    abbrachen,
+    [führte das Problem schließlich auf ein defektes Teil zurück](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/),
+    das er als Werkzeughalter bezeichnet und beim Hersteller reklamiert hat; seitdem
+    funktioniert alles. Auf die Warnung im Wägezellentest kommt der Beitrag nicht
+    zurück; dass auch sie verschwand, folgt aus dem „alles“, ausdrücklich gesagt wird es
+    nicht. Ein Ferrit wird im Beitrag nicht erwähnt. Aus dem Beitrag geht
+    nicht hervor, welche Baugruppe gemeint ist, daher ist dieser Bericht `provisional`.
+    Derselbe Fall erscheint unter
+    [Werkzeug-Offset-Kalibrierung schlägt fehl](offset-sensor-board-failure.md).
 
 !!! note "Eine dritte Ursache: Homing, das nach bestandener Kalibrierung fehlschlägt"
     Firmware 6.9.1, am 2026-09-25 als stabile Version erschienen, nennt eine
@@ -186,10 +240,14 @@ Wo die Quellen schwächer sind: Der in der Zusammenfassung beschriebene kontroll
 A/B-Test (Fehlschlag ohne Kern, Funktion mit Kern, erneuter Fehlschlag nach Entfernen)
 ist dort aus zweiter Hand berichtet und im Forumsbestand nicht gesondert nachweisbar. Die
 Wertebänder der Wägezelle und die Ferritspezifikationen haben nur eine Quelle und werden
-oben zurückgehalten. Der Bericht zum Selbsttest beim ersten Durchlauf ist ein einzelnes
-Issue, das Prusa nicht nachstellen konnte, und die Homing-Korrektur stützt sich auf die
-Release Notes und das Firmware-Repository des Herstellers, nicht auf Berichte von
-Besitzern.
+oben zurückgehalten. Für den Selbsttest, der beim zweiten Versuch besteht, gibt es
+inzwischen zwei Berichte an verschiedenen Stellen, aber keine Erklärung, und Prusa
+konnte den ersten nicht nachstellen. Die Referenzfahrt vor dem zweiten Versuch, die
+Prüfung mit wiederholtem Mesh, die Reklamation beim Hersteller und der Fall der Werkzeugerkennung
+unter „Verwandte Seiten“ sind jeweils ein einzelner Bericht. Keiner dieser Besitzer hat einen Ferrit angebracht;
+sie stärken oder schwächen die Argumente dafür also nicht. Die Homing-Korrektur stützt
+sich auf die Release Notes und das Firmware-Repository des Herstellers, nicht auf
+Berichte von Besitzern.
 
 ## Verwandte Seiten
 
@@ -206,3 +264,10 @@ Besitzern.
 - [Montagehinweise](../reference/assembly-notes.md) — wenn der Wägezellentest seit dem
   Aufbau der Maschine instabil war und nie funktioniert hat, behandeln Sie es als
   Aufbaufrage, bevor Sie es als Störungsfrage behandeln.
+- [Phantom-Werkzeuge, „Werkzeug nicht erkannt“ und Park-Fehler](tool-detection-ringdown-decay.md)
+  — wie der Kopf ein eingesetztes Werkzeug erkennt. Ein Erkennungsfehler kann den
+  Wägezellentest ebenfalls stoppen, ohne ein Wägezellenfehler zu sein: In
+  [einem Bericht](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/loadcell-test-tool-crash-on-calibration/)
+  unter 6.9.1 nahm der Testschritt ein Werkzeug auf und fuhr es gegen die anderen Docks,
+  und der Besitzer stellte fest, dass der Drucker ein eingesetztes Werkzeug nie erkannte
+  (`provisional`).

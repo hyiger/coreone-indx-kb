@@ -1,7 +1,7 @@
 ---
 title:        Probing fails or nozzle never touches the bed — loadcell noise
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -17,6 +17,10 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/loadcell-noise-and-mesh-bed-levelling/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/loadcell-test-tool-crash-on-calibration/
 superseded_by:
 ---
 
@@ -75,9 +79,40 @@ test in the first calibration after a C1 was upgraded to a C1+ (Gen 2) with INDX
 press or a noisy signal; once the owner aborted the wizard and started it again, it
 passed straight away. The owner suspected that silent mode, set on the pre-INDX
 firmware, had carried over. Prusa replied that, as far as it knew, the conversion
-factory-resets the printer, and that it could not reproduce the fault. That is one
-unexplained report, `provisional`, but a retry costs nothing: if the self-test fails on
-the first run after a conversion, run it once more before treating it as interference.
+factory-resets the printer, and that it could not reproduce the fault. A second owner,
+also on a Gen 2 upgrade, describes the same fail-then-pass-on-retry outcome in
+[a forum thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/):
+the self-test kept flagging a noisy signal until they aborted it, homed the printer and
+ran it again, and then it passed. Only that outcome is shared. The first report
+concerned only the first run after the conversion, with the beeps missing; the second
+owner's failure was not tied to a first run: it came both in the full calibration
+sequence and when the test was started on its own from a cold machine, and they
+describe a faint hum during the failing attempt.
+Two reports in different places make the retry outcome `reported`, but neither
+explains it. A retry costs nothing: if the self-test fails, abort and run it once more
+before treating it as interference. The second owner also homed the printer before the
+retry; that step comes from their report alone, `provisional`.
+
+Whether a noisy self-test means noisy probing is not settled. That second owner and a
+third, in
+[a separate thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/loadcell-noise-and-mesh-bed-levelling/),
+both linked the self-test's noise complaints to first-layer trouble and asked whether
+one causes the other. The second owner has one area of the bed where the first layer
+consistently fails to attach and suspects the loadcell, without a diagnosis. The third,
+whose self-test often complains of noise, tried to check: they ran the same mesh bed
+leveling twice in a row, changing nothing except cleaning the sheet between runs, and
+read back the probed values. They found the two runs close at every point, judged that
+within tolerance, and asked whether that meant the noise warnings were nothing to worry
+about.
+TODO(verify): the spread between the two runs, as given in the loadcell noise and mesh
+bed leveling thread; no band separating a healthy repeat from a faulty one has been
+established here. Each of these is a single report, `provisional`, and none of the
+three owners fitted a ferrite, so they say nothing either way about the fix below. A
+repeated mesh may still be a cheap check before buying hardware, but only if it is run
+the way a print probes, with the hotend hot, because the working theory on this page
+is interference from the heater. The thread does not say whether the nozzle was hot
+during those runs. Two matching runs with a cold nozzle do not rule interference out. This is an
+inference, not a tested rule.
 
 ### What to try
 
@@ -107,6 +142,19 @@ the first run after a conversion, run it once more before treating it as interfe
     in the toolhead. See [diagonal banding](diagonal-banding.md), where that swap is
     described. If your board is recent and the fault moves with the head, go to the
     vendor rather than buying ferrites.
+
+    A report from another thread ended in a hardware fix rather than interference. An
+    owner on 6.6.0 and 6.6.1 whose loadcell
+    test kept warning of unstable readings, although a press on the nozzle still
+    registered once the warning was dismissed, and whose prints stopped on a 36130 tool
+    offset error, eventually
+    [traced the problem to a faulty part](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/)
+    they call the tool holder, which they took up with the manufacturer under warranty;
+    everything has worked since. The post does not come back to the loadcell warning;
+    that it cleared too is implied by "everything", not stated. The post mentions no
+    ferrite. It does not make clear
+    which assembly they mean, so that one is `provisional`. The same case appears under
+    [tool offset calibration fails](offset-sensor-board-failure.md).
 
 !!! note "A third cause: homing that fails after the calibration passed"
     Firmware 6.9.1, released as stable on 2026-09-25, lists a homing fix for
@@ -168,9 +216,13 @@ Where the sources are weaker: the controlled A/B test described in the summary
 (failing without a core, working with one, failing again on removal) is reported
 second-hand there and is not separately visible in the forum corpus. The loadcell
 value bands and ferrite specifications are single-source and withheld above. The
-first-run self-test report is a single issue that Prusa could not reproduce, and the
-homing fix rests on the vendor's release notes and firmware repository, not on owner
-reports.
+self-test that passes on a retry now has two reports in different places, but no
+explanation, and Prusa could not reproduce the first. Homing before the retry, the
+repeated-mesh check, the warranty claim and the tool-detection case under Related are
+one report each.
+None of those owners fitted a ferrite, so they neither strengthen nor weaken the case
+for it. The homing fix rests on the vendor's release notes and firmware repository,
+not on owner reports.
 
 ## Related
 
@@ -187,3 +239,9 @@ reports.
 - [Assembly notes](../reference/assembly-notes.md) — if the loadcell test has been
   unstable since the machine was built and never worked, treat it as a build
   question before an interference one.
+- [Phantom tools, "tool not detected" and park failures](tool-detection-ringdown-decay.md)
+  — how the head detects a fitted tool. A detection fault can also stop the loadcell
+  test without being a loadcell fault: in
+  [one report](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/loadcell-test-tool-crash-on-calibration/)
+  on 6.9.1, the test step picked a tool and drove it into the other docks, and the
+  owner found the printer never registered a fitted tool (`provisional`).

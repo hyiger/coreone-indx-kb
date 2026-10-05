@@ -1,7 +1,7 @@
 ---
 title:        Diagonale Bänderung auf den Druckwänden
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -13,7 +13,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
 superseded_by:
-source_sha:   a3165a1d3e91ab88684dc481d0d9cdd4de1049b02109a786623f54636a6e6399
+source_sha:   e91570c58454a5b77f5aa93ccdf9e8ad20c493ed60c72c77bd65e748516a8722
 ---
 # Diagonale Bänderung auf den Druckwänden
 
@@ -26,7 +26,8 @@ Es gibt einen Test aus zwei Drucken, der die Frage in etwa einer Stunde und ohne
 Demontage klärt; er lohnt sich, bevor Sie einen Supportfall eröffnen. Eine schwach
 ausgeprägte Form dieses Artefakts scheint für einen Extruder mit zwei Antriebsrädern
 normal zu sein; eine deutlich ausgeprägte ist ein Hardwarefehler, und die berichtete
-Abhilfe ist ein Austausch des Werkzeugkopfs.
+Abhilfe ist ein Austausch des Werkzeugkopfs — noch keine verlässliche, denn bei einem
+Besitzer zeigte auch der Ersatzkopf dieselben Linien (ein einzelner Bericht).
 
 ## Details
 
@@ -202,8 +203,8 @@ entspricht — ist der berichtbare Teil und kommt ohne sie aus.
 
 Bei einem deutlich ausgeprägten Fall ist der berichtete Weg ein **Austausch des
 Werkzeugkopfs** über den Hersteller, da der Fehler zum Zeitpunkt der Abfassung nicht auf
-ein einzeln austauschbares Teil eingegrenzt war. Siehe
-[wen Sie kontaktieren](support-and-warranty-path.md).
+ein einzeln austauschbares Teil eingegrenzt war, und auch bei dieser Aktualisierung ist er
+es noch nicht. Siehe [wen Sie kontaktieren](support-and-warranty-path.md).
 
 Dieser Weg kann dauern. Mitte September berichtete ein anderer Besitzer, ihm sei
 mitgeteilt worden, der Hersteller untersuche zurückgesandte Werkzeugköpfe, um den Fehler
@@ -214,6 +215,22 @@ berichtete von drei Wochen ohne Rückmeldung, nachdem ihm ein Austausch angebote
 war; der parallel eingeschaltete Prusa-Support habe zunächst eine Ursache in der
 Bewegungsmechanik gesucht und dann eine Werksreparatur angeboten. Jeder dieser Berichte
 stammt von einem einzelnen Besitzer über seinen eigenen Support-Fall.
+
+Ende September zogen die beiden Support-Wege in verschiedene Richtungen. Der Besitzer,
+dem mitgeteilt worden war, der Hersteller halte Austauschköpfe zurück, wiederholte diese
+frühere Antwort: Der Hersteller erkenne den Fehler an, arbeite noch an einer Lösung und
+werde keine neue Einheit verschicken, bevor er sich ihrer sicher sei. Dennoch erhielt
+ein Besitzer über Prusa einen Austauschkopf — eine spritzgegossene Ausführung, die er
+einer neueren Charge zuordnete —, und dieser zeigte erneut die diagonalen Linien. Der
+Verfasser des Protokolls deutete an, der Unterschied könne daran liegen, dass inzwischen
+Prusa die meisten dieser Fälle bearbeite; das ist eine Vermutung, und keines der beiden
+Unternehmen hat das gesagt. Ein weiterer Besitzer mit einem offenen Prusa-Fall erhielt
+eine E-Mail, laut der Prusa in vergleichbaren Fällen eine mögliche Ursache auf der Seite
+des Werkzeugkopfs gesehen habe; darin wurde nach seiner Firmware gefragt und eine
+Abhilfe in Aussicht gestellt, ohne sie zu beschreiben. Der nächste Kontakt, Ende
+September, bestand aus routinemäßigen Fragen zur Fehlersuche an der Bewegungsmechanik,
+die nach Ansicht dieses Besitzers den ersten Chat weitgehend wiederholten. Auch dies ist
+jeweils die Darstellung eines einzelnen Besitzers, und keine davon benennt ein Teil.
 
 #### Der Behelf mit dem Distanzstück
 
@@ -257,21 +274,29 @@ danach suchte.
 
 !!! warning "Prüfen Sie den Austausch, bevor Sie sich freuen"
     Der Besitzer, auf dessen Fall diese Seite beruht, erhielt einen Austausch-Werkzeugkopf,
-    der die Bänderung beseitigte, aber mit einem **anderen Fehler** ankam — einer
-    unzuverlässigen Wägezelle, wobei Referenzfahrt und Antasten übermäßig lange dauerten
-    und die meisten Drucke mit der Aufforderung, Z neu zu kalibrieren, gar nicht erst
-    starteten.
+    der die Bänderung weitgehend beseitigte, aber mit einem **anderen Fehler** ankam —
+    einer unzuverlässigen Wägezelle, wobei Referenzfahrt und Antasten übermäßig lange
+    dauerten und die meisten Drucke mit der Aufforderung, Z neu zu kalibrieren, gar nicht
+    erst starteten. Es folgte ein weiterer Austauschkopf. Ende September beschrieb dieser
+    Besitzer den inzwischen eingebauten Kopf als viel besser, aber nicht makellos: Auf
+    glänzendem Filament und bei passendem Licht lassen sich die Linien noch schwach
+    ausmachen.
 
-    Zwei Dinge machen diesen Fall lehrreich. Der Fehler **folgte dem Werkzeugkopf** über
-    den Tausch hinweg, während der ursprüngliche Werkzeugkopf jedes Mal einwandfrei
-    referenzierte, und die Steuerplatine der Maschine war neueren Datums. Genau diese
-    Kombination unterscheidet einen echten Hardwarefehler von der durch elektrische
-    Störungen verursachten Variante desselben Symptoms — siehe
+    Zwei Dinge machen den Fall mit der Wägezelle lehrreich. Der Fehler **folgte dem
+    Werkzeugkopf** über den Tausch hinweg, während der ursprüngliche Werkzeugkopf jedes
+    Mal einwandfrei referenzierte, und die Steuerplatine der Maschine war neueren Datums.
+    Genau diese Kombination unterscheidet einen echten Hardwarefehler von der durch
+    elektrische Störungen verursachten Variante desselben Symptoms — siehe
     [Störungen an der Wägezelle](loadcell-emi-noise.md), wo ein Ferritkern die übliche
-    Antwort ist. Ein Ferrit behandelt Störungen; eine defekte Wägezelle repariert er nicht.
+    Antwort ist. Ein Ferrit behandelt Störungen; eine defekte Wägezelle repariert er
+    nicht.
 
-    Prüfen Sie an jedem Austauschkopf Antasten und Referenzfahrt, bevor Sie ihm einen
-    langen Druck anvertrauen.
+    Auch die Bänderung selbst ist nicht sicher verschwunden: Der oben erwähnte Ersatzkopf
+    eines Besitzers zeigte erneut die diagonalen Linien, ohne Angabe zur Ausprägung
+    (`provisional`, ein einzelner Bericht).
+    Prüfen Sie an jedem Austauschkopf Antasten und Referenzfahrt und führen Sie damit den
+    ersten Druck des Zwei-Druck-Protokolls aus, bevor Sie ihm einen langen Druck
+    anvertrauen.
 
 ## Verifikation
 
@@ -283,7 +308,7 @@ verschiedenen Teilnehmern im
 [Thread zur diagonalen Bänderung](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/)
 beschrieben worden, seitdem von mehreren weiteren, von massiv bis kaum wahrnehmbar auf
 glänzendem Filament; das Phänomen ist also nicht die Einbildung einer einzelnen Person.
-Der Thread ist als beantwortet markiert und umfasst 117 Beiträge. Das
+Der Thread ist als beantwortet markiert und umfasst 125 Beiträge. Das
 Zwei-Druck-Protokoll ist seine als Lösung markierte Antwort, verfasst von dem Besitzer,
 der das Problem unter Beteiligung des Herstellers und des Prusa-Supports bearbeitet hat,
 und die Begründung, warum es Extrusion von Bewegung trennt, ist in sich schlüssig.
@@ -296,12 +321,16 @@ einzelner Durchlauf. Er bestätigt die Kernaussage (das Muster ändert sich zwis
 beiden Drucken), zählt aber, da im selben Thread, nicht als zweite Quelle; das Ausmaß
 der beobachteten Änderung wird beim Test selbst behandelt.
 
-**Einzelquelle.** Der schwere Fall, das Ergebnis mit dem Austausch-Werkzeugkopf und der
-nachfolgende Wägezellenfehler sind allesamt die Erfahrung eines einzelnen Besitzers. Die
+**Einzelquelle.** Der schwere Fall, die Ergebnisse mit den Austausch-Werkzeugköpfen und
+der nachfolgende Wägezellenfehler sind allesamt die Erfahrung eines einzelnen Besitzers,
+der zwei Austauschköpfe erhielt. Die
 [Zusammenfassung häufiger Probleme](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/)
 verzeichnet unabhängig davon einen schweren Bänderungsfall, den der Hersteller als defekte
 Extrudereinheit bestätigt hat, was die Schlussfolgerung stützt, aber durchaus denselben
-Fall beschreiben kann und nicht einen zweiten.
+Fall beschreiben kann und nicht einen zweiten. Der Austauschkopf, der die Linien wieder
+zeigte, ist die Erfahrung eines zweiten Besitzers, ebenfalls aus einer Einzelquelle und
+im selben Thread. Die dokumentierten Austauschergebnisse weisen in entgegengesetzte
+Richtungen, und keines kommt über `provisional` hinaus.
 
 **Analyse, keine Messung.** Die Erklärung über den Zahneingriff ist die Berechnung eines
 einzelnen Besitzers, veröffentlicht kurz bevor diese Seite entstand, ohne dass der
@@ -320,10 +349,12 @@ durch Zahnradreinigung ergibt.
 
 Was diese Seite stärken würde: weitere Besitzer, die das Zwei-Druck-Protokoll durchführen
 und das Ergebnis melden, ein Distanzstück, das auch an einem zweiten Werkzeugkopf wirkt,
-und eine Aussage des Herstellers, die das konkrete Teil benennt. Zum Zeitpunkt dieser
-Aktualisierung hat niemand ein Ergebnis mit Distanzstück an einem anderen Werkzeugkopf
-gemeldet, und die im Thread wiedergegebenen Antworten des Herstellers erkennen den Fehler
-an, ohne ein Teil zu benennen.
+eine Aussage des Herstellers, die das konkrete Teil benennt, und ein Austauschkopf, der
+nachweislich eine Korrektur enthält. Zum Zeitpunkt dieser Aktualisierung hat niemand ein
+Ergebnis mit Distanzstück an einem anderen Werkzeugkopf oder einen weiteren Durchlauf des
+Protokolls gemeldet. Die im Thread wiedergegebenen Antworten des Herstellers erkennen den
+Fehler an, ohne ein Teil zu benennen, und auch die bis Ende September wiedergegebenen
+Antworten von Prusa benennen keines.
 
 ## Verwandte Seiten
 
