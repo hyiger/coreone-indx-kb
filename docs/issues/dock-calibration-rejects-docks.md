@@ -3,7 +3,7 @@ title:        Dock calibration rejects some or all docks
 confidence:   reported
 updated:      2026-10-04
 author:       hyiger
-printer:      Core One, Core One+ (Gen 2)
+printer:      Core One, Core One+, Core One+ (Gen 2)
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
