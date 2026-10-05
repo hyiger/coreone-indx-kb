@@ -1,7 +1,7 @@
 ---
 title:        Issues
 confidence:   unknown
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      unknown
 toolhead:     unknown
@@ -64,6 +64,10 @@ reader a part, a print, or a warranty window.
 - [Tool offset calibration fails with a clean nozzle and nothing loaded](tool-offset-bed-z-alignment.md)
   — the bed is out of alignment in Z and gives way under the nozzle during the Z
   touch. Run Z Alignment Calibration before suspecting the board. *Single source.*
+- [Dock calibration rejects some or all docks](dock-calibration-rejects-docks.md)
+  — the measured docks fall outside the window the firmware expects. Which docks fail,
+  and in which direction, points to the cause; docks all off by the same amount in Y
+  usually mean the belt-type setting does not match the belts.
 - [Oozing spoils bed probing and tool calibration](oozing-during-probing-and-calibration.md)
   — material where the machine is trying to take a measurement. Start by cleaning the
   offset sensor window.
@@ -109,7 +113,7 @@ The `361xx` block is the toolchanger family. These are the codes that map onto a
 | `36130` | Tool offset failed | [Error codes](../codes.md#stock-firmware) to find which step failed, then [tool offset calibration](offset-sensor-board-failure.md), or [bed alignment](tool-offset-bed-z-alignment.md) with a clean nozzle and nothing loaded |
 | `36190` to `36197` | The step of tool offset calibration that failed | [Error codes](../codes.md) |
 | `36135` | Toolchanger error | [Tool detection](tool-detection-ringdown-decay.md) |
-| `36136` | Calibrate dock from menu | [Tool offset calibration](offset-sensor-board-failure.md) |
+| `36136` | Calibrate dock from menu | [Dock calibration](dock-calibration-rejects-docks.md) |
 | `36202` | Hotend preheat error | [Tool detection](tool-detection-ringdown-decay.md) |
 | `36526` `36527` `36528` | Loadcell measure failed / bad configuration / timeout | [Loadcell noise](loadcell-emi-noise.md) |
 

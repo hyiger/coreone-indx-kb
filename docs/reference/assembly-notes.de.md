@@ -23,7 +23,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/how-many-types-of-fasteners-etc-come-with-indx-gen2-upgrade/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-fe-upgrading-to-gen2/
 superseded_by:
-source_sha:   926f1dffc9ff3e7b99f8e8772b6a62235da37d9216f664edd61c5291b58a9dda
+source_sha:   2f02773f46195353a51614073ae5de3d03551153f986576043b34c09b0990f3b
 ---
 # Montagehinweise — INDX-Umbausatz
 
@@ -181,9 +181,14 @@ hat; ein Besitzer der Founders Edition rät in einem anderen Thread ebenfalls da
 dieses Teil wegzulassen. Prüfen Sie nach dem ersten Flashen den Bildschirm der
 Hardwarekonfiguration: Ein Besitzer stellte mit der INDX-Firmware, die Mitte September
 2026 aktuell war, also vor dem stabilen Release 6.9.1, fest, dass sie angenommen hatte,
-die Gen-2-Riemen seien verbaut — in seinem Fall zu Recht, aber sie hatte keine
-Möglichkeit, das zu erkennen. *Einzelmeldung* zur Riemeneinstellung, und ob sich 6.9.1
-ebenso verhält, wurde nicht berichtet.
+die Gen-2-Riemen seien verbaut — in diesem Fall zu Recht, aber sie hatte keine
+Möglichkeit, das zu erkennen. Ein zweiter Besitzer fand in einem anderen Thread dieselbe
+Einstellung an einer Maschine, deren Gen-2-Teile noch nicht verbaut waren, und sie ließ
+die Dock-Kalibrierung scheitern; siehe
+[Dock-Kalibrierung](../issues/dock-calibration-rejects-docks.md). Prusas Firmware-Quellcode
+wendet beim ersten Start die Gen-2-Variante an, was beides erklären würde; dass das
+Flashen der INDX-Firmware als erster Start zählt, ist jedoch erschlossen, nicht
+bestätigt.
 
 ## Schritte, bei denen man langsamer machen sollte
 
@@ -526,5 +531,8 @@ nicht sagen kann.
   der häufigste Fehlschlag beim ersten Start
 - [Antasten schlägt fehl oder die Düse berührt das Bett nie](../issues/loadcell-emi-noise.md) —
   wenn der Wägezellentest ab Werk instabil ist
+- [Dock-Kalibrierung lehnt einige oder alle Docks ab](../issues/dock-calibration-rejects-docks.md) —
+  wenn die Dock-Kalibrierung an einem frisch aufgebauten Drucker scheitert; prüfen Sie
+  zuerst die Riemeneinstellung
 - [Wen Sie kontaktieren sollten](../issues/support-and-warranty-path.md) — Weiterleitung
   bei Support und Garantie
