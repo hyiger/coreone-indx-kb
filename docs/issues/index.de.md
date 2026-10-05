@@ -10,7 +10,7 @@ nozzle:       unknown
 firmware:     unknown
 sources:      []
 superseded_by:
-source_sha:   c27fcb29e8882ef7f195260acd7148ef4e5aa8ecc63615eb995946b79397e911
+source_sha:   256b5670888b4ee4e37969d66e77f913d28e2a187ab751584448ed4358cc9411
 ---
 # Probleme
 
@@ -73,6 +73,10 @@ falscher Wert kostet den Leser ein Bauteil, einen Druck oder eine Gewährleistun
   — die gemessenen Docks liegen außerhalb des Fensters, das die Firmware erwartet. Welche
   Docks scheitern und in welche Richtung, verrät die Ursache; liegen alle Docks in Y um
   denselben Betrag daneben, passt meist die Riemeneinstellung nicht zu den Riemen.
+- [Input-Shaper-Kalibrierung bricht mit „Measurement failed“ ab](input-shaper-measurement-failed.md)
+  — der Beschleunigungssensor kalibriert, dann scheitert die erste Achsmessung, meist
+  unter 6.9.x. Prüfen Sie die Riemeneinstellung; eine Ursache ist noch nicht gefunden.
+  *Einzelquelle.*
 - [Oozing verdirbt Bettabtastung und Werkzeugkalibrierung](oozing-during-probing-and-calibration.md)
   — Material dort, wo die Maschine eine Messung vornehmen will. Beginnen Sie damit, das
   Fenster des Offsetsensors zu reinigen.

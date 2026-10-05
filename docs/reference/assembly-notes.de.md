@@ -23,7 +23,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/how-many-types-of-fasteners-etc-come-with-indx-gen2-upgrade/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-fe-upgrading-to-gen2/
 superseded_by:
-source_sha:   2f02773f46195353a51614073ae5de3d03551153f986576043b34c09b0990f3b
+source_sha:   51f076ec7d530341e9beeffd9ce3b89ba1a70fb48b07c9364ad8c12691bd2d2a
 ---
 # Montagehinweise — INDX-Umbausatz
 
@@ -534,5 +534,8 @@ nicht sagen kann.
 - [Dock-Kalibrierung lehnt einige oder alle Docks ab](../issues/dock-calibration-rejects-docks.md) —
   wenn die Dock-Kalibrierung an einem frisch aufgebauten Drucker scheitert; prüfen Sie
   zuerst die Riemeneinstellung
+- [Input-Shaper-Kalibrierung bricht mit „Measurement failed“ ab](../issues/input-shaper-measurement-failed.md)
+  — wenn die Input-Shaper-Kalibrierung direkt nach der Kalibrierung des
+  Beschleunigungssensors scheitert; prüfen Sie zuerst die Riemeneinstellung
 - [Wen Sie kontaktieren sollten](../issues/support-and-warranty-path.md) — Weiterleitung
   bei Support und Garantie
