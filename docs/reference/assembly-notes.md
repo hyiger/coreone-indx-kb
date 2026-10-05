@@ -159,8 +159,11 @@ Edition owner in a separate thread likewise says to skip that part. After the fi
 flash, check the hardware configuration screen: one owner, on the INDX firmware
 current in mid-September 2026, before the stable 6.9.1 release, found it had assumed
 the Gen 2 belts were fitted — rightly, in that case, but it had no means of telling.
-*Single report* for the belt setting, and whether 6.9.1 behaves the same way has not
-been reported.
+A second owner, in a separate thread, found the same setting on a machine whose Gen 2
+parts were not yet fitted, and it made dock calibration fail; see
+[dock calibration](../issues/dock-calibration-rejects-docks.md). Prusa's firmware source
+applies the Gen 2 variant on a first run, which would explain both, though that flashing
+the INDX firmware counts as a first run is inferred, not confirmed.
 
 ## Steps to slow down on
 
@@ -454,4 +457,6 @@ records where builders got stuck, which is the part the guide cannot tell you.
   first-boot failure
 - [Probing fails or nozzle never touches the bed](../issues/loadcell-emi-noise.md) — if the
   loadcell test is unstable out of the box
+- [Dock calibration rejects some or all docks](../issues/dock-calibration-rejects-docks.md) —
+  if dock calibration fails on a fresh build; check the belt setting first
 - [Who to contact](../issues/support-and-warranty-path.md) — support and warranty routing

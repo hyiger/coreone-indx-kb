@@ -1,7 +1,7 @@
 ---
 title:        Probleme
 confidence:   unknown
-updated:      2026-09-25
+updated:      2026-10-04
 author:       hyiger
 printer:      unknown
 toolhead:     unknown
@@ -10,7 +10,7 @@ nozzle:       unknown
 firmware:     unknown
 sources:      []
 superseded_by:
-source_sha:   cc47c3d7e8acc638aaafb71a8871a535ecddfb3d131e172fc074763be8b0579a
+source_sha:   c27fcb29e8882ef7f195260acd7148ef4e5aa8ecc63615eb995946b79397e911
 ---
 # Probleme
 
@@ -69,6 +69,10 @@ falscher Wert kostet den Leser ein Bauteil, einen Druck oder eine Gewährleistun
   — das Bett ist in Z nicht ausgerichtet und gibt bei der Z-Berührung unter der Düse
   nach. Führen Sie Z Alignment Calibration aus, bevor Sie die Platine verdächtigen.
   *Einzelquelle.*
+- [Dock-Kalibrierung lehnt einige oder alle Docks ab](dock-calibration-rejects-docks.md)
+  — die gemessenen Docks liegen außerhalb des Fensters, das die Firmware erwartet. Welche
+  Docks scheitern und in welche Richtung, verrät die Ursache; liegen alle Docks in Y um
+  denselben Betrag daneben, passt meist die Riemeneinstellung nicht zu den Riemen.
 - [Oozing verdirbt Bettabtastung und Werkzeugkalibrierung](oozing-during-probing-and-calibration.md)
   — Material dort, wo die Maschine eine Messung vornehmen will. Beginnen Sie damit, das
   Fenster des Offsetsensors zu reinigen.
@@ -117,7 +121,7 @@ abgebildet werden:
 | `36130` | Tool offset failed | [Fehlercodes](../codes.md#stock-firmware), um den fehlgeschlagenen Schritt zu finden, dann [Werkzeug-Offset-Kalibrierung](offset-sensor-board-failure.md), oder [Bettausrichtung](tool-offset-bed-z-alignment.md) bei sauberer Düse und ohne geladenes Filament |
 | `36190` bis `36197` | Der fehlgeschlagene Schritt der Werkzeug-Offset-Kalibrierung | [Fehlercodes](../codes.md) |
 | `36135` | Toolchanger error | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
-| `36136` | Calibrate dock from menu | [Werkzeug-Offset-Kalibrierung](offset-sensor-board-failure.md) |
+| `36136` | Calibrate dock from menu | [Dock-Kalibrierung](dock-calibration-rejects-docks.md) |
 | `36202` | Hotend preheat error | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
 | `36526` `36527` `36528` | Loadcell measure failed / bad configuration / timeout | [Störungen der Wägezelle](loadcell-emi-noise.md) |
 

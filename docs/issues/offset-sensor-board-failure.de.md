@@ -23,7 +23,7 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/
 superseded_by:
-source_sha:   d010a731cb3baf62c3ef2f6a6bc5f4e29297b7c033063741e550e0f4e9dc907d
+source_sha:   37b30e277f9284272f5f2a0ae1728f023ff0e2bcf7f4b4fd217b544afbc0601d
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 
@@ -365,6 +365,8 @@ ob das die Fehlschläge dieses Besitzers verursacht hat.
   aufgebauten Maschine fehlschlägt, die noch nie erfolgreich kalibriert hat, prüfen Sie
   zuerst den Aufbau: Dies ist einer der beiden Selbsttest-Fehler, die bei Neuumbauten
   immer wieder auftreten
+- [Dock-Kalibrierung lehnt einige oder alle Docks ab](dock-calibration-rejects-docks.md) —
+  dort ist eine nicht passende 1.5GT-Riemeneinstellung das Erste, was zu prüfen ist
 - [Wen Sie kontaktieren](support-and-warranty-path.md) — so kommen Sie an das Ersatzteil:
   Diagnose von Prusa, Hardware von Bondtech, und eröffnen Sie den Fall früh genug, dass
   das Datum in Ihren Garantiezeitraum fällt.

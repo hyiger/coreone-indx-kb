@@ -47,6 +47,7 @@ plugins:
             Probing and loadcell noise: Abtastung und Wägezellen-Störungen
             Tool offset calibration: Werkzeug-Offset-Kalibrierung
             Bed not aligned in Z: Bett in Z nicht ausgerichtet
+            Dock calibration: Dock-Kalibrierung
             Oozing during probing: Nachsickern beim Abtasten
             Wiper, purge and blobs: Abstreifer, Spülen und Blobs
             Diagonal banding: Diagonale Streifenbildung
@@ -85,6 +86,7 @@ nav:
       - Probing and loadcell noise: issues/loadcell-emi-noise.md
       - Tool offset calibration: issues/offset-sensor-board-failure.md
       - Bed not aligned in Z: issues/tool-offset-bed-z-alignment.md
+      - Dock calibration: issues/dock-calibration-rejects-docks.md
       - Oozing during probing: issues/oozing-during-probing-and-calibration.md
       - Wiper, purge and blobs: issues/stringing-and-wiper-calibration.md
       - Diagonal banding: issues/diagonal-banding.md
