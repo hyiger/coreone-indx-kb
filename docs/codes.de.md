@@ -15,7 +15,7 @@ sources:
   - https://github.com/hyiger/Prusa-Firmware-Buddy/blob/master/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
 superseded_by:
-source_sha:   94166b9412eb848146505d183b5719db654a2bebc69b98969cabf606ada25dec
+source_sha:   ad9db8edbf7cdf04385cf4ea4d26cb944fcea8e6944010d868e7a7fce783e5c3
 ---
 # Fehlercodes der Werkzeug-Offset-Kalibrierung
 
@@ -300,7 +300,9 @@ bringt. Siehe [Mitwirken](contributing.md).
 Die aufgeteilten Codes gibt es nur in Firmware, die aus dem Fork gebaut ist. Den
 fehlgeschlagenen Schritt zu melden statt eines einzigen allgemeinen Dialogs wurde
 upstream in [Firmware-Issue 5482](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5482)
-vorgeschlagen.
+vorgeschlagen. Ein Prusa-Entwickler antwortete am 23. September 2026, dass der Hersteller
+bereits daran arbeite, ohne Liefertermin. Was die Standard-Firmware am Ende anzeigt, muss
+nicht den Codes auf dieser Seite entsprechen.
 
 ## Verwandt
 

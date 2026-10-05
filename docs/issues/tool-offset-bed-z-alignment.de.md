@@ -13,8 +13,9 @@ sources:
   - https://help.prusa3d.com/article/uneven-bed-31111-core-one-35111-core-one-l-36111-core-one-indx_856294
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/common/probe_analysis.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/marlin_stubs/G162.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
 superseded_by:
-source_sha:   c27ab4c116ef6b05637d85e13fd95ee51e95c16981090a93b60e69ee9712b727
+source_sha:   a0ee253fd0e224a807fe253ef4ac12a1306a36d01d473bf6a83a42a695b58879
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl: Bett in Z nicht ausgerichtet
 
@@ -134,8 +135,10 @@ einer anderen Maschine reproduziert. Die Firmware-Referenzen sind der Klassifizi
 [probe_analysis.cpp](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/common/probe_analysis.cpp)
 und der Ausrichtungsvorgang in
 [G162.cpp](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/marlin_stubs/G162.cpp),
-beide am Tag 6.9.1-beta. Wozu Z Alignment Calibration dient und der Menüpfad stammen
-aus dem
+beide am Tag 6.9.1-beta. Keine der beiden Dateien hat sich in der
+[stabilen 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1)
+geändert, die Lesart gilt also auch für sie. Wozu Z Alignment Calibration dient und der
+Menüpfad stammen aus dem
 [Artikel des Herstellers zum unebenen Bett](https://help.prusa3d.com/article/uneven-bed-31111-core-one-35111-core-one-l-36111-core-one-indx_856294).
 
 Wenn Ihre Maschine dem entspricht und die Z-Ausrichtung es behebt, ist dieser zweite

@@ -1,7 +1,7 @@
 ---
 title:        Verrutschen der Silikonsocke über den Temperatursensor
 confidence:   provisional
-updated:      2026-09-19
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -13,8 +13,9 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/filament-blobs-can-tear-the-silicon-sock-on-indx-nozzles/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/missing-layers-5/
 superseded_by:
-source_sha:   49c21bdb459d683614fd5a24e31f60daf7992487ca1a96d4d7e12b65c7b32127
+source_sha:   1eaf60be689d2404a0585aa59504fee8594a97c9afd407a4095c69ab5c954c7f
 ---
 # Verrutschen der Silikonsocke über den Temperatursensor
 
@@ -29,9 +30,9 @@ source_sha:   49c21bdb459d683614fd5a24e31f60daf7992487ca1a96d4d7e12b65c7b32127
 Die Silikonsocke einer INDX-Düse kann so weit aus ihrer Sitzposition nach oben wandern,
 dass sie das Fenster des Temperatursensors am Werkzeugkopf teilweise verdeckt. Bei
 teilweise verdecktem Sensor läuft die Düse heißer als vorgegeben. Bei der PET-Familie,
-und Berichten zufolge am ausgeprägtesten bei PCTG, backt die überschüssige Hitze
-Filament an der Düsenspitze fest, und die entstehende Ablagerung reicht aus, um die
-Werkzeug-Offset-Kalibrierung scheitern zu lassen.
+nach der Erfahrung des Autors dieser Seite vor allem bei PCTG, backt die überschüssige
+Hitze Filament an der Düsenspitze fest, und die entstehende Ablagerung reicht aus, um
+die Werkzeug-Offset-Kalibrierung scheitern zu lassen.
 
 Die Abhilfe ist trivial, sobald man weiß, wonach zu suchen ist: die Socke wieder nach
 unten setzen. Der Grund, davon zu wissen, ist, dass sämtliche Symptome auf etwas anderes
@@ -44,30 +45,46 @@ sind unterschiedliche Bauteile mit unterschiedlichen Messprinzipien, und die
 Unterscheidung ist wichtig, weil das Symptom — fehlgeschlagene Offset-Kalibrierung — auf
 das falsche Bauteil deutet.
 
-Ein Bericht beschreibt das verdeckte Teil als IR-Fenster, ein anderer als Rechteck des
-Temperatursensors. Beide Beschreibungen sind thermischer Natur. Der
+Der Autor dieser Seite hat das verdeckte Teil in mehr als einem Thread teils als
+IR-Fenster und teils als Rechteck des Temperatursensors beschrieben. Beide
+Beschreibungen sind thermischer Natur. Der
 Werkzeug-Offset-Sensor ist an anderer Stelle als wirbelstrombasiert dokumentiert, und
 Wirbelstrommessung hat kein optisches Fenster, das verdeckt werden könnte. Siehe
 [Ausfall der Offset-Sensorplatine](offset-sensor-board-failure.md) zu diesem Bauteil.
 
-TODO(verify): ob das „IR-Fenster“ und das „Rechteck des Temperatursensors“ dasselbe
-physische Merkmal sind und nach welchem Messprinzip der Temperatursensor des
-Werkzeugkopfs tatsächlich arbeitet. Zwei Besitzer beschreiben es mit unterschiedlichen
-Worten, und keine der Beschreibungen ist gegen einen Schaltplan oder die Dokumentation
-des Herstellers abgesichert.
+Der Eröffnungsbeitrag des Wartungs-Threads, von einem anderen Besitzer, nennt das Teil
+vor dem Werkzeug unabhängig davon ein Fenster zur Temperaturerfassung; der
+Reinigungshinweis unter dieser Überschrift ist allerdings aus zweiter Hand
+weitergegeben, und als Symptom eines verschmutzten Fensters nennt er schlechtes
+Abtasten des Druckbetts, nicht einen Temperaturfehler. Nicht nur diese Seite ist
+unsicher, welches Teil gemeint ist: Am 25. September 2026 fragte ein anderer Besitzer in
+jenem Thread, ob das kleine Fenster, das laut dem Eröffnungsbeitrag sauber zu halten
+ist, dieses Rechteck meint oder ein anderes Teil, und an diesem Tag war die Frage noch
+unbeantwortet.
+
+TODO(verify): ob das Fenster, das laut dem Eröffnungsbeitrag des Wartungs-Threads
+sauber zu halten ist, dasselbe Merkmal ist wie das Rechteck des Temperatursensors, das
+die Socke verdeckt, und nach welchem Messprinzip der Temperatursensor des Werkzeugkopfs
+tatsächlich arbeitet. Keine dieser Beschreibungen ist gegen einen Schaltplan oder die
+Dokumentation des Herstellers abgesichert.
 
 ## Im Einzelnen
 
 ### Wandern der Socke
 
-Berichten zufolge rutscht die Socke aus ihrer Sitzposition nach oben. Ein Besitzer fand
-sie in einer Position vor, in der sie den Temperatursensor teilweise verdeckte, und
-erhielt als unmittelbare Folge einen Thermal-Runaway-Fehler — das ist ein
-Erfahrungsbericht aus erster Hand zur Verdeckung und ihrer unmittelbaren Konsequenz. Der
-Autor dieser Seite fand die Socke an drei verschiedenen Düsen einer Maschine verschoben
-vor, und ein weiterer Besitzer musste sie in einem [anderen Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/) nach nur
-wenigen Testdrucken an zwei Werkzeugen wieder zurechtsetzen. Das Wandern ist nicht mehr
-etwas, das an einer einzigen Maschine beobachtet wurde.
+Berichten zufolge rutscht die Socke aus ihrer Sitzposition nach oben. Der Autor dieser
+Seite fand sie in einer Position vor, in der sie den Temperatursensor teilweise
+verdeckte, und erhielt als unmittelbare Folge einen Thermal-Runaway-Fehler — ein
+Erfahrungsbericht aus erster Hand zur Verdeckung und ihrer unmittelbaren Konsequenz —
+und hatte bis Ende August die Socke an drei Düsen einer Maschine wieder zurechtgesetzt.
+Ein anderer Besitzer musste sie, als Antwort in dem [Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/), in dem der Autor
+diese drei Düsen gemeldet hatte, nach nur wenigen Testdrucken an zwei Werkzeugen wieder
+zurechtsetzen. Das Wandern ist nicht mehr etwas, das an einer einzigen Maschine
+beobachtet wurde, bisher aber an nur zwei. In einem
+[anderen Thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/missing-layers-5/)
+nannte der Autor eine hochgerutschte Socke als eine mögliche Ursache für fehlende
+Schichten bei einem anderen Besitzer; dieser sah nach, fand die Socke unverändert an
+ihrem Platz und führte den Fehler später auf den Slicer zurück.
 
 Warum sie wandert, ist nicht geklärt. Keiner der Berichte benennt einen Auslöser, und
 weder der Hersteller noch die Community haben eine Ursache veröffentlicht.
@@ -78,12 +95,24 @@ Ein teilweise verdeckter Temperatursensor misst zu niedrig, sodass die Heizung s
 nachregelt, um einen Sollwert zu erreichen, den die Maschine für noch nicht erreicht
 hält. Die Düse läuft dann oberhalb der vorgegebenen Temperatur.
 
-Dass Filament an INDX-Düsenspitzen anbackt, wird unabhängig davon berichtet und hängt
-nicht davon ab, ob die Kette dieser Seite zutrifft: Die PET-Familie allgemein und PCTG
-im Besonderen bleibt Berichten zufolge bereitwillig an diesen Düsen haften. Ein Besitzer
-führt das teilweise auf die Geometrie der Socke zurück und merkt an, dass sie fast bis
-zur Spitze reicht, sodass Ablagerungen etwas zum Anhaften finden; er stellt dem
-beschichtete Düsen gegenüber, die Material besser abweisen.
+Dass Filament an INDX-Düsenspitzen anbackt, wird auch außerhalb der Kette dieser Seite
+berichtet und hängt nicht davon ab, ob sie zutrifft, ist aber nur dünn belegt: Ein
+anderer Besitzer beschreibt, dass vor allem PETG bereitwillig an diesen Düsen haften
+bleibt, und der Autor dieser Seite berichtet dasselbe von PCTG. Der Autor führt das
+teilweise auf die Geometrie der Socke zurück und merkt an, dass sie fast bis zur Spitze
+reicht, sodass Ablagerungen etwas zum Anhaften finden. Früher im selben Thread sagte der
+Autor allerdings, dass ein bestimmtes PCTG, das er verwendet — eine einzige Marke und
+Farbe —, auf allen seinen Druckern an der Düse haften bleibt und kleine Klumpen
+hinterlässt, nicht nur am INDX; zumindest für dieses Filament grenzt sein PCTG-Bericht
+also weder die INDX-Düse noch ihre Socke als Ursache ab. Ein zweiter Besitzer im selben
+Thread sieht ebenfalls PETG-Klumpen, ist aber nicht überzeugt, dass während des Drucks
+Material an der Düse haften bleibt, und führt es stattdessen darauf zurück, dass der
+Abstreifer nicht sauber zurückgelassen wird. Im selben Thread wurden beschichtete Düsen
+als Material besser abweisend ins Spiel gebracht, doch ein anderer Besitzer dort sieht
+keinen Unterschied: PETG setzt sich nach dessen Erfahrung an beschichteten Düsen ebenso
+bereitwillig fest wie an unbeschichteten. Dieser Vergleich ist also umstritten. Wie das
+Wandern stützt sich die Aussage zu den Anbackungen auf einen unabhängigen Besitzer in
+einem Thread und ist daher für sich genommen `provisional`.
 
 Dass Überhitzung dies verschlimmert, ist mechanistisch plausibel und entspricht dem, was
 der einzige Bericht über die vollständige Kette beschreibt, ist aber eine Schlussfolgerung
@@ -141,19 +170,27 @@ Vorsichtsmaßnahme beim Reinigen — Ablagerungen entfernen, nicht polieren.
 
 `provisional` — die Kette stützt sich auf einen einzigen Bericht.
 
-Was in unterschiedlichen Threads von unterschiedlichen Besitzern bestätigt wird:
+Was von anderen Besitzern als dem Autor bestätigt wird:
 
-- **Wandern der Socke, nun in zwei Threads.** Ein Bericht aus erster Hand im
+- **Wandern der Socke, an zwei Maschinen.** Der Bericht aus erster Hand im
   [Wartungs-Thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-maintenance/)
-  beschreibt einen genau dadurch verursachten Thermal-Runaway-Fehler, und ein zweiter
-  Besitzer musste in [einem späteren Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/) die Socke an zwei Werkzeugen wieder
-  zurechtsetzen. Jener spätere Thread wurde vom Autor dieser Seite eröffnet, der
-  bestätigende Bericht stammt aber von einem anderen Besitzer, weshalb er zählt. Für sich
-  genommen erfüllt die Aussage zum Wandern nun `reported`; die Seite als Ganzes bleibt
-  `provisional`, weil die Kette darunter das nicht tut.
-- **Anbacken der PET-Familie und von PCTG an INDX-Düsenspitzen**, einschließlich der
-  Beobachtung, dass die Geometrie der Socke dazu beiträgt, im
-  [Wischer-Thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/).
+  über einen genau dadurch verursachten Thermal-Runaway-Fehler stammt vom Autor selbst,
+  ebenso der Bericht über die drei Düsen. Die unabhängige Bestätigung ist ein zweiter
+  Besitzer in [einem späteren Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/), der die Socke an zwei Werkzeugen wieder
+  zurechtsetzen musste. Jener Thread wurde vom Autor dieser Seite eröffnet, der
+  bestätigende Bericht stammt aber von einem anderen Besitzer, weshalb er zählt. Ein
+  unabhängiger Besitzer in einem Thread erfüllt `reported` nicht, also ist auch die
+  Aussage zum Wandern für sich genommen `provisional`. Frühere Fassungen dieser Seite
+  hielten den Bericht im Wartungs-Thread für den eines zweiten Besitzers und stuften das
+  Wandern als `reported` ein; das war falsch.
+- **Anbacken der PET-Familie an INDX-Düsenspitzen**, von einem anderen Besitzer im
+  [Wischer-Thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/);
+  ein zweiter Besitzer dort sieht die Klumpen ebenfalls, führt sie aber auf den
+  Abstreifer zurück, nicht auf die Düse. Wie beim Wandern ist das ein unabhängiger
+  Besitzer in einem Thread, also ist die Aussage zu den Anbackungen für sich genommen
+  `provisional`. Der Bericht zu PCTG und die Beobachtung, dass die Geometrie der Socke
+  dazu beiträgt, stammen vom Autor selbst, im selben Thread, in dem er auch angibt, dass
+  das eine von ihm genannte PCTG auf allen seinen Druckern haftet, nicht nur am INDX.
 
 **Nicht** bestätigt ist die Ursachenkette, die beides verbindet: dass die Verdeckung die
 Anbackungen antreibt und dass die Anbackungen die Kalibrierung scheitern lassen. Das ist

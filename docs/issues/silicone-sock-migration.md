@@ -1,7 +1,7 @@
 ---
 title:        Silicone sock migration over the temperature sensor
 confidence:   provisional
-updated:      2026-09-19
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -13,6 +13,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/filament-blobs-can-tear-the-silicon-sock-on-indx-nozzles/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/missing-layers-5/
 superseded_by:
 ---
 
@@ -28,9 +29,10 @@ superseded_by:
 
 The silicone sock on an INDX nozzle can creep upward from its seated position far
 enough to partially cover the toolhead's temperature sensor window. With the sensor
-partially obscured the nozzle runs hotter than commanded. On the PET family, and
-reportedly worst on PCTG, the excess heat bakes filament onto the nozzle tip, and the
-resulting deposit is enough to make tool offset calibration fail.
+partially obscured the nozzle runs hotter than commanded. On the PET family, and in
+this page author's experience PCTG in particular, the excess heat bakes filament onto
+the nozzle tip, and the resulting deposit is enough to make tool offset calibration
+fail.
 
 The fix is trivial once you know to look: seat the sock back down. The reason to know
 about it is that every symptom it produces points somewhere else — at the nozzle, at
@@ -42,27 +44,40 @@ the filament, or at the offset sensor.
 components with different sensing principles, and the distinction matters because the
 symptom — failed offset calibration — points at the wrong one.
 
-One account describes the obscured part as an IR window; another describes it as the
-temperature sensor rectangle. Both descriptions are thermal. The tool offset sensor is
-separately documented as eddy-current based, and eddy-current sensing has no optical
-window to obscure. See [offset sensor board failure](offset-sensor-board-failure.md)
-for that component.
+This page's author has described the obscured part both as an IR window and as the
+temperature sensor rectangle, in more than one thread. Both descriptions are thermal.
+The tool offset sensor is separately documented as eddy-current based, and eddy-current
+sensing has no optical window to obscure. See
+[offset sensor board failure](offset-sensor-board-failure.md) for that component.
 
-TODO(verify): whether the "IR window" and the "temperature sensor rectangle" are the
-same physical feature, and what sensing principle the toolhead's temperature sensor
-actually uses. Two owners describe it in different words and neither is confirmed
-against a schematic or the vendor's documentation.
+The maintenance thread's opening post, from another owner, independently calls the part
+in front of the tool a temperature sensing window, though the cleaning advice under that
+heading is relayed second-hand and the symptom it names for a dirty window is poor bed
+probing rather than a temperature fault. This page is not alone in being unsure which
+part is meant: on 25 September 2026 another owner asked in that thread whether the
+small window its opening post says to keep clean is this same rectangle or some other
+part, and the question was still unanswered that day.
+
+TODO(verify): whether the window the maintenance thread's opening post says to keep
+clean is the same feature as the temperature sensor rectangle the sock covers, and what
+sensing principle the toolhead's temperature sensor actually uses. None of these
+descriptions is confirmed against a schematic or the vendor's documentation.
 
 ## Detail
 
 ### Sock migration
 
-The sock is reported to slide upward from where it seats. One owner found it partially
-covering the temperature sensor and got a thermal runaway error as a direct result —
-that is a first-hand account of the occlusion and its immediate consequence. The author of this
-page found the sock displaced on three separate nozzles on one machine, and another
-owner, in a [separate thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/), had to reseat it on two tools after only a
-couple of test prints. The migration is no longer something seen on one machine.
+The sock is reported to slide upward from where it seats. This page's author found it
+partially covering the temperature sensor and got a thermal runaway error as a direct
+result — a first-hand account of the occlusion and its immediate consequence — and by
+late August had reseated the sock on three nozzles on one machine. Another owner,
+replying in the [thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/) where the author reported those three nozzles, had to
+reseat it on two tools after only a couple of test prints. The migration is no longer
+something seen on one machine, but so far it has been seen on only two. In a
+[separate thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/missing-layers-5/),
+the author suggested a slipped sock as one possible cause of another owner's missing
+layers; that owner checked, found the sock had not moved, and later traced the fault to
+the slicer.
 
 Why it migrates is not established. None of the accounts identifies a trigger, and
 neither the vendor nor the community has published a cause.
@@ -73,11 +88,22 @@ A partially covered thermal sensor reads low, so the heater drives harder to rea
 target the machine believes it has not met. The nozzle then runs above the commanded
 temperature.
 
-Filament caking on INDX nozzle tips is independently reported and does not depend on
-this page's chain being right: the PET family in general, and PCTG in particular, is
-described as sticking to these nozzles readily. One owner attributes that partly to the
-sock geometry, noting that it extends nearly to the tip so deposits have something to
-cling to, and contrasts it with coated nozzles that shed material better.
+Filament caking on INDX nozzle tips is reported apart from this page's chain and does
+not depend on the chain being right, though the support for it is thin: one other owner
+describes PETG in particular as sticking to these nozzles readily, and this page's
+author reports the same of PCTG. The author attributes that partly to the sock
+geometry, noting that it extends nearly to the tip so deposits have something to cling
+to. Earlier in the same thread, though, the author said that one PCTG they use, a single
+brand and color, sticks to the nozzle and sheds small blobs on all of their printers,
+not only the INDX; so, at least for that filament, the author's PCTG report does not
+isolate the INDX nozzle or its sock. A
+second owner in the same thread sees PETG blobbing too, but is not convinced it is
+material sticking to the nozzle during a print, and puts it down to the wiper not being
+left clean instead. Coated nozzles were put forward in the same thread as shedding
+material better, but another owner there has seen no difference, with PETG building up
+on coated nozzles as readily as on plain ones, so that contrast is disputed. Like
+migration, the caking claim rests on one independent owner in one thread, so on its own
+it is `provisional`.
 
 Overheating making that worse is mechanistically plausible and is what the single
 full-chain account describes, but it is inference rather than a measured relationship.
@@ -132,18 +158,25 @@ cleaning caution — remove debris, do not polish the sensor face.
 
 `provisional` — the chain rests on one account.
 
-What is corroborated, in different threads by different owners:
+What is corroborated by owners other than the author:
 
-- **Sock migration, now in two threads.** One first-hand report in the
+- **Sock migration, on two machines.** The first-hand report in the
   [maintenance thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-maintenance/)
-  describes a thermal runaway error caused by exactly this, and a second owner in
-  [a later thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/) had to reseat the sock on two tools. That later thread was
+  of a thermal runaway error caused by exactly this is the author's own, as is the
+  three-nozzle account. The independent corroboration is a second owner in
+  [a later thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/) who had to reseat the sock on two tools. That thread was
   started by this page's author, but the corroborating account is another owner's, which
-  is why it counts. Taken alone, the migration claim now meets `reported`; the page as a
-  whole stays `provisional` because the chain below it does not.
-- **PET-family and PCTG caking onto INDX nozzle tips**, including the observation that
-  the sock geometry contributes, in the
-  [wiper thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/).
+  is why it counts. One independent owner in one thread does not meet `reported`, so the
+  migration claim taken alone is `provisional` too. Earlier versions of this page read
+  the maintenance-thread report as a second owner's and rated migration `reported`;
+  that was wrong.
+- **PET-family caking onto INDX nozzle tips**, from one other owner in the
+  [wiper thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/);
+  a second owner there sees the blobbing but attributes it to the wiper, not the nozzle.
+  Like migration, this is one independent owner in one thread, so the caking claim taken
+  alone is `provisional`. The PCTG report and the observation that the sock geometry
+  contributes are the author's own, in the same thread, where the author also says the
+  one PCTG they named sticks on all of their printers, not only the INDX.
 
 What is **not** corroborated is the causal chain joining them: that the occlusion is
 what drives the caking, and that the caking is what fails the calibration. That is this

@@ -47,7 +47,8 @@ reader a part, a print, or a warranty window.
   missing, or a tool that parked correctly is reported still attached.
 - [Tool unlocks or ejects from the head](tool-unlocks-or-ejects.md)
   — the tool physically comes loose, often on the retraction after a filament load;
-  one owner traced it to a defective gear in the lock.
+  one owner traced it to a defective gear in the lock. Also covers the reverse, a tool
+  that stays locked in the head at its dock.
 
 **Probing or calibration fails**
 

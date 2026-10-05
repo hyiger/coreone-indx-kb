@@ -1,7 +1,7 @@
 ---
 title:        Probing schlägt fehl oder die Düse berührt das Bett nie — Rauschen im Wägezellensignal
 confidence:   reported
-updated:      2026-09-14
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -13,8 +13,12 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-not-touching-bed-during-probing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5468
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
 superseded_by:
-source_sha:   d3cb6c10df7849ff1b2ac35e0d74d5d18d077364391eec06456bb67ac48ad357
+source_sha:   0eb57cb747bbdc4f583eadc68c8df3421543b18288b6a2c9dfba2a4c03039085
 ---
 # Probing schlägt fehl oder die Düse berührt das Bett nie — Rauschen im Wägezellensignal
 
@@ -69,6 +73,19 @@ Berichtete Symptome dieser Gruppe:
 - Eine erste Schicht, die nicht haftet oder Filament zu einem Klumpen hochzieht, weil
   die Maschine das Bett höher wähnt, als es ist
 
+Nicht jeder fehlgeschlagene Selbsttest ist eine Störung. In einem Bericht
+([#5468](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5468)) gab der
+Wägezellentest in der ersten Kalibrierung nach dem Umbau eines C1 zum C1+ (Gen 2) mit
+INDX, unter 6.9.0, nie seine Pieptöne aus und wies das Drücken zurück, gemeldet entweder
+als verfrühtes Drücken oder als verrauschtes Signal; nachdem der Besitzer den Assistenten
+abgebrochen und neu gestartet hatte, bestand er sofort. Der Besitzer vermutete, dass der
+in der Firmware vor INDX eingestellte Lautlos-Modus übernommen worden war. Prusa
+antwortete, der Umbau setze den Drucker nach eigenem Kenntnisstand auf
+Werkseinstellungen zurück, und der Fehler lasse sich nicht nachstellen. Das ist ein
+einzelner, ungeklärter Bericht, `provisional`, aber ein zweiter Versuch kostet nichts:
+Schlägt der Selbsttest beim ersten Durchlauf nach einem Umbau fehl, führen Sie ihn noch
+einmal aus, bevor Sie von einer Störung ausgehen.
+
 ### Was Sie versuchen können
 
 1. **Setzen Sie einen aufklappbaren Ferritkern auf das Hauptkabel des Werkzeugkopfs**,
@@ -103,6 +120,24 @@ Berichtete Symptome dieser Gruppe:
     ist. Wenn Ihre Platine neueren Datums ist und der Fehler mit dem Kopf mitwandert,
     wenden Sie sich an den Hersteller, statt Ferrite zu kaufen.
 
+!!! note "Eine dritte Ursache: Homing, das nach bestandener Kalibrierung fehlschlägt"
+    Firmware 6.9.1, am 2026-09-25 als stabile Version erschienen, nennt eine
+    Homing-Korrektur für Drucker, die ihre erste Homing-Kalibrierung bestanden, beim
+    späteren erneuten Homing aber scheiterten. Die von Prusa beschriebene Änderung
+    betrifft die Motorströme. Die
+    [Release Notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
+    nennen keine Achse, doch die einzige Änderung an Motorströmen im Firmware-Repository
+    zwischen der Beta und der stabilen Version
+    ([Vergleich](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1))
+    betrifft das diagonale XY-Homing, nicht das Z-Abtasten mit der Wägezelle. Die Notes
+    sagen zudem nichts über die Wägezelle oder das Heizelement; das ist also ein von
+    dieser Seite getrennter Fehler und keine Behebung für ihn. Passen Ihre Homing-Fehler
+    zu dieser Beschreibung statt zum Muster oben — Fehlschlag nur bei heißem Hotend, die
+    Düse hält sichtbar vor der Druckplatte an —, aktualisieren Sie die Firmware, bevor
+    Sie einen Ferrit anbringen. Das stützt sich allein auf die Release Notes und das
+    Firmware-Repository des Herstellers, `provisional`: Bisher hat kein Besitzer
+    berichtet, dass die Korrektur seine Homing-Fehler behoben hat.
+
 Wenn nichts davon hilft, insbesondere wenn der Fehler nur bei eingeschalteter Heizung
 auftritt und Sie eine frühe Platinenrevision haben, führt der Weg über einen
 Hardwaretausch beim Hersteller. Ein Besitzer berichtete stattdessen von Erfolg damit,
@@ -118,8 +153,19 @@ entscheiden, ob seine Maschine defekt ist.
 !!! note "Das ist eine Abmilderung, keine Behebung"
     Der Hersteller hat den Ferrit als Behelfslösung und nicht als Behebung beschrieben,
     und eine firmwareseitige Verbesserung der Wägezellenauswertung ist Berichten zufolge
-    in Arbeit. Wenn Sie dies deutlich nach dem oben genannten Datum lesen, prüfen Sie,
-    ob eine neuere Firmware das Problem behoben hat, bevor Sie Hardware ergänzen.
+    in Arbeit. Weder die Release Notes zu 6.9.0 noch die zu 6.9.1 beschreiben eine
+    Änderung daran, wie das Wägezellensignal gefiltert oder bewertet wird. Die
+    [Release Notes zu 6.9.1-beta](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta)
+    geben der Werkzeug-Offset-Kalibrierung allerdings mehr Versuche beim Z-Abtasten. Die
+    Notes der stabilen Version wiederholen das nicht, aber die stabile 6.9.1 baut auf
+    dieser Beta auf: Im Firmware-Repository fügt sie dem Beta-Tag
+    [15 Commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1)
+    hinzu, von denen keiner den Code der Werkzeug-Offset-Kalibrierung betrifft. Das
+    ergibt sich aus der Release-Historie, nicht aus den Notes. Mehr Wiederholungen geben
+    einem verrauschten Antippen mehr Gelegenheiten,
+    durchzugehen; gegen das Rauschen selbst tun sie nichts. Wenn Sie dies deutlich nach
+    dem oben genannten Datum lesen, prüfen Sie, ob eine neuere Firmware das Problem
+    behoben hat, bevor Sie Hardware ergänzen.
 
 ## Verifizierung
 
@@ -140,7 +186,10 @@ Wo die Quellen schwächer sind: Der in der Zusammenfassung beschriebene kontroll
 A/B-Test (Fehlschlag ohne Kern, Funktion mit Kern, erneuter Fehlschlag nach Entfernen)
 ist dort aus zweiter Hand berichtet und im Forumsbestand nicht gesondert nachweisbar. Die
 Wertebänder der Wägezelle und die Ferritspezifikationen haben nur eine Quelle und werden
-oben zurückgehalten.
+oben zurückgehalten. Der Bericht zum Selbsttest beim ersten Durchlauf ist ein einzelnes
+Issue, das Prusa nicht nachstellen konnte, und die Homing-Korrektur stützt sich auf die
+Release Notes und das Firmware-Repository des Herstellers, nicht auf Berichte von
+Besitzern.
 
 ## Verwandte Seiten
 

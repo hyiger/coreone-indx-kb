@@ -1,7 +1,7 @@
 ---
 title:        Düsenhärte und abrasive Filamente
 confidence:   reported
-updated:      2026-08-30
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -16,7 +16,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/missing-profiles-in-slicer-for-non-0-4-nozzles-and-other-materials/
 superseded_by:
-source_sha:   6ecaf27c35d6a0f917c18146749fb67147011149393d19e76e56483c0117493e
+source_sha:   e0cbf2d84f35081d64fd456544f98bca8c20b4b31c3e05b9f713cd40c37c03cf
 ---
 # Düsenhärte und abrasive Filamente
 
@@ -159,6 +159,31 @@ Sie können auch eine **Mischung** aus Guthaben und Barerstattung beantragen sta
 ausschließlich das eine. Mindestens ein Besitzer hat das getan, weil er genug Guthaben
 wollte, um eine wirklich gehärtete Düse zu kaufen, sobald es eine gibt.
 
+**Lesen Sie die Gutscheinbedingungen, bevor Sie sich auf Guthaben festlegen.** Das den
+Besitzern der Founders Edition angebotene Shop-Guthaben wird als Gutschein ausgegeben,
+und am 24. September teilte der Hersteller mindestens zwei Besitzern per E-Mail die
+daran geknüpften Bedingungen mit — vorläufig: Diese beiden geben ihre privaten E-Mails
+in einem einzigen Thread wieder, und eine veröffentlichte Fassung dieser Bedingungen ist
+nicht bekannt. Der Gutschein deckt keine Versandkosten. Er wird in einer einzigen
+Bestellung eingelöst, und was diese Bestellung davon nicht aufbraucht, verfällt. Einer
+der beiden ergänzt, dass er vor der Mehrwertsteuer vom Preis abgezogen wird, sodass nach
+seinem Verständnis die Steuer nur auf den Rest anfällt, und dass er nach einer festen
+Frist verfällt. Diese Bedingungen sprechen gegen den oben beschriebenen gemischten Weg:
+Guthaben, das für eine gehärtete Düse zurückgehalten wird, muss auf einmal und vor
+Ablauf ausgegeben werden — für ein Teil, für das es noch keinen Erscheinungstermin gibt.
+
+TODO(verify): die Gültigkeitsdauer des Gutscheins — von einem Besitzer im Thread
+„nozzlegate communications“ als Antwort des Herstellers wiedergegeben; eine
+veröffentlichte Fassung davon ist nicht bekannt.
+
+Ein Besitzer verlangte nach Bekanntwerden dieser Bedingungen eine Barerstattung und
+berichtet, der Hersteller habe sofort zugestimmt; andere im Thread kündigen an, nun
+ebenfalls Bargeld zu verlangen. Der Beitrag sagt nicht, ob dieser Besitzer zuvor schon
+Guthaben beantragt hatte; ob sich eine bereits eingereichte Wahl für Guthaben noch ändern
+lässt, ist daher nicht geklärt. Zwei dort gestellte Fragen blieben unbeantwortet: ob
+dieselben Bedingungen für Guthaben auf bei Prusa gekaufte Kits gelten und ob eine
+Barerstattung auf das ursprüngliche Zahlungsmittel zurückfließt.
+
 !!! note "Shop-Guthaben kauft Düsen, die Sie vielleicht noch nicht nutzen können"
     Wissenswert, bevor Sie Guthaben statt Bargeld wählen: PrusaSlicer bietet für den INDX
     derzeit nur eine einzige Düsenvariante an, für andere Größen existiert also kein Profil
@@ -227,8 +252,11 @@ Schlussfolgerung von Besitzern.
 
 Schwächer: Der Härtewert, den ein Käufer hätte erwarten „dürfen“, ist eine Konvention der
 Community und kein veröffentlichter Standard. Die Rechnung zur Angemessenheit der
-Entschädigung ist die Berechnung eines einzelnen Besitzers. Der Zeitplan für die
-Diamantdüse ist eine Absichtserklärung eines Drittanbieters.
+Entschädigung ist die Berechnung eines einzelnen Besitzers. Die Gutscheinbedingungen
+stammen aus zweiter Hand, von zwei Besitzern in einem einzigen Thread aus E-Mails des
+Herstellers wiedergegeben, die Behandlung der Mehrwertsteuer und der Verfall nur von
+einem der beiden. Der Zeitplan für die Diamantdüse ist eine Absichtserklärung eines
+Drittanbieters.
 
 Wo die Quellen sich widersprechen: Besitzer sind sich deutlich uneins darüber, ob die
 Entschädigung angemessen ist und wie groß die praktische Auswirkung der Härte für jemanden

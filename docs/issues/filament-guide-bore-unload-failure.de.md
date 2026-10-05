@@ -1,7 +1,7 @@
 ---
 title:        Fehlgeschlagenes Entladen und Auswerfen — zu enge Bohrung der Filamentführung
 confidence:   provisional
-updated:      2026-08-25
+updated:      2026-09-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -10,15 +10,17 @@ nozzle:       unknown
 firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-stuck-with-filament/
 superseded_by:
-source_sha:   23acab05563f1bdcc95cc4112e05cbb1a706afcc4afb49a52304945a1aac6fc4
+source_sha:   16f15fa56d01c8882e0a979a613399f92d6966ea2ce3f585ec9bced61ac02c99
 ---
 # Fehlgeschlagenes Entladen und Auswerfen — zu enge Bohrung der Filamentführung
 
-!!! warning "Einzelquelle — als Hinweis behandeln, nicht als Anleitung"
-    Alles auf dieser Seite stammt aus einem einzigen Thread, der selbst eine Verdichtung
-    einer inzwischen offline genommenen Community-Wissensdatenbank ist. Nichts davon wurde
-    im Forum von einem anderen Besitzer unabhängig reproduziert. Es wird veröffentlicht,
+!!! warning "Einzelquelle für die Ursache — als Hinweis behandeln, nicht als Anleitung"
+    Die Erklärung auf dieser Seite stammt aus einem einzigen Thread, der selbst eine
+    Verdichtung einer inzwischen offline genommenen Community-Wissensdatenbank ist. Ein
+    weiterer Besitzer hat inzwischen in einem anderen Thread ein ähnliches Symptom
+    beschrieben, aber niemand im Forum hat die Ursache bestätigt. Es wird veröffentlicht,
     weil das Symptom charakteristisch genug ist, um es wiederzuerkennen, nicht weil die
     Abhilfe gesichert wäre.
 
@@ -86,14 +88,34 @@ Versuch funktioniert.
 
 ## Überprüfung
 
-`provisional` — eine Quelle, nicht reproduziert.
+`provisional` — eine Quelle für die Ursache, nicht reproduziert; ein weiterer Bericht
+des Symptoms, ohne bestätigte Ursache.
 
-Die einzige Quelle ist die [Zusammenfassung häufiger Probleme](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/).
-Eine Suche im gesamten Forumsbestand nach Fehlern beim Entladen und Auswerfen liefert
-keinen weiteren Thread dazu, es gibt also keinen zweiten Bericht eines Besitzers zum
-Vergleich. Der dortige Bericht ist konkret und in sich plausibel — er nennt einen
-gemessenen Bereich, einen vorgesehenen Durchmesser, eine Bestätigung des Herstellers und
-eine Erfolgsquote — aber Konkretheit ist keine Bestätigung.
+Die Quelle für die Ursache ist die [Zusammenfassung häufiger Probleme](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/).
+Der dortige Bericht ist konkret und in sich plausibel — er nennt einen gemessenen
+Bereich, einen vorgesehenen Durchmesser, eine Bestätigung des Herstellers und eine
+Erfolgsquote — aber Konkretheit ist keine Bestätigung.
+
+Eine Suche im gesamten Forumsbestand nach Fehlern beim Entladen und Auswerfen findet
+einen weiteren passenden Thread, im
+[Board zur Fehlersuche bei ersten Drucken](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-stuck-with-filament/).
+Ein Besitzer beschreibt ein einzelnes Werkzeug, an dem jedes Entladen fehlschlägt und der
+Strang von Hand herausgezogen werden muss, während ein Druck, der nur dieses Werkzeug
+nutzt, normal läuft und die übrigen Werkzeuge der Maschine in Ordnung sind. Das ähnelt dem
+Muster, das diese Seite beschreibt, aber es reicht nicht als Bestätigung. Der Besitzer
+hat keine Messung der Bohrung gemeldet und nie gesagt, was das Problem behoben hat,
+obwohl der Thread später als gelöst markiert wurde. Die Erklärung mit der zu engen
+Bohrung, die in diesem Thread angeboten wurde, stammt vom Autor dieser Website und ist
+daher keine unabhängige Diagnose. Und der Bericht weicht in einem Punkt von dieser Seite
+ab: Der Abschnitt „Zusammenfassung“ auf dieser Seite sagt, dass der Druck durch ein
+betroffenes Werkzeug nicht beeinträchtigt ist, während dort das Werkzeug nur dann normal druckte, wenn keine
+Werkzeugwechsel beteiligt waren — mit Wechseln verklemmte sich sein Filament oder kam
+erst nach mehreren Versuchen durch.
+
+Ein anderer Besitzer im selben Thread konnte eines seiner Werkzeuge nie laden. Ein
+Laden, das nie gelingt, ist nicht das, was dieser Mechanismus erwarten lässt, und eine
+ab Werk verstopfte Düse (siehe [Düsenhärte](nozzle-hardness.md)) würde es ebenso gut
+erklären; es wird hier daher nicht gezählt.
 
 Inzwischen wurde ein zweiter Bericht aus dem Discord des Herstellers weitergegeben,
 unabhängig vom Forums-Thread. Er stimmt im Mechanismus überein — ein
@@ -105,10 +127,12 @@ und diese Website zitiert kein Discord, daher wird er hier als Bestätigung fest
 übereinstimmende Berichte an zwei Orten stärken den Mechanismus; sie sind nicht die zwei
 verlinkbaren Quellen, die `reported` verlangt.
 
-Was diese Seite noch auf `reported` heben würde: ein zweiter Besitzer, der an einem
-normal druckenden Werkzeug fehlgeschlagene Entladevorgänge beschreibt, an einem
-zitierbaren Ort, idealerweise mit einer eigenen Messung der Bohrung. Wenn Sie das haben,
-ist es das Nützlichste, was Sie dieser Seite hinzufügen können.
+Was diese Seite noch auf `reported` heben würde: ein zweiter Besitzer an einem
+zitierbaren Ort, der fehlgeschlagene Entladevorgänge an einem normal druckenden Werkzeug
+auf die Bohrung selbst zurückführt — durch eine Messung oder dadurch, dass der Fehler
+verschwindet, sobald die Bohrung nachbearbeitet oder das Teil ersetzt ist. Ein
+ähnliches Symptom allein, wie das oben, genügt nicht. Wenn Sie das haben, ist es das
+Nützlichste, was Sie dieser Seite hinzufügen können.
 
 ## Verwandte Seiten
 

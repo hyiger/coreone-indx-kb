@@ -10,7 +10,7 @@ nozzle:       unknown
 firmware:     unknown
 sources:      []
 superseded_by:
-source_sha:   af0c89640accef092bb35d88a30e1d602968f998fb95f146f507e05fa4751971
+source_sha:   cc47c3d7e8acc638aaafb71a8871a535ecddfb3d131e172fc074763be8b0579a
 ---
 # Probleme
 
@@ -49,7 +49,9 @@ falscher Wert kostet den Leser ein Bauteil, einen Druck oder eine Gewährleistun
   angedockt gemeldet.
 - [Werkzeug entriegelt sich oder fällt aus dem Kopf](tool-unlocks-or-ejects.md)
   — das Werkzeug löst sich tatsächlich, oft beim Rückzug nach dem Laden von Filament;
-  ein Besitzer führte es auf ein defektes Zahnrad der Verriegelung zurück.
+  ein Besitzer führte es auf ein defektes Zahnrad der Verriegelung zurück. Die Seite
+  behandelt auch den umgekehrten Fall: ein Werkzeug, das am Dock im Kopf verriegelt
+  bleibt.
 
 **Abtasten oder Kalibrierung schlägt fehl**
 
