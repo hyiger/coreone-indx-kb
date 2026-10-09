@@ -1,7 +1,7 @@
 ---
 title:        Tool offset calibration error codes
 confidence:   provisional
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -18,6 +18,8 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.6.3/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
 superseded_by:
 ---
 
@@ -320,8 +322,13 @@ The split codes exist only in firmware built from the fork. Reporting the failin
 instead of one generic dialog was proposed upstream in
 [firmware issue 5482](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5482). A
 Prusa developer replied on 23 September 2026 that the vendor is already working on it,
-with no delivery date. Whatever stock firmware ends up showing need not match the codes
-on this page.
+with no delivery date. It is not in
+[6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2), released
+on 7 October 2026, which on the INDX
+[changes only](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
+the filament presets: stock 6.9.2 still shows 36130 for every failure on this page, and
+logs the same lines as 6.9.1. Whatever stock firmware ends up showing need not match
+the codes on this page.
 
 ## Related
 

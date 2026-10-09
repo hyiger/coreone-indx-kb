@@ -1,7 +1,7 @@
 ---
 title:        Input-Shaper-Kalibrierung bricht mit „Measurement failed“ ab
 confidence:   provisional
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One / Core One+ with INDX, mostly Founders Edition; one Founders Edition with the Gen 2 upgrade
 toolhead:     INDX (one report is an 8-tool head; the rest do not say)
@@ -15,6 +15,8 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.0
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/factory_reset/factory_reset.hpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/factory_reset/factory_reset.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/gui/screen/screen_factory_reset.cpp
@@ -26,7 +28,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/coreone-with-mmu-upgrade-to-indx/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/toolhead-docking-calibration-fails/
 superseded_by:
-source_sha:   8fde11540e6f9f00c23db3b7d1d8038ec4ff1058880c639ed1ee840b1fc72943
+source_sha:   23616c2a551975af7eef4f40e62c46096a76787b3c52b7dcf11c10c0712f6ce1
 ---
 # Input-Shaper-Kalibrierung bricht mit „Measurement failed“ ab
 
@@ -41,13 +43,15 @@ An INDX-Druckern mit der Firmware 6.9.0 oder der Beta von 6.9.1 kann die
 Input-Shaper-Kalibrierung bei ihrer ersten Messung mit „Measurement failed.“ abbrechen,
 obwohl der Beschleunigungssensor gerade anstandslos kalibriert wurde. Prusa untersucht
 das Problem, und das Issue ist offen; in den Versionshinweisen zu 6.9.1 geht nichts
-darauf ein. Ob die stabile Version 6.9.1, die nach den meisten dieser Berichte erschien,
-betroffen ist, sagt bisher kein Bericht; der jüngste Bericht nennt keine
-Firmware-Version. Die erste Prüfung, die ein Prusa-Entwickler nannte, galt der
-Einstellung **1.5GT Belts**, die zu den tatsächlich im Drucker eingebauten Riemen passen
-muss. Die Rückkehr zur Firmware 6.6.3 brachte die Kalibrierung bei zwei Besitzern wieder
-zum Laufen. Bei einem dritten scheiterte sie auch unter 6.6.3, und sie gelang ihm erst,
-nachdem er zusätzlich „Common Misconfigurations“ zurückgesetzt hatte.
+darauf ein, und 6.9.2, erschienen am 7. Oktober 2026, ändert nur die
+Filament-Presets des Druckers. Ob die stabile Version 6.9.1, die nach den meisten
+dieser Berichte erschien, oder 6.9.2 betroffen ist, sagt bisher kein Bericht; der
+jüngste Bericht nennt keine Firmware-Version. Die erste Prüfung, die ein
+Prusa-Entwickler nannte, galt der Einstellung **1.5GT Belts**, die zu den tatsächlich im
+Drucker eingebauten Riemen passen muss. Die Rückkehr zur Firmware 6.6.3 brachte die
+Kalibrierung bei zwei Besitzern wieder zum Laufen. Bei einem dritten scheiterte sie auch
+unter 6.6.3, und sie gelang ihm erst, nachdem er zusätzlich „Common Misconfigurations“
+zurückgesetzt hatte.
 
 ## Im Einzelnen
 
@@ -111,7 +115,10 @@ wird. Zwei Besitzer hängten Logs an, und Prusa sagte, das Problem werde intern 
 Weder die Versionshinweise zu 6.9.1 noch die Titel der Commits zwischen 6.9.0 und 6.9.1
 erwähnen Input Shaping oder den Beschleunigungssensor. Die einzige Quelldatei des Input
 Shapers, die sich zwischen den beiden Tags geändert hat, enthält lediglich ein kleines
-Refactoring der Art, wie Filternamen nachgeschlagen werden.
+Refactoring der Art, wie Filternamen nachgeschlagen werden. Am INDX ändert 6.9.2 nichts
+außer den Filament-Presets für PVA und BVOH, die in den Versionshinweisen zu 6.9.1
+angekündigt waren, in jener Version selbst aber fehlten. 6.9.2 berührt keinen Code des
+Input Shapers oder des Beschleunigungssensors.
 
 Zuvor hatten Prusas Versionshinweise zu 6.6.0, der ersten INDX-Firmware, gelegentliche
 Fehler bei der Input-Shaper- und der Phase-Stepping-Kalibrierung als bekanntes Problem
@@ -193,7 +200,9 @@ doch an einer Stelle gesammelte Berichte sind keine unabhängige Bestätigung. E
 fünf fügt außer Zustimmung nichts hinzu, und zwei (der Ersteller und der jüngste) machen
 nur wenige Angaben; der jüngste sagt nicht, wie bei ihm die Einstellung 1.5GT Belts
 steht. Der Widerspruch, ob 6.6.3 allein das Problem behebt, ist ungelöst. Ob die stabile
-Version 6.9.1 betroffen ist, sagt bisher kein Bericht.
+Version 6.9.1 oder 6.9.2 betroffen ist, sagt bisher kein Bericht. Bei einer erneuten
+Prüfung am 8. Oktober 2026 hatte das Issue keine Kommentare, die neuer waren als der
+jüngste Bericht.
 
 Die beiden Berichte über die Riemeneinstellung in den Montagehinweisen betreffen die
 Einstellung und die Dock-Kalibrierung; keiner von beiden berichtete diesen Fehler. Die
@@ -206,9 +215,12 @@ Common Misconfigurations umfasst, der gespeicherte Standardwert der Riemeneinste
 die Gen-2-Variante, die bei einem ersten Start und nach einem Zurücksetzen der
 Hardwarekonfiguration angewendet wird, und was eine Änderung der Riemeneinstellung
 zurücksetzt, stammen alle aus Prusas Firmware-Quellcode beim Git-Tag 6.9.1; dass 6.6.3
-keine Riemeneinstellung hat, stammt aus dem Quellcode bei dessen Tag. Die Warnung beim
-Ändern der Riemeneinstellung ist die des Druckers selbst. Das bekannte Problem mit
-Fehlern bei der Input-Shaper-Kalibrierung stammt aus Prusas Versionshinweisen zu 6.6.0.
+keine Riemeneinstellung hat, stammt aus dem Quellcode bei dessen Tag. Dass 6.9.2 nur die
+Filament-Presets ändert, ergibt sich aus dem
+[Vergleich ihres Tags mit dem von 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2).
+Die Warnung beim Ändern der Riemeneinstellung ist die des Druckers selbst. Das bekannte
+Problem mit Fehlern bei der Input-Shaper-Kalibrierung stammt aus Prusas
+Versionshinweisen zu 6.6.0.
 
 Was weiterhelfen würde: dass Prusa eine Ursache nennt oder eine Behebung ausliefert,
 oder ein Bericht in einem separaten Thread oder Issue.

@@ -1,7 +1,7 @@
 ---
 title:        Probing fails or nozzle never touches the bed — loadcell noise
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -21,6 +21,16 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/loadcell-noise-and-mesh-bed-levelling/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/loadcell-test-tool-crash-on-calibration/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/module/probe.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/common/selftest/selftest_loadcell_indx.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.0/src/common/selftest/selftest_loadcell_indx.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/module/prusa/toolchanger_indx.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5520
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/homing-shows-early-endstop-detected-message/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/module/prusa/homing_corexy.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
 superseded_by:
 ---
 
@@ -34,7 +44,9 @@ interference in the loadcell signal rather than anything mechanical. The vendor 
 acknowledged interference from the heater as the working theory. The community fix,
 which vendor support now also recommends, is a clamp-on ferrite core on the main
 toolhead cable close to where it enters the controller board. Several owners report
-this resolving the fault outright.
+this resolving the fault outright. A loadcell self-test that reports noise straight
+after a toolchange (possibly also one the test makes itself) may be a different
+matter, with a suspected firmware cause; see below before buying hardware for that.
 
 ## Error codes that lead here
 
@@ -72,7 +84,9 @@ Symptoms reported in this family:
 - A first layer that does not stick, or that drags filament up into a blob, because
   the machine believes the bed is higher than it is
 
-Not every self-test failure is interference. In one report
+### A noisy self-test is not always interference
+
+In one report
 ([#5468](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5468)), the loadcell
 test in the first calibration after a C1 was upgraded to a C1+ (Gen 2) with INDX, on
 6.9.0, never sounded its beeps and rejected the press, reporting either a premature
@@ -91,7 +105,48 @@ describe a faint hum during the failing attempt.
 Two reports in different places make the retry outcome `reported`, but neither
 explains it. A retry costs nothing: if the self-test fails, abort and run it once more
 before treating it as interference. The second owner also homed the printer before the
-retry; that step comes from their report alone, `provisional`.
+retry; that step comes from their report alone, `provisional`, though the report below
+gives a reason it could matter.
+
+A later report offers a firmware explanation that would fit both. In
+[#5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518), an owner with an
+eight-tool Gen 2 upgrade on 6.9.1 found the self-test failing as noisy every time after
+a toolchange and passing again after homing, with each of the four tools they tried.
+They traced it to the extruder motor, which on the INDX also works the tool lock: a
+toolchange leaves that motor switched on, and while it is on, the loadcell signal is
+noisy enough to fail the test. Switching that motor on by itself, with no toolchange,
+made the signal noisy; switching it off after a toolchange made it clean again without
+homing. Homing clears it because homing Z is itself a probe of the bed, and probing
+switches the extruder motor off first; homing only X and Y left the noise in place.
+Moving cables, switching fans and heaters, and changing temperatures neither caused it
+nor cleared it, which is what sets it apart from the heater interference on the rest of
+this page.
+Another owner, in the same issue, heard something from inside the head during the
+failing test, found that aborting the test switched the motor off, and passed on the
+retry. The firmware source fits the reporter's reading: in 6.9.1 the
+[probing code](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/module/probe.cpp)
+switches the extruder motor off before probing, with a comment that this reduces noise
+on the sensor; the
+[INDX loadcell self-test](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/common/selftest/selftest_loadcell_indx.cpp)
+does not; and the
+[toolchange code](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/module/prusa/toolchanger_indx.cpp)
+puts back the motor's current and position after working the lock, but not whether it
+was on.
+
+That would account for the two earlier reports: an abort that switches the motor off, a
+homing pass before the retry, and the faint hum the second owner heard. Neither of those
+owners tested it, so the link is an inference. Neither says whether a tool had just been
+changed, either. In 6.9.1, though, the self-test picks up a tool by itself when none is
+held, and
+[6.9.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.0/src/common/selftest/selftest_loadcell_indx.cpp),
+which the first report was on, has the same step; that pickup would leave the motor on
+in the same way. That too is a reading of the code, not a tested result. The
+explanation itself rests on one issue, `provisional`; Prusa had not answered in it by
+the date above, and 6.9.2 changes nothing that reaches an INDX beyond filament presets,
+so nothing there addresses it.
+In practice: if the self-test reports noise after a toolchange, or when the test had to
+pick up a tool first, home all axes, not only X and Y, and run it again before
+suspecting interference or the loadcell.
 
 Whether a noisy self-test means noisy probing is not settled. That second owner and a
 third, in
@@ -112,7 +167,10 @@ repeated mesh may still be a cheap check before buying hardware, but only if it 
 the way a print probes, with the hotend hot, because the working theory on this page
 is interference from the heater. The thread does not say whether the nozzle was hot
 during those runs. Two matching runs with a cold nozzle do not rule interference out. This is an
-inference, not a tested rule.
+inference, not a tested rule. If the explanation in #5518 holds, there is a further
+reason the two can disagree: probing switches the extruder motor off and the self-test
+does not, so a self-test that fails for that reason says nothing about probing. Neither
+owner checked whether that was their case.
 
 ### What to try
 
@@ -172,6 +230,20 @@ inference, not a tested rule.
     the vendor's release notes and firmware repository alone, `provisional`: no owner
     has yet reported the fix curing their homing failures.
 
+    One owner reports what looks like a side effect of the same change, in
+    [#5520](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5520) and in a
+    [forum thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/homing-shows-early-endstop-detected-message/):
+    since 6.9.1, both the homing calibration and ordinary homing show an
+    `Endstop early trigger` message several times and take longer, but they finish and
+    prints run normally. The owner had run the homing calibration again after updating
+    to 6.9.1, which is what Prusa first suggested; going back to the 6.9.1 beta and
+    calibrating homing again made the message stop. Prusa says it did not see this on
+    the printers it tested the change on. In the
+    [6.9.1 source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/module/prusa/homing_corexy.cpp)
+    that message marks an X/Y homing bump that stopped short and is being repeated;
+    the measurement gives up only if the repeats run out. It comes from the X/Y homing,
+    not the loadcell, and is no sign of interference. `provisional`.
+
 If none of that helps, particularly if the failure happens only with the heater on
 and you are on an early board revision, the path is hardware replacement through the
 vendor. One owner reported success wrapping the wiring at the controller connector in
@@ -195,7 +267,13 @@ their machine is faulty.
     [15 commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1)
     to the beta tag, none of them in the tool offset calibration code. That comes from
     the release history, not from the notes. More retries give a noisy tap more
-    chances to pass; they do nothing about the noise. If you are reading this well
+    chances to pass; they do nothing about the noise.
+    [6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2),
+    released on 2026-10-07,
+    adds the PVA and BVOH filament presets that 6.9.1 announced and left out, and
+    nothing else that reaches an INDX
+    ([compare](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)),
+    so it changes nothing described on this page. If you are reading this well
     after the date above, check whether a newer firmware has addressed it before
     adding hardware.
 
@@ -216,10 +294,14 @@ Where the sources are weaker: the controlled A/B test described in the summary
 (failing without a core, working with one, failing again on removal) is reported
 second-hand there and is not separately visible in the forum corpus. The loadcell
 value bands and ferrite specifications are single-source and withheld above. The
-self-test that passes on a retry now has two reports in different places, but no
-explanation, and Prusa could not reproduce the first. Homing before the retry, the
+self-test that passes on a retry now has two reports in different places, and Prusa
+could not reproduce the first. The extruder-motor explanation for it comes from a
+single issue, with one other owner there confirming the abort-and-retry part; the
+firmware source is consistent with it, but Prusa has not confirmed it and neither
+earlier owner tested it. Homing before the retry, the
 repeated-mesh check, the warranty claim and the tool-detection case under Related are
-one report each.
+one report each, and the early-trigger homing message is one owner's, posted in two
+places.
 None of those owners fitted a ferrite, so they neither strengthen nor weaken the case
 for it. The homing fix rests on the vendor's release notes and firmware repository,
 not on owner reports.
@@ -244,4 +326,6 @@ not on owner reports.
   test without being a loadcell fault: in
   [one report](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/loadcell-test-tool-crash-on-calibration/)
   on 6.9.1, the test step picked a tool and drove it into the other docks, and the
-  owner found the printer never registered a fitted tool (`provisional`).
+  owner found the printer never registered a fitted tool (`provisional`). A check of
+  the head's wiring found nothing, and the case was still open with Prusa support at
+  the date above.

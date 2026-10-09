@@ -1,7 +1,7 @@
 ---
 title:        Düsenhärte und abrasive Filamente
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -17,8 +17,9 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/missing-profiles-in-slicer-for-non-0-4-nozzles-and-other-materials/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-nozzles/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/hardened-nozzle/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/
 superseded_by:
-source_sha:   a2bbc701b4ff8f6854c67ae5c883b1f552920409735d0598528ac9efb994c89f
+source_sha:   db2df65a1346cc323128cb663be6a46b7657f0e97cafdfb105c7ff1171721f3d
 ---
 # Düsenhärte und abrasive Filamente
 
@@ -151,15 +152,41 @@ versäumte Frist kostet — holen Sie sie aus der aktuellen Erklärung des Herst
 nicht von dieser Seite. Unabhängig davon hat Prusa eine verlängerte Rückgabefrist für
 Kit-Bestellungen aus der ersten Charge veröffentlicht; TODO(verify) auch deren Länge.
 
-**Wie der Anspruch abläuft, nach Angaben von Besitzern, die einen gestellt haben.** Das
-Kontaktformular hat keine offensichtlich passende Kategorie; Besitzer berichten, unter dem
-allgemeinen Anfragetyp „Sonstiges“ eingereicht zu haben. Rechnen Sie mit einer sofortigen
-automatischen Eingangsbestätigung und danach mit Wartezeit — ein Besitzer berichtet, eine
-Woche zuvor geschrieben und eine Bestätigung erhalten zu haben, aber immer noch ohne
-inhaltliche Antwort zu sein. Ein anderer hat an dem Tag eingereicht, an dem dies
-geschrieben wurde, und berichtet weitgehend dasselbe. Reichen Sie also früh ein, führen Sie
-eine eigene Aufzeichnung darüber, was Sie beantragt haben, und deuten Sie Schweigen nicht
-als Ablehnung.
+**Wenn Ihr Kit im August bereits bei Prusa bestellt war, richtet sich der Anspruch an
+Prusa.** Prusas Update vom August ging an Kunden, die ihre Kit-Bestellung schon
+aufgegeben hatten, also an die ersten Chargen, und besagt, dass Prusa und nicht der
+Hersteller deren Entschädigung abwickelt: Guthaben im Prusa-Shop oder eine geringere
+Barerstattung, festgelegt je Kit und gestaffelt nach dessen Werkzeuganzahl. Das Guthaben
+kommt als Gutschein per E-Mail, verschickt in Wellen, die den Versandchargen folgen; ist
+Ihr Gutschein einige Tage nach Eintreffen des Kits nicht da, ist Prusas technischer
+Support der Ansprechpartner. Bargeld statt Guthaben beantragen Sie bei Prusas Support per
+Live-Chat oder E-Mail. Ob auch Kits abgedeckt sind, die nach diesem Update bei Prusa
+bestellt wurden, hat Prusa nicht gesagt.
+
+TODO(verify): Prusas Guthaben- und Barbeträge für jede Kit-Größe, aus Prusas Update vom
+August an die Kit-Kunden, wie im Thread „nozzlegate communications“ wiedergegeben.
+
+Bedenken Sie eine Grenze, bevor Sie Prusas Guthaben für Düsen einplanen. Mit Prusas
+Shop-Guthaben lassen sich laut zwei Besitzern weder Ersatz- noch Reservedüsen für den
+INDX kaufen: Einer merkte im August an, dass Prusa sie nicht verkaufe, und ein anderer
+zählt im Oktober das nicht einsetzbare Guthaben zu den Kosten einer Düsenbestellung
+beim Hersteller. Diese Düsen
+kommen aus dem eigenen Shop des Herstellers, zuzüglich Versand, und der Besitzer vom
+Oktober nennt außerdem Einfuhrabgaben. Die beiden schreiben in getrennten Threads, der
+Besitzer vom August im Thread
+[nozzlegate communications](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/)
+und der vom Oktober in einem
+[Thread zu langsamen Düsenbestellungen](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/).
+
+**Wie ein Anspruch beim Hersteller abläuft, nach Angaben von Besitzern, die einen
+gestellt haben.** Sein Kontaktformular hat keine offensichtlich passende Kategorie;
+Besitzer berichten, unter dem allgemeinen Anfragetyp „Sonstiges“ eingereicht zu haben.
+Rechnen Sie mit einer sofortigen automatischen Eingangsbestätigung und danach mit
+Wartezeit — ein Besitzer berichtet, eine Woche zuvor geschrieben und eine Bestätigung
+erhalten zu haben, aber immer noch ohne inhaltliche Antwort zu sein. Ein anderer hat an
+dem Tag eingereicht, an dem dies geschrieben wurde, und berichtet weitgehend dasselbe.
+Reichen Sie also früh ein, führen Sie eine eigene Aufzeichnung darüber, was Sie
+beantragt haben, und deuten Sie Schweigen nicht als Ablehnung.
 
 Sie können auch eine **Mischung** aus Guthaben und Barerstattung beantragen statt
 ausschließlich das eine. Mindestens ein Besitzer hat das getan, weil er genug Guthaben
@@ -200,10 +227,24 @@ Barerstattung auf das ursprüngliche Zahlungsmittel zurückfließt.
     Profilpaket eine einzige Düsenvariante, sodass keine andere Größe auswählbar ist. Siehe
     [fehlende Slicer-Profile](missing-slicer-profiles.md).
 
-    Auch die Lieferung zieht sich. Zwei Besitzer, die Mitte Juli Ersatzdüsen im Shop des
-    Herstellers bestellt hatten, berichten, dass diese erst Ende September versandt bzw. geliefert wurden —
-    vorläufig, beide in einem einzigen Thread, dem
+    Auch die Lieferung zieht sich, und das ungleichmäßig. Zwei Besitzer, die Mitte Juli
+    Ersatzdüsen im Shop des Herstellers bestellt hatten, berichten, dass diese erst Ende
+    September versandt bzw. geliefert wurden, im
     [Thread zu Ersatzdüsen](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-nozzles/).
+    Neuere Bestellungen sind laut einem
+    [späteren Thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/)
+    mal so, mal so verlaufen. Anfang Oktober warteten dort zwei Besitzer, die Mitte
+    September bestellt hatten, nach rund drei Wochen noch immer. Dem einen teilte der
+    Hersteller mit, die Düsen müssten erst noch montiert werden, dem anderen nach einem
+    Support-Ticket, die Bestellung stehe zur Kommissionierung an und werde innerhalb von
+    etwa einer Woche versandt. Ein dritter Besitzer hatte eine Bestellung von Düsen mit
+    glatter Bohrung in der Woche vor seinem Beitrag innerhalb von drei Tagen erhalten.
+    Der erste der wartenden Besitzer warnt, dass der Shop Düsen als vorrätig anzeigen
+    kann, die nicht versandbereit sind, und vermutet, dass Düsen mit glatter Bohrung
+    die Bestellungen aufhalten. Auch die zweite wartende Bestellung galt
+    einer Düse mit glatter Bohrung, die schnelle Lieferung bestand aber ebenso aus
+    solchen Düsen; ein Muster nach Typ ist also nicht belegt. Die Erklärungen des
+    Herstellers gibt jeweils ein einzelner Besitzer wieder.
 
 Beachten Sie, dass die Angemessenheit der Entschädigung umstritten ist. Mindestens ein
 Besitzer hat die Rechnung durchgeführt und kam zu dem Ergebnis, dass das angebotene
@@ -279,7 +320,9 @@ Stark belegt: die Marketingaussage und ihre Entfernung, die Natur als
 Oberflächenbehandlung und der Härtewert, der Messingeinsatz, Existenz und Aufbau des
 Entschädigungsangebots sowie die Erklärung über Induktion und Permeabilität — all das
 erscheint in den Threads als zitiertes Material des Herstellers und nicht als
-Schlussfolgerung von Besitzern.
+Schlussfolgerung von Besitzern. Dasselbe gilt dafür, dass Prusa die Entschädigung für
+bereits bei Prusa bestellte Kits abwickelt, zitiert aus Prusas Update vom August an diese
+Kunden.
 
 !!! note "Warum hier Härtewerte stehen, andere Zahlen aber nicht"
     Diese Website hält Kalibrierwerte, Temperaturen und Druckeinstellungen zurück, bis ein
@@ -307,8 +350,13 @@ einem der beiden. Der Zeitplan für die Diamantdüse ist eine Absichtserklärung
 Drittanbieters. Dass E3D eine INDX-Düse entwickelt, ist in drei Threads belegt, aber
 jedes Detail dazu — Zeitrahmen, Größen, Aufbau, Sensorverträglichkeit, Vertriebswege,
 die Vorführung am Messestand — beruht auf den Notizen eines einzelnen Besitzers aus
-einem Gespräch auf einer Messe. Die Lieferzeiten der Ersatzdüsen und die Bezeichnung
-„gehärtet“ an gelieferten Ersatzdüsen stammen aus einem einzigen Thread.
+einem Gespräch auf einer Messe. Langsame Lieferungen von Ersatzdüsen berichten vier
+Besitzer in zwei Threads, einer dieser Threads enthält aber auch eine schnelle
+Lieferung, und die Gründe des Herstellers für die Verzögerungen gibt jeweils ein
+einzelner Besitzer wieder. Die Bezeichnung „gehärtet“ an gelieferten Ersatzdüsen stammt
+aus einem einzigen Thread. Dass sich mit Prusas Guthaben keine INDX-Düsen kaufen lassen,
+beruht auf zwei Besitzern in getrennten Threads, nicht auf einer Aussage von Prusa; dass
+Prusa sie im August nicht verkaufte, ist allein die Erklärung des Besitzers vom August.
 
 Wo die Quellen sich widersprechen: Besitzer sind sich deutlich uneins darüber, ob die
 Entschädigung angemessen ist und wie groß die praktische Auswirkung der Härte für jemanden

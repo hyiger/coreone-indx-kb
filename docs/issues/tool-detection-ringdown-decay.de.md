@@ -1,7 +1,7 @@
 ---
 title:        Phantom-Werkzeuge, „Werkzeug nicht erkannt“ und Park-Fehler
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -15,11 +15,13 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/6-9-0-firmware-tool-docking/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/will-the-prusa-indxs-wave1-ship-with-fixed-induction-coils/
 superseded_by:
-source_sha:   8c0c450a09133bc431455639c2207bb5e71b531ee511254701194f2548264cd6
+source_sha:   416fb971b7f2bab8236d29c42112553fad80b7a51798830cc858ae2f2a79ab4d
 ---
 # Phantom-Werkzeuge, „Werkzeug nicht erkannt“ und Park-Fehler
 
@@ -219,7 +221,7 @@ Schwellwertproblem vereinbaren.
 
 TODO(verify): die Zeitüberschreitung, die die Firmware für die Prüfung zulässt, und wie
 lange der Messwert tatsächlich zum Einpendeln braucht. Beides wird im verlinkten Issue
-genannt, das zum Zeitpunkt des Schreibens offen und ungelöst ist.
+genannt, das wegen Inaktivität ohne Lösung geschlossen wurde.
 
 **Firmware 6.9.1 ändert daran nichts.** 6.9.1 erschien am 25. September 2026 als stabile
 Version, nach einer Beta am 10. September. Keine der beiden Release Notes erwähnt die
@@ -229,12 +231,17 @@ betreffen die Änderungen die Werkzeug-Offset-Kalibrierung, Park- und Kalibrierb
 Referenzfahrt, eine WLAN-Korrektur, einen neuen Assistenten zur Rechtwinkligkeit der Gantry und
 Filament-Voreinstellungen, während der Code, der die Spule ausliest und den Abklingwert als
 vorhanden, abwesend oder unbekannt einordnet, unberührt bleibt. Der Schwellwert aus 6.9.0
-gilt weiterhin. Der Fehlerbericht ist weiterhin offen, doch seit Juli hat niemand etwas
-ergänzt: Am 28. September 2026 warnte der Stale-Bot von GitHub, dass er geschlossen werden
-könnte, falls binnen einer Woche keine Rückmeldung folgt. Eine Schließung aus diesem Grund
-würde nicht bedeuten, dass der Fehler behoben ist. Noch hat kein Besitzer den Fehler
+gilt weiterhin. Zum Fehlerbericht hat nach Juli niemand etwas ergänzt, und der Stale-Bot
+von GitHub schloss ihn am 5. Oktober 2026 wegen Inaktivität als „not planned“, eine Woche
+nach seiner Warnung. Diese Schließung ist keine Behebung: Kein Entwickler hat geantwortet,
+und keine Änderung ist damit verknüpft. Noch hat kein Besitzer den Fehler
 „nach dem Parken weiterhin erkannt“ auf 6.9.1 gemeldet; dies ist also eine Lesart des
 Quellcodes und kein Ergebnis von einer Maschine.
+[Firmware 6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2),
+erschienen am 7. Oktober 2026, ändert daran ebenfalls nichts: Zwischen den
+[Tags 6.9.1 und 6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
+betrifft die einzige Änderung, die einen INDX erreicht, die Filament-Presets für PVA und
+BVOH.
 
 ## Überprüfung
 
@@ -258,7 +265,7 @@ einer Quelle gekennzeichnet. Ein Firmware-Fehlerbericht hat seither gezeigt, das
 Park-Fehler auf 6.6.3 auftritt und bei einem Downgrade auf 6.6.2 verschwindet — bevor sich
 der Schwellwert überhaupt bewegte. Die Vermutung wurde zurückgezogen, und das Park-Verhalten
 hat nun einen eigenen Abschnitt, in dem die Belege stattdessen auf ein
-Einpendelzeit-Problem deuten. Das Issue ist offen und ungelöst, daher kann sich auch diese
+Einpendelzeit-Problem deuten. Das Issue wurde wegen Inaktivität ohne Lösung geschlossen, daher kann sich auch diese
 Darstellung noch ändern.
 
 **Erstanbieter.** Die Schwellwertänderung in 6.9.0 — sowohl die Lockerung als auch die

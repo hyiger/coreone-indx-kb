@@ -1,7 +1,7 @@
 ---
 title:        Toolhead collides with finished parts — "Complete individual objects"
 confidence:   reported
-updated:      2026-09-12
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -274,6 +274,17 @@ Only the second of those is new evidence. The first points back to the same comm
 write-up this page already cites, so it is that source being carried to the tracker
 rather than an independent sighting. The second comes from an unrelated owner, and it is
 what finally makes the INDX side more than a single report.
+
+Both issues have moved since. Within minutes of filing it, the reporter of issue 15778
+closed it as a duplicate of issue 15672 and posted the same project file there, so the
+two INDX sightings now sit in one issue, which remains open. The day after issue 15672
+was opened, a reply from Prusa said it had been logged in Prusa's internal tracker, the
+same step Prusa took on the XL report. On 17 September 2026 two more commenters added
+that they had hit it: one on a two-color job, where a color change during the second
+object sent the head straight for the dock through the first, the other reporting that
+the tool came away from the head. Neither names their printer, although the issue is
+specific to the Core One INDX, so they add weight to the INDX side without being
+confirmed INDX sightings.
 
 Versions are now on record — 2.9.6, and a 3.0 alpha — so a later reader can tell whether
 a fix has landed. The Prusa firmware tracker still has nothing on this for the INDX; the

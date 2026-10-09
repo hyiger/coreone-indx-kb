@@ -1,7 +1,7 @@
 ---
 title:        Werkzeug-Offset-Kalibrierung schlägt fehl: Bett in Z nicht ausgerichtet
 confidence:   provisional
-updated:      2026-09-25
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -14,8 +14,9 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/common/probe_analysis.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/marlin_stubs/G162.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
 superseded_by:
-source_sha:   a0ee253fd0e224a807fe253ef4ac12a1306a36d01d473bf6a83a42a695b58879
+source_sha:   4f73b1087392809b488fcd8243940a795ed9092cb0321fa99b434a9edfb6ed9a
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl: Bett in Z nicht ausgerichtet
 
@@ -137,8 +138,9 @@ und der Ausrichtungsvorgang in
 [G162.cpp](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/marlin_stubs/G162.cpp),
 beide am Tag 6.9.1-beta. Keine der beiden Dateien hat sich in der
 [stabilen 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1)
-geändert, die Lesart gilt also auch für sie. Wozu Z Alignment Calibration dient und der
-Menüpfad stammen aus dem
+oder in [6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
+geändert, die am INDX nur die Filament-Presets ändert; die Lesart gilt also für beide.
+Wozu Z Alignment Calibration dient und der Menüpfad stammen aus dem
 [Artikel des Herstellers zum unebenen Bett](https://help.prusa3d.com/article/uneven-bed-31111-core-one-35111-core-one-l-36111-core-one-indx_856294).
 
 Wenn Ihre Maschine dem entspricht und die Z-Ausrichtung es behebt, ist dieser zweite

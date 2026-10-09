@@ -1,19 +1,21 @@
 ---
 title:        Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1; the board fault is not version-specific
+firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1 and 6.9.2; the board fault is not version-specific
 sources:
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/df2b2eb4b2e9161ff3ae50a364d3e389b17684a3
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
@@ -23,7 +25,7 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/
 superseded_by:
-source_sha:   37b30e277f9284272f5f2a0ae1728f023ff0e2bcf7f4b4fd217b544afbc0601d
+source_sha:   58e6dcc07e03b68010a905e316dea7a2b4604c432c373ca65305ba915293cd27
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 
@@ -117,6 +119,11 @@ einzigen berichteten Fall behoben.
     und keiner davon berührt den Code der Werkzeug-Offset-Kalibrierung oder des
     Offset-Sensors. Das stammt aus dem Repository, nicht aus den Versionshinweisen, und
     nichts in der stabilen Version wird als weitere Behebung dieses Fehlers beschrieben.
+    [6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2),
+    erschienen am 7. Oktober 2026, enthält denselben Code. Am INDX
+    [ändert sie nichts](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
+    außer den Filament-Presets für PVA und BVOH, die in den Versionshinweisen zu 6.9.1
+    angekündigt waren, in jener Version selbst aber fehlten.
 
     Die Beta war nicht bei allen fehlerfrei, und die Hinweise zur stabilen Version
     erwähnen nichts vom Folgenden. Ein Besitzer stellt fest, dass die Kalibrierung
@@ -341,12 +348,13 @@ Offset-Sensors, und der Entwickler im Bericht sagte, beides habe eine Rolle gesp
 Das ist der Hersteller, der beitragende Ursachen benennt, keine veröffentlichte
 Ursachenanalyse. Die Behebung ist inzwischen keine Beta mehr. Der Bericht wurde am 23.
 September 2026 aufgrund der Rückmeldungen von Besitzern zur Beta geschlossen, und die
-stabile 6.9.1 enthält denselben Code, was die Release-Tags zeigen und die
-Versionshinweise nicht sagen. Damit ist sie die veröffentlichte Behebung des
-Herstellers, keine nachgewiesene Heilung: Ein Besitzer im Bericht sah mit der Beta
-weiterhin gelegentliche Fehlschläge, und der erste Besitzer, der zur stabilen Version
-berichtet, in einem eigenen Issue, sieht die Kalibrierung bei Drucken mit mehreren
-Werkzeugen weiterhin oft scheitern und führt das auf Spülmaterial an den Düsen zurück.
+stabile 6.9.1 sowie die darauf folgende 6.9.2 enthalten denselben Code, was die
+Release-Tags zeigen und die Versionshinweise nicht sagen. Damit ist dieser Code die
+veröffentlichte Behebung des Herstellers, keine nachgewiesene Heilung: Ein Besitzer im
+Bericht sah mit der Beta weiterhin gelegentliche Fehlschläge, und der erste Besitzer,
+der zur stabilen Version berichtet, in einem eigenen Issue, sieht die Kalibrierung bei
+Drucken mit mehreren Werkzeugen weiterhin oft scheitern und führt das auf Spülmaterial
+an den Düsen zurück.
 
 Der Hinweis auf die Referenzfrequenz des LDC1612 ist ein separater Einzelbericht eines
 anderen Besitzers und ist dort, wo er erscheint, als `provisional` markiert. Der eigene

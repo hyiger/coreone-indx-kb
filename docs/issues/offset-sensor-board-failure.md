@@ -1,19 +1,21 @@
 ---
 title:        Tool offset calibration fails — contactless offset sensor
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1; the board fault is not version-specific
+firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1 and 6.9.2; the board fault is not version-specific
 sources:
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/df2b2eb4b2e9161ff3ae50a364d3e389b17684a3
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
@@ -106,6 +108,11 @@ tension, which support may suggest, has not fixed a single reported case.
     and none of them touches the tool offset calibration or offset sensor code. That
     comes from reading the repository, not from the notes, and nothing in the stable is
     described as a further fix for this failure.
+    [6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2),
+    released on 7 October 2026, carries the same code. On the INDX it
+    [changes nothing](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
+    but the PVA and BVOH filament presets, which the 6.9.1 notes had announced and
+    which that release left out.
 
     The beta was not clean for everyone, and the stable notes mention none of what
     follows. One owner finds calibration passing reliably but nozzles coming out
@@ -303,12 +310,12 @@ converging on ooze, the vendor's beta release notes name a lower calibration
 temperature and a fix for offset sensor communication dropouts, and the developer on
 the report said both mattered. That is the vendor naming contributing causes, not a
 published root-cause analysis. The fix has since left beta. The report was closed on
-23 September 2026 on the strength of owner feedback on the beta, and the stable 6.9.1
-carries the same code, which the release tags show and the notes do not say. That
-makes it the vendor's released fix, not a verified cure: one owner on the report still
-saw occasional failures on the beta, and the first owner to report on the stable, in a
-separate issue, still sees calibration fail often on prints that use several tools,
-which they put down to purge material left on the nozzles.
+23 September 2026 on the strength of owner feedback on the beta, and the stable 6.9.1,
+and 6.9.2 after it, carry the same code, which the release tags show and the notes do
+not say. That makes it the vendor's released fix, not a verified cure: one owner on the
+report still saw occasional failures on the beta, and the first owner to report on the
+stable, in a separate issue, still sees calibration fail often on prints that use
+several tools, which they put down to purge material left on the nozzles.
 
 The LDC1612 reference-frequency lead is a separate single report from a different
 owner, and is marked `provisional` where it appears. The vendor's own commit confirms
