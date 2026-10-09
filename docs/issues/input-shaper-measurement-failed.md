@@ -1,7 +1,7 @@
 ---
 title:        Input shaper calibration stops with "Measurement failed"
 confidence:   provisional
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One / Core One+ with INDX, mostly Founders Edition; one Founders Edition with the Gen 2 upgrade
 toolhead:     INDX (one report is an 8-tool head; the rest do not say)
@@ -15,6 +15,8 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.0
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/factory_reset/factory_reset.hpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/factory_reset/factory_reset.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/gui/screen/screen_factory_reset.cpp
@@ -40,8 +42,9 @@ superseded_by:
 On INDX printers running firmware 6.9.0 or the 6.9.1 beta, the Input Shaper
 calibration can stop at its first measurement with "Measurement failed." even though the
 accelerometer has just calibrated without complaint. Prusa is investigating and the
-issue is open; nothing in the 6.9.1 release notes addresses it. No report yet says
-whether the stable 6.9.1 release, which came out after most of these reports, is
+issue is open; nothing in the 6.9.1 release notes addresses it, and 6.9.2, released on
+7 October 2026, changes only the printer's filament presets. No report yet says whether
+the stable 6.9.1 release, which came out after most of these reports, or 6.9.2 is
 affected; the latest report gives no firmware version. A Prusa developer's
 first check was the **1.5GT Belts** setting, which must match the belts actually on the
 printer. Going back to firmware 6.6.3 got the calibration working for two owners. A
@@ -103,6 +106,9 @@ Two owners attached logs, and Prusa said it is tracking the problem internally.
 Neither the 6.9.1 release notes nor the titles of the commits between 6.9.0 and 6.9.1
 mention input shaping or the accelerometer. The only input shaper source file that
 changed between the two tags is a small refactor of how filter names are looked up.
+On the INDX, 6.9.2 changes nothing but the PVA and BVOH filament presets, which the
+6.9.1 notes had announced and which that release left out. 6.9.2 touches no input
+shaper or accelerometer code.
 
 Earlier, Prusa's notes for 6.6.0, the first INDX firmware, listed occasional errors in
 the Input Shaper and Phase Stepping calibrations as a known issue, which a restart and
@@ -170,8 +176,9 @@ notes and the firmware source; nobody has reported trying it.
 reports gathered in one place are not independent confirmation. One of the five adds
 nothing beyond agreeing, and two (the opener and the latest) give little detail; the
 latest does not say how its 1.5GT Belts setting is set. The disagreement over whether
-6.6.3 alone fixes it is unresolved. No report yet says whether stable 6.9.1 is
-affected.
+6.6.3 alone fixes it is unresolved. No report yet says whether stable 6.9.1, or 6.9.2,
+is affected. Rechecked on 8 October 2026, the issue had no comments newer than the
+latest report.
 
 The two reports about the belt setting in the assembly notes concern the setting and
 dock calibration; neither reported this failure. The two forum threads in the sources
@@ -182,9 +189,10 @@ for this site reports the failure.
 covers, the belt setting's stored default, the Gen 2 variant applied on a first run and
 after a hardware-configuration reset, and what changing the belt setting resets all come
 from Prusa's firmware source at the 6.9.1 tag; that 6.6.3 has no belt setting comes from
-the source at that tag. The warning shown when the belt setting changes is the printer's
-own. The known issue with input shaper calibration errors is from Prusa's 6.6.0 release
-notes.
+the source at that tag. That 6.9.2 changes only the filament presets comes from
+[comparing its tag with 6.9.1's](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2).
+The warning shown when the belt setting changes is the printer's own. The known issue
+with input shaper calibration errors is from Prusa's 6.6.0 release notes.
 
 What would move this forward: Prusa naming a cause or shipping a fix, or a report in a
 separate thread or issue.

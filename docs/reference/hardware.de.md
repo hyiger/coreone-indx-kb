@@ -1,7 +1,7 @@
 ---
 title:        Hardware
 confidence:   unknown
-updated:      2026-09-25
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One, Core One Plus, Core One L
 toolhead:     INDX
@@ -13,10 +13,11 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/sourcing-tool-dock-hardware/
 superseded_by:
-source_sha:   915ec04c381933e0c2f0f964b654fc4030bb8443990667519fae2f04b4b5ac41
+source_sha:   e576938c16e6919161d8831d22b7a9a130ec1ccf073d7143e43d3634ba8bfb98
 ---
 # Hardware
 
@@ -65,12 +66,14 @@ Bei der Core One selbst verkauft Prusa den kompletten INDX-Drucker als Core One+
 Ausgleichselemente für die Wärmeausdehnung gehören. Er ist fertig montiert oder als
 Bausatz erhältlich, mit vier oder acht Werkzeugen, und Prusa hat die Gen-2-Teile
 außerdem der ersten Charge seiner INDX-Umbausätze beigelegt; eine umgebaute Core One
-kann also zu jeder der beiden Generationen gehören. Die Release Notes führen sie getrennt auf: Die stabile
-Firmware 6.9.1, veröffentlicht am 25. September 2026, nennt die Core One+ (Gen 2) INDX
-und die Core One/+ INDX als die Maschinen, die sie unterstützt. Lassen Sie zwischen den
-Generationen dieselbe Sorgfalt walten wie zwischen den Modellen, wo immer ein Befund die
-Riemen, ihre Riemenscheiben oder die Ausgleichselemente des Betts betrifft, die zu den
-Teilen gehören, die Gen 2 ändert.
+kann also zu jeder der beiden Generationen gehören. Die Release Notes führen sie
+getrennt auf: Die stabile Firmware 6.9.1, veröffentlicht am 25. September 2026, nennt
+die Core One+ (Gen 2) INDX und die Core One/+ INDX als die Maschinen, die sie
+unterstützt, und 6.9.2, veröffentlicht am 7. Oktober 2026, nennt dieselben beiden.
+Keines der beiden Releases nennt die Core One L. Lassen Sie zwischen den Generationen
+dieselbe Sorgfalt walten wie zwischen den Modellen, wo immer ein Befund die Riemen,
+ihre Riemenscheiben oder die Ausgleichselemente des Betts betrifft, die zu den Teilen
+gehören, die Gen 2 ändert.
 
 **Vier oder acht Werkzeuge.** Prusas Produktseite beschreibt die beiden Satzgrößen so,
 dass sie sich Smart Head und Docking-Hardware teilen und sich nur darin unterscheiden,
@@ -91,8 +94,9 @@ sind nur als bequeme Verweise angegeben — Shop-Texte ändern sich, sie sind ni
 Beleg. Die Angaben zu Gen 2 stammen aus Prusas eigenem
 [Startbeitrag zum Gen-2-INDX](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders/)
 und seiner [Versandankündigung](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/),
-die Firmware-Bezeichnungen aus dem
-[Release 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1).
+die Firmware-Bezeichnungen aus den Releases
+[6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1) und
+[6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2).
 Der Unterschied bei den Sätzen der Founders Edition ist das, was deren Besitzer
 berichten, in
 [einem Thread über die Erweiterung eines Vier-Werkzeug-Satzes](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/)

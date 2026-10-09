@@ -1,7 +1,7 @@
 ---
 title:        Fehlercodes der Werkzeug-Offset-Kalibrierung
 confidence:   provisional
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -18,8 +18,10 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.6.3/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
 superseded_by:
-source_sha:   10dc57fe7bdd0b7fc1a6fc1192ad8919d7e899acf412ee65964177afd6044e80
+source_sha:   a7f4b4b32a75191b13b038c885335f7ad4e0ba65062b73356d62c19c9ffa3933
 ---
 # Fehlercodes der Werkzeug-Offset-Kalibrierung
 
@@ -356,8 +358,13 @@ Die aufgeteilten Codes gibt es nur in Firmware, die aus dem Fork gebaut ist. Den
 fehlgeschlagenen Schritt zu melden statt eines einzigen allgemeinen Dialogs wurde
 upstream in [Firmware-Issue 5482](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5482)
 vorgeschlagen. Ein Prusa-Entwickler antwortete am 23. September 2026, dass der Hersteller
-bereits daran arbeite, ohne Liefertermin. Was die Standard-Firmware am Ende anzeigt, muss
-nicht den Codes auf dieser Seite entsprechen.
+bereits daran arbeite, ohne Liefertermin. Die Meldung des fehlgeschlagenen Schritts ist in
+[6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2),
+erschienen am 7. Oktober 2026, nicht enthalten; diese Version
+[ändert am INDX nur](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
+die Filament-Presets: Die Standard-Firmware 6.9.2 zeigt für jeden Fehler auf dieser
+Seite weiterhin 36130 und schreibt dieselben Log-Zeilen wie 6.9.1. Was die
+Standard-Firmware am Ende anzeigt, muss nicht den Codes auf dieser Seite entsprechen.
 
 ## Verwandt
 

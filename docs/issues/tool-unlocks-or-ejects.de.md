@@ -1,7 +1,7 @@
 ---
 title:        Werkzeug entriegelt sich oder fällt aus dem Kopf
 confidence:   provisional
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -12,8 +12,9 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/postid/804782/
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/filament-stuck-with-asa-pla-support/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/
 superseded_by:
-source_sha:   645eaf8dc0b96378ea3c12e876b4021c23dcf6997f13903bb18da4914fab9be8
+source_sha:   184c3a990626fc977d14921977f9468469a66747c6f71457b475711b35a5a489
 ---
 # Werkzeug entriegelt sich oder fällt aus dem Kopf
 
@@ -89,6 +90,8 @@ Kopfs ließ sich das Werkzeug überhaupt nicht mehr lösen — er vermutet, dass
 Kopf dann auf das Magnetteil des Docks drückt —, deshalb setzte er die Originalabdeckung
 lose wieder auf, um den Draht erreichbar zu halten. Er räumt ein, dass auch ein
 fehlerhaftes Zahnrad wie das des ersten Besitzers die eigentliche Ursache sein könnte.
+Später berichtet er, einen Ersatzkopf eingebaut zu haben; wie weit dieser Bericht trägt,
+steht unten unter „Was zu tun ist“.
 
 Das ist eine Verriegelung, die sich nicht öffnet, und nicht eine, die sich öffnet, wenn
 sie es nicht soll — also nicht das Symptom, das der Rest dieser Seite beschreibt. Es steht
@@ -135,9 +138,13 @@ fand. Siehe [wen Sie kontaktieren](support-and-warranty-path.md).
 setzt einen Zahn wieder auf ein Zahnrad. Realistisch sind ein Ersatzzahnrad mit einer
 Anleitung zum Zerlegen des Werkzeugkopfs oder ein Ersatz-Werkzeugkopf. Der dritte
 Besitzer oben, dessen Fehler der umgekehrte ist (ein Werkzeug, das verriegelt bleibt),
-schreibt, Prusas Live-Chat habe ihm zugesagt, einen Ersatzkopf zu schicken; das ist ein
-einzelner Bericht aus zweiter Hand, er benennt keinen Defekt, und ein Ergebnis wurde
-nicht gemeldet.
+schreibt, Prusas Live-Chat habe ihm zugesagt, einen Ersatzkopf zu schicken. In einem
+[späteren Thread zu einem anderen Thema](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/)
+schreibt er, der neue Kopf sei wenige Tage nach einem kurzen Online-Chat angekommen, und
+er habe ihn eingebaut. Das festsitzende Werkzeug, für dessen Befreiung jedes Mal Teile
+abgebaut werden mussten, schildert er in der Vergangenheitsform, sagt aber nicht
+ausdrücklich, dass der neue Kopf den Fehler behoben hat. Es bleibt der Bericht eines
+einzelnen Besitzers über seinen eigenen Fall, und ein Defekt wird darin nicht benannt.
 
 **Fragen Sie, bevor Sie den Kopf öffnen.** Das Zerlegen des Werkzeugkopfs kann einen
 Gewährleistungsanspruch erschweren, den der Hersteller sonst anerkennen würde. Und
@@ -169,8 +176,10 @@ behandelt.
 
 Der Bericht des dritten Besitzers stammt aus demselben Thread, beschreibt den umgekehrten
 Fehler und verdächtigt ein anderes Teil; auf die Stufe wirkt er sich daher nicht aus. Die
-Zusage eines Ersatzkopfs gibt er selbst wieder, nicht der Hersteller, und dabei wird kein
-Defekt benannt; es ist also nicht die unten verlangte Aussage des Herstellers.
+Zusage eines Ersatzkopfs und dessen spätere Ankunft gibt er selbst wieder, nicht der
+Hersteller, und dabei wird kein Defekt benannt; es ist also nicht die unten verlangte
+Aussage des Herstellers. Der spätere Beitrag steht zwar in einem anderen Thread, stammt
+aber von demselben Besitzer und ist daher auch keine zweite Quelle.
 
 Der Bericht aus dem anderen Thread ist ein einzelner, ohne Demontage. Er beschreibt ein
 Werkzeug, das den Kopf nicht verließ, statt eines, das herausfiel, und macht erweichtes

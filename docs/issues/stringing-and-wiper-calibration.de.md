@@ -1,13 +1,13 @@
 ---
 title:        In den Druck geschleppte Blobs — Düsenwischer und Spülvorgang
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       0.4mm reported
-firmware:     6.9.0, re-checked against 6.9.1; earlier behavior noted throughout
+firmware:     6.9.0, re-checked against 6.9.1 and 6.9.2; earlier behavior noted throughout
 sources:
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
@@ -28,8 +28,10 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5412
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5477
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
 superseded_by:
-source_sha:   1f8ec35b274577ba79b86f34b228d3964c7ae9039d695f3f817c7ff952541d11
+source_sha:   848b25d0bf75c53e4e88b3647c085211a9bb8af0515f0d1f046be0581724a742
 ---
 # In den Druck geschleppte Blobs — Düsenwischer und Spülvorgang
 
@@ -61,7 +63,7 @@ source_sha:   1f8ec35b274577ba79b86f34b228d3964c7ae9039d695f3f817c7ff952541d11
     Kalibrierung früher von Hand erledigt wurde, schlecht und ohne jede Möglichkeit zu
     sehen, was man tut. Wenn Sie etwas Älteres als 6.9.0 einsetzen, aktualisieren Sie und
     testen Sie erneut, bevor Sie Zeit in manuelle Ausrichtung investieren. Die Höhe ist
-    die Ausnahme: Sie bleibt auch in 6.9.0 und 6.9.1 ein manueller Schritt.
+    die Ausnahme: Sie bleibt auch in 6.9.0, 6.9.1 und 6.9.2 ein manueller Schritt.
 
     Die Release Notes der stabilen Version 6.9.1 nennen keine Änderung am Wischer oder am
     Spülvorgang. Die Beta hat für den Reiniger eine Sache geändert: Das Bett fährt während
@@ -71,7 +73,11 @@ source_sha:   1f8ec35b274577ba79b86f34b228d3964c7ae9039d695f3f817c7ff952541d11
     dem Beta-Tag
     [15 Commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1)
     hinzu, von denen keiner den Düsenreiniger betrifft. Das ergibt sich aus der
-    Release-Historie, nicht aus den Notes. Auf einem 6.9.1-Build fand ein Anwender PLA,
+    Release-Historie, nicht aus den Notes. 6.9.2, erschienen am 2026-10-07, ändert daran
+    nichts: Es ist 6.9.1 plus die Filament-Presets für PVA und BVOH, die die Notes zu
+    6.9.1 angekündigt, aber nicht mitgeliefert hatten, und sonst nichts, was einen INDX
+    erreicht ([Vergleich](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)).
+    Auf einem 6.9.1-Build fand ein Anwender PLA,
     das zu langen Fäden ausgezogen an der Düse hing, woraufhin das Antasten der Düsen
     scheiterte; mit 6.9.0 lief es anscheinend besser, er vermutete aber seine
     eigene Wischereinstellung oder einen Fehler der Wägezelle. Ein zweiter Anwender, auf
@@ -303,7 +309,10 @@ eine Richtungsangabe („tiefer als nur berührend“), die keine Zahl benötigt
   nicht; ob das Wiederaufheizen aus 6.9.0 hilft, ist also weiterhin nicht geklärt. Er
   bittet darum, das Bett hochzufahren, bevor das Werkzeug aufgenommen und vorgespült
   wird, und zwei weitere Anwender haben ergänzt, dass auch bei ihnen nach einer Pause
-  Blobs entstehen. Beide Anfragen sind offen und ohne Antwort von Prusa. Eine
+  Blobs entstehen. Anfang Oktober wurde #5412 als veraltet markiert — derselbe
+  automatische Schritt, der der Schließung von #5391 vorausgegangen war; einer dieser
+  beiden Anwender meldete, dass das Problem weiterhin auftritt, und die Markierung wurde
+  wieder entfernt. Beide Anfragen sind weiterhin offen und ohne Antwort von Prusa. Eine
   Behelfslösung ist nicht bestätigt: Ein Kommentator schlug für Aufträge mit Pause einen
   kleinen Reinigungsturm vor, hatte das aber nicht ausprobiert. `reported` — zwei
   Anwender führen den Blob in separaten Issues auf das Ausschwitzen während der
@@ -356,7 +365,11 @@ nennen einen Assistenten zum Rechtwinkligstellen der Gantry und eine Korrektur b
 Referenzieren, und keines von beiden betrifft den Reiniger.
 Dass das Bett während der Nozzle-Cleaner-Kalibrierung nach unten fährt, steht nur in den
 [Notes der Beta](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta).
-Keine der beiden widerspricht etwas auf dieser Seite.
+Keine der beiden widerspricht etwas auf dieser Seite. Das
+[Release 6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2)
+fügt die Presets für PVA und BVOH hinzu und sonst nichts, was einen INDX erreicht; keine
+der unten zitierten Quelldateien unterscheidet sich zwischen den Git-Tags v6.9.1 und
+v6.9.2, die folgende Lesart gilt also auch für 6.9.2.
 
 Was die automatische Kalibrierung abdeckt und was nicht, sowie die Reihenfolge von
 Spülen, Abkühlen und Wischen bei der Reinigung je Werkzeug zu Beginn eines Drucks, sind

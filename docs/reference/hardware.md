@@ -1,7 +1,7 @@
 ---
 title:        Hardware
 confidence:   unknown
-updated:      2026-09-25
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One, Core One Plus, Core One L
 toolhead:     INDX
@@ -13,6 +13,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/sourcing-tool-dock-hardware/
 superseded_by:
@@ -65,9 +66,10 @@ It comes assembled or as a kit, in four- or eight-tool form, and Prusa also ship
 the Gen 2 parts with the first batch of its INDX conversion kits, so a converted
 Core One may be of either generation. The release notes name them
 separately: stable firmware 6.9.1, published 25 September 2026, lists the Core One+
-(Gen 2) INDX and the Core One/+ INDX as the machines it supports. Take the same care
-between generations as between models wherever a finding involves the belts, their
-pulleys or the bed's expansion joints, which are among the parts Gen 2 changes.
+(Gen 2) INDX and the Core One/+ INDX as the machines it supports, and 6.9.2, published
+7 October 2026, names the same two. Neither release names the Core One L. Take the
+same care between generations as between models wherever a finding involves the belts,
+their pulleys or the bed's expansion joints, which are among the parts Gen 2 changes.
 
 **Four tools or eight.** Prusa's listing describes the two kit sizes as sharing the
 Smart Head and docking hardware and differing only in how many passive tools come with
@@ -87,7 +89,8 @@ citation. The Gen 2 details come from Prusa's own
 [launch post for the Gen 2 INDX](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders/)
 and its [shipping announcement](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/),
 and the firmware naming from the
-[6.9.1 release](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1).
+[6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1) and
+[6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2) releases.
 The difference in Founders Edition kits is what their owners report, in
 [a thread on growing a four-tool kit](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/)
 and in [one on sourcing dock hardware](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/sourcing-tool-dock-hardware/).
