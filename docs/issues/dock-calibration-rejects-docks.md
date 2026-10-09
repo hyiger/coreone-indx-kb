@@ -122,7 +122,8 @@ variant and, separately, the belt setting, and the two are tied together: of the
 Core One variants (Core One, Core One+ and Core One+ Gen2), only the Gen2 one switches
 the 1.5GT belt setting on, along with other features of that edition, and choosing
 either earlier variant switches it off. By default the firmware applies the Gen2 variant
-on first run and after a factory reset, at both the 6.9.0 and 6.9.1 tags, which fits
+on first run and after a factory reset that clears the hardware configuration, at both
+the 6.9.0 and 6.9.1 tags, which fits
 the developer's remark below that the default is 1.5GT. A machine without the Gen 2
 upgrade has to be set back after any reset.
 
@@ -277,8 +278,8 @@ Prusa developer identified the cause before the owner confirmed it.
 **First-party.** How the firmware validates a dock — fixed expected positions, one shared
 Y on the Core One, a fixed window, and what happens to a dock that falls outside it —
 comes from Prusa's public firmware source, read at the 6.9.1 release tag. The tie
-between printer variant and belt setting, the Gen2 variant as the first-run and
-factory-reset default, and the calibrations a belt-setting change resets come from the
+between printer variant and belt setting, the Gen2 variant as the default on first run and
+after a factory reset that clears the hardware configuration, and the calibrations a belt-setting change resets come from the
 same source. The warning text for the belt setting is the printer's own. An earlier
 request ([#5445](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5445)) to
 validate docks against a reference measured on the machine was closed as not planned.
@@ -304,4 +305,6 @@ line that no squaring brings it inside the window.
   calibrates but pickup or park still fails
 - [Build plate compatibility](../reference/build-plate-compatibility.md) — tools knocked
   out of their docks while calibration passes
+- [Input shaper calibration stops with "Measurement failed"](input-shaper-measurement-failed.md)
+  — another calibration where the belt setting is the first check
 - [Who to contact](support-and-warranty-path.md)

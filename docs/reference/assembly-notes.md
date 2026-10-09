@@ -459,4 +459,7 @@ records where builders got stuck, which is the part the guide cannot tell you.
   loadcell test is unstable out of the box
 - [Dock calibration rejects some or all docks](../issues/dock-calibration-rejects-docks.md) —
   if dock calibration fails on a fresh build; check the belt setting first
+- [Input shaper calibration stops with "Measurement failed"](../issues/input-shaper-measurement-failed.md)
+  — if input shaper calibration fails right after the accelerometer calibrates; check
+  the belt setting first
 - [Who to contact](../issues/support-and-warranty-path.md) — support and warranty routing

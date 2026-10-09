@@ -27,7 +27,7 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/gui/MItem_hardware.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
 superseded_by:
-source_sha:   13a2e2f0db6400dea46cbaea7351e7937f5e84bd242a2d9e19c47d22511ac167
+source_sha:   9c2d689c0f1c13413cd13084b9e224ef879a3bb8ee58ebf9f7a195b3fae7c3e5
 ---
 # Dock-Kalibrierung lehnt einige oder alle Docks ab
 
@@ -135,7 +135,7 @@ Core-One-Varianten (Core One, Core One+ und Core One+ Gen2) schaltet nur die
 Gen2-Variante die 1.5GT-Riemeneinstellung ein, zusammen mit weiteren Merkmalen dieser
 Ausführung, und die Wahl einer der beiden früheren Varianten schaltet sie aus.
 Standardmäßig setzt die Firmware beim ersten Start und nach einem Zurücksetzen auf
-Werkseinstellungen die Gen2-Variante, sowohl beim Git-Tag 6.9.0 als auch bei 6.9.1, was
+Werkseinstellungen, das die Hardwarekonfiguration löscht, die Gen2-Variante, sowohl beim Git-Tag 6.9.0 als auch bei 6.9.1, was
 zu der unten wiedergegebenen Bemerkung des Entwicklers passt, der Standard sei 1.5GT.
 Eine Maschine ohne das Gen-2-Upgrade muss nach jedem Zurücksetzen wieder umgestellt
 werden.
@@ -313,8 +313,8 @@ ein Prusa-Entwickler die Ursache, bevor der Besitzer sie bestätigte.
 gemeinsames Y an der Core One, ein festes Fenster und was mit einem Dock geschieht, das
 außerhalb davon liegt —, stammt aus Prusas öffentlichem Firmware-Quellcode, gelesen beim
 Release-Tag 6.9.1. Die Kopplung zwischen Druckervariante und Riemeneinstellung, die
-Gen2-Variante als Standard beim ersten Start und nach dem Zurücksetzen auf
-Werkseinstellungen sowie die Kalibrierungen, die eine Änderung der Riemeneinstellung
+Gen2-Variante als Standard beim ersten Start und nach einem Zurücksetzen auf
+Werkseinstellungen, das die Hardwarekonfiguration löscht, sowie die Kalibrierungen, die eine Änderung der Riemeneinstellung
 zurücksetzt, stammen aus demselben Quellcode. Der Warntext zur Riemeneinstellung ist der
 des Druckers selbst. Eine frühere Anfrage
 ([#5445](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5445)), Docks gegen
@@ -343,4 +343,6 @@ die so weit aus der Linie liegt, dass kein Rechtwinkligstellen sie ins Fenster b
   Dock-Kalibrierung gelingt, das Aufnehmen oder Parken aber weiterhin scheitert
 - [Kompatibilität der Druckplatten](../reference/build-plate-compatibility.md) —
   Werkzeuge, die aus ihren Docks gestoßen werden, während die Kalibrierung besteht
+- [Input-Shaper-Kalibrierung bricht mit „Measurement failed“ ab](input-shaper-measurement-failed.md)
+  — eine weitere Kalibrierung, bei der die Riemeneinstellung die erste Prüfung ist
 - [Wen Sie kontaktieren](support-and-warranty-path.md)

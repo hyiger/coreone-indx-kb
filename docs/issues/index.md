@@ -68,6 +68,9 @@ reader a part, a print, or a warranty window.
   — the measured docks fall outside the window the firmware expects. Which docks fail,
   and in which direction, points to the cause; docks all off by the same amount in Y
   usually mean the belt-type setting does not match the belts.
+- [Input shaper calibration stops with "Measurement failed"](input-shaper-measurement-failed.md)
+  — the accelerometer calibrates, then the first axis measurement fails, mostly on 6.9.x.
+  Check the belt-type setting; no cause found yet. *Single source.*
 - [Oozing spoils bed probing and tool calibration](oozing-during-probing-and-calibration.md)
   — material where the machine is trying to take a measurement. Start by cleaning the
   offset sensor window.
