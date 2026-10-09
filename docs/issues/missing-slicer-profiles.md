@@ -1,7 +1,7 @@
 ---
 title:        Only one nozzle size has a slicer profile
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -20,6 +20,10 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/prusa-slicer-does-not-load-other-filaments/
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-flex-material-on-indx-prusa-core-one-2-generation/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/3d-fuel-pctg-pro-profile-for-indx/
+  - https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/slic3r/GUI/MainFrame.cpp
 superseded_by:
 ---
 
@@ -38,9 +42,9 @@ response. Prusa's latest profile bundle, 2.5.11 of 2 October 2026, still declare
 that one variant, though it lays more switched-off groundwork for a 0.25mm nozzle.
 
 The material side has moved since this page was first written: flexible filament and
-BVOH gained INDX slicer presets in September. HIPS and PVA still have none. Printer-side PVA and
-BVOH presets were announced for firmware 6.9.1 but left out of it, and they would not be
-slicer profiles in any case.
+BVOH gained INDX slicer presets in September. HIPS and PVA still have none. Printer-side
+PVA and BVOH presets, announced for firmware 6.9.1 but left out of it, arrived with 6.9.2
+on 7 October; they are not slicer profiles, so they leave PVA still without one.
 
 Variable nozzle sizes across tools was a headline capability for this toolchanger, so
 it is worth knowing before you buy nozzles, and particularly before you take store
@@ -161,13 +165,15 @@ usual PLA and PETG family, which understated it even in August. As of 2.5.11 it 
 in PLA, PETG, ASA, the PC Blends and Woodfill, and since 2.5.9 TPU 95A, all at the one
 available variant.
 
-**Printer-side PVA and BVOH presets are a different thing, and not here yet.** The
-[stable 6.9.1 release](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
-of 25 September at first listed PVA and BVOH filament presets as new. Prusa has since
-struck that item from the notes: the presets were left out of the build by mistake, and
-a further release is promised. Presets of that kind are the printer's own filament
-entries, used when you load a spool at the machine, and would not add a print profile to
-PrusaSlicer anyway. For now BVOH is covered only in the slicer, and PVA at neither end.
+**Printer-side PVA and BVOH presets are a different thing, and arrived with firmware
+6.9.2.** The [6.9.1 release](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
+of 25 September listed them as new, then struck the item because a process error had left
+them out of the build. [6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2),
+released on 7 October, adds them, and a
+[comparison of the two release tags](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
+shows nothing else in it that reaches an INDX. Presets of that kind are the printer's own
+filament entries, used when you load a spool at the machine, and do not add a print
+profile to PrusaSlicer. So BVOH is now covered at both ends, and PVA only at the printer.
 
 That matters beyond convenience: HIPS and the soluble materials are what you would reach
 for to print support interfaces on a toolchanger, which is a large part of why someone
@@ -198,6 +204,25 @@ They layer INDX-specific templates on top and replace the filament start G-code,
 widened Core One preset brings its Core One G-code with it. Either way, the result is a
 hand-made profile, not a tested one.
 
+Two more routes have come up since, each on one owner's report. The first is a profile
+someone else has shared. In October one owner tried to load an INDX filament profile
+shared in a [forum thread](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/3d-fuel-pctg-pro-profile-for-indx/)
+through File > Import > Import Config, and got a project with nearly every field reading
+default. The profile's author, who is this page's author, replied by pointing to Import
+Config Bundle in the same menu instead; whether that worked for the asker was not
+reported.
+[PrusaSlicer's own menu](https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/slic3r/GUI/MainFrame.cpp)
+describes the two differently: Import Config loads a single exported configuration, and
+Import Config Bundle loads a set of presets. The owner in the
+[flexible-filament thread](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-flex-material-on-indx-prusa-core-one-2-generation/)
+had likewise failed to import an .ini found on the forum, without saying how. The second
+route came from another owner in that thread in October: an OpenPrintTag importer for
+PrusaSlicer, shared on Reddit, which they said works for them, PrusaSlicer 3 included.
+The same line goes on to say they then could not find filaments, and the post does not
+make clear in which slicer that was or what failed. They did not say which filaments they
+used it for, or how its presets are matched to the INDX, and this page has not tried it.
+Neither route gives you a profile Prusa has tested.
+
 ### Why this compounds the nozzle compensation
 
 The vendor's remediation for the nozzle hardness issue offers store credit at a higher
@@ -216,10 +241,10 @@ machine changes.
 - **Add your voice to the open requests.** The first is
   [issue 45 in Prusa's FFF settings repository](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/45),
   open since 31 July 2026 for sizes and materials, and still without a comment or
-  response on 4 October. The second,
+  response on 8 October. The second,
   [issue 48](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/48), was
   filed on 29 September by someone else and asks for the nozzle sizes alone, listing
-  0.25, 0.5, 0.6, 0.8 and 1.0; it too had no response by 4 October. An issue with one
+  0.25, 0.5, 0.6, 0.8 and 1.0; it too had no response by 8 October. An issue with one
   reporter and no engagement is easy to leave unattended; several owners saying which
   sizes and materials they actually need is harder to. Note that the September material
   presets arrived without issue 45 being touched, and the 0.25 groundwork in 2.5.11
@@ -281,6 +306,15 @@ The second concerns a material that had no live INDX preset at the time and name
 brand, so it corroborates the symptom rather than the brand list. That third-party
 brands specifically are affected rests on one owner. The mechanism behind both is read
 from the bundle, not taken from either thread.
+
+**The two further routes are provisional.** The failed import rests on one owner in
+[one thread](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/3d-fuel-pctg-pro-profile-for-indx/),
+and the suggested alternative came from this page's author, so it has no independent
+confirmation and was never reported to work; whether the flexible-filament owner's
+failed import had the same cause is unknown. The OpenPrintTag importer rests on one
+owner's word that it works for them, PrusaSlicer 3 included, alongside an unclear remark
+in the same post about then not finding filaments. What is checked here is only how
+PrusaSlicer's own menu describes the two import entries.
 
 **Where this is weaker than it looks.** Whether FLEX is genuinely usable is unclear: the
 templates exist in the bundle but that is not the same as a selectable, tested profile,

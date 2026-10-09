@@ -1,7 +1,7 @@
 ---
 title:        Werkzeugkopf kollidiert mit fertigen Teilen — "Complete individual objects"
 confidence:   reported
-updated:      2026-09-12
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -15,7 +15,7 @@ sources:
   - https://kb.nomadsgalaxy.com/topics/core-one/indx/issues/2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy
 superseded_by:
-source_sha:   18c4985008dcb9c749ede732fb96f544454a11146e9df88ce72b7dd81b698126
+source_sha:   91630f830310a016ecf14ebc4d7b74204a8fcdf3ddcd4730beb471e8e0701b49
 ---
 # Werkzeugkopf kollidiert mit fertigen Teilen — "Complete individual objects"
 
@@ -306,6 +306,19 @@ Community-Darstellung, die diese Seite bereits zitiert; es ist also diese Quelle
 den Tracker getragen wurde, und keine unabhängige Sichtung. Das zweite stammt von einem
 unbeteiligten Besitzer, und erst dadurch ist die INDX-Seite mehr als ein einzelner
 Bericht.
+
+Beide Issues haben sich seither weiterentwickelt. Der Melder von Issue 15778 schloss es
+wenige Minuten nach dem Anlegen als Duplikat von Issue 15672 und stellte dort dieselbe
+Projektdatei ein, sodass beide INDX-Sichtungen nun in einem Issue liegen, das weiterhin
+offen ist. Am Tag nach der Eröffnung von Issue 15672 hieß es in einer Antwort von Prusa,
+der Fall sei in Prusas internem Tracker erfasst worden — derselbe Schritt, den Prusa
+beim XL-Bericht unternommen hatte. Am 17. September 2026 ergänzten zwei weitere
+Kommentatoren, dass sie den Fehler ebenfalls erlebt hatten: einer bei einem zweifarbigen
+Auftrag, bei dem ein Farbwechsel während des zweiten Objekts den Kopf geradewegs zum
+Dock schickte, quer durch das erste, der andere mit dem Hinweis, dass sich das Werkzeug
+vom Kopf gelöst habe. Keiner der beiden nennt den eigenen Drucker, obwohl sich das Issue
+eigens auf die Core One INDX bezieht; sie verleihen der INDX-Seite daher Gewicht, ohne
+bestätigte INDX-Sichtungen zu sein.
 
 Versionen sind nun festgehalten — 2.9.6 und eine Alpha von 3.0 —, sodass ein späterer
 Leser erkennen kann, ob eine Behebung eingespielt wurde. Im Firmware-Tracker von Prusa

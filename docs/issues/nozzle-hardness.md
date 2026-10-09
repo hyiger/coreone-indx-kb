@@ -1,7 +1,7 @@
 ---
 title:        Nozzle hardness and abrasive filaments
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -17,6 +17,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/missing-profiles-in-slicer-for-non-0-4-nozzles-and-other-materials/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-nozzles/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/hardened-nozzle/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/
 superseded_by:
 ---
 
@@ -140,9 +141,31 @@ window — get them from the vendor's own current statement, not from this page.
 Separately, Prusa published an extended return period for initial-batch kit orders;
 TODO(verify) that length too.
 
-**How the claim goes, from owners who have filed one.** The contact form has no
-category that obviously fits, and owners report submitting under the generic "other"
-request type. Expect an automated acknowledgment immediately and then a wait — one
+**If your kit was already on order from Prusa in August, the claim goes to Prusa.**
+Prusa's August update went to customers who already had kit orders in, the initial
+batches, and says that Prusa, not the vendor, handles their compensation: Prusa Store
+credit, or a smaller cash refund, set per kit and scaled to its tool count. The credit
+arrives as an emailed voucher, sent in waves that follow the shipping batches; if yours
+has not appeared a few days after the kit arrived, Prusa's tech support is the contact.
+Cash instead of credit is requested from Prusa's support by live chat or email. Prusa
+has not said whether kits ordered from it after that update are covered.
+
+TODO(verify): Prusa's credit and cash amounts for each kit size, from Prusa's August
+update to its kit customers as relayed in the nozzlegate communications thread.
+
+Weigh one limit before taking Prusa's credit for nozzles. Prusa's store credit cannot
+buy INDX spares or replacements, according to two owners: one noted in August that
+Prusa did not sell them, and another, in October, counts the credit's not being usable
+among the costs of a nozzle order from the vendor. Those nozzles come from the vendor's
+own shop, with shipping on top, and the October owner mentions import fees as well. The
+two write in separate threads, the August owner in the
+[nozzlegate communications](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/)
+thread and the October owner in a
+[thread on slow nozzle orders](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/).
+
+**How a claim to the vendor goes, from owners who have filed one.** Its contact form
+has no category that obviously fits, and owners report submitting under the generic
+"other" request type. Expect an automated acknowledgment immediately and then a wait — one
 owner reports writing a week earlier, being acknowledged, and still having no substantive
 reply. Another filed the day this was written and says much the same. So file early, keep
 your own record of what you asked for, and do not read silence as refusal.
@@ -181,10 +204,22 @@ Prusa, and whether a cash refund returns to the original payment method.
     variant in Prusa's published profile bundle, so no other size is selectable. See
     [missing slicer profiles](missing-slicer-profiles.md).
 
-    Delivery has been slow as well. Two owners who ordered spare nozzles from the
-    vendor's shop in mid-July report them shipping or arriving only in late September — provisional,
-    both in a single thread, the
+    Delivery has been slow and uneven as well. Two owners who ordered spare nozzles from
+    the vendor's shop in mid-July report them shipping or arriving only in late
+    September, in the
     [spare nozzles thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-nozzles/).
+    Recent orders have gone both ways, according to a
+    [later thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/).
+    In early October two owners there who had ordered in mid-September were still
+    waiting, about three weeks on. The vendor told one that the nozzles still had to be
+    assembled, and told the other, after a support ticket, that the order was queued to
+    be picked and shipped within about a week. A third owner had received an order of
+    plain-bore nozzles within three days, the week before posting. The first of the
+    waiting owners warns that the shop can show nozzles in stock that are not ready to
+    ship, and guesses that plain-bore nozzles are what is holding orders up. The
+    second waiting order was also plain-bore, but so was the quick delivery, so no
+    pattern by type is established. The vendor's explanations are each relayed by one
+    owner.
 
 Be aware the adequacy of the compensation is disputed. At least one owner worked
 through the arithmetic and found the offered credit represents a substantially
@@ -253,7 +288,9 @@ vendor's remediation statement directly.
 Strongly sourced: the marketing claim and its removal, the surface-treatment nature
 and hardness figure, the brass insert, the existence and structure of the remediation
 offer, and the induction/permeability explanation — all appear as quoted vendor
-material in the threads rather than as owner inference.
+material in the threads rather than as owner inference. So does Prusa's handling of
+compensation for kits already on order from Prusa, quoted from its August update to
+those customers.
 
 !!! note "Why hardness figures appear here when other numbers do not"
     This site withholds calibration values, temperatures and print settings until a
@@ -277,8 +314,13 @@ two owners in a single thread, the VAT treatment and expiry from only one of the
 diamond-nozzle timeline is a third-party statement of intent. That E3D is developing an
 INDX nozzle is corroborated in three threads, but every detail of it — timeframe, sizes,
 construction, sensor compatibility, where it will be sold, the booth demonstration —
-rests on one owner's notes from a trade-show conversation. The spare-nozzle delivery
-times and the "hardened" description on delivered spares come from a single thread.
+rests on one owner's notes from a trade-show conversation. Slow spare-nozzle delivery is
+reported in two threads by four owners, but one of those threads also has a quick
+delivery, and the vendor's reasons for the delays are each one owner's relay. The
+"hardened" description on delivered spares comes from a single thread. That Prusa's
+credit cannot buy INDX nozzles rests on two owners in separate threads, not on a
+statement from Prusa; that Prusa did not sell them as of August is the August owner's
+explanation alone.
 
 Where the sources disagree: owners differ sharply on whether the remediation is
 adequate, and on how much practical impact the hardness actually has for someone who

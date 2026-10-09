@@ -1,7 +1,7 @@
 ---
 title:        Tool offset calibration fails: bed not aligned in Z
 confidence:   provisional
-updated:      2026-09-25
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -14,6 +14,7 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/common/probe_analysis.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/marlin_stubs/G162.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
 superseded_by:
 ---
 
@@ -124,9 +125,10 @@ machine. The firmware references are the classifier in
 and the alignment procedure in
 [G162.cpp](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/marlin_stubs/G162.cpp),
 both at the 6.9.1-beta tag. Neither file changed in the
-[stable 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1),
-so the reading applies to it as well. What Z Alignment Calibration is for, and the menu
-path, are from the vendor's
+[stable 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1)
+or in [6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2),
+which on the INDX changes only the filament presets, so the reading applies to both.
+What Z Alignment Calibration is for, and the menu path, are from the vendor's
 [uneven bed article](https://help.prusa3d.com/article/uneven-bed-31111-core-one-35111-core-one-l-36111-core-one-indx_856294).
 
 If your machine matches this and Z alignment fixes it, that second report is what

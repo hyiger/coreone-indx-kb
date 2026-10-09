@@ -1,7 +1,7 @@
 ---
 title:        Wen Sie kontaktieren — Support vs. Gewährleistung bei einem INDX-Kit
 confidence:   reported
-updated:      2026-09-25
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -12,8 +12,10 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/warranty-concern-uk/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/
 superseded_by:
-source_sha:   57864c521601e86b97e92f55a95fbe42e027cddd5b8aca2d19d0655eca6078c7
+source_sha:   1935eb41a3feb457a171b52f76663a9f3fbb557c158d0e8fb4246a0ab25d7d9b
 ---
 # Wen Sie kontaktieren — Support vs. Gewährleistung bei einem INDX-Kit
 
@@ -67,9 +69,38 @@ Woche nach der ersten Meldung wartete er noch immer.
 Ein Besitzer, bei dem sich Werkzeuge am Dock wiederholt nicht aus dem Kopf lösten — siehe
 [Werkzeug entriegelt sich oder fällt aus dem Kopf](tool-unlocks-or-ejects.md) — berichtet,
 dass Prusas Live-Chat angeboten habe, einen kompletten Ersatz-Werkzeugkopf zu schicken.
-Der Beitrag nennt weder die Edition des Kits noch, wo es gekauft wurde, und beschreibt
-eine Zusage, kein erhaltenes Teil; er bestätigt das oben beschriebene Muster der Founders
-Edition also weder, noch widerlegt er es. Behandeln Sie ihn als Einzelbericht.
+In einem
+[späteren Thread zu einem anderen Thema](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/)
+schreibt derselbe Besitzer, der neue Kopf sei wenige Tage nach einem kurzen Online-Chat
+von Prusa gekommen und eingebaut worden. Keiner der beiden Beiträge nennt die Edition des
+Kits oder, wo es gekauft wurde; der Bericht bestätigt das oben beschriebene Muster der
+Founders Edition also weder, noch widerlegt er es. Es ist ein Besitzer, der seinen
+eigenen Fall zweimal schildert, keine zweite Quelle: Behandeln Sie ihn als Einzelbericht,
+`provisional`.
+
+### Düsenentschädigung und Ersatzdüsen
+
+Die ausgelieferten INDX-Düsen sind nur an der Oberfläche gehärtet, nicht durchgehend,
+und dafür wird eine Entschädigung angeboten; Hintergrund, Optionen und deren Grenzen
+stehen auf der Seite zur [Düsenhärte](nozzle-hardness.md). Die Entschädigung wickelt
+ab, wer Ihnen das Kit verkauft hat. Besitzer der Founders Edition stellen ihren Anspruch beim Hersteller,
+über dessen Kontaktformular. Prusas Update vom August ging an Kunden, die ihre
+Kit-Bestellung schon aufgegeben hatten, also an die ersten Chargen, und besagt, dass
+Prusa deren Entschädigung selbst abwickelt: Shop-Guthaben, verschickt als Gutschein per
+E-Mail, oder stattdessen eine Barerstattung. Ist der Gutschein für das Shop-Guthaben
+einige Tage nach Eintreffen des Kits nicht da, wenden Sie sich an Prusas technischen
+Support; wenn Sie statt Guthaben die Barerstattung möchten, fragen Sie Prusas Support
+per Live-Chat oder E-Mail. Ob auch Kits abgedeckt sind, die nach diesem Update bei Prusa
+bestellt wurden, hat Prusa nicht gesagt.
+
+Der Kauf von Ersatzdüsen ist eine eigene Sache. Besitzer in zwei getrennten Threads
+berichten, dass sich Prusas Shop-Guthaben nicht für INDX-Düsen einsetzen lässt; diese
+kommen aus dem Shop des Herstellers, gleich welche Edition Sie besitzen, und der frühere
+der beiden erklärte im August, Prusa verkaufe sie nicht. Eine hängende Shop-Bestellung
+ist ein Fall für ein Ticket beim Hersteller. Ein Besitzer, dessen Bestellung im Oktober
+knapp drei Wochen gewartet hatte, eröffnete ein Ticket und erhielt noch am selben Tag
+eine Antwort mit einer Versandschätzung. Das ist vorläufig, ein Einzelbericht, und die
+Schätzung war zum Zeitpunkt des Beitrags noch nicht eingelöst.
 
 ### Zur Dauer der Gewährleistung — prüfen Sie das selbst
 
@@ -102,12 +133,24 @@ reale Fälle durcharbeiten, der das Muster aus technischem Support beim einen un
 Ersatzteilen beim anderen Unternehmen unabhängig bestätigt. Erfahrungen mit Eskalationen
 und Bearbeitungszeiten werden in den beiden großen
 [nozzlegate](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/)-Threads
-berichtet.
+berichtet. Dass Prusa die Düsenentschädigung für Kits abwickelt, die im August bereits bei
+Prusa bestellt waren, stammt aus erster Hand: aus Prusas Update vom August an diese
+Kunden, zitiert im Thread „nozzlegate communications“.
 
 Schwächer: Das Ersatzangebot über den Live-Chat und die genannte Eskalationsdauer beruhen
 jeweils auf dem Bericht eines einzelnen Besitzers im Thread mit der Zusammenfassung
-häufiger Probleme, und der erste davon nennt nicht, um welche Edition es sich beim Kit
-handelt.
+häufiger Probleme. Der spätere Beitrag desselben Besitzers, der Kopf sei angekommen und
+eingebaut, in einem
+[Thread zur Frage, ob sich das INDX-Upgrade lohnt](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/),
+ist wiederum dessen eigene Schilderung und keine zweite Quelle, und keiner der beiden
+Beiträge nennt, um welche Edition es sich beim Kit handelt. Dass sich Prusas Shop-Guthaben nicht für INDX-Düsen einsetzen lässt, beruht auf
+zwei Besitzern in getrennten Threads, dem Thread
+[nozzlegate communications](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/)
+und einem
+[Thread zu langsamen Düsenbestellungen](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/),
+nicht auf einer Aussage von Prusa; dass Prusa sie im August nicht verkaufte, beruht
+allein auf dem ersten davon. Die Antwort des Herstellers am selben Tag ist ein
+Einzelbericht aus dem zweiten.
 
 Wo die Quellen sich widersprechen: bei der Gewährleistungsdauer. Der UK-Thread kommt zu
 keinem Ergebnis, und seine Teilnehmer sagen das deutlich. Behandeln Sie jede Dauerangabe

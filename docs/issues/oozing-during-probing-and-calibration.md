@@ -1,7 +1,7 @@
 ---
 title:        Oozing spoils bed probing and tool calibration
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -22,6 +22,8 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/gcode/bedlevel/ubl/G29.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
 superseded_by:
 ---
 
@@ -156,7 +158,11 @@ calibration changes, but the stable carries them all the same: in the firmware
 repository it is the beta tag plus
 [15 further commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1),
 none of which touches tool offset calibration. That comes from the release history, not
-the notes. No owner has yet reported how PC Blend probes on the stable.
+the notes. 6.9.2, released 2026-10-07, changes nothing here either: on the INDX it is the
+stable 6.9.1 plus the PVA and BVOH filament presets that the 6.9.1 notes announced but
+left out
+([compare](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)).
+No owner has yet reported how PC Blend probes on stable 6.9.1 or 6.9.2.
 
 **Adjusting it.** One owner widened the PC offset in the printer's start G-code and the
 failures stopped. The catch, which they pointed out themselves, is that a printer
@@ -222,7 +228,10 @@ both failures on one machine.
 To find out whether ooze is involved at all, one owner had the printer probe with an
 empty tool, so that nothing could ooze; probing failed just the same, which ruled ooze
 out for them ([thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/)).
-Single report, and their fault was still unresolved.
+The cause turned out to be an assembly mistake: they had mixed up the bed spacers and
+inadvertently refitted the old one; once the correct spacer was in, probing worked.
+Single report, but the empty-tool test did its job: it ruled ooze out, and the fault
+was mechanical.
 
 If probing fails with the nozzle plainly nowhere near the sheet — a gap you can see
 rather than one you would measure — that is a different fault entirely and ooze is
@@ -259,6 +268,10 @@ cooler, and the touch on the sensor board gets more attempts before it counts as
 (see [error codes](../codes.md)). It is recorded because
 it accounts for every owner report in that section without contradicting any of them,
 but it shows what the code does, not what an owner has watched happen.
+Neither source file (the bed leveling command or the tool offset calibration) differs
+between the v6.9.1 and
+[v6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2) tags, so
+the reading holds for 6.9.2 as well.
 
 Where the sources disagree: drying was offered confidently as the likely cause for
 PETG, but the case that was actually resolved was resolved by cleaning, not drying.

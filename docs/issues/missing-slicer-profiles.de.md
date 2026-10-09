@@ -1,7 +1,7 @@
 ---
 title:        Nur eine Düsengröße hat ein Slicer-Profil
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -20,8 +20,12 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/prusa-slicer-does-not-load-other-filaments/
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-flex-material-on-indx-prusa-core-one-2-generation/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/3d-fuel-pctg-pro-profile-for-indx/
+  - https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/slic3r/GUI/MainFrame.cpp
 superseded_by:
-source_sha:   9075501ecacd8e8fb07974b9471a87d5eea538224ea74ca36cace5c0d55662a1
+source_sha:   9eb5bec937e39690032d1dec94c51b6e2dcef94019f4101173437d31563e5f46
 ---
 # Nur eine Düsengröße hat ein Slicer-Profil
 
@@ -40,8 +44,9 @@ eine Variante, legt aber weitere abgeschaltete Vorarbeiten für eine 0.25mm-Düs
 
 Bei den Materialien hat sich seit der ersten Fassung dieser Seite etwas bewegt: Flexible
 Filamente und BVOH haben im September INDX-Slicer-Presets erhalten. HIPS und PVA haben
-weiterhin keine. Druckerseitige PVA- und BVOH-Presets waren für Firmware 6.9.1
-angekündigt, fehlen darin aber, und Slicer-Profile wären sie ohnehin nicht.
+weiterhin keine. Druckerseitige PVA- und BVOH-Presets, für Firmware 6.9.1 angekündigt,
+aber darin nicht enthalten, kamen am 7. Oktober mit 6.9.2; Slicer-Profile sind sie nicht,
+PVA bleibt also weiterhin ohne eines.
 
 Unterschiedliche Düsengrößen über die Werkzeuge hinweg waren ein beworbenes
 Hauptmerkmal dieses Werkzeugwechslers; man sollte das also wissen, bevor man Düsen
@@ -176,14 +181,17 @@ Die für Anwender sichtbare Standard-Materialliste beider INDX-Modelle wurde hie
 2.5.11 umfasst sie PLA, PETG, ASA, die PC Blends und Woodfill sowie seit 2.5.9 TPU 95A,
 alle für die eine verfügbare Variante.
 
-**Druckerseitige PVA- und BVOH-Presets sind etwas anderes, und es gibt sie noch nicht.**
-Die [stabile Version 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
-vom 25. September führte Filament-Presets für PVA und BVOH zunächst als neu auf. Prusa
-hat diesen Punkt inzwischen aus den Versionshinweisen gestrichen: Die Presets fehlen
-versehentlich im Build, und eine weitere Version ist angekündigt. Solche Presets sind
-die eigenen Filamenteinträge des Druckers, die man beim Laden einer Spule an der
-Maschine verwendet, und würden PrusaSlicer ohnehin kein Druckprofil hinzufügen. Vorerst
-ist BVOH also nur im Slicer abgedeckt und PVA an keinem Ende.
+**Druckerseitige PVA- und BVOH-Presets sind etwas anderes, und sie kamen mit Firmware
+6.9.2.** Die [Version 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
+vom 25. September führte sie als neu auf und strich den Punkt dann wieder, weil ein
+Fehler im Ablauf sie aus dem Build herausgehalten hatte.
+[6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2), erschienen
+am 7. Oktober, fügt sie hinzu, und ein
+[Vergleich der beiden Release-Tags](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
+zeigt darin nichts weiter, was einen INDX betrifft. Solche Presets sind die eigenen
+Filamenteinträge des Druckers, die man beim Laden einer Spule an der Maschine verwendet,
+und fügen PrusaSlicer kein Druckprofil hinzu. BVOH ist damit nun an beiden Enden
+abgedeckt, PVA nur am Drucker.
 
 Das ist mehr als eine Frage der Bequemlichkeit: HIPS und die löslichen Materialien sind
 das, wozu man greift, um auf einem Werkzeugwechsler Kontaktflächen von Stützstrukturen
@@ -219,6 +227,27 @@ Vorlagen darüber und ersetzen den Filament-Start-G-Code, sodass ein erweitertes
 Core-One-Preset seinen Core-One-G-Code mitbringt. So oder so ist das Ergebnis ein
 selbst gebautes Profil, kein getestetes.
 
+Seitdem sind zwei weitere Wege aufgetaucht, jeder gestützt auf den Bericht eines
+einzelnen Besitzers. Der erste ist ein Profil, das jemand anderes geteilt hat. Im Oktober
+versuchte ein Besitzer, ein in einem
+[Forumsthread](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/3d-fuel-pctg-pro-profile-for-indx/)
+geteiltes INDX-Filamentprofil über File > Import > Import Config zu laden, und erhielt ein
+Projekt, in dem fast jedes Feld „default“ lautete. Der Autor des Profils, der zugleich
+Autor dieser Seite ist, verwies stattdessen auf Import Config Bundle im selben Menü; ob
+das beim Fragenden funktionierte, wurde nicht berichtet.
+[PrusaSlicers eigenes Menü](https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/slic3r/GUI/MainFrame.cpp)
+beschreibt die beiden unterschiedlich: Import Config lädt eine einzelne exportierte
+Konfiguration, Import Config Bundle einen Satz von Presets. Der Besitzer im
+[Thread zu flexiblen Filamenten](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/printing-flex-material-on-indx-prusa-core-one-2-generation/)
+war ebenfalls daran gescheitert, eine im Forum gefundene .ini zu importieren, ohne zu
+sagen, auf welchem Weg. Der zweite Weg kam im Oktober von einem weiteren Besitzer in
+diesem Thread: ein auf Reddit geteilter OpenPrintTag-Importer für PrusaSlicer, der nach
+seinen Worten bei ihm funktioniert, PrusaSlicer 3 eingeschlossen. Im selben Satz heißt es
+dann, er habe danach keine Filamente finden können, und aus dem Beitrag geht nicht hervor,
+in welchem Slicer das war oder was nicht klappte. Er sagte nicht, für welche Filamente er
+ihn nutzte oder wie dessen Presets dem INDX zugeordnet werden, und diese Seite hat ihn
+nicht ausprobiert. Keiner der beiden Wege liefert ein von Prusa getestetes Profil.
+
 ### Warum das die Düsen-Entschädigung verschärft
 
 Die Abhilfe des Herstellers für das Problem der Düsenhärte bietet Shop-Guthaben zu
@@ -237,11 +266,11 @@ Einstellung an Ihrer Maschine ändert.
 
 - **Schließen Sie sich den offenen Anfragen an.** Die erste ist
   [Issue 45 in Prusas FFF-Settings-Repository](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/45),
-  offen seit dem 31. Juli 2026 für Größen und Materialien und am 4. Oktober weiterhin
+  offen seit dem 31. Juli 2026 für Größen und Materialien und am 8. Oktober weiterhin
   ohne Kommentar und ohne Reaktion. Die zweite,
   [Issue 48](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/48), wurde
   am 29. September von jemand anderem eingereicht und bittet allein um die Düsengrößen,
-  namentlich 0.25, 0.5, 0.6, 0.8 und 1.0; auch sie war bis zum 4. Oktober unbeantwortet.
+  namentlich 0.25, 0.5, 0.6, 0.8 und 1.0; auch sie war bis zum 8. Oktober unbeantwortet.
   Ein Issue mit einem einzigen Melder und ohne Resonanz bleibt leicht unbeachtet;
   mehrere Besitzer, die benennen, welche Größen und Materialien sie tatsächlich brauchen,
   lassen sich schwerer übergehen. Die Material-Presets vom September kamen
@@ -313,6 +342,17 @@ Der zweite Bericht betrifft ein Material, das damals kein aktives INDX-Preset ha
 nennt keine Marke; er bestätigt also das Symptom, nicht die Markenliste. Dass gerade
 Drittanbieter-Marken betroffen sind, stützt sich auf einen Besitzer. Der Mechanismus
 hinter beiden ist aus dem Bundle gelesen, nicht aus einem der Threads übernommen.
+
+**Die beiden weiteren Wege sind vorläufig.** Der gescheiterte Import stützt sich auf
+einen Besitzer in
+[einem Thread](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/3d-fuel-pctg-pro-profile-for-indx/),
+und die vorgeschlagene Alternative kam vom Autor dieser Seite; sie ist also nicht
+unabhängig bestätigt und wurde nie als funktionierend gemeldet, und ob der gescheiterte
+Import des Besitzers mit den flexiblen Filamenten dieselbe Ursache hatte, ist unbekannt.
+Der OpenPrintTag-Importer stützt sich allein auf die Aussage eines Besitzers, dass der
+Importer bei ihm funktioniert, PrusaSlicer 3 eingeschlossen; hinzu kommt eine unklare
+Bemerkung im selben Beitrag, danach keine Filamente gefunden zu haben. Hier geprüft ist
+nur, wie PrusaSlicers eigenes Menü die beiden Import-Einträge beschreibt.
 
 **Wo das schwächer ist, als es aussieht.** Ob FLEX wirklich nutzbar ist, bleibt unklar:
 Die Vorlagen sind im Bundle vorhanden, doch das ist nicht dasselbe wie ein auswählbares,

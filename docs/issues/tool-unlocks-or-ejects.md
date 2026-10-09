@@ -1,7 +1,7 @@
 ---
 title:        Tool unlocks or ejects from the head
 confidence:   provisional
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -12,6 +12,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/postid/804782/
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/filament-stuck-with-asa-pla-support/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/
 superseded_by:
 ---
 
@@ -83,6 +84,8 @@ six-color print they had to do that three times. With the head's cover taken off
 completely the tool would not release at all — they think the bare head then presses on
 the dock's magnet part — so they refitted the stock cover loosely to keep the wire within
 reach. They allow that a faulty gear like the first owner's could be the real cause.
+They later report fitting a replacement head; how far that account goes is covered
+under "What to do" below.
 
 This is a lock that fails to open rather than one that opens when it should not, so it
 is not the symptom the rest of this page describes. It is recorded here because it
@@ -126,8 +129,11 @@ an escalated ticket open well before finding the cause. See
 gear. The realistic outcomes are a replacement gear with instructions for taking the
 toolhead apart, or a replacement toolhead. The third owner above, whose fault is the
 opposite one (a tool that stays locked), says Prusa's live chat told them a replacement
-head would be sent; it is a single second-hand report, it names no defect, and no
-outcome has been posted.
+head would be sent. In a [later thread on another topic](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/)
+they say the new head reached them a few days after a short online chat and that they
+fitted it. They describe the stuck tool, which meant taking parts off to free it each
+time, in the past tense, but do not say in so many words that the new head cured it. It
+remains one owner's account of their own case, and it names no defect.
 
 **Ask before you open the head.** Dismantling the toolhead may complicate a warranty
 claim the vendor would otherwise honor. And rule out the simpler reasons a tool comes
@@ -154,8 +160,10 @@ PLA-only pattern is a reason for caution before treating the two as one fault.
 
 The third owner's report comes from the same thread, describes the opposite fault, and
 suspects a different part, so it does not bear on the tier. The replacement head they
-say they were promised is their own account rather than the vendor's, and it names no
-defect, so it is not the vendor statement asked for below.
+say they were promised, and later say they received, is their own account rather than
+the vendor's, and it names no defect, so it is not the vendor statement asked for below.
+That later post sits in a different thread but comes from the same owner, so it is not a
+second source either.
 
 The separate-thread report is a single account with no teardown. It describes a tool
 that would not leave the head rather than one that fell out, and blames softened

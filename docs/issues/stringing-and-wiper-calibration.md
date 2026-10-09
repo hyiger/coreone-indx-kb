@@ -1,13 +1,13 @@
 ---
 title:        Blobs dragged into the print — nozzle wiper and purge
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       0.4mm reported
-firmware:     6.9.0, re-checked against 6.9.1; earlier behavior noted throughout
+firmware:     6.9.0, re-checked against 6.9.1 and 6.9.2; earlier behavior noted throughout
 sources:
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
@@ -28,6 +28,8 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5412
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5477
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
 superseded_by:
 ---
 
@@ -57,7 +59,7 @@ superseded_by:
     Most of the manual procedure below exists because that calibration used to be
     done by hand, badly, with no way to see what you were doing. If you are on anything
     older than 6.9.0, update and re-test before investing any time in manual alignment.
-    Height is the exception: it is still a manual step in 6.9.0 and 6.9.1.
+    Height is the exception: it is still a manual step in 6.9.0, 6.9.1 and 6.9.2.
 
     The stable 6.9.1 notes name no change to the wiper or the purge. The beta did one
     thing for the cleaner: where appropriate, the bed now moves down during Nozzle
@@ -65,7 +67,10 @@ superseded_by:
     repeat it, but the stable is built on the beta: in the firmware repository it adds
     [15 commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1)
     to the beta tag, none of them about the nozzle cleaner. That comes from the release
-    history, not from the notes.
+    history, not from the notes. 6.9.2, released 2026-10-07, leaves all of this as it
+    was: it is 6.9.1 plus the PVA and BVOH filament presets that the 6.9.1 notes
+    announced but left out, and nothing else that reaches an INDX
+    ([compare](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)).
     On a 6.9.1 build, one owner found PLA drawn out into long strings and left clinging
     to the nozzle, after which nozzle probing failed; going back to 6.9.0 seemed better,
     though they suspected their own wiper setting or a load cell fault. A second owner,
@@ -274,9 +279,12 @@ just touching"), which needs no number.
   only afterwards, so the primed nozzle oozes during that wait and the blob ends up on
   the part. They give no firmware version, so whether the 6.9.0 reheat helps is still
   not established. They ask for the bed to go up before the tool is picked and primed,
-  and two more owners have added that they get blobs after a pause as well. Both
-  requests are open with no reply from Prusa. No workaround is confirmed: one commenter
-  suggested a small wipe tower for jobs with a pause, but had not tried it. `reported` —
+  and two more owners have added that they get blobs after a pause as well. In early
+  October #5412 was flagged as stale, the same automatic step that preceded the closure
+  of #5391; one of those two owners replied that it still affects them, and the flag was
+  lifted. Both requests remain open with no reply from Prusa. No workaround is
+  confirmed: one commenter suggested a small wipe tower for jobs with a pause, but had
+  not tried it. `reported` —
   two owners, in separate issues, trace the blob to ooze while the bed travels.
 
 ### Temperatures, retraction and flow
@@ -320,7 +328,11 @@ The 6.9.1 re-check: the
 [stable notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1)
 list a gantry squaring wizard and a homing fix, and neither touches the cleaner. The bed dropping during Nozzle Cleaner calibration comes from the
 [beta notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta)
-only. Nothing on this page is contradicted by either.
+only. Nothing on this page is contradicted by either. The
+[6.9.2 release](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2)
+adds the PVA and BVOH presets and nothing else that reaches an INDX; none of the source
+files cited below differs between the v6.9.1 and v6.9.2 tags, so the reading that
+follows holds for 6.9.2 as well.
 
 What the automatic calibration does and does not cover, and the order of purge,
 cool-down and wipe in the per-tool clean that runs as a print begins, are read from the

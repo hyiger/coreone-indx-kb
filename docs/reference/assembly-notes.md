@@ -1,7 +1,7 @@
 ---
 title:        Assembly notes — INDX conversion kit
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One, Core One Plus
 toolhead:     INDX
@@ -22,6 +22,8 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/how-many-types-of-fasteners-etc-come-with-indx-gen2-upgrade/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-fe-upgrading-to-gen2/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/calibration-issues-from-beginning/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/
 superseded_by:
 ---
 
@@ -262,8 +264,13 @@ harder to find:
   and found a match online, in a grade whose relation to the original is unknown; a
   second owner has since found another listing at that size, which states no grade at
   all. The author of this page has not found a source and suspects they are custom; a
-  further owner is still looking. That first owner notes the sensor depends on magnet strength
-  more than the dock does, because it works by Hall effect.
+  further owner is still looking. That first owner notes the sensor depends on magnet
+  strength more than the dock does, because it works by Hall effect. Yet another
+  owner, who believes they now have the parts for a do-it-yourself expansion, settled
+  on a near match for the sensor's ring-shaped magnets (presumably the countersunk
+  ones, though the post does not say) in early October 2026 and has yet to learn
+  whether the sensor calibrates with it. No substitute has so far been reported
+  working in the sensor.
 - **The plain plastic spacers inside the printed housing** — not the collets the PTFE
   plugs into. No source is known. One owner went a different way, with a community
   adapter that takes standard PC4-M10 push fittings and lets the PTFE tube pass
@@ -317,6 +324,27 @@ The vendor's guidance is to be on current INDX firmware, run calibration with fi
 loaded, and — if it still fails — to take the full log to support rather than finding a
 fresh way around it each time. The machine depends on those calibrations being right,
 so a workaround here only compounds later.
+
+## Failures traced to assembly mistakes
+
+Two failures have turned out to be assembly mistakes, each confirmed as the cause by
+the owner who made it:
+
+- **X and Y motor cables swapped at the board.** One owner who had fitted both the INDX
+  and the Gen 2 upgrade could get the X and Y axis calibrations to pass only with
+  the tools taken out; with them in, the head ran into the docked tools. Belt tuning
+  passed its first gantry check, then on a second pass tried to drive the head out past
+  the printer's frame, and homing kept tugging tool 8 in its dock until it gave up.
+  Another forum member suggested checking which motor went to which socket on the
+  xBuddy board, and putting the two cables back the right way around fixed everything
+  ([thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/calibration-issues-from-beginning/)).
+- **An old heat bed spacer refitted.** One owner whose probing kept failing at the back
+  right of the bed worked through a long list of checks before finding they had mixed
+  up the bed spacers and put the old one back instead of its replacement. With the
+  correct spacer in, probing worked
+  ([thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/)).
+
+*Provisional.* Each of these is a single report, from its own thread.
 
 ## Adding Gen 2 to a finished Founders Edition build
 
@@ -428,12 +456,13 @@ shipping and order chatter — it was found by reading all 1534 posts, and it is
 only two durable technical items that survived review out of that entire thread. Also
 single reports, and marked in place: the belt setting after the first flash, the
 assembled printer that arrived without tools, the screws that melted into dock parts,
-the sensor-housing spacer workaround and the countersunk magnet measurement, along
-with the two listings found at that size. The
-activation magnet size rests on one owner's measurement set against a figure nobody
-measured. The exact point in the INDX sequence where the Gen 2 parts go is this page
-author's own practice; fitting them during the INDX build has the support noted above,
-and leaving out the nozzle wiper has one independent voice, in
+the sensor-housing spacer workaround, the countersunk magnet measurement along with the
+two listings found at that size and the near match still awaiting a test, and both
+assembly mistakes, each from its own thread. The activation magnet size rests on one
+owner's measurement set against a figure nobody measured. The exact point in the INDX
+sequence where the Gen 2 parts go is this page author's own practice; fitting them
+during the INDX build has the support noted above, and leaving out the nozzle wiper
+has one independent voice, in
 [a separate thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-founders-edition-upgrade-path-to-core-one-gen-2/).
 The notes on adding Gen 2 to a finished Founders Edition build all come from
 [one thread on that retrofit](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-fe-upgrading-to-gen2/):

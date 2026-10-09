@@ -1,7 +1,7 @@
 ---
 title:        Phantom tools, "tool not detected" and park failures
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -15,6 +15,8 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/6-9-0-firmware-tool-docking/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/will-the-prusa-indxs-wave1-ship-with-fixed-induction-coils/
@@ -201,8 +203,8 @@ detection value. That is consistent with a settling-time problem and hard to rec
 with a threshold one.
 
 TODO(verify): the verification timeout the firmware allows, and how long the reading
-actually takes to settle. Both are quoted in the linked issue, which is open and
-unresolved at the time of writing.
+actually takes to settle. Both are quoted in the linked issue, which was closed for
+inactivity without a resolution.
 
 **Firmware 6.9.1 does not change this.** 6.9.1 went stable on 25 September 2026, after a
 beta on 10 September. Neither set of release notes mentions nozzle-presence detection or
@@ -211,11 +213,15 @@ the park check, and the public source bears that out: between the
 the work is in tool offset calibration, parking and calibration moves, homing, a Wi-Fi
 fix, a new gantry squareness wizard and filament presets, and the code that reads the coil and
 sorts the decay into present, absent or unknown is untouched. The 6.9.0 threshold still
-stands. The bug report is still open, but nobody has added to it since July: on 28
-September 2026 GitHub's stale-issue bot warned that it may be closed if no update follows
-within a week. A closure on those grounds would not mean the fault had been fixed. No
+stands. Nobody added to the bug report after July, and GitHub's stale-issue bot closed it
+on 5 October 2026 for inactivity, as not planned, a week after warning that it would.
+That closure is not a fix: no developer replied and no change is linked to it. No
 owner has yet reported the still-detected-after-park failure on 6.9.1, so this is a
 reading of the source rather than a result from a machine.
+[Firmware 6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2),
+released on 7 October 2026, does not change it either: between the
+[6.9.1 and 6.9.2 tags](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
+the only change that reaches an INDX is the PVA and BVOH filament presets.
 
 ## Verification
 
@@ -237,7 +243,7 @@ an inference rather than a claim any source made. A firmware bug report has sinc
 the park failure occurring on 6.6.3 and disappearing on a downgrade to 6.6.2 — before
 the threshold moved at all. The suggestion has been withdrawn and the park behavior now
 has its own section, where the evidence points at a settling-time problem instead. The
-issue is open and unresolved, so that account may yet change too.
+issue was closed for inactivity without a resolution, so that account may yet change too.
 
 **First-party.** The 6.9.0 threshold change — both the relaxation and the specific
 decay values — comes from

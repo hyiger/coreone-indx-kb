@@ -1,7 +1,7 @@
 ---
 title:        Dock calibration rejects some or all docks
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One, Core One+, Core One+ (Gen 2)
 toolhead:     INDX
@@ -25,7 +25,12 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/persistent_stores/store_instances/config_store/store_definition.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/gui/screen_printer_setup.hpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/gui/MItem_hardware.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_gantry_squareness/indx_gantry_squareness.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_gantry_squareness/indx_gantry_squareness.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_gantry_squareness/screen_gantry_squareness.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
 superseded_by:
 ---
 
@@ -207,9 +212,29 @@ become unreliable. The owner says squaring the gantry by the guide makes gantry
 calibration fail, while skewing it so one side shows a gap lets that pass and breaks
 everything else. After weeks with support it was still unresolved on 29 September 2026.
 
-TODO(verify): the gantry squareness tolerance the Prusa developer quoted on #5491, and
-whether the 6.9.1 wizard judges against the same figure. Withheld as an assembly
-setting.
+On 8 October 2026 the developer came back with questions rather than a fix. They asked
+what the owner means by gantry calibration failing, said they could not see how skewing
+the gantry would let it pass, and asked whether the nozzles had been taken out of docks
+1 and 8 before the squareness check, as the wizard instructs. The owner had not answered
+when this page was updated.
+
+TODO(verify): the gantry squareness tolerance the Prusa developer quoted on #5491. The
+6.9.1 wizard passes against the same figure, a constant in indx_gantry_squareness.hpp
+that its result screen also shows. Withheld as an assembly setting.
+
+How the wizard measures bears on that exchange. Prusa's 6.9.1 source shows it homing
+first, then driving the empty head into the two outermost docks until it stalls, and
+taking the difference between the two stopping points in Y as the skew. It asks for
+docks 1 and 8 to be emptied beforehand, and if the measurement itself fails, it asks you
+to check that they are; a skew reading over the limit instead tells you to align the
+gantry by the guide. It follows that the wizard judges square against the dock row: it
+reads the same tilt that dock calibration rejects, and by itself it cannot tell a skewed
+gantry from a dock row sitting out of line with a square one. Were this machine's docks
+out of line, squaring the gantry by the guide would fail the wizard and skewing it to
+follow the docks would pass, which matches the owner's account, if the gantry
+calibration they mention is this wizard, something the developer has asked them to
+clarify. That is this page's reading of the source, not Prusa's explanation, and nobody
+has checked it on the machine.
 
 The owner has asked Prusa to validate docks against a line fitted through the measured
 docks, rather than one fixed Y, so a uniformly rotated row could pass while a single
@@ -257,9 +282,12 @@ printer variant only if every part of that edition matches what is fitted. Rerun
 calibrations from the start, since the change resets several of them. If the setting
 was already right, belt tension is next.
 
-**Error growing along the row: check squareness.** On 6.9.1, run the gantry squareness
-wizard. If it reports significant skew, treat the dock failure as a symptom of that
-rather than something to fix at the docks.
+**Error growing along the row: check squareness.** On 6.9.1 or 6.9.2, run the gantry
+squareness wizard, with the nozzles taken out of docks 1 and 8 as it asks. If it reports
+significant skew, square the gantry by the guide first and treat the dock failure as
+most likely a symptom of that. Because the wizard measures against those same docks, it
+is not an independent check on them; if squaring the gantry by the guide will not
+satisfy it, tell support that, along with the dock values.
 
 **Neither pattern:** work through belt tension, gantry squareness and homing
 calibration, then rerun the calibrations from the start rather than retrying the dock
@@ -280,7 +308,12 @@ Y on the Core One, a fixed window, and what happens to a dock that falls outside
 comes from Prusa's public firmware source, read at the 6.9.1 release tag. The tie
 between printer variant and belt setting, the Gen2 variant as the default on first run and
 after a factory reset that clears the hardware configuration, and the calibrations a belt-setting change resets come from the
-same source. The warning text for the belt setting is the printer's own. An earlier
+same source, as do how the gantry squareness wizard measures and the limit it passes
+against. Firmware 6.9.2, released on 7 October 2026, adds the PVA and BVOH filament
+presets to 6.9.1 and nothing else that reaches an INDX
+([compare](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)),
+so everything read here at the 6.9.1 tag holds for it unchanged. The warning text for
+the belt setting is the printer's own. An earlier
 request ([#5445](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5445)) to
 validate docks against a reference measured on the machine was closed as not planned.
 Relaying the team's view, the developer judged it a large job for a small gain at the
@@ -288,14 +321,17 @@ current stage of development, while not dismissing the idea, once the belt setti
 explained the original case.
 
 `provisional`: the rotated-row case is one machine; the owner reports being unable to
-square the gantry by the guide without breaking gantry calibration, and support has not
-yet resolved it. The belt-tension and homing advice comes from several owners, but all
-in one thread, and the slack-belt fix is a single owner's account.
+square the gantry by the guide without breaking gantry calibration, support has not yet
+resolved it, and the developer's follow-up questions are unanswered. The belt-tension
+and homing advice comes from several owners, but all in one thread, and the slack-belt
+fix is a single owner's account.
 
 Still unverified: whether flashing the INDX firmware counts as the first run that
 applies the Gen2 default, which would explain both owners who found their printer set
-for Gen 2; and whether any Core One left the factory with a dock row far enough out of
-line that no squaring brings it inside the window.
+for Gen 2; whether docks 1 and 8 were empty in the owner's wizard runs; whether the
+skew the wizard reports on the rotated-row machine lies in the gantry or in the dock row
+itself; and whether any Core One left the factory with a dock row far enough out of line
+that no squaring brings it inside the window.
 
 ## Related
 

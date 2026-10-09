@@ -1,7 +1,7 @@
 ---
 title:        Dock-Kalibrierung lehnt einige oder alle Docks ab
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One, Core One+, Core One+ (Gen 2)
 toolhead:     INDX
@@ -25,9 +25,14 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/persistent_stores/store_instances/config_store/store_definition.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/gui/screen_printer_setup.hpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/gui/MItem_hardware.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_gantry_squareness/indx_gantry_squareness.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_gantry_squareness/indx_gantry_squareness.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_gantry_squareness/screen_gantry_squareness.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
 superseded_by:
-source_sha:   9c2d689c0f1c13413cd13084b9e224ef879a3bb8ee58ebf9f7a195b3fae7c3e5
+source_sha:   417723c49da6f26025b89ac5a80dc34ccfba2f51d9ea6aa613bf27ddead946d5
 ---
 # Dock-Kalibrierung lehnt einige oder alle Docks ab
 
@@ -232,9 +237,34 @@ ein Verziehen, bei dem eine Seite einen Spalt zeigt, diese bestehen lasse und al
 andere zunichtemache. Nach Wochen mit dem Support war es am 29. September 2026 noch
 immer ungelöst.
 
+Am 8. Oktober 2026 meldete sich der Entwickler mit Rückfragen statt mit einer Lösung. Er
+fragte, was der Besitzer mit einer scheiternden Portalkalibrierung meine, sagte, er
+könne nicht nachvollziehen, wie ein verzogenes Portal sie bestehen lassen sollte, und
+fragte, ob vor der Prüfung der Rechtwinkligkeit die Düsen aus den Docks 1 und 8 genommen
+worden seien, wie es der Assistent verlangt. Als diese Seite aktualisiert wurde, stand
+die Antwort des Besitzers noch aus.
+
 TODO(verify): die Toleranz für die Rechtwinkligkeit des Portals, die der Prusa-Entwickler
-in #5491 nannte, und ob der Assistent in 6.9.1 gegen denselben Wert prüft. Als
+in #5491 nannte. Der Assistent in 6.9.1 prüft gegen denselben Wert, eine Konstante in
+indx_gantry_squareness.hpp, die auch sein Ergebnisbildschirm anzeigt. Als
 Montageeinstellung zurückgehalten.
+
+Wie der Assistent misst, ist für diesen Austausch von Belang. Laut Prusas Quellcode in
+6.9.1 führt er zuerst ein Homing aus, fährt dann den leeren Kopf in die beiden äußersten
+Docks, bis er blockiert, und wertet den Unterschied der beiden Haltepunkte in Y als
+Schiefstellung. Er verlangt, dass die Docks 1 und 8 vorher geleert werden. Schlägt die
+Messung selbst fehl, fordert er dazu auf, das zu prüfen; eine Schiefstellung über der
+Grenze beantwortet er dagegen mit der Aufforderung, das Portal nach der Anleitung
+auszurichten. Daraus folgt, dass der Assistent die Rechtwinkligkeit an der Dock-Reihe
+misst: Er erfasst dieselbe Neigung, die die Dock-Kalibrierung ablehnt, und kann für sich
+genommen ein schiefes Portal nicht von einer Dock-Reihe unterscheiden, die gegenüber
+einem rechtwinkligen Portal aus der Linie liegt. Lägen die Docks dieser Maschine aus der
+Linie, würde ein nach der Anleitung rechtwinklig ausgerichtetes Portal den Assistenten
+scheitern lassen und ein den Docks folgend verzogenes ihn bestehen lassen, was zur
+Schilderung des Besitzers passt, sofern mit der von ihm erwähnten Portalkalibrierung
+dieser Assistent gemeint ist; um genau diese Klarstellung hat der Entwickler gebeten.
+Das ist die Lesart dieser Seite aus dem Quellcode, nicht Prusas Erklärung, und niemand
+hat sie an der Maschine geprüft.
 
 Der Besitzer hat Prusa gebeten, Docks gegen eine Linie zu validieren, die durch die
 gemessenen Docks gelegt wird, statt gegen ein festes Y, sodass eine gleichmäßig verdrehte
@@ -290,9 +320,13 @@ zurücksetzt. War die Einstellung bereits richtig, ist als Nächstes die Riemens
 der Reihe.
 
 **Fehler, der entlang der Reihe wächst: Prüfen Sie die Rechtwinkligkeit.** Führen Sie
-unter 6.9.1 den Assistenten zur Rechtwinkligkeit des Portals aus. Meldet er eine
-deutliche Schiefstellung, behandeln Sie das Scheitern der Docks als Symptom davon und
-nicht als etwas, das an den Docks zu beheben ist.
+unter 6.9.1 oder 6.9.2 den Assistenten zur Rechtwinkligkeit des Portals aus, nachdem Sie
+wie verlangt die Düsen aus den Docks 1 und 8 genommen haben. Meldet er eine deutliche
+Schiefstellung, richten Sie zuerst das Portal nach der Anleitung rechtwinklig aus, und
+behandeln Sie das Scheitern der Docks als wahrscheinliches Symptom davon. Da der
+Assistent an denselben Docks misst, ist er keine unabhängige Prüfung der Docks; lässt er
+sich durch ein Ausrichten des Portals nach der Anleitung nicht zufriedenstellen, teilen
+Sie das dem Support mit, zusammen mit den Dock-Werten.
 
 **Keines der beiden Muster:** Arbeiten Sie Riemenspannung, Rechtwinkligkeit des Portals
 und Homing-Kalibrierung durch, und führen Sie dann die Kalibrierungen von Anfang an
@@ -315,8 +349,13 @@ außerhalb davon liegt —, stammt aus Prusas öffentlichem Firmware-Quellcode, 
 Release-Tag 6.9.1. Die Kopplung zwischen Druckervariante und Riemeneinstellung, die
 Gen2-Variante als Standard beim ersten Start und nach einem Zurücksetzen auf
 Werkseinstellungen, das die Hardwarekonfiguration löscht, sowie die Kalibrierungen, die eine Änderung der Riemeneinstellung
-zurücksetzt, stammen aus demselben Quellcode. Der Warntext zur Riemeneinstellung ist der
-des Druckers selbst. Eine frühere Anfrage
+zurücksetzt, stammen aus demselben Quellcode, ebenso, wie der Assistent zur
+Rechtwinkligkeit des Portals misst und an welcher Grenze er das Bestehen festmacht. Die
+am 7. Oktober 2026 veröffentlichte Firmware 6.9.2 ergänzt 6.9.1 um die
+Filament-Voreinstellungen für PVA und BVOH und um nichts weiter, was einen INDX betrifft
+([Vergleich](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)),
+sodass alles, was hier beim Git-Tag 6.9.1 gelesen wurde, für sie unverändert gilt. Der
+Warntext zur Riemeneinstellung ist der des Druckers selbst. Eine frühere Anfrage
 ([#5445](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5445)), Docks gegen
 eine an der Maschine gemessene Referenz zu validieren, wurde als nicht geplant
 geschlossen. Der Entwickler gab die Sicht des Teams wieder und hielt es beim derzeitigen
@@ -325,15 +364,18 @@ nachdem die Riemeneinstellung den ursprünglichen Fall erklärt hatte.
 
 `provisional`: Der Fall der verdrehten Reihe ist eine Maschine; der Besitzer berichtet,
 das Portal nicht nach der Anleitung rechtwinklig ausrichten zu können, ohne die
-Portalkalibrierung scheitern zu lassen, und der Support hat es noch nicht gelöst. Die
-Hinweise zu Riemenspannung und Homing stammen von mehreren Besitzern, aber alle aus
-einem Thread, und die Behebung durch Nachspannen zu lockerer Riemen ist der Bericht eines einzelnen
-Besitzers.
+Portalkalibrierung scheitern zu lassen, der Support hat es noch nicht gelöst, und die
+Rückfragen des Entwicklers sind unbeantwortet. Die Hinweise zu Riemenspannung und Homing
+stammen von mehreren Besitzern, aber alle aus einem Thread, und die Behebung durch
+Nachspannen zu lockerer Riemen ist der Bericht eines einzelnen Besitzers.
 
 Noch nicht geprüft: ob das Flashen der INDX-Firmware als der erste Start zählt, der den
 Gen2-Standard setzt, was beide Besitzer erklären würde, die ihren Drucker auf Gen 2
-eingestellt vorfanden; und ob eine Core One das Werk mit einer Dock-Reihe verlassen hat,
-die so weit aus der Linie liegt, dass kein Rechtwinkligstellen sie ins Fenster bringt.
+eingestellt vorfanden; ob die Docks 1 und 8 leer waren, als der Besitzer den Assistenten
+ausführte; ob die Schiefstellung, die der Assistent an der Maschine mit der verdrehten
+Reihe meldet, im Portal oder in der Dock-Reihe selbst liegt; und ob eine Core One das
+Werk mit einer Dock-Reihe verlassen hat, die so weit aus der Linie liegt, dass kein
+Rechtwinkligstellen sie ins Fenster bringt.
 
 ## Verwandte Seiten
 

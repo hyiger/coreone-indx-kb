@@ -1,7 +1,7 @@
 ---
 title:        Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -22,8 +22,10 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/gcode/bedlevel/ubl/G29.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
 superseded_by:
-source_sha:   680e50c58ad90641fc8ca1b3e0731c60f367d46ab8d3091d90b60babe88e06c2
+source_sha:   86dc1f43e7ef118c2f790d5ad7ac3539d7f28c02449720d5d320f30b75e06155
 ---
 # Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 
@@ -170,8 +172,13 @@ Version nicht wieder auf, enthalten sind sie trotzdem: Im Firmware-Repository is
 stabile Version das Beta-Tag plus
 [15 weitere Commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1),
 von denen keiner die Werkzeug-Offset-Kalibrierung berührt. Das ergibt sich aus der
-Release-Historie, nicht aus den Versionshinweisen. Wie PC Blend unter der stabilen
-Version abtastet, hat bislang kein Besitzer berichtet.
+Release-Historie, nicht aus den Versionshinweisen. 6.9.2, erschienen am 2026-10-07,
+ändert hier ebenfalls nichts: Am INDX ist es die stabile 6.9.1 plus die Filament-Presets
+für PVA und BVOH, die die Versionshinweise zu 6.9.1 angekündigt, aber nicht mitgeliefert
+hatten
+([Vergleich](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)).
+Wie PC Blend unter den stabilen Versionen 6.9.1 oder 6.9.2 abtastet, hat bislang kein
+Besitzer berichtet.
 
 **Anpassen.** Ein Besitzer vergrößerte den PC-Abstand im Start-G-Code des Druckers, und
 die Fehlschläge hörten auf. Der Haken, auf den er selbst hinwies: Ein
@@ -249,7 +256,11 @@ Um herauszufinden, ob Oozing überhaupt beteiligt ist, ließ ein Besitzer den Dr
 einem leeren Werkzeug abtasten, sodass nichts austreten konnte; die Abtastung schlug
 genauso fehl, was Oozing für ihn ausschloss
 ([Thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/)).
-Einzelbericht, und sein Fehler war weiterhin ungelöst.
+Die Ursache erwies sich als Montagefehler: Der Besitzer hatte die Bett-Abstandshalter
+verwechselt und versehentlich den alten wieder eingebaut; sobald der richtige
+Abstandshalter saß, funktionierte die Abtastung. Einzelbericht, doch der Test mit dem
+leeren Werkzeug hat seinen Zweck erfüllt: Er schloss Oozing aus, und der Fehler war
+mechanisch.
 
 Wenn die Abtastung fehlschlägt, während die Düse offensichtlich nirgends in der Nähe
 des Druckblechs ist — ein Abstand, den man sieht und nicht misst —, dann ist das ein
@@ -292,6 +303,10 @@ bekommt mehr Versuche, bevor es als gescheitert gilt (siehe
 [Fehlercodes](../codes.md)). Es wird
 festgehalten, weil es jeden Besitzerbericht in jenem Abschnitt erklärt, ohne einem davon
 zu widersprechen, zeigt aber, was der Code tut, nicht was ein Besitzer beobachtet hat.
+Keine der beiden Quelldateien (der Befehl für das Bett-Leveling und die
+Werkzeug-Offset-Kalibrierung) unterscheidet sich zwischen den Git-Tags v6.9.1 und
+[v6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2), die
+Lesart gilt also auch für 6.9.2.
 
 Wo die Quellen sich widersprechen: Das Trocknen wurde mit Nachdruck als wahrscheinliche
 Ursache für PETG genannt, doch der Fall, der tatsächlich gelöst wurde, wurde durch

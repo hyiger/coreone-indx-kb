@@ -1,7 +1,7 @@
 ---
 title:        Montagehinweise — INDX-Umbausatz
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One, Core One Plus
 toolhead:     INDX
@@ -22,8 +22,10 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/how-many-types-of-fasteners-etc-come-with-indx-gen2-upgrade/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-fe-upgrading-to-gen2/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/calibration-issues-from-beginning/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/
 superseded_by:
-source_sha:   51f076ec7d530341e9beeffd9ce3b89ba1a70fb48b07c9364ad8c12691bd2d2a
+source_sha:   5a08273fddc7be2563be44c83dca8a789c8a4a3814883f7d19e16c893b13df00
 ---
 # Montagehinweise — INDX-Umbausatz
 
@@ -303,8 +305,14 @@ die schwerer zu finden sind:
   Verhältnis zum Original unbekannt ist; ein zweiter Besitzer hat seither ein weiteres
   Angebot in dieser Größe gefunden, das überhaupt keine Güte angibt. Der Autor dieser
   Seite hat keine Bezugsquelle gefunden und vermutet Sonderanfertigungen; ein weiterer
-  Besitzer sucht noch. Der erste Besitzer merkt an, dass der Sensor stärker von der Magnetstärke abhängt als
-  das Dock, weil er mit dem Hall-Effekt arbeitet.
+  Besitzer sucht noch. Der erste Besitzer merkt an, dass der Sensor stärker von der
+  Magnetstärke abhängt als das Dock, weil er mit dem Hall-Effekt arbeitet. Noch ein
+  weiterer Besitzer, der nach eigener Einschätzung die Teile für eine Erweiterung in
+  Eigenregie beisammen hat, hat sich Anfang Oktober 2026 bei den ringförmigen Magneten
+  des Sensors (vermutlich den Senkkopf-Magneten; der Beitrag sagt es nicht) für einen
+  annähernd passenden Ersatz entschieden und weiß noch nicht, ob sich der Sensor damit
+  kalibrieren lässt. Dass ein Ersatz im Sensor funktioniert, hat bislang niemand
+  berichtet.
 - **Die schlichten Kunststoff-Abstandshalter im gedruckten Gehäuse** — nicht die
   Spannzangen, in die der PTFE-Schlauch gesteckt wird. Eine Bezugsquelle ist nicht
   bekannt. Ein Besitzer ist einen anderen Weg gegangen, mit einem Community-Adapter, der
@@ -368,6 +376,30 @@ Kalibrierung mit geladenem Filament auszuführen und — wenn sie weiterhin fehl
 mit dem vollständigen Log den Support einzuschalten, statt jedes Mal einen neuen Weg
 darum herum zu finden. Die Maschine ist darauf angewiesen, dass diese Kalibrierungen
 stimmen; ein Behelf an dieser Stelle rächt sich später umso mehr.
+
+## Auf Montagefehler zurückgeführte Fehlschläge
+
+Zwei Fehlschläge haben sich als Montagefehler erwiesen; jeweils hat der Besitzer, dem
+der Fehler unterlaufen war, ihn als Ursache bestätigt:
+
+- **X- und Y-Motorkabel am Board vertauscht.** Ein Besitzer, der sowohl den INDX als
+  auch das Gen-2-Upgrade eingebaut hatte, brachte die Kalibrierungen der X- und Y-Achse
+  nur mit herausgenommenen Werkzeugen zum Bestehen; mit eingesetzten Werkzeugen fuhr
+  der Kopf in die angedockten Werkzeuge. Die Riemenabstimmung bestand ihre erste
+  Prüfung des Portals, versuchte dann aber bei einem zweiten Durchgang, den Kopf über
+  den Rahmen des Druckers hinauszufahren, und bei der Referenzfahrt zerrte der Drucker
+  so lange an Werkzeug 8 in seinem Dock, bis er aufgab. Ein anderes Forumsmitglied
+  schlug vor zu prüfen, welcher Motor an welcher Buchse des xBuddy-Boards steckt, und
+  nachdem die beiden Kabel richtig herum gesteckt waren, lief alles einwandfrei
+  ([Thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/calibration-issues-from-beginning/)).
+- **Ein alter Heizbett-Abstandshalter wieder eingebaut.** Ein Besitzer, bei dem die
+  Abtastung hinten rechts am Bett immer wieder fehlschlug, arbeitete eine lange Liste
+  von Prüfungen ab, bevor er feststellte, dass er die Bett-Abstandshalter verwechselt
+  und den alten statt seines Ersatzes wieder eingebaut hatte. Mit dem richtigen
+  Abstandshalter funktionierte die Abtastung
+  ([Thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/)).
+
+*Vorläufig.* Beides sind Einzelmeldungen, jede aus einem eigenen Thread.
 
 ## Gen 2 an einem fertigen Aufbau der Founders Edition nachrüsten
 
@@ -495,13 +527,15 @@ beim Lesen aller 1534 Beiträge gefunden und ist einer von nur zwei belastbaren
 technischen Punkten, die aus diesem gesamten Thread die Prüfung überstanden haben.
 Ebenfalls Einzelmeldungen und an Ort und Stelle gekennzeichnet: die Riemeneinstellung
 nach dem ersten Flashen, der montiert gelieferte Drucker ohne Werkzeug, die in
-Dock-Teile geschmolzenen Schrauben, der Behelf für die Abstandshalter im Sensorgehäuse
-und die Messung der Senkkopf-Magnete, zusammen mit den beiden Angeboten, die in dieser
-Größe gefunden wurden. Die Größe des Aktivierungsmagneten beruht auf der
-Messung eines Besitzers gegenüber einem Wert, den niemand gemessen hat. An welcher
-genauen Stelle der INDX-Abfolge die Gen-2-Teile hingehören, ist die eigene Praxis des
-Autors dieser Seite; der Einbau während des INDX-Aufbaus hat die oben genannte
-Unterstützung, und das Weglassen des Düsenabstreifers hat eine unabhängige Stimme, in
+Dock-Teile geschmolzenen Schrauben, der Behelf für die Abstandshalter im Sensorgehäuse,
+die Messung der Senkkopf-Magnete zusammen mit den beiden Angeboten, die in dieser
+Größe gefunden wurden, und dem annähernd passenden Magneten, dessen Test noch aussteht,
+sowie beide Montagefehler, jeder aus einem eigenen Thread. Die Größe des
+Aktivierungsmagneten beruht auf der Messung eines Besitzers gegenüber einem Wert, den
+niemand gemessen hat. An welcher genauen Stelle der INDX-Abfolge die Gen-2-Teile
+hingehören, ist die eigene Praxis des Autors dieser Seite; der Einbau während des
+INDX-Aufbaus hat die oben genannte Unterstützung, und das Weglassen des
+Düsenabstreifers hat eine unabhängige Stimme, in
 [einem anderen Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-founders-edition-upgrade-path-to-core-one-gen-2/).
 Die Hinweise zum Nachrüsten von Gen 2 an einem fertigen Aufbau der Founders Edition
 stammen alle aus

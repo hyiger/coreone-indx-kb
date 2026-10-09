@@ -1,7 +1,7 @@
 ---
 title:        Kommentierter G-Code für Start, Schichtwechsel und Werkzeugwechsel
 confidence:   measured
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -21,8 +21,11 @@ sources:
   - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.11.ini
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5508
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/49
 superseded_by:
-source_sha:   b0df521043de3594fa741536490a36b15af3573b9f48cc0960e3b62b7c1672ff
+source_sha:   1f0017fa59bc5acc40d07cabf1f4d900c084f1537436d9ce0add6799d2d69343
 ---
 # Kommentierter G-Code für Start, Schichtwechsel und Werkzeugwechsel
 
@@ -41,15 +44,16 @@ source_sha:   b0df521043de3594fa741536490a36b15af3573b9f48cc0960e3b62b7c1672ff
     genannte Version gegen Ihre — das Profil von 6.6.3 wich an mehreren Stellen von
     diesem ab.
 
-!!! warning "Für 6.9.0 geschrieben und noch nicht gegen 6.9.1 geprüft"
-    Firmware 6.9.1 erschien am 25. September 2026 als stabile Version. Die Blöcke auf
-    dieser Seite sind weiterhin das Profil von 6.9.0 und wurden bewusst nicht anhand der
-    Release Notes von 6.9.1 angepasst. Prusas Profilpaket 2.5.10 vom 17. September
-    liefert diese Blöcke unverändert aus. Ebenso 2.5.11, das am 2. Oktober, eine Woche
-    nach der stabilen Version, in Prusas Profil-Repository erschien: Alle fünf INDX-Blöcke
-    sind mit denen aus 2.5.10 identisch, und die `M115`-Zeile nennt weiterhin 6.9.0. Ein
-    späteres Paket kann sie ändern; weicht das Profil in Ihrem Slicer von dem hier
-    gezeigten ab, ist Ihres das aktuelle.
+!!! warning "Für 6.9.0 geschrieben; die Firmware ist inzwischen bei 6.9.2"
+    Firmware 6.9.1 erschien am 25. September 2026 als stabile Version, 6.9.2 folgte
+    am 7. Oktober. Die Blöcke auf dieser Seite sind weiterhin das Profil von 6.9.0 und
+    wurden bewusst nicht anhand der Release Notes von 6.9.1 angepasst. Prusas
+    Profilpaket 2.5.10 vom 17. September liefert diese Blöcke unverändert aus. Ebenso
+    2.5.11, das am 2. Oktober, eine Woche nach 6.9.1, in Prusas Profil-Repository
+    erschien: Alle fünf INDX-Blöcke sind mit denen aus 2.5.10 identisch, und die
+    `M115`-Zeile nennt weiterhin 6.9.0. Am 8. Oktober war 2.5.11 weiterhin das neueste
+    Paket. Ein späteres kann die Blöcke ändern; weicht das Profil in Ihrem Slicer von
+    dem hier gezeigten ab, ist Ihres das aktuelle.
 
     Die Firmware-Seite wurde gegen den öffentlichen Quellcode geprüft, durch einen
     Vergleich [der Release-Tags 6.9.0 und 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1).
@@ -64,6 +68,12 @@ source_sha:   b0df521043de3594fa741536490a36b15af3573b9f48cc0960e3b62b7c1672ff
     - Die Park-Routine hinter `G27` hebt Z schneller an, wenn sie sich vom Bett
       wegbewegt, und es gibt eine Korrektur daran, wie `W3` auswählt, welche
       Werkzeug-Parkposition verwendet wird — die Release Notes erwähnen sie nicht.
+
+    6.9.2 ändert daran nichts. Laut einem Vergleich
+    [der Release-Tags 6.9.1 und 6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
+    fügt es die PVA- und BVOH-Filament-Presets des Druckers hinzu, die die Release Notes
+    von 6.9.1 angekündigt hatten, die im Build dieser Version aber fehlten, und
+    berührt keinen G-Code-Handler.
 
 ## Worum es sich handelt
 
@@ -512,6 +522,16 @@ wird.
 
 `M400` wartet, bis die Bewegungswarteschlange leergelaufen ist, bevor der Strom
 zurückgesetzt wird, damit die Änderung nicht mitten in einer Bewegung greift.
+
+Der Rückzug nach dem Spülen zieht etwas mehr Filament zurück, als die Zeile danach in
+`e_retracted` als zurückgezogen vermerkt, und nichts im ausgelieferten Profil schiebt
+die Differenz wieder vor. Der Pfad über die Reinigungsstation im Werkzeugwechsel-Block
+macht es genauso. Das ist Absicht. Auf die Frage im Profil-Repository von Prusa, wozu
+der zusätzliche Rückzug dient, antwortete ein Profil-Betreuer von Prusa am 7. Oktober
+2026, er baue nach dem Spülen etwas mehr Druck ab und sei zusammen mit dem Abschalten
+von Pressure Advance für das Spülen eingeführt worden. In derselben Antwort hieß es,
+Prusa erwäge, ihn nach weiteren Tests zu entfernen; ein späteres Paket könnte ihn also
+streichen ([Issue 49](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/49)).
 
 !!! important "Die letzte interessante Zeile ist `{tool_init[initial_tool] = 1}`"
     Damit wird das Startwerkzeug als bereits gereinigt und vorgefüllt markiert. Nichts in

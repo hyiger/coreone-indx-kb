@@ -1,7 +1,7 @@
 ---
 title:        Annotated start, layer and toolchange G-code
 confidence:   measured
-updated:      2026-10-04
+updated:      2026-10-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -21,6 +21,9 @@ sources:
   - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.11.ini
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5508
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/49
 superseded_by:
 ---
 
@@ -40,14 +43,15 @@ superseded_by:
     itself changes between firmware releases, so check the version above against yours —
     the 6.6.3 profile differed from this one in several places.
 
-!!! warning "Written for 6.9.0 and not yet re-checked against 6.9.1"
-    Firmware 6.9.1 went stable on 25 September 2026. The blocks on this page are still
-    the 6.9.0 profile, and they have deliberately not been edited to match the 6.9.1
-    release notes. Prusa's profile bundle 2.5.10, of 17 September, ships these blocks
-    unchanged. So does 2.5.11, which reached Prusa's profile repository on 2 October, a
-    week after the stable release: all five INDX blocks are identical to 2.5.10's, and
-    the `M115` line still declares 6.9.0. A later bundle may change them, so if the
-    profile in your slicer differs from what is shown here, yours is the current one.
+!!! warning "Written for 6.9.0; firmware has since reached 6.9.2"
+    Firmware 6.9.1 went stable on 25 September 2026, and 6.9.2 followed on 7 October.
+    The blocks on this page are still the 6.9.0 profile, and they have deliberately not
+    been edited to match the 6.9.1 release notes. Prusa's profile bundle 2.5.10, of 17
+    September, ships these blocks unchanged. So does 2.5.11, which reached Prusa's
+    profile repository on 2 October, a week after 6.9.1: all five INDX blocks are
+    identical to 2.5.10's, and the `M115` line still declares 6.9.0. On 8 October 2.5.11
+    was still the newest bundle. A later one may change the blocks, so if the profile in
+    your slicer differs from what is shown here, yours is the current one.
 
     The firmware side has been checked against the public source, comparing
     [the 6.9.0 and 6.9.1 release tags](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1).
@@ -61,6 +65,11 @@ superseded_by:
     - The parking routine behind `G27` lifts Z faster when moving away from the bed,
       and there is a fix to how `W3` picks which tool's park position to use, which
       the release notes do not mention.
+
+    6.9.2 changes none of this. Comparing
+    [the 6.9.1 and 6.9.2 release tags](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2),
+    it adds the printer's PVA and BVOH filament presets, which the 6.9.1 notes announced
+    and its build left out, and touches no G-code handler.
 
 ## What this is
 
@@ -486,6 +495,15 @@ transitions, which is unwanted when you are deliberately pushing a fixed volume.
 
 `M400` waits for the move queue to drain before the current is reverted, so the change
 does not land mid-move.
+
+The retract after the flush takes back slightly more filament than the line after it
+records as retracted in `e_retracted`, and nothing in the shipped profile pushes the
+difference back out. The purge-station path of the tool change block does the same.
+That is deliberate. Asked on Prusa's profile repository why the extra is there, a Prusa
+profile maintainer replied on 7 October 2026 that it relieves a little more pressure
+after the flush, and was added together with switching pressure advance off for it. The
+same reply said Prusa is considering removing it after more testing, so a later bundle
+may drop it ([issue 49](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/49)).
 
 !!! important "The last interesting line is `{tool_init[initial_tool] = 1}`"
     That marks the starting tool as already cleaned and primed. Nothing in this block
