@@ -1,13 +1,13 @@
 ---
 title:        Blobs dragged into the print — nozzle wiper and purge
 confidence:   reported
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       0.4mm reported
-firmware:     6.9.0, re-checked against 6.9.1 and 6.9.2; earlier behavior noted throughout
+firmware:     6.9.0, re-checked against 6.9.1, 6.9.2 and the 7.0.0 release notes; earlier behavior noted throughout
 sources:
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
@@ -30,6 +30,9 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5477
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/cleaning-nozzle-2/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-review/
 superseded_by:
 ---
 
@@ -59,7 +62,8 @@ superseded_by:
     Most of the manual procedure below exists because that calibration used to be
     done by hand, badly, with no way to see what you were doing. If you are on anything
     older than 6.9.0, update and re-test before investing any time in manual alignment.
-    Height is the exception: it is still a manual step in 6.9.0, 6.9.1 and 6.9.2.
+    Height is the exception: it is still a manual step in 6.9.0, 6.9.1 and 6.9.2, and the
+    7.0.0 notes do not say that has changed.
 
     The stable 6.9.1 notes name no change to the wiper or the purge. The beta did one
     thing for the cleaner: where appropriate, the bed now moves down during Nozzle
@@ -71,6 +75,17 @@ superseded_by:
     was: it is 6.9.1 plus the PVA and BVOH filament presets that the 6.9.1 notes
     announced but left out, and nothing else that reaches an INDX
     ([compare](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)).
+
+    Firmware 7.0.0, dated 15 October 2026 on
+    [Prusa's downloads page](https://help.prusa3d.com/downloads/core-one-indx), has two
+    lines on the cleaner. One promises improved nozzle wiper cleaning without saying what
+    changed; the notes tag it as already shipped in
+    [6.10.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1), which
+    was firmware for the XL and XL+, not for the INDX. The other moves filament loading and
+    unloading to positions that take account of the calibrated cleaner offset. Prusa had
+    not published the 7.0.0 source when this was written, and no owner has yet reported
+    how the wipe behaves with it, so whether either line settles anything below is open.
+
     On a 6.9.1 build, one owner found PLA drawn out into long strings and left clinging
     to the nozzle, after which nozzle probing failed; going back to 6.9.0 seemed better,
     though they suspected their own wiper setting or a load cell fault. A second owner,
@@ -94,11 +109,20 @@ superseded_by:
     as it cools, because by the time the wipe comes the material has set on the tip. So
     the complaint about the order rests on two reports in two issues. It has not been
     checked whether the #5505 reporter is independent of the PETG account above, and
-    whether wiping first would help is untested. The reporter of #5500 adds that 6.9.0
-    and 6.9.1 both purge more than they need to, often leaving material on the nozzle
-    after the wipe, and that the firmware does not use the purge volume set in the
-    slicer. That is a single report, not checked against the source. For probing
-    failures in general, see
+    whether wiping first would help is untested. In October a forum owner came at it from
+    the temperature side: the automatic clean, they observed, runs far below printing
+    temperature, too cool in their view to soften PETG enough to wipe it off, and they
+    suggested running it at the temperature of the loaded material instead
+    ([thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/cleaning-nozzle-2/)).
+    That is one owner's suggestion, firmware not stated, not a test. The reporter of
+    #5500 adds that 6.9.0 and 6.9.1 both purge more than they need to, often leaving
+    material on the nozzle after the wipe, and that the firmware takes no notice of the
+    slicer's purge volume. That is a single report, not checked against the source.
+    Two later commenters there say they have the same issue, one on a four-tool Gen 2
+    and one who finds ASA sticks worse still, without saying which of its complaints
+    they mean, so it stays a single report. Whether the improved wiper cleaning in 7.0.0
+    changes the order, the cool-down or the amount purged, its notes do not say. For
+    probing failures in general, see
     [oozing during probing and calibration](oozing-during-probing-and-calibration.md).
 
 ## Summary
@@ -229,6 +253,14 @@ just touching"), which needs no number.
     not the same as one set to just touching, so this is a single report that more
     contact helps. It says nothing about whether the automatic routine stops short.
 
+    A further owner, writing in mid-October on firmware they do not state but before
+    they moved to 7.0.0, says their early stringing and blobs eased a great deal once they
+    set the height so that the nozzle presses well down into the pad
+    ([thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-review/)).
+    They also gave the earlier reply above about raising the pad, so this is not an
+    independent second voice for it. `provisional` — a single report, directional only,
+    and like the last one it does not show whether the automatic routine stops short.
+
 ### Workarounds that do not involve calibration
 
 - **Print a skirt or brim.** Several owners report this catching the initial debris
@@ -282,7 +314,12 @@ just touching"), which needs no number.
   and two more owners have added that they get blobs after a pause as well. In early
   October #5412 was flagged as stale, the same automatic step that preceded the closure
   of #5391; one of those two owners replied that it still affects them, and the flag was
-  lifted. Both requests remain open with no reply from Prusa. No workaround is
+  lifted. Both requests remain open with no reply from Prusa, and the 7.0.0 notes list no
+  change to that sequence: the nearest items fix an extra blob when resuming after a
+  power failure, tagged as already in 6.9.0, resuming with a cold tool after a filament
+  change on another tool, and a Z shift after a Spool Join on an instant runout. None of
+  them changes the order of bed travel, pick and prime that #5412 and #5477 ask about.
+  No workaround is
   confirmed: one commenter suggested a small wipe tower for jobs with a pause, but had
   not tried it. `reported` —
   two owners, in separate issues, trace the blob to ooze while the bed travels.
@@ -333,6 +370,14 @@ only. Nothing on this page is contradicted by either. The
 adds the PVA and BVOH presets and nothing else that reaches an INDX; none of the source
 files cited below differs between the v6.9.1 and v6.9.2 tags, so the reading that
 follows holds for 6.9.2 as well.
+
+The 7.0.0 re-check rests on the
+[notes alone](https://help.prusa3d.com/downloads/core-one-indx): Prusa had published no
+7.0.0 tag on GitHub when this was written, so the source reading below stops at 6.9.2.
+Of the two cleaner items described in the tip, neither says what changed in the wipe,
+and the notes name no change to wiper height, to the order of purge, cool-down and wipe,
+or to the order of bed travel and priming on resume that #5412 and #5477 ask for. No
+INDX owner has yet reported how the wipe or the purge behaves on 7.0.0.
 
 What the automatic calibration does and does not cover, and the order of purge,
 cool-down and wipe in the per-tool clean that runs as a print begins, are read from the
@@ -389,9 +434,16 @@ Nor is an upstream report that the firmware's wipe path consistently lands off-c
 in Y on the silicone pad
 ([#5496](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5496)). It reads like
 the Nozzle Cleaner Y Offset question above, but it was filed against a non-INDX
-Core One+ (Gen 2) with its own wiper accessory, on the non-INDX 6.8.1 firmware. It is
-not evidence of a systematic Y error on the INDX, and the per-machine reading of the
-Y offset stands.
+Core One+ (Gen 2) with its own wiper accessory, on the non-INDX 6.8.1 firmware. A
+second owner has since confirmed it, again on a non-INDX Gen 2. Prusa developers took
+it up in October: the first to reply says that on that machine the wipe runs at a
+position set by hand in the firmware, and another asked the owners to check the
+printer's belt-type setting. After updating to 7.0.0 the reporter still found the wipe
+off-center. No INDX owner has reported the same there. The INDX, by contrast, measures
+where its cleaner sits (see the source reading above); that contrast is this page's
+reason, not the developers', for not carrying the report over. The report is not
+evidence of a systematic Y error on the INDX, and the per-machine reading of the Y
+offset stands.
 
 ## Related
 

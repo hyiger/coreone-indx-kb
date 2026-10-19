@@ -1,7 +1,7 @@
 ---
 title:        Annotated start, layer and toolchange G-code
 confidence:   measured
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -24,6 +24,13 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
   - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/49
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.12.ini
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/index.idx
+  - https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/libslic3r/GCode/GCodeProcessor.cpp
+  - https://help.prusa3d.com/downloads/core-one-indx
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.10.1/ProjectOptions.cmake
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.10.1/src/gui/MItem_hardware.hpp
 superseded_by:
 ---
 
@@ -43,15 +50,15 @@ superseded_by:
     itself changes between firmware releases, so check the version above against yours —
     the 6.6.3 profile differed from this one in several places.
 
-!!! warning "Written for 6.9.0; firmware has since reached 6.9.2"
-    Firmware 6.9.1 went stable on 25 September 2026, and 6.9.2 followed on 7 October.
-    The blocks on this page are still the 6.9.0 profile, and they have deliberately not
-    been edited to match the 6.9.1 release notes. Prusa's profile bundle 2.5.10, of 17
-    September, ships these blocks unchanged. So does 2.5.11, which reached Prusa's
-    profile repository on 2 October, a week after 6.9.1: all five INDX blocks are
-    identical to 2.5.10's, and the `M115` line still declares 6.9.0. On 8 October 2.5.11
-    was still the newest bundle. A later one may change the blocks, so if the profile in
-    your slicer differs from what is shown here, yours is the current one.
+!!! warning "Written for 6.9.0; firmware has since reached 7.0.0"
+    Firmware 6.9.1 went stable on 25 September 2026, 6.9.2 followed on 7 October, and
+    7.0.0 on 15 October. The blocks on this page are still the 6.9.0 profile, and they
+    have deliberately not been edited to match later releases. Prusa's profile bundle
+    2.5.10, of 17 September, ships these blocks unchanged. So does 2.5.11, which reached
+    Prusa's profile repository on 2 October, a week after 6.9.1: all five INDX blocks are
+    identical to 2.5.10's, and the `M115` line still declares 6.9.0. **Bundle 2.5.12, of
+    15 October, is the first to change them**; see the note below. If the profile in your
+    slicer differs from what is shown here, yours is the current one.
 
     The firmware side has been checked against the public source, comparing
     [the 6.9.0 and 6.9.1 release tags](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1).
@@ -70,6 +77,59 @@ superseded_by:
     [the 6.9.1 and 6.9.2 release tags](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2),
     it adds the printer's PVA and BVOH filament presets, which the 6.9.1 notes announced
     and its build left out, and touches no G-code handler.
+
+    7.0.0 has not been checked the same way. Prusa had not published its source on
+    GitHub by 18 October, so every command annotation here is verified only through
+    6.9.2. Two entries in its
+    [release notes](https://help.prusa3d.com/downloads/core-one-indx) sit close to this
+    page, and both are marked as coming from earlier releases. The faster Z lift when
+    parking, marked 6.9.1 and 6.10.2, is the `G27` change 6.9.1 already shipped.
+    Improved Nozzle Wiper cleaning, marked 6.10.1, comes from the XL firmware line, where
+    [6.10.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1)
+    introduced the Nozzle Wiper as XL+ hardware. A comment in that release's
+    [hardware menu source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.10.1/src/gui/MItem_hardware.hpp)
+    gives the wiper's internal name as the nozzle cleaner lite, and in its
+    [build options](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.10.1/ProjectOptions.cmake)
+    that is a separate feature from the INDX's cleaning station and is not built for
+    the INDX. Neither entry is new in 7.0.0. The one new entry that names the cleaner,
+    filament load and unload positions now taking the calibrated nozzle cleaner offset,
+    concerns the firmware's own load and unload moves; whether it changes anything the
+    `G12` lines below do cannot be checked until the source is out.
+
+!!! note "Bundle 2.5.12 changed two of these blocks after this page was written"
+    Prusa's profile bundle 2.5.12, committed on 15 October 2026, the day firmware 7.0.0
+    came out, lists a reworked INDX tool change script and a new firmware version
+    notice in its
+    [changelog](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/index.idx).
+    Comparing [the file](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.12.ini)
+    with 2.5.11:
+
+    - **Start:** only the `M115` line changed. It now declares 6.9.2, as
+      `M115 U6.9.2+16336`, rather than the 6.9.0 shown below, and not 7.0.0.
+    - **Tool change:** changed in three ways, none of them in the flush pattern.
+        - The `G27` park line and four filament moves around the swap are now fenced by
+          `;EXCLUDE_E_START` and `;EXCLUDE_E_END` comment lines: the push that locks a
+          primed tool, the push before the wipe-tower moves, and, on each path, a new
+          move that puts back what `G27 R` retracted at park. PrusaSlicer's G-code
+          processor reads those tags only from comment lines and leaves the extruder
+          moves between them out of its filament-use tally
+          ([PrusaSlicer 2.9.6 source](https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/libslic3r/GCode/GCodeProcessor.cpp)).
+          In 2.5.11 the only pair present, around the lock push, lacked the semicolon,
+          so it was not a comment and the processor did not act on it.
+        - The deretract before the flush is split in two for a tool already primed:
+          first the length `G27 R` took back at park, then the rest. The total is
+          unchanged; only the first part falls inside the tags. A tool not yet primed
+          keeps the single deretract. The wipe-tower path splits its deretract the same
+          way.
+        - The retract after the flush on the purge-station path no longer adds the
+          extra `+ 0.04`; see the note on it in the start block below. The start
+          block's own retract still adds it.
+    - **Before layer change, after layer change and end:** unchanged.
+
+    The blocks below are still the 2.5.11 text, and the tool change excerpts no longer
+    match 2.5.12. They have not been rewritten here: this page reproduces one profile
+    verbatim and annotates it, and a new reproduction would be a new revision of the
+    page, not an edit to it.
 
 ## What this is
 
@@ -498,12 +558,15 @@ does not land mid-move.
 
 The retract after the flush takes back slightly more filament than the line after it
 records as retracted in `e_retracted`, and nothing in the shipped profile pushes the
-difference back out. The purge-station path of the tool change block does the same.
-That is deliberate. Asked on Prusa's profile repository why the extra is there, a Prusa
-profile maintainer replied on 7 October 2026 that it relieves a little more pressure
-after the flush, and was added together with switching pressure advance off for it. The
-same reply said Prusa is considering removing it after more testing, so a later bundle
-may drop it ([issue 49](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/49)).
+difference back out. Up to bundle 2.5.11 the purge-station path of the tool change block
+did the same. That is deliberate. Asked on Prusa's profile repository why the extra is
+there, a Prusa profile maintainer replied on 7 October 2026 that it relieves a little
+more pressure after the flush, and was added together with switching pressure advance
+off for it. The same reply said Prusa is considering removing it after more testing
+([issue 49](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/49)).
+Bundle 2.5.12, of 15 October, has since dropped it from the tool change block but kept
+it in this start block; the issue itself had no further reply and was still open on
+18 October.
 
 !!! important "The last interesting line is `{tool_init[initial_tool] = 1}`"
     That marks the starting tool as already cleaned and primed. Nothing in this block
@@ -603,6 +666,9 @@ nearest to ambient, so a tool sitting in its dock beside a heated chamber is mos
 risk of the filament in it going soft.
 
 ## Tool change
+
+*The excerpts in this section are the 2.5.11 text. Bundle 2.5.12 changes this block in
+several places; the note at the top of this page lists them.*
 
 ```gcode
   G1 F{speed_tc}
@@ -846,7 +912,9 @@ Nor is the profile static. It changes across firmware releases: the 6.6.3 versio
 misspelled variable in the probe-temperature expression, used a different offset for PC
 and PA, omitted the `low_temp_types` global that the after-layer-change block depends on,
 and included chamber-light commands this one drops. If your firmware differs from the
-version in the front matter, expect differences.
+version in the front matter, expect differences. The profile also moves between bundles
+on its own schedule: 2.5.12 reworked the tool change block and declares 6.9.2, not the
+7.0.0 released the same day, as the note at the top describes.
 
 ## Related
 

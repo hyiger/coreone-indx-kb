@@ -1,7 +1,7 @@
 ---
 title:        Who to contact — support vs warranty on an INDX kit
 confidence:   reported
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -14,6 +14,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/
 superseded_by:
 ---
 
@@ -61,6 +62,9 @@ several weeks of silence, so a slow reply is not necessarily a lost ticket.
 Whichever company holds your case, ask what turnaround to expect and chase it once
 that has passed. One owner was told by Prusa's support that an escalated case normally
 takes a few days, and was still waiting close to a week after first reporting the fault.
+Footage helps, but it does not settle every case quickly: another owner, whose printer
+fails bed probing and tool calibration on most attempts, reports having sent Prusa's
+support ten videos and still having no final answer.
 
 One owner whose tools repeatedly failed to release at the dock — see
 [tools unlocking or ejecting](tool-unlocks-or-ejects.md) — reports that Prusa's live
@@ -82,16 +86,25 @@ Prusa's August update went to customers who already had kit orders in, the initi
 batches, and says that Prusa handles their compensation itself: store credit, sent as an
 emailed voucher, or a cash refund instead. If the store-credit voucher has not arrived a
 few days after the kit, ask Prusa's tech support; to take the cash refund in place of
-credit, ask Prusa's support by live chat or email. Prusa has not said whether kits
-ordered from it after that update are covered.
+credit, ask Prusa's support by live chat or email. A printed note packed with the kit
+sets the same few-day expectation, according to one owner who could not find the email
+afterward. Search your mail before you chase it: another owner in the same thread
+reports that theirs arrived with a subject line calling it an INDX compensation voucher,
+which is easier to find than anything sent under Prusa's name alone. Both are from one
+thread, so provisional. Prusa has not said whether kits ordered from it after that
+update are covered.
 
-Buying spare nozzles is a separate matter. Owners in two separate threads report that
-Prusa store credit cannot be used for INDX nozzles, which come from the vendor's shop
-whichever edition you own; the earlier of the two explained in August that Prusa did
-not sell them. A stalled shop order is a ticket to the vendor. One owner in October,
-whose order had waited nearly three weeks, opened a ticket and had a reply with a
-dispatch estimate the same day. That is provisional, a single report, and the estimate
-had not yet been tested when it was posted.
+Buying spare nozzles is a separate matter. INDX nozzles come from the vendor's shop
+whichever edition you own. As of mid-October, Prusa store credit could not be used for
+them, because Prusa's shop did not stock them; owners in three separate threads report
+this, the earliest in August. One owner expects Prusa to stock them eventually, and the
+same owner relays from Prusa that its voucher has a validity limit; both are a single
+provisional report, covered on the [nozzle hardness](nozzle-hardness.md) page. A
+stalled shop order is a ticket to the vendor. One owner in October, whose order had
+waited nearly three weeks, opened a ticket and had a reply with a dispatch estimate the
+same day; the order shipped early the following week, as estimated, and arrived a day
+later. That is still provisional, a single report. By mid-October, other owners in the
+same thread were seeing orders placed that month ship within one to two weeks.
 
 ### On warranty length — verify this yourself
 
@@ -126,18 +139,25 @@ threads. Prusa's handling of nozzle compensation for kits already on order from 
 August is first-party: Prusa's August update to those customers, quoted in the
 nozzlegate communications thread.
 
-Weaker: the live-chat replacement offer and the quoted escalation time each rest on a
-single owner's report in the common problems summary thread. The same owner's later
-post that the head arrived and was fitted, in a
+Weaker: the live-chat replacement offer, the quoted escalation time and the ten-video
+case each rest on a single owner's report in the common problems summary thread. The
+live-chat owner's later post that the head arrived and was fitted, in a
 [thread on whether the INDX upgrade is worth it](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/),
 is that owner's account again rather than a second source, and neither post says which
-edition the kit is. That Prusa store credit cannot be used for INDX nozzles rests on
-two owners in separate threads, the
+edition the kit is. That Prusa store credit could not be used for INDX nozzles, because
+Prusa's shop did not stock them, rests on three owners in three separate threads, the
 [nozzlegate communications](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/)
-thread and a
-[thread on slow nozzle orders](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/),
-not on a statement from Prusa; that Prusa did not sell them as of August rests on the
-first of those alone. The same-day vendor reply is a single report from the second.
+thread, a
+[thread on slow nozzle orders](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/)
+and Prusa's
+[shipping update thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/),
+not on a statement from Prusa; for August it rests on the first of those alone. The
+same-day vendor reply, and the order's shipping as estimated, are a single owner's
+report from the second, where the faster shipping since comes from several owners. The
+packed note and the voucher email's subject line come from two owners in the third.
+The expectation that Prusa will stock INDX nozzles later is one owner's, not clearly
+from Prusa, and the validity limit on Prusa's voucher is that owner's relay, both in
+that same third thread.
 
 Where the sources disagree: warranty duration. The UK thread reaches no conclusion
 and its participants say so plainly. Treat every duration figure on the forum as

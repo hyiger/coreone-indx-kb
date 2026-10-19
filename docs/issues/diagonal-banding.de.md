@@ -1,7 +1,7 @@
 ---
 title:        Diagonale Bänderung auf den Druckwänden
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -12,8 +12,9 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
+  - https://help.prusa3d.com/downloads/core-one-indx
 superseded_by:
-source_sha:   e91570c58454a5b77f5aa93ccdf9e8ad20c493ed60c72c77bd65e748516a8722
+source_sha:   075d004eb23d9b661b77bd15dd8ecf3509ac8a96055518b2a3b2253c8ad9e82b
 ---
 # Diagonale Bänderung auf den Druckwänden
 
@@ -26,8 +27,10 @@ Es gibt einen Test aus zwei Drucken, der die Frage in etwa einer Stunde und ohne
 Demontage klärt; er lohnt sich, bevor Sie einen Supportfall eröffnen. Eine schwach
 ausgeprägte Form dieses Artefakts scheint für einen Extruder mit zwei Antriebsrädern
 normal zu sein; eine deutlich ausgeprägte ist ein Hardwarefehler, und die berichtete
-Abhilfe ist ein Austausch des Werkzeugkopfs — noch keine verlässliche, denn bei einem
-Besitzer zeigte auch der Ersatzkopf dieselben Linien (ein einzelner Bericht).
+Abhilfe ist ein Austausch des Werkzeugkopfs — noch keine verlässliche, denn bis Mitte
+Oktober hatten drei Besitzer Ersatzköpfe erhalten, zwei davon in der neueren
+spritzgegossenen Ausführung, die das Problem nicht behoben (alle im selben Thread, daher
+`provisional`).
 
 ## Details
 
@@ -101,6 +104,13 @@ Bänderung, kann die Ursache nicht in der XY-Bewegungsmechanik liegen, und Sie h
 Riemen, Führungen, Schrittmotoren und Portalausrichtung in einem Schritt ausgeschlossen.
 Das sind eine Menge teurer Verdächtiger, die zwei Testwürfel aus dem Rennen nehmen.
 
+**Zwei Köpfe vergleichen.** Ein Besitzer, der gerade einen Ersatzkopf erhalten hatte,
+stellte fest, dass ein üblicher VFA-Testdruck (Vertical Fine Artifacts) dasselbe Muster
+zeigt, womöglich deutlicher, und stellte Drucke davon aus identischem G-Code ein
+(`provisional`, ein einzelner Bericht). Eine feste Testdatei dieser Art eignet sich für
+einen Vorher-nachher-Vergleich zweier Köpfe, ersetzt das Protokoll aber nicht: Ein
+einzelner Druck kann Extrusion und Bewegung nicht voneinander trennen.
+
 ### Was das ausschließt, und was zuerst verfolgt wurde
 
 Der Verfasser des Threads hat die frühen Theorien ausdrücklich zurückgezogen und die Leser
@@ -145,6 +155,14 @@ ist. Schwach und nur auf glänzendem Filament im richtigen Winkel sichtbar ist z
 Deutlich sichtbar auf allen vier Wänden eines mit Standardprofil gedruckten Testwürfels
 nicht.
 
+Ein deutlich ausgeprägter Fall ist auch keine bloße Eigenheit des Vasenmodus. Ein
+Besitzer mit klarer Bänderung sieht sie an jeder unter 45° gedruckten Wand, deren Umriss
+sich von Lage zu Lage nicht ändert. Mehrere Besitzer im Thread berichten, dass sie sich
+an gewöhnlichen Bauteilen, bei denen die Perimeterlänge variiert, stattdessen als
+allgemein ungleichmäßige, unscharf wirkende Wände zeigt — leicht feuchtem Filament oder
+einem nicht abgestimmten Profil zuzuschreiben, weshalb einige von ihnen Wochen oder
+Monate brauchten, um sie zu bemerken (`provisional`: ein einziger Thread).
+
 ### Was es offenbar ist
 
 Die ausführlichste und zugleich jüngste Analyse im Thread führt es auf einen schlechten
@@ -179,6 +197,15 @@ diese Fläche ist also ein unwahrscheinlicher Verursacher; die eigene Vermutung 
 Besitzers ist, dass der Schwingarm nicht rechtwinklig zur Platte steht, möglicherweise
 weil das Gewinde des Drehpunkts leicht schief geschnitten wurde. Bestätigt ist davon
 nichts.
+
+Für die Fehlausrichtung selbst gibt es inzwischen eine zweite, schwächere Beobachtung.
+Mitte September meinte ein zweiter Besitzer, auf einem Foto seines Extruders von oben
+einen leichten Winkel zwischen den Zahnrädern zu erkennen; der Besitzer des
+Distanzstücks sah das ebenso, konnte es anhand des Fotos aber nicht sicher sagen. Im
+Oktober berichtete derselbe Besitzer, die Zahnradachsen seien sowohl am ursprünglichen
+Kopf als auch am Ersatzkopf sichtbar nicht parallel, und hielt das für einen Mangel der
+Qualitätskontrolle. Das ist eine Sichtprüfung an einem montierten Extruder, keine
+Messung, und sie stammt aus demselben Thread (`provisional`).
 
 Trifft es zu, rückt das den Fehler in ein anderes Licht: kein schlecht gefertigtes
 Zahnrad, sondern eine Toleranzkette, die auf perfekter Fertigung beruht und keine
@@ -232,6 +259,24 @@ September, bestand aus routinemäßigen Fragen zur Fehlersuche an der Bewegungsm
 die nach Ansicht dieses Besitzers den ersten Chat weitgehend wiederholten. Auch dies ist
 jeweils die Darstellung eines einzelnen Besitzers, und keine davon benennt ein Teil.
 
+Auch der Oktober brachte kein benanntes Teil. Der Besitzer mit dem offenen Prusa-Fall
+erhielt einen neuen Kopf, der die Bänderung nicht beseitigte, aber veränderte: ein
+einzelnes Band, wo der ursprüngliche zwei zeigte, möglicherweise ein stärkeres. Der
+Prusa-Support ließ diesen Besitzer erneut die Riemen abstimmen und verwies ihn dann auf
+den E-Mail-Verlauf zurück, da der Fall bei den INDX-Spezialisten von Prusa liegt. Ein
+anderer Besitzer erhielt einen Austauschkopf in der neueren spritzgegossenen
+Ausführung, stellte fest, dass er nicht half und es nach seiner Ansicht sogar
+verschlimmerte, berichtete, der Support habe sich daraufhin nicht mehr gemeldet, und
+wartete Mitte Oktober auf einen zweiten Austauschkopf.
+Ein weiterer Besitzer gab an, der Support habe ihn auf eine Liste von Besitzern gesetzt,
+die auf eine Lösung warten. Jeder dieser Berichte stammt von einem einzelnen Besitzer,
+alle aus demselben Thread, und keiner benennt ein Teil.
+
+Die am 15. Oktober veröffentlichte Firmware 7.0.0 ändert an diesem Bild nichts: Keiner
+der Punkte in ihren
+[Versionshinweisen](https://help.prusa3d.com/downloads/core-one-indx) betrifft den
+Extruderantrieb, die Wandqualität oder dieses Artefakt.
+
 #### Der Behelf mit dem Distanzstück
 
 Ein Besitzer korrigierte die Fehlausrichtung, indem er den Motor unterlegte: die
@@ -251,6 +296,13 @@ Es gibt also ein Fenster und keinen Zusammenhang nach dem Muster „mehr ist bes
 zu erwarten ist, wenn das Distanzstück einen Winkel korrigiert und keinen Spalt ausgleicht.
 Das beste Ergebnis des Besitzers zeigte immer noch die schwächste Bänderung, wenn man
 danach suchte.
+
+Wie lange die Korrektur hält, ist unbekannt. Der Besitzer des Distanzstücks betrachtet
+es als Notbehelf, der wieder herauskommt, sobald der Hersteller das Teil korrigiert, und
+seine Berichte bis Mitte September beschreiben es als weiterhin wirksam. Ein anderer
+Besitzer hat seither als persönliche Theorie geäußert, der schiefe Zahnkontakt könne die
+Motorseite verschleißen und die Bänderung zurückkehren lassen; dass dies eingetreten
+wäre, hat niemand berichtet.
 
 !!! warning "Ein Besitzer, eine Maschine, und ein invasiver Eingriff"
     `provisional`, inline auf einer ansonsten mit `reported` bewerteten Seite. Dies ist
@@ -291,9 +343,10 @@ danach suchte.
     Antwort ist. Ein Ferrit behandelt Störungen; eine defekte Wägezelle repariert er
     nicht.
 
-    Auch die Bänderung selbst ist nicht sicher verschwunden: Der oben erwähnte Ersatzkopf
-    eines Besitzers zeigte erneut die diagonalen Linien, ohne Angabe zur Ausprägung
-    (`provisional`, ein einzelner Bericht).
+    Auch die Bänderung selbst ist nicht sicher verschwunden: Wie oben beschrieben,
+    behoben die Ersatzköpfe dreier anderer Besitzer sie nicht, zwei davon in der neueren
+    spritzgegossenen Ausführung (`provisional`: mehrere Besitzer, aber alle im selben
+    Thread).
     Prüfen Sie an jedem Austauschkopf Antasten und Referenzfahrt und führen Sie damit den
     ersten Druck des Zwei-Druck-Protokolls aus, bevor Sie ihm einen langen Druck
     anvertrauen.
@@ -308,7 +361,7 @@ verschiedenen Teilnehmern im
 [Thread zur diagonalen Bänderung](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/)
 beschrieben worden, seitdem von mehreren weiteren, von massiv bis kaum wahrnehmbar auf
 glänzendem Filament; das Phänomen ist also nicht die Einbildung einer einzelnen Person.
-Der Thread ist als beantwortet markiert und umfasst 125 Beiträge. Das
+Der Thread ist als beantwortet markiert und umfasst 142 Beiträge. Das
 Zwei-Druck-Protokoll ist seine als Lösung markierte Antwort, verfasst von dem Besitzer,
 der das Problem unter Beteiligung des Herstellers und des Prusa-Supports bearbeitet hat,
 und die Begründung, warum es Extrusion von Bewegung trennt, ist in sich schlüssig.
@@ -327,10 +380,12 @@ der zwei Austauschköpfe erhielt. Die
 [Zusammenfassung häufiger Probleme](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/)
 verzeichnet unabhängig davon einen schweren Bänderungsfall, den der Hersteller als defekte
 Extrudereinheit bestätigt hat, was die Schlussfolgerung stützt, aber durchaus denselben
-Fall beschreiben kann und nicht einen zweiten. Der Austauschkopf, der die Linien wieder
-zeigte, ist die Erfahrung eines zweiten Besitzers, ebenfalls aus einer Einzelquelle und
-im selben Thread. Die dokumentierten Austauschergebnisse weisen in entgegengesetzte
-Richtungen, und keines kommt über `provisional` hinaus.
+Fall beschreiben kann und nicht einen zweiten. Die Austauschköpfe, die die Bänderung
+nicht behoben, stammen von drei weiteren Besitzern, von denen zwei die neuere
+spritzgegossene Ausführung angeben; die Berichte sind voneinander unabhängig, stehen aber
+alle im selben Thread. Insgesamt sprechen die dokumentierten Ergebnisse eher dagegen,
+dass ein Austausch eine verlässliche Abhilfe ist, und keines kommt über `provisional`
+hinaus.
 
 **Analyse, keine Messung.** Die Erklärung über den Zahneingriff ist die Berechnung eines
 einzelnen Besitzers, veröffentlicht kurz bevor diese Seite entstand, ohne dass der
@@ -351,10 +406,13 @@ Was diese Seite stärken würde: weitere Besitzer, die das Zwei-Druck-Protokoll 
 und das Ergebnis melden, ein Distanzstück, das auch an einem zweiten Werkzeugkopf wirkt,
 eine Aussage des Herstellers, die das konkrete Teil benennt, und ein Austauschkopf, der
 nachweislich eine Korrektur enthält. Zum Zeitpunkt dieser Aktualisierung hat niemand ein
-Ergebnis mit Distanzstück an einem anderen Werkzeugkopf oder einen weiteren Durchlauf des
-Protokolls gemeldet. Die im Thread wiedergegebenen Antworten des Herstellers erkennen den
-Fehler an, ohne ein Teil zu benennen, und auch die bis Ende September wiedergegebenen
-Antworten von Prusa benennen keines.
+Ergebnis mit Distanzstück an einem anderen Werkzeugkopf gemeldet, auch wenn ein Besitzer
+angekündigt hat, es an seinem ursprünglichen Kopf zu versuchen, und auch keinen weiteren
+Durchlauf des Protokolls. Die im Thread wiedergegebenen Antworten des Herstellers
+erkennen den Fehler an, ohne ein Teil zu benennen, auch die bis Mitte Oktober
+wiedergegebenen Antworten von Prusa benennen keines, und von keiner Ersatzcharge ist
+bekannt, dass sie eine Korrektur enthält: Die beiden bisher gemeldeten spritzgegossenen
+Austauschköpfe taten es nicht.
 
 ## Verwandte Seiten
 

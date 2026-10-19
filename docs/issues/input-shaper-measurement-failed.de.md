@@ -1,13 +1,13 @@
 ---
 title:        Input-Shaper-Kalibrierung bricht mit „Measurement failed“ ab
 confidence:   provisional
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One / Core One+ with INDX, mostly Founders Edition; one Founders Edition with the Gen 2 upgrade
 toolhead:     INDX (one report is an 8-tool head; the rest do not say)
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0 and 6.9.1-beta; one report also on 6.6.3
+firmware:     6.9.0 and 6.9.1-beta; one report also on 6.6.3, and an update from another reporter on 6.9.2, 6.9.1 and 6.6.3
 sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5436
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.6.0
@@ -15,6 +15,7 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.0
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/factory_reset/factory_reset.hpp
@@ -27,8 +28,9 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.6.3/src/persistent_stores/store_instances/config_store/store_definition.hpp
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/coreone-with-mmu-upgrade-to-indx/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/toolhead-docking-calibration-fails/
+  - https://help.prusa3d.com/downloads/core-one-indx
 superseded_by:
-source_sha:   23616c2a551975af7eef4f40e62c46096a76787b3c52b7dcf11c10c0712f6ce1
+source_sha:   8557aa57f6bb1f0f8ee8144aa555f6904b2cb445c6027b91ff958fcbbb058ad9
 ---
 # Input-Shaper-Kalibrierung bricht mit „Measurement failed“ ab
 
@@ -43,13 +45,18 @@ An INDX-Druckern mit der Firmware 6.9.0 oder der Beta von 6.9.1 kann die
 Input-Shaper-Kalibrierung bei ihrer ersten Messung mit „Measurement failed.“ abbrechen,
 obwohl der Beschleunigungssensor gerade anstandslos kalibriert wurde. Prusa untersucht
 das Problem, und das Issue ist offen; in den Versionshinweisen zu 6.9.1 geht nichts
-darauf ein, und 6.9.2, erschienen am 7. Oktober 2026, ändert nur die
-Filament-Presets des Druckers. Ob die stabile Version 6.9.1, die nach den meisten
-dieser Berichte erschien, oder 6.9.2 betroffen ist, sagt bisher kein Bericht; der
-jüngste Bericht nennt keine Firmware-Version. Die erste Prüfung, die ein
+darauf ein, 6.9.2, erschienen am 7. Oktober 2026, ändert nur die
+Filament-Presets des Druckers, und die Versionshinweise zu
+[7.0.0](https://help.prusa3d.com/downloads/core-one-indx), veröffentlicht am
+15. Oktober 2026, erwähnen weder Input Shaping noch den Beschleunigungssensor. Der
+einzige Bericht seit dem Erscheinen von 6.9.2 ist ein Nachtrag eines Besitzers, der
+zur Beta berichtet hatte: Seit er 6.9.2 geflasht hat, scheitert die Kalibrierung einen
+Schritt früher, beim Beschleunigungssensor, und das blieb auch nach der Rückkehr zu
+6.9.1 so. Zu 7.0.0 hat noch niemand berichtet. Die erste Prüfung, die ein
 Prusa-Entwickler nannte, galt der Einstellung **1.5GT Belts**, die zu den tatsächlich im
 Drucker eingebauten Riemen passen muss. Die Rückkehr zur Firmware 6.6.3 brachte die
-Kalibrierung bei zwei Besitzern wieder zum Laufen. Bei einem dritten scheiterte sie auch
+Kalibrierung bei zwei Besitzern wieder zum Laufen, wobei einer von ihnen sie dort
+inzwischen ebenfalls scheitern sieht. Bei einem dritten scheiterte sie auch
 unter 6.6.3, und sie gelang ihm erst, nachdem er zusätzlich „Common Misconfigurations“
 zurückgesetzt hatte.
 
@@ -60,7 +67,11 @@ zurückgesetzt hatte.
 Der Ablauf ist in jedem ausführlichen Bericht derselbe: Die Kalibrierung des
 Beschleunigungssensors wird abgeschlossen, dann scheitert die erste Achsmessung — X,
 sofern die Achse genannt wird — mit „Measurement failed.“ Die Phase-Stepping-Kalibrierung
-funktioniert an dem einen Drucker, bei dem sie erwähnt wurde, weiterhin.
+funktioniert an dem einen Drucker, bei dem sie erwähnt wurde, weiterhin. Der spätere
+Nachtrag eines Besitzers beschreibt eine Veränderung: Unter 6.9.2 und auch nach der
+Rückkehr zu 6.9.1 scheitert schon die Kalibrierung des Beschleunigungssensors, und
+unter 6.6.3 kalibriert der Beschleunigungssensor wieder, die Kalibrierung scheitert
+aber weiterhin nach der Messung der X-Achse.
 
 [GitHub #5436](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5436) wurde von
 einem Besitzer einer Founders Edition unter 6.9.0 eröffnet, der angab, der Fehler habe
@@ -70,24 +81,39 @@ verschwunden. Weitere folgten:
 - ein Besitzer ohne weitere Angaben;
 - ein Besitzer unter 6.9.1-beta, dessen Drucker auf Core One+ eingestellt und bei dem
   die Option 1.5GT Belts ausgeschaltet war; auch bei ihm behob die Rückkehr zu 6.6.3 das
-  Problem;
+  Problem zunächst. Sein Nachtrag nach dem Flashen von 6.9.2 ist der oben beschriebene.
+  Er vermutet die Firmware des INDX-Werkzeugkopfs, weil der neue Fehler blieb, als er zu
+  6.9.1 zurückkehrte;
 - ein Besitzer einer Founders Edition, bei dem es unter 6.6.3, 6.9.0 und 6.9.1-beta
   gleichermaßen scheiterte, obwohl 6.6.3 einen Monat zuvor noch einwandfrei kalibriert
   hatte. Er hatte das Filament entladen, den Drucker abkühlen lassen, die Riemen
   nachgespannt, die Rechtwinkligkeit des Portals geprüft und Vibrationen von außen
   ausgeschlossen;
-- zuletzt ein Besitzer einer Founders Edition mit 8 Werkzeugen, mit dem Gen-2-Upgrade und
-  den dazugehörigen 1.5GT-Riemen.
+- als jüngster neuer Melder ein Besitzer einer Founders Edition mit 8 Werkzeugen, mit
+  dem Gen-2-Upgrade und den dazugehörigen 1.5GT-Riemen.
 
 ### Wo sich die Berichte widersprechen
 
-Der Ersteller des Issues und der Besitzer unter 6.9.1-beta sagen beide, das erneute
-Flashen von 6.6.3 habe den Fehler behoben. Der Besitzer, der die Riemen nachgespannt
-hatte und dessen Drucker einen Monat zuvor unter 6.6.3 kalibriert hatte, sagt, es sei
-auch unter 6.6.3 gescheitert. Später brachte er es zum Laufen, indem er 6.6.3 erneut
-flashte **und** „Common Misconfigurations“ zurücksetzte; bei ihm ist also nicht bekannt,
-welcher der beiden Schritte es bewirkt hat. Diese Seite gibt beide Darstellungen wieder
-und entscheidet sich für keine.
+Der Ersteller des Issues und der Besitzer unter 6.9.1-beta sagten beide, das erneute
+Flashen von 6.6.3 habe den Fehler behoben, doch der Besitzer unter 6.9.1-beta sieht die
+Kalibrierung inzwischen auch unter 6.6.3 nach der Messung der X-Achse scheitern. Der
+Besitzer, der die Riemen
+nachgespannt hatte und dessen Drucker einen Monat zuvor unter 6.6.3 kalibriert hatte,
+sagt, es sei auch unter 6.6.3 gescheitert. Später brachte er es zum Laufen, indem er
+6.6.3 erneut flashte **und** „Common Misconfigurations“ zurücksetzte; bei ihm ist also
+nicht bekannt, welcher der beiden Schritte es bewirkt hat. Zwei Besitzer haben nun
+erlebt, dass ein Drucker, der unter 6.6.3 einmal kalibriert hatte, das dort nicht mehr
+tut. Diese Seite gibt jede Darstellung wieder und entscheidet sich für keine.
+
+Zwischen den Tags 6.9.1 und 6.9.2 betreffen die einzigen Codeänderungen am INDX die
+Filament-Presets; lief dieser Drucker vor 6.9.2 mit der stabilen 6.9.1, brachte 6.9.2
+also keine Änderung, die eine Rückkehr zu 6.9.1 hätte bestehen lassen können. Der
+frühere Bericht des Besitzers stammte allerdings von der Beta, und die stabile 6.9.1
+ist die Beta plus
+[15 weitere Commits](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1),
+darunter Änderungen am Code des Werkzeugwechslers, am Homing und an den
+Kalibrierergebnissen, die der Drucker speichert. Mit welcher Firmware der Drucker
+zwischen den beiden Berichten lief und was sich an ihm geändert hat, ist nicht bekannt.
 
 „Common Misconfigurations“ ist einer der Einträge auf dem Bildschirm **Factory Reset**
 des Druckers (`Settings > System > Factory Reset`), und das dortige Preset
@@ -118,7 +144,11 @@ Shapers, die sich zwischen den beiden Tags geändert hat, enthält lediglich ein
 Refactoring der Art, wie Filternamen nachgeschlagen werden. Am INDX ändert 6.9.2 nichts
 außer den Filament-Presets für PVA und BVOH, die in den Versionshinweisen zu 6.9.1
 angekündigt waren, in jener Version selbst aber fehlten. 6.9.2 berührt keinen Code des
-Input Shapers oder des Beschleunigungssensors.
+Input Shapers oder des Beschleunigungssensors. Auch die Versionshinweise zu 7.0.0
+erwähnen weder Input Shaping noch den Beschleunigungssensor, und Prusa hat den
+Quellcode von 7.0.0 noch nicht veröffentlicht; ob sie diesen Code ändert, lässt sich
+also nicht prüfen. Seit der Aussage, das Problem werde intern verfolgt, hat sich Prusa
+im Issue nicht mehr geäußert.
 
 Zuvor hatten Prusas Versionshinweise zu 6.6.0, der ersten INDX-Firmware, gelegentliche
 Fehler bei der Input-Shaper- und der Phase-Stepping-Kalibrierung als bekanntes Problem
@@ -151,7 +181,7 @@ INDX-Firmware als erster Start zählt, ist erschlossen, nicht bestätigt. Nach d
 Lesart behält ein Drucker, der ohne Zurücksetzen von 6.6.3 aus aktualisiert wurde —
 einer Version ganz ohne Riemeneinstellung —, die Option ausgeschaltet, selbst wenn
 seither Gen-2-Riemen eingebaut wurden. Auch das ist aus dem Quellcode erschlossen; der
-jüngste Melder, der diese Riemen hat, gab nicht an, wie die Einstellung bei ihm steht.
+Gen-2-Besitzer, der diese Riemen hat, gab nicht an, wie die Einstellung bei ihm steht.
 
 Ändern Sie die Einstellung erst, wenn Sie wissen, welche Riemen eingebaut sind; die
 Seite [Dock-Kalibrierung lehnt einige oder alle Docks ab](dock-calibration-rejects-docks.md)
@@ -177,11 +207,15 @@ Es lässt sich nicht rückgängig machen und verwirft die oben aufgeführten
 Hard-Reset am Ende der Liste noch eine Auswahl, die HW Configuration zurücksetzt: Diese
 stellen den Gen-2-Standard des ersten Starts wieder her, die Riemeneinstellung
 eingeschlossen, was an einem Drucker mit den ursprünglichen Riemen genau die
-Fehlkombination erzeugt, vor der der Entwickler gewarnt hat. Prüfen Sie den Eintrag
-1.5GT Belts nach jedem Zurücksetzen erneut.
+Fehlkombination erzeugt, vor der der Entwickler gewarnt hat. Ab 6.9.0 löscht ein
+Zurücksetzen von HW Configuration außerdem die gespeicherten Kalibrierungen, sodass
+alle erneut ausgeführt werden müssen. Die Versionshinweise zu 7.0.0 führen das als Behebung auf, die
+erstmals mit 6.9.0 ausgeliefert wurde, und der Quellcode von 6.9.1 koppelt beides.
+Prüfen Sie den Eintrag 1.5GT Belts nach jedem Zurücksetzen erneut.
 
 **Wägen Sie ein Downgrade sorgfältig ab.** Die Rückkehr zu 6.6.3 half zwei Besitzern,
-bei denen die Option 1.5GT ausgeschaltet war, einem dritten aber erst, nachdem er
+bei denen die Option 1.5GT ausgeschaltet war, wobei einer von ihnen die Kalibrierung
+dort später ebenfalls scheitern sah, einem dritten aber erst, nachdem er
 zusätzlich Common Misconfigurations zurückgesetzt hatte. Außerdem gibt man damit auf,
 was später kam, darunter die Homing-Korrektur aus 6.9.1 und den Assistenten zur
 Rechtwinkligkeit des Portals. An einem Gen-2-Drucker oder an jedem Drucker mit
@@ -197,12 +231,14 @@ versucht zu haben.
 
 `provisional` — ein GitHub-Issue. Mehrere Besitzer beschreiben darin denselben Fehler,
 doch an einer Stelle gesammelte Berichte sind keine unabhängige Bestätigung. Einer der
-fünf fügt außer Zustimmung nichts hinzu, und zwei (der Ersteller und der jüngste) machen
-nur wenige Angaben; der jüngste sagt nicht, wie bei ihm die Einstellung 1.5GT Belts
-steht. Der Widerspruch, ob 6.6.3 allein das Problem behebt, ist ungelöst. Ob die stabile
-Version 6.9.1 oder 6.9.2 betroffen ist, sagt bisher kein Bericht. Bei einer erneuten
-Prüfung am 8. Oktober 2026 hatte das Issue keine Kommentare, die neuer waren als der
-jüngste Bericht.
+fünf fügt außer Zustimmung nichts hinzu, und zwei (der Ersteller und der Gen-2-Besitzer)
+machen nur wenige Angaben; der Gen-2-Besitzer sagt nicht, wie bei ihm die Einstellung
+1.5GT Belts steht. Der Widerspruch, ob 6.6.3 allein das Problem behebt, ist ungelöst,
+und einer der beiden Besitzer, bei denen es half, hat es dort inzwischen scheitern
+sehen. Sein Nachtrag ist der einzige Bericht zu 6.9.2 oder zu einer Rückkehr zu 6.9.1,
+und er beschreibt, dass der Fehler zur Kalibrierung des Beschleunigungssensors
+gewandert ist. Zu 7.0.0 hat noch niemand berichtet. Bei einer erneuten Prüfung am
+18. Oktober 2026 hatte das Issue keine Kommentare, die neuer waren als dieser Nachtrag.
 
 Die beiden Berichte über die Riemeneinstellung in den Montagehinweisen betreffen die
 Einstellung und die Dock-Kalibrierung; keiner von beiden berichtete diesen Fehler. Die
@@ -217,8 +253,12 @@ Hardwarekonfiguration angewendet wird, und was eine Änderung der Riemeneinstell
 zurücksetzt, stammen alle aus Prusas Firmware-Quellcode beim Git-Tag 6.9.1; dass 6.6.3
 keine Riemeneinstellung hat, stammt aus dem Quellcode bei dessen Tag. Dass 6.9.2 nur die
 Filament-Presets ändert, ergibt sich aus dem
-[Vergleich ihres Tags mit dem von 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2).
-Die Warnung beim Ändern der Riemeneinstellung ist die des Druckers selbst. Das bekannte
+[Vergleich ihres Tags mit dem von 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2),
+und was die stabile 6.9.1 gegenüber der Beta hinzufügt, aus dem Vergleich dieser
+beiden Tags. Dass ein Zurücksetzen der Hardwarekonfiguration auch die Kalibrierungen löscht, steht in
+den [Versionshinweisen zu 7.0.0](https://help.prusa3d.com/downloads/core-one-indx), als
+erstmals mit 6.9.0 ausgeliefert gekennzeichnet, und im Quellcode von 6.9.1. Die Warnung
+beim Ändern der Riemeneinstellung ist die des Druckers selbst. Das bekannte
 Problem mit Fehlern bei der Input-Shaper-Kalibrierung stammt aus Prusas
 Versionshinweisen zu 6.6.0.
 

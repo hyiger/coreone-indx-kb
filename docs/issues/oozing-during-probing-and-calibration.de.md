@@ -1,7 +1,7 @@
 ---
 title:        Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 confidence:   reported
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -24,8 +24,10 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://help.prusa3d.com/downloads/core-one-indx
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1
 superseded_by:
-source_sha:   86dc1f43e7ef118c2f790d5ad7ac3539d7f28c02449720d5d320f30b75e06155
+source_sha:   686d32105b591ef0ce61a59471fc66a737c0dd54488b95eeb15e42cd200e684e
 ---
 # Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 
@@ -158,12 +160,12 @@ T1 ein Niedertemperatur-Filament zu deklarieren, wenn der Druck auf T3 beginnt;
 maßgeblich ist das Filament, mit dem Ihr Druck startet. Ob der frühere T1-Bericht ein
 älteres Profil oder einen anderen Maschinenzustand beschreibt, ist nicht geklärt.
 
-**Keine der beiden 6.9.1-Versionen nennt hier eine Änderung.** Die Beta senkte die
+**Bislang nennt keine Firmware-Version hier eine Änderung.** Die 6.9.1-Beta senkte die
 Temperatur für die *Werkzeug-Offset-Kalibrierung*, einen eigenen Firmware-Schritt. Die
 Temperatur beim Abtasten des Betts stammt aus dem Slicer-Profil, weshalb PC Blend auch
 unter der Beta weiterhin heiß abtastet, und der gegen die Beta eröffnete
 [Fehlerbericht](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5483) ist
-noch immer offen und unbeantwortet. Die
+noch immer offen, ohne Antwort von Prusa. Die
 [stabile Version 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1),
 veröffentlicht am 2026-09-25, nennt einen Assistenten zum Ausrichten des Portals und eine
 Korrektur beim Referenzieren — zur Abtasttemperatur nichts.
@@ -177,8 +179,13 @@ Release-Historie, nicht aus den Versionshinweisen. 6.9.2, erschienen am 2026-10-
 für PVA und BVOH, die die Versionshinweise zu 6.9.1 angekündigt, aber nicht mitgeliefert
 hatten
 ([Vergleich](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)).
-Wie PC Blend unter den stabilen Versionen 6.9.1 oder 6.9.2 abtastet, hat bislang kein
-Besitzer berichtet.
+Firmware 7.0.0 vom 15. Oktober 2026 (laut
+[Prusas Download-Seite](https://help.prusa3d.com/downloads/core-one-indx)) nennt zur
+Abtasttemperatur ebenfalls nichts, was dazu passt, dass der
+Wert aus dem Slicer-Profil kommt. Am 18. Oktober stieß ein weiterer Kommentator des
+Fehlerberichts gleich beim ersten Versuch mit PC Blend auf den Fehler, ohne Maschine
+oder Firmware-Version zu nennen. Wie PC Blend unter den stabilen Versionen 6.9.1, 6.9.2
+oder 7.0.0 abtastet, hat bislang kein Besitzer berichtet.
 
 **Anpassen.** Ein Besitzer vergrößerte den PC-Abstand im Start-G-Code des Druckers, und
 die Fehlschläge hörten auf. Der Haken, auf den er selbst hinwies: Ein
@@ -188,7 +195,11 @@ Filamentnotizen des Startwerkzeugs auf eine Überschreibungsmarke, bevor er übe
 den PC-Fall erreicht; das deutet auf einen Weg je Filament hin, der solche Updates
 überstehen würde — doch das ist eine Lesart des Profils und nichts, das ein Besitzer als
 getestet berichtet hat. Und die slicereigene **Option zur Sickerverhinderung half
-nicht**, sodass es einen Druck kostet, zuerst danach zu greifen.
+nicht**, sodass es einen Druck kostet, zuerst danach zu greifen. Der Besitzer, der den
+Fehlerbericht zu PC Blend eingereicht hat, schlägt eine Notlösung vor, die keine Datei
+berührt: Sobald die Bettabtastung beginnt, die Düsentemperatur im Tune-Menü
+herunterdrehen. Das ist das oben beschriebene händische Absenken, abgestimmt auf die
+Abtastung, und es muss bei jedem Druck wiederholt werden.
 
 TODO(verify): Diese Berichte nennen die Temperatur, mit der PC abgetastet wurde, die
 niedrigeren, die funktionierten, und den angepassten Abstand. Nichts davon wird hier
@@ -246,9 +257,15 @@ erneutes Spülen. Ein
 [Bericht an den Hersteller](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5505)
 zur Beta bittet darum, dass die Wiederholung der Kalibrierung das Spülen auslässt und
 nur wieder aufheizt und abstreift, da erneutes Spülen das Problem wieder einspeist; er
-ist offen und unbeantwortet. Dies ist eine Lesart des Codes im Stand des Git-Tags v6.9.1, nicht etwas,
-das ein Besitzer bestätigt hat, indem er beide Fehlschläge an einer Maschine beobachtet
-hätte.
+ist offen und unbeantwortet, ebenso die Funktionsanfrage. Dies ist eine Lesart des Codes
+im Stand des Git-Tags v6.9.1, nicht etwas, das ein Besitzer bestätigt hat, indem er
+beide Fehlschläge an einer Maschine beobachtet hätte. Die Notes zu 7.0.0 erwähnen keine
+der beiden Wiederholungen. Ihr einziger Eintrag zum Wischen selbst, eine verbesserte
+Reinigung durch den Düsenwischer, ist als übernommen aus
+[6.10.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1)
+(Firmware für XL und XL+) gekennzeichnet und sagt nicht, was sich geändert hat, und Prusa
+hatte den Quellcode von 7.0.0 bei Abfassung dieses Textes nicht veröffentlicht. Ob eine
+Wiederholung unter 7.0.0 noch spült, ist daher offen.
 
 ### Wenn nichts davon hilft
 
@@ -306,7 +323,9 @@ zu widersprechen, zeigt aber, was der Code tut, nicht was ein Besitzer beobachte
 Keine der beiden Quelldateien (der Befehl für das Bett-Leveling und die
 Werkzeug-Offset-Kalibrierung) unterscheidet sich zwischen den Git-Tags v6.9.1 und
 [v6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2), die
-Lesart gilt also auch für 6.9.2.
+Lesart gilt also auch für 6.9.2. Prusa hatte bei Abfassung dieses Textes kein
+7.0.0-Tag auf GitHub veröffentlicht, die Lesart ist also nicht gegen 7.0.0 geprüft,
+dessen Notes an keiner der beiden Wiederholungen eine Änderung nennen.
 
 Wo die Quellen sich widersprechen: Das Trocknen wurde mit Nachdruck als wahrscheinliche
 Ursache für PETG genannt, doch der Fall, der tatsächlich gelöst wurde, wurde durch

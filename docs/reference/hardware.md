@@ -1,7 +1,7 @@
 ---
 title:        Hardware
 confidence:   unknown
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One, Core One Plus, Core One L
 toolhead:     INDX
@@ -14,6 +14,8 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
+  - https://help.prusa3d.com/downloads/core-one-indx
+  - https://help.prusa3d.com/guide/4-indx-toolhead-side-filament-sensors_1096247
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/sourcing-tool-dock-hardware/
 superseded_by:
@@ -67,7 +69,12 @@ the Gen 2 parts with the first batch of its INDX conversion kits, so a converted
 Core One may be of either generation. The release notes name them
 separately: stable firmware 6.9.1, published 25 September 2026, lists the Core One+
 (Gen 2) INDX and the Core One/+ INDX as the machines it supports, and 6.9.2, published
-7 October 2026, names the same two. Neither release names the Core One L. Take the
+7 October 2026, names the same two. Firmware 7.0.0 for the INDX, dated 15 October 2026,
+had by 18 October appeared only on Prusa's downloads page, not as a GitHub release.
+There it sits under a single Core One INDX entry, on a page headed for the Core One/+
+INDX, and its notes do not list the two generations separately. The same page carries
+a separate 7.0.0 for the Core One L+, dated 5 October 2026, whose notes do not mention
+the INDX at all. None of these releases names an INDX-equipped Core One L. Take the
 same care between generations as between models wherever a finding involves the belts,
 their pulleys or the bed's expansion joints, which are among the parts Gen 2 changes.
 
@@ -75,10 +82,11 @@ their pulleys or the bed's expansion joints, which are among the parts Gen 2 cha
 Smart Head and docking hardware and differing only in how many passive tools come with
 them. Owners of four-tool Founders Edition kits report one more difference in theirs,
 and it matters if you expand later: the second side filament sensor, which serves tools
-five to eight, was not in the box. Whether Prusa's own four-tool kit leaves it out too
-rests so far on one owner's second-hand statement; Prusa now sells that sensor
-separately, which fits, but is not a report. The [assembly notes](assembly-notes.md)
-cover what adding tools involves.
+five to eight, was not in the box. Prusa's own four-tool kit leaves it out too:
+Prusa's assembly guide tells a four-tool builder that only the left sensor board, the
+one with two connectors, is in the box, and the Founders Edition guide says the same
+of its kit. Prusa now sells the right-hand sensor separately. The
+[assembly notes](assembly-notes.md) cover what adding tools involves.
 
 Sourced from the vendor's [dated announcement](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-l-with-indx-now-available-assembled-and-upgrade/) of 27 August 2026, which is what
 fixes the availability and the shipping date. The product listings for the
@@ -90,12 +98,18 @@ citation. The Gen 2 details come from Prusa's own
 and its [shipping announcement](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/),
 and the firmware naming from the
 [6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1) and
-[6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2) releases.
-The difference in Founders Edition kits is what their owners report, in
+[6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2) releases
+and, for 7.0.0, from Prusa's
+[downloads page](https://help.prusa3d.com/downloads/core-one-indx) as it stood on
+18 October 2026. The difference in Founders Edition kits is what their owners report, in
 [a thread on growing a four-tool kit](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/)
 and in [one on sourcing dock hardware](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/sourcing-tool-dock-hardware/).
-The second-hand statement about Prusa's kit is in the first of those, and so is the
-listing's wording, as an owner relayed it rather than taken from the storefront.
+That Prusa's four-tool kit lacks the sensor too is stated in the
+[side filament sensor chapter](https://help.prusa3d.com/guide/4-indx-toolhead-side-filament-sensors_1096247)
+of Prusa's guide; the same chapter of the Founders Edition guide says the same of the
+Founders Edition kit, which also confirms the owners' reports. The listing's wording
+is as an owner relayed it in the thread on growing a four-tool kit, rather than taken
+from the storefront.
 
 !!! note "`provisional` — this section only"
     The page as a whole is an unverified stub and declares `confidence: unknown`. This
@@ -108,10 +122,11 @@ listing's wording, as an owner relayed it rather than taken from the storefront.
     the announcement, not a date that has passed — treat the shipping claim as a plan,
     and the availability claim as true of August 2026 rather than of whenever you are
     reading this. The Gen 2 paragraph rests on more — Prusa's own posts and release
-    notes — and so does the Founders Edition half of the kit-size paragraph, with
-    owners in two separate threads, but both sit in this section and take its tier.
-    What that paragraph says about Prusa's own four-tool kit is one owner's second-hand
-    statement, provisional on its own account.
+    notes — and so does the kit-size paragraph, with owners in two separate threads and
+    that edition's own guide for the Founders Edition, and Prusa's guide for Prusa's
+    kit, but both sit in this section and take its tier. The 7.0.0 naming rests on a
+    downloads page that Prusa edits in place, not on a tagged release, and should be
+    checked again once a GitHub release appears.
 
 ## Verification
 

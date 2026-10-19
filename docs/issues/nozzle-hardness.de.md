@@ -1,7 +1,7 @@
 ---
 title:        Düsenhärte und abrasive Filamente
 confidence:   reported
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -18,8 +18,9 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-nozzles/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/hardened-nozzle/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/
 superseded_by:
-source_sha:   db2df65a1346cc323128cb663be6a46b7657f0e97cafdfb105c7ff1171721f3d
+source_sha:   5cf006da171d7b2d76192e60421ce411c354e513e58e28444ab66802c404e8ea
 ---
 # Düsenhärte und abrasive Filamente
 
@@ -166,17 +167,37 @@ bestellt wurden, hat Prusa nicht gesagt.
 TODO(verify): Prusas Guthaben- und Barbeträge für jede Kit-Größe, aus Prusas Update vom
 August an die Kit-Kunden, wie im Thread „nozzlegate communications“ wiedergegeben.
 
-Bedenken Sie eine Grenze, bevor Sie Prusas Guthaben für Düsen einplanen. Mit Prusas
-Shop-Guthaben lassen sich laut zwei Besitzern weder Ersatz- noch Reservedüsen für den
-INDX kaufen: Einer merkte im August an, dass Prusa sie nicht verkaufe, und ein anderer
-zählt im Oktober das nicht einsetzbare Guthaben zu den Kosten einer Düsenbestellung
-beim Hersteller. Diese Düsen
-kommen aus dem eigenen Shop des Herstellers, zuzüglich Versand, und der Besitzer vom
-Oktober nennt außerdem Einfuhrabgaben. Die beiden schreiben in getrennten Threads, der
-Besitzer vom August im Thread
-[nozzlegate communications](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/)
-und der vom Oktober in einem
-[Thread zu langsamen Düsenbestellungen](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/).
+Bedenken Sie eine Grenze, bevor Sie Prusas Guthaben für Düsen einplanen. Stand Mitte
+Oktober ließen sich mit Prusas Shop-Guthaben weder Ersatz- noch Reservedüsen für den
+INDX kaufen, weil Prusas Shop sie nicht führte; das sagen Besitzer in drei getrennten
+Threads. Einer merkte im August an, dass Prusa sie nicht verkaufe. Ein anderer zählt im
+Oktober das nicht einsetzbare Guthaben, neben Einfuhrabgaben, zu den Kosten einer
+Düsenbestellung im eigenen Shop des Herstellers.
+Später im Monat ergänzt derselbe Besitzer, dass Prusa nach wie vor keine INDX-Düsen
+anbiete, und geht, ohne sich dessen sicher zu sein, davon aus, dass sich das Guthaben
+nicht beim US-Händler von Prusa einlösen lässt, sodass nur eine Bestellung direkt bei
+Prusa mit Versand- und Einfuhrkosten bleibt; das ist allein seine Lesart und nicht
+bestätigt. Ein dritter wollte Mitte Oktober das Guthaben für zusätzliche Größen ausgeben
+und fand in Prusas Shop keine. Der erste schreibt im Thread
+[nozzlegate communications](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/),
+der zweite in einem
+[Thread zu langsamen Düsenbestellungen](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/)
+und der dritte in Prusas
+[Thread zu Versand-Updates](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/).
+
+Der dritte Besitzer erwartet INDX-Düsen in Prusas Shop, sobald der Rückstand der
+Vorbestellungen abgearbeitet ist; ob Prusa das gesagt hat, geht aus dem Beitrag nicht
+hervor. Der Zeitpunkt, vielleicht im Frühjahr, ist seine eigene Schätzung. Derselbe
+Besitzer fragte Prusa außerdem, wie lange der Gutschein gültig bleibt, und gibt die
+Antwort wieder: Es gibt eine Frist; prüfen Sie sie, bevor Sie Guthaben für Düsen
+zurückhalten, die Prusa vielleicht später führt. Ob für Prusas Gutschein auch die
+weiteren, weiter unten beschriebenen Bedingungen des Herstellers gelten, ist nicht
+berichtet. Das ist vorläufig, der Beitrag eines einzelnen Besitzers und seine
+Wiedergabe einer privaten Antwort.
+
+TODO(verify): die Gültigkeitsdauer von Prusas Entschädigungsgutschein — von einem
+Besitzer in Prusas Thread zu Versand-Updates als Prusas Antwort auf eine Frage
+wiedergegeben; eine veröffentlichte Fassung davon ist nicht bekannt.
 
 **Wie ein Anspruch beim Hersteller abläuft, nach Angaben von Besitzern, die einen
 gestellt haben.** Sein Kontaktformular hat keine offensichtlich passende Kategorie;
@@ -215,7 +236,9 @@ ebenfalls Bargeld zu verlangen. Der Beitrag sagt nicht, ob dieser Besitzer zuvor
 Guthaben beantragt hatte; ob sich eine bereits eingereichte Wahl für Guthaben noch ändern
 lässt, ist daher nicht geklärt. Zwei dort gestellte Fragen blieben unbeantwortet: ob
 dieselben Bedingungen für Guthaben auf bei Prusa gekaufte Kits gelten und ob eine
-Barerstattung auf das ursprüngliche Zahlungsmittel zurückfließt.
+Barerstattung auf das ursprüngliche Zahlungsmittel zurückfließt. Die oben aus einem
+anderen Thread wiedergegebene Gültigkeitsfrist von Prusas Gutschein beantwortet die
+erste Frage nur zum Teil.
 
 !!! note "Shop-Guthaben kauft Düsen, die Sie vielleicht noch nicht nutzen können"
     Wissenswert, bevor Sie Guthaben statt Bargeld wählen: PrusaSlicer bietet für den INDX
@@ -227,24 +250,37 @@ Barerstattung auf das ursprüngliche Zahlungsmittel zurückfließt.
     Profilpaket eine einzige Düsenvariante, sodass keine andere Größe auswählbar ist. Siehe
     [fehlende Slicer-Profile](missing-slicer-profiles.md).
 
-    Auch die Lieferung zieht sich, und das ungleichmäßig. Zwei Besitzer, die Mitte Juli
-    Ersatzdüsen im Shop des Herstellers bestellt hatten, berichten, dass diese erst Ende
-    September versandt bzw. geliefert wurden, im
+    Die Lieferung zog sich bis Anfang Oktober, und das ungleichmäßig; seither geht es
+    schneller. Zwei Besitzer, die Mitte Juli Ersatzdüsen im Shop des Herstellers
+    bestellt hatten, berichten, dass diese erst Ende September versandt bzw. geliefert
+    wurden, im
     [Thread zu Ersatzdüsen](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-nozzles/).
-    Neuere Bestellungen sind laut einem
+    In einem
     [späteren Thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/)
-    mal so, mal so verlaufen. Anfang Oktober warteten dort zwei Besitzer, die Mitte
-    September bestellt hatten, nach rund drei Wochen noch immer. Dem einen teilte der
-    Hersteller mit, die Düsen müssten erst noch montiert werden, dem anderen nach einem
-    Support-Ticket, die Bestellung stehe zur Kommissionierung an und werde innerhalb von
-    etwa einer Woche versandt. Ein dritter Besitzer hatte eine Bestellung von Düsen mit
-    glatter Bohrung in der Woche vor seinem Beitrag innerhalb von drei Tagen erhalten.
-    Der erste der wartenden Besitzer warnt, dass der Shop Düsen als vorrätig anzeigen
-    kann, die nicht versandbereit sind, und vermutet, dass Düsen mit glatter Bohrung
-    die Bestellungen aufhalten. Auch die zweite wartende Bestellung galt
-    einer Düse mit glatter Bohrung, die schnelle Lieferung bestand aber ebenso aus
-    solchen Düsen; ein Muster nach Typ ist also nicht belegt. Die Erklärungen des
-    Herstellers gibt jeweils ein einzelner Besitzer wieder.
+    warteten Anfang Oktober zwei Besitzer, die Mitte September bestellt hatten, nach
+    rund drei Wochen noch immer. Dem einen teilte der Hersteller mit, die Düsen müssten
+    erst noch montiert werden, dem anderen nach einem Support-Ticket, die Bestellung
+    stehe zur Kommissionierung an und werde innerhalb von etwa einer Woche versandt;
+    ein dritter Besitzer hatte unterdessen Düsen mit glatter Bohrung innerhalb von drei
+    Tagen erhalten. Danach wurden beide wartenden Bestellungen versandt: die mit dem
+    Ticket Anfang der folgenden Woche, wie vom Hersteller geschätzt, mit Zustellung
+    einen Tag später, und die erste Mitte Oktober, rund einen Monat nach der Bestellung.
+    Im Oktober aufgegebene Bestellungen gingen nach Angaben dreier weiterer Besitzer dort
+    innerhalb von ein bis zwei Wochen hinaus, und eine davon enthielt eine Düse mit
+    glatter Bohrung. Mitte Oktober sagten zwei Besitzer dort, die 0.4mm- und
+    0.6mm-Düsen seien offenbar gut verfügbar. Der erste der wartenden Besitzer hält
+    weiterhin Düsen mit glatter Bohrung für den Grund der Verzögerungen und hatte
+    gewarnt, dass der Shop Düsen als vorrätig anzeigen kann, die nicht versandbereit
+    sind; ein Muster nach Typ ist nicht belegt. Die Erklärungen des Herstellers gibt
+    jeweils ein einzelner Besitzer wieder. Als der erste wartende Besitzer seine Düsen
+    erhielt, fand er kein PrusaSlicer-Profil dafür, wie oben beschrieben.
+
+    Auch die äußere Oberfläche der Düsen unterschied sich zwischen Lieferungen, nach
+    Angaben zweier Besitzer in diesem Thread. Eine Mitte Oktober erhaltene Düse wirkte
+    glatt, was ihr Besitzer für einen überarbeiteten Grundkörper hielt; ein anderer
+    Besitzer beschreibt zwei um Anfang Oktober erhaltene als rau strukturiert. Über das
+    Aussehen hinaus sagt keiner, was sich geändert hat, und nichts im Thread deutet auf
+    eine Änderung am Stahl oder an dessen Härte hin. Vorläufig: ein einziger Thread.
 
 Beachten Sie, dass die Angemessenheit der Entschädigung umstritten ist. Mindestens ein
 Besitzer hat die Rechnung durchgeführt und kam zu dem Ergebnis, dass das angebotene
@@ -350,13 +386,19 @@ einem der beiden. Der Zeitplan für die Diamantdüse ist eine Absichtserklärung
 Drittanbieters. Dass E3D eine INDX-Düse entwickelt, ist in drei Threads belegt, aber
 jedes Detail dazu — Zeitrahmen, Größen, Aufbau, Sensorverträglichkeit, Vertriebswege,
 die Vorführung am Messestand — beruht auf den Notizen eines einzelnen Besitzers aus
-einem Gespräch auf einer Messe. Langsame Lieferungen von Ersatzdüsen berichten vier
-Besitzer in zwei Threads, einer dieser Threads enthält aber auch eine schnelle
-Lieferung, und die Gründe des Herstellers für die Verzögerungen gibt jeweils ein
-einzelner Besitzer wieder. Die Bezeichnung „gehärtet“ an gelieferten Ersatzdüsen stammt
-aus einem einzigen Thread. Dass sich mit Prusas Guthaben keine INDX-Düsen kaufen lassen,
-beruht auf zwei Besitzern in getrennten Threads, nicht auf einer Aussage von Prusa; dass
-Prusa sie im August nicht verkaufte, ist allein die Erklärung des Besitzers vom August.
+einem Gespräch auf einer Messe. Langsame Lieferungen von Ersatzdüsen bis Anfang Oktober
+berichten vier Besitzer in zwei Threads, einer dieser Threads enthält aber auch eine
+schnelle Lieferung, und die Gründe des Herstellers für die Verzögerungen gibt jeweils ein
+einzelner Besitzer wieder. Der seither schnellere Versand und die veränderte äußere
+Oberfläche der Düsen beruhen auf Besitzern in diesem einen späteren Thread. Die
+Bezeichnung „gehärtet“ an gelieferten Ersatzdüsen stammt aus einem einzigen Thread. Dass
+sich mit Prusas Guthaben keine INDX-Düsen kaufen ließen, weil Prusas Shop sie nicht
+führte, beruht auf drei Besitzern in drei getrennten Threads, nicht auf einer Aussage
+von Prusa: für August auf dem Besitzer vom August, für Mitte Oktober auf zwei Besitzern.
+Die Erwartung, dass Prusa sie später führen wird, stammt von einem einzelnen Besitzer
+und nicht erkennbar von Prusa; die Gültigkeitsfrist von Prusas Gutschein ist dessen
+Wiedergabe. Dass sich das Guthaben nicht beim US-Händler von Prusa einlösen lasse, ist
+die vorsichtig geäußerte Annahme eines einzelnen Besitzers.
 
 Wo die Quellen sich widersprechen: Besitzer sind sich deutlich uneins darüber, ob die
 Entschädigung angemessen ist und wie groß die praktische Auswirkung der Härte für jemanden

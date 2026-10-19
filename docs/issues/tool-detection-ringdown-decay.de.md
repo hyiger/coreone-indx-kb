@@ -1,7 +1,7 @@
 ---
 title:        Phantom-Werkzeuge, „Werkzeug nicht erkannt“ und Park-Fehler
 confidence:   reported
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -17,11 +17,12 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://help.prusa3d.com/downloads/core-one-indx
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/6-9-0-firmware-tool-docking/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/will-the-prusa-indxs-wave1-ship-with-fixed-induction-coils/
 superseded_by:
-source_sha:   416fb971b7f2bab8236d29c42112553fad80b7a51798830cc858ae2f2a79ab4d
+source_sha:   1d3114d0d938cb9e3f96e9c81ff0634ef8c9df27fcb84c0434aed80bae33d3a0
 ---
 # Phantom-Werkzeuge, „Werkzeug nicht erkannt“ und Park-Fehler
 
@@ -241,7 +242,11 @@ Quellcodes und kein Ergebnis von einer Maschine.
 erschienen am 7. Oktober 2026, ändert daran ebenfalls nichts: Zwischen den
 [Tags 6.9.1 und 6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
 betrifft die einzige Änderung, die einen INDX erreicht, die Filament-Presets für PVA und
-BVOH.
+BVOH. Die Firmware 7.0.0, auf
+[Prusas Download-Seite](https://help.prusa3d.com/downloads/core-one-indx) auf den
+15. Oktober 2026 datiert, führt nichts zur Düsenerkennung oder zur Park-Prüfung auf. Prusa
+hatte ihren Quellcode beim Schreiben dieses Abschnitts noch nicht veröffentlicht; das ist
+also das Schweigen der Versionshinweise, keine Lesart des Codes.
 
 ## Überprüfung
 

@@ -1,13 +1,13 @@
 ---
 title:        Dock-Kalibrierung lehnt einige oder alle Docks ab
 confidence:   reported
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One, Core One+, Core One+ (Gen 2)
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0, 6.9.1-beta, 6.9.1
+firmware:     6.9.0, 6.9.1-beta, 6.9.1; 6.9.2 by source comparison; checked against the 7.0.0 release notes
 sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5444
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5445
@@ -31,8 +31,12 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/gantry-squaring-failing/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5520
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/tree/v6.9.1-beta/src/feature
+  - https://help.prusa3d.com/downloads/core-one-indx
 superseded_by:
-source_sha:   417723c49da6f26025b89ac5a80dc34ccfba2f51d9ea6aa613bf27ddead946d5
+source_sha:   6767df38c2c7465e6352372af714bc87171c941b67ddcf8d142b2be93e37dea9
 ---
 # Dock-Kalibrierung lehnt einige oder alle Docks ab
 
@@ -43,9 +47,11 @@ source_sha:   417723c49da6f26025b89ac5a80dc34ccfba2f51d9ea6aa613bf27ddead946d5
     an jedem Dock, im anderen als Y-Messwert, der sich nicht verändern ließ. Die
     Einstellung zu korrigieren, direkt oder über die Druckervariante, behob beides. Dieser
     Teil ist `reported`. Eine Dock-Reihe, die nur an einem Ende scheitert und einem
-    schiefen Portal zugeschrieben wird, stammt von einer einzigen, ungelösten Maschine.
-    Die Behebung durch Nachspannen zu lockerer Riemen stützt sich auf einen Besitzer, und die Hinweise
-    zu Riemen und Homing bei einem scheiternden ersten Dock stammen aus einem einzigen
+    schiefen Portal zugeschrieben wird, stammt von einer einzigen, ungelösten Maschine,
+    und ein Assistent zur Rechtwinkligkeit, den die Docks selbst aufhielten, von einer
+    weiteren. Die Behebung einer gleichmäßigen Verschiebung durch Nachspannen zu lockerer
+    Riemen stützt sich auf einen Besitzer, und die Hinweise zu Riemen und Homing bei einem
+    scheiternden ersten Dock stammen von mehreren Besitzern, aber alle aus einem einzigen
     Forenthread. Diese Teile sind `provisional` und dort markiert, wo sie vorkommen.
 
 ## Zusammenfassung
@@ -71,7 +77,12 @@ scheitern und in welche Richtung:
   Muster hat es nicht gelöst. `provisional`.
 - **Das erste Dock scheitert, und sonst wirkt nichts falsch.** Besitzer in einem Thread
   verweisen auf lockere Riemen, die Rechtwinkligkeit des Portals und die
-  Homing-Kalibrierung. `provisional`.
+  Homing-Kalibrierung. Zwei spätere Besitzer im selben Thread brachten die
+  Dock-Kalibrierung zum Bestehen, indem sie die Riemen zwischen den Versuchen
+  schrittweise nachspannten, doch keiner von beiden beschrieb ein Scheitern allein am
+  ersten Dock: Bei einem lagen alle Docks daneben, nachdem ein Werkzeug hängen geblieben
+  war und das Homing wiederholt scheiterte (vergleichen Sie den Fall der lockeren Riemen
+  im ersten Punkt). `provisional`.
 
 ## Fehlercodes, die hierher führen
 
@@ -271,6 +282,42 @@ gemessenen Docks gelegt wird, statt gegen ein festes Y, sodass eine gleichmäßi
 Reihe bestehen könnte, während ein einzelnes verschobenes Dock weiterhin auffiele. Diese
 Anfrage ist offen und als INDX-Erweiterung gekennzeichnet, ohne Zusage von Prusa.
 
+### Der Assistent zur Rechtwinkligkeit, von den Docks aufgehalten
+
+`provisional` — ein Besitzer, ein Thread.
+
+Ein zweiter Bericht zum Assistenten zur Rechtwinkligkeit stammt von einer anderen
+Maschine, und dort waren die Docks selbst eindeutig beteiligt. An einer ursprünglichen
+Core One, in die das Gen-2- und das INDX-Upgrade in einem Zug eingebaut wurden, scheiterte
+der Assistent mit einer Schiefstellung, die ein Vielfaches über seiner Grenze lag und von
+Durchlauf zu Durchlauf stark schwankte
+([Ausrichten des Portals scheitert](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/gantry-squaring-failing/)).
+Beim Zusehen bemerkte der Besitzer, dass der Kopf links zu früh anhielt, an den
+gefederten Knöpfen der Docks 1 und 2, während er rechts jedes Mal den ganzen Weg fuhr.
+Keiner der beiden Knöpfe fühlte sich schwergängiger an als der an Dock 8, und sonst war
+nichts im Weg. Mit abgenommenen Docks 1 und 2 bestand der Assistent.
+
+Das passt dazu, wie der Assistent misst, wie oben beschrieben: Er nimmt die Stelle, an
+der der Kopf blockiert, als Position des jeweiligen Docks, sodass alles, was den Kopf auf
+einer Seite zurückhält, als Schiefstellung erscheint. Das ist die Lesart dieser Seite aus
+dem Quellcode von 6.9.1 zusammen mit dem Bericht eines Besitzers; warum die Knöpfe den
+Kopf an jener Maschine aufhielten, wurde nicht geklärt, und ob an der Maschine mit der
+verdrehten Reihe etwas Ähnliches mitspielte, ist nicht bekannt.
+
+Ein anderer Besitzer schlug vor, zu prüfen, ob die Platte, auf der die Docks montiert
+sind, an beiden Enden bündig sitzt, und die Docks 1 und 8 zu tauschen, um zu sehen, ob
+der Fehler mit dem Dock wandert. Ob der Threadersteller eines davon versucht hat, sagt
+er nicht.
+
+Nachdem die Riemen neu abgestimmt waren, scheiterte dieselbe Maschine an der
+Homing-Kalibrierung mit einem vorzeitigen Endschalter-Auslösen, einem eigenen
+Homing-Fehler, der in
+[#5520](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5520) verfolgt wird. Der
+Besitzer behob das, indem er zu 6.9.1-beta zurückkehrte. Diese Version ist älter als der
+Assistent zur Rechtwinkligkeit; die Rückkehr erledigte also den Homing-Fehler, sagt aber
+nichts über die Messung des Assistenten aus. Als diese Seite aktualisiert wurde, war
+#5520 noch offen, und zwei Besitzer meldeten dort denselben Homing-Fehler unter 7.0.0.
+
 ### Das erste Dock scheitert, sonst ist nichts offensichtlich falsch
 
 `provisional` — mehrere Besitzer, aber alle in einem Forenthread.
@@ -294,9 +341,30 @@ sammelt die Ratschläge der Besitzer und die Lösungen, die funktionierten:
 
 Ein Besitzer schrieb am 30. September 2026, dass fünf Versuche, die Riemen neu
 abzustimmen, das Portal neu auszurichten und die Homing-Kalibrierung erneut auszuführen,
-das Y des ersten Docks nicht in den zulässigen Bereich gebracht hätten; eine Antwort gibt
-es bisher nicht. Ob er die weiter oben im selben Thread angesprochene Riemeneinstellung
-geprüft hat, sagt er nicht.
+das Y des ersten Docks nicht in den zulässigen Bereich gebracht hätten. Ob er die weiter
+oben im selben Thread angesprochene Riemeneinstellung geprüft hat, sagt er nicht, und er
+hat sich seitdem nicht wieder gemeldet.
+
+Die nächsten Beiträge, vom 11. Oktober 2026, beschreiben ein langsameres Vorgehen beim
+Spannen. Ein Besitzer, dessen Dock-Kalibrierung durchweg danebenlag, nachdem ein Werkzeug
+hängen geblieben war und das Homing immer wieder scheiterte, spannte beide Riemenspanner
+in kleinen Schritten nach und führte nach jedem Schritt die Dock-Kalibrierung an einem
+einzelnen Werkzeug erneut aus, bis sie bestand. Er weist darauf hin, dass die Lösung
+auch im Lockern liegen könne, und warnt vor zu starkem Spannen. Ein zweiter Besitzer
+brachte danach auf demselben Weg alle acht Docks durch. Keiner von beiden beschreibt ein
+Scheitern, das auf das erste Dock beschränkt war: Beim ersten lagen alle Docks daneben
+(vergleichen Sie den Bericht über die lockeren Riemen oben, auch wenn dieser Besitzer
+weder Richtung noch Betrag nennt), und der zweite sagt nicht, wie die Kalibrierung bei
+ihm scheiterte; das zeigt also nicht, dass ein allein scheiterndes erstes Dock auf
+dieselbe Behandlung anspricht. Das ist ein Weg, eine Spannung zu suchen, kein Zielwert
+dafür, und es bleibt ein Thread: `provisional`. Prusas Anleitung zur Riemenspannung
+bleibt die Referenz, und da die Spannung in die übrigen Kalibrierungen eingeht, ist es
+der Vorschlag dieser Seite, sie von Anfang an erneut auszuführen, sobald die Docks
+bestehen; ob die beiden Besitzer das taten, sagen sie nicht.
+
+TODO(verify): die Größe jedes Spannschritts und die gesamte Drehung der Riemenspanner,
+die ein Besitzer brauchte, aus dem Thread zur Docking-Kalibrierung des Werkzeugkopfs. Als
+Spanneinstellung zurückgehalten.
 
 ## Was zu tun ist
 
@@ -321,12 +389,18 @@ der Reihe.
 
 **Fehler, der entlang der Reihe wächst: Prüfen Sie die Rechtwinkligkeit.** Führen Sie
 unter 6.9.1 oder 6.9.2 den Assistenten zur Rechtwinkligkeit des Portals aus, nachdem Sie
-wie verlangt die Düsen aus den Docks 1 und 8 genommen haben. Meldet er eine deutliche
-Schiefstellung, richten Sie zuerst das Portal nach der Anleitung rechtwinklig aus, und
-behandeln Sie das Scheitern der Docks als wahrscheinliches Symptom davon. Da der
+wie verlangt die Düsen aus den Docks 1 und 8 genommen haben. Die Versionshinweise zu
+7.0.0 erwähnen den Assistenten nicht, und der Quellcode von 7.0.0 ist noch nicht
+öffentlich; diese Seite hat also nicht bestätigt, dass er sich dort gleich verhält.
+Meldet er eine deutliche Schiefstellung, richten Sie zuerst das Portal nach der
+Anleitung rechtwinklig aus, und behandeln Sie das Scheitern der Docks als
+wahrscheinliches Symptom davon. Da der
 Assistent an denselben Docks misst, ist er keine unabhängige Prüfung der Docks; lässt er
 sich durch ein Ausrichten des Portals nach der Anleitung nicht zufriedenstellen, teilen
-Sie das dem Support mit, zusammen mit den Dock-Werten.
+Sie das dem Support mit, zusammen mit den Dock-Werten. Ist die gemeldete Schiefstellung
+unplausibel groß oder springt sie zwischen den Durchläufen, beobachten Sie, wo der Kopf
+an beiden Enden anhält, bevor Sie das Portal anfassen: An einer Maschine hielten ihn die
+Knöpfe der Docks zu früh auf (`provisional`, siehe oben).
 
 **Keines der beiden Muster:** Arbeiten Sie Riemenspannung, Rechtwinkligkeit des Portals
 und Homing-Kalibrierung durch, und führen Sie dann die Kalibrierungen von Anfang an
@@ -354,8 +428,16 @@ Rechtwinkligkeit des Portals misst und an welcher Grenze er das Bestehen festmac
 am 7. Oktober 2026 veröffentlichte Firmware 6.9.2 ergänzt 6.9.1 um die
 Filament-Voreinstellungen für PVA und BVOH und um nichts weiter, was einen INDX betrifft
 ([Vergleich](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)),
-sodass alles, was hier beim Git-Tag 6.9.1 gelesen wurde, für sie unverändert gilt. Der
-Warntext zur Riemeneinstellung ist der des Druckers selbst. Eine frühere Anfrage
+sodass alles, was hier beim Git-Tag 6.9.1 gelesen wurde, für sie unverändert gilt. Die
+am 15. Oktober 2026 veröffentlichte Firmware 7.0.0 sagt in ihren
+[Versionshinweisen](https://help.prusa3d.com/downloads/core-one-indx) nichts zur
+Dock-Kalibrierung, zur Riemeneinstellung oder zum Assistenten zur Rechtwinkligkeit.
+Prusa hat ihren Quellcode noch nicht veröffentlicht, sodass diese Seite nicht bestätigen
+kann, dass das bei 6.9.1 Gelesene auch unter 7.0.0 gilt. Im
+[Quellcode von 6.9.1-beta](https://github.com/prusa3d/Prusa-Firmware-Buddy/tree/v6.9.1-beta/src/feature)
+fehlt der Assistent zur Rechtwinkligkeit, weshalb eine Rückkehr zu dieser Version nichts
+über ihn aussagen kann. Der Warntext zur Riemeneinstellung ist der des Druckers selbst.
+Eine frühere Anfrage
 ([#5445](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5445)), Docks gegen
 eine an der Maschine gemessene Referenz zu validieren, wurde als nicht geplant
 geschlossen. Der Entwickler gab die Sicht des Teams wieder und hielt es beim derzeitigen
@@ -365,17 +447,21 @@ nachdem die Riemeneinstellung den ursprünglichen Fall erklärt hatte.
 `provisional`: Der Fall der verdrehten Reihe ist eine Maschine; der Besitzer berichtet,
 das Portal nicht nach der Anleitung rechtwinklig ausrichten zu können, ohne die
 Portalkalibrierung scheitern zu lassen, der Support hat es noch nicht gelöst, und die
-Rückfragen des Entwicklers sind unbeantwortet. Die Hinweise zu Riemenspannung und Homing
-stammen von mehreren Besitzern, aber alle aus einem Thread, und die Behebung durch
-Nachspannen zu lockerer Riemen ist der Bericht eines einzelnen Besitzers.
+Rückfragen des Entwicklers sind unbeantwortet. Der von den Knöpfen der Docks
+aufgehaltene Assistent zur Rechtwinkligkeit ist ein Besitzer in einem Thread. Die
+Hinweise zu Riemenspannung und Homing stammen von mehreren Besitzern, aber alle aus einem
+Thread, einschließlich der beiden, die schrittweise nachspannten, bis die Docks
+bestanden, und die Behebung einer gleichmäßigen Verschiebung durch Nachspannen zu
+lockerer Riemen ist der Bericht eines einzelnen Besitzers.
 
 Noch nicht geprüft: ob das Flashen der INDX-Firmware als der erste Start zählt, der den
 Gen2-Standard setzt, was beide Besitzer erklären würde, die ihren Drucker auf Gen 2
 eingestellt vorfanden; ob die Docks 1 und 8 leer waren, als der Besitzer den Assistenten
 ausführte; ob die Schiefstellung, die der Assistent an der Maschine mit der verdrehten
-Reihe meldet, im Portal oder in der Dock-Reihe selbst liegt; und ob eine Core One das
-Werk mit einer Dock-Reihe verlassen hat, die so weit aus der Linie liegt, dass kein
-Rechtwinkligstellen sie ins Fenster bringt.
+Reihe meldet, im Portal oder in der Dock-Reihe selbst liegt; warum die Knöpfe der Docks
+den Kopf an der Maschine zu früh aufhielten, deren Assistent erst ohne die Docks 1 und 2
+bestand; und ob eine Core One das Werk mit einer Dock-Reihe verlassen hat, die so weit
+aus der Linie liegt, dass kein Rechtwinkligstellen sie ins Fenster bringt.
 
 ## Verwandte Seiten
 

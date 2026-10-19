@@ -1,7 +1,7 @@
 ---
 title:        Unload and eject failures — undersized filament guide bore
 confidence:   provisional
-updated:      2026-09-25
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -11,6 +11,8 @@ firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-stuck-with-filament/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/filament-jams-on-first-load/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/1st-time-filament-loading-doesn%cb%8bt-work/
 superseded_by:
 ---
 
@@ -104,9 +106,15 @@ tool printed normally only when no tool changes were involved — with changes, 
 filament jammed or got through only after several attempts.
 
 Another owner in the same thread could never load one of their tools at all. A load
-that never succeeds is not what this mechanism predicts, and a nozzle blocked from the
-factory (see [nozzle hardness](nozzle-hardness.md)) would explain it as well, so it is
-not counted here.
+that never succeeds is not what this mechanism predicts, and a blockage present from the
+tool's very first load would explain it as well, so it is not counted here. Later
+threads describe jams on or soon after a tool's first load: on
+[several new tools at once](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/filament-jams-on-first-load/),
+and on tools that
+[would neither load nor unload](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/1st-time-filament-loading-doesn%cb%8bt-work/),
+with the drive clicking. Most were eventually cleared, by retrying with extra heat or by
+pushing the filament in by hand, and one owner was sent replacements by support. Loading
+fails there too, so they do not fit this mechanism either and are not counted.
 
 A second account has since been relayed from the vendor's Discord, independent of the
 forum thread. It agrees on the mechanism — a finishing pass that brings the sintered
@@ -124,6 +132,8 @@ you could add to this page.
 
 ## Related
 
-- [Nozzle hardness](nozzle-hardness.md) — the other nozzle-adjacent manufacturing
-  defects, including nozzles blocked from the factory
+- [Nozzle hardness](nozzle-hardness.md) — the other nozzle-level shortfall: nozzles
+  that are not hardened as marketed
+- [Tool unlocks or ejects](tool-unlocks-or-ejects.md) — when an unload fails because
+  the tool itself comes out of the head
 - [Who to contact](support-and-warranty-path.md)

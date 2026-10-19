@@ -1,7 +1,7 @@
 ---
 title:        Silicone sock migration over the temperature sensor
 confidence:   provisional
-updated:      2026-09-25
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -14,6 +14,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/filament-blobs-can-tear-the-silicon-sock-on-indx-nozzles/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/missing-layers-5/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/
 superseded_by:
 ---
 
@@ -142,8 +143,9 @@ machine a lump of PCTG stuck to a nozzle tip was dragged through the wiper hard 
 to tear the sock. Spares were not included in the kit. The vendor has since told this page's author
 that socks will soon be sold on its store as a five-pack, at 4.90 USD when announced in
 September 2026, and within days they were listed there, though on backorder as of 19
-September; another owner was told by Prusa's support that socks will be stocked
-there later too; Prusa's shop now lists INDX parts individually,
+September. At least one order has since gone out: one owner reports socks they ordered there with
+nozzles on 8 October 2026 shipping a week later. Another owner was told by Prusa's
+support that socks will be stocked in Prusa's shop later too; Prusa's shop now lists INDX parts individually,
 including a [tool holder with magnets](https://www.prusa3d.com/product/tool-holder-with-magnets-2/) and the
 [INDX filament sensor cable](https://www.prusa3d.com/product/filament-sensor-cable-for-indx/), and sensor boards and silicone wipers are
 reported there too. For this page's author, shipping and import
@@ -196,7 +198,9 @@ uncheckable by a reader, and are marked `provisional` here for that reason. They
 an earlier warning against removing the sock that was the author's inference from
 firmware source and never tested. What Prusa's support said about stocking socks is
 relayed from another owner's replies in a [thread the author started](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/filament-blobs-can-tear-the-silicon-sock-on-indx-nozzles/), and is
-not published by either company.
+not published by either company. That a sock order has since shipped from the vendor's
+store rests on one owner's post in a
+[thread about nozzle shipments](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/).
 
 What would move this to `reported`: a second owner describing the full sequence —
 displaced sock, then overheating, then caking, then failed calibration — in a citable

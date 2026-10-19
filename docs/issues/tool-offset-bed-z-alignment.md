@@ -1,7 +1,7 @@
 ---
 title:        Tool offset calibration fails: bed not aligned in Z
 confidence:   provisional
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -15,6 +15,8 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1-beta/src/marlin_stubs/G162.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://help.prusa3d.com/downloads/core-one-indx
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526
 superseded_by:
 ---
 
@@ -73,7 +75,9 @@ What makes this fault easy to misread:
   apply and the on-screen advice leads nowhere.
 - **It looks like interference.** Failures that come and go, on different tools, on a
   machine that passes its loadcell selftest, are what a noise problem looks like from
-  the outside. The owner fitted a ferrite core on that theory. It made no difference.
+  the outside, and on other machines noise has been the cause, see
+  [loadcell noise](loadcell-emi-noise.md). The owner fitted a ferrite core on that
+  theory. It made no difference. The tip below says how to tell the two apart.
 - **It looks like a bad sensor board.** The sensor board page describes calibration
   failing part way through the tool sequence with the stopping point moving between
   attempts. This presents the same way. The difference is in the log: a sensor board
@@ -83,6 +87,12 @@ What makes this fault easy to misread:
   by more than a fixed margin. A carriage that is racked by less than that prints
   acceptably and never triggers the offer, and tool offset calibration does not level
   the bed at all.
+  [7.0.0](https://help.prusa3d.com/downloads/core-one-indx), published on 15 October
+  2026, lists automatic Z-axis alignment on an uneven bed among its new features. Its
+  notes do not say what triggers it, and its source is not yet published. If it takes
+  the place of that offer, a carriage racked by less than the margin would presumably
+  still be left alone. That is an inference, and no owner has reported on the new
+  behavior yet.
 
 ### What to do
 
@@ -91,7 +101,8 @@ What makes this fault easy to misread:
    distance past the hard stop, so that the Z drive skips against the frame until the
    carriage sits square. That is what resets the alignment. The owner described what
    they did as moving the bed to the bottom of the printer to reset the level, which
-   is the step this procedure performs.
+   is the step this procedure performs. Run it by hand on 7.0.0 too: nothing in its
+   notes says the automatic alignment covers this case.
 2. **Run tool offset calibration again.** On the reported machine the failure was gone
    afterwards.
 3. **If it still fails**, the vendor's uneven bed article says to move the bed down,
@@ -99,13 +110,22 @@ What makes this fault easy to misread:
    After that, capture a serial log and go to the
    [sensor board page](offset-sensor-board-failure.md).
 
-!!! tip "Telling the three apart from the serial log"
-    Three faults share this error code, and the log separates them. No sample at all
-    points at the [sensor board](offset-sensor-board-failure.md). Samples taken and
-    rejected with `angle_after` mean something is giving way under the nozzle:
-    filament on the tip, or the bed carriage. With the tips clean and nothing loaded,
-    that leaves the carriage. Clean and unload before you read anything into the log,
-    because [ooze](oozing-during-probing-and-calibration.md) is rejected the same way.
+!!! tip "Telling them apart"
+    Several faults share this error code, and the serial log separates three of them.
+    No sample at all points at the [sensor board](offset-sensor-board-failure.md).
+    Samples taken and rejected with `angle_after` mean something is giving way under
+    the nozzle: filament on the tip, or the bed carriage. With the tips clean and
+    nothing loaded, that leaves the carriage. Clean and unload before you read anything
+    into the log, because [ooze](oozing-during-probing-and-calibration.md) is rejected
+    the same way.
+    [Noise on the loadcell](loadcell-emi-noise.md) gets touches rejected too, and this
+    page has no log from stock firmware showing which check rejects them, so go by when
+    and how it fails instead. In the reports on that page, noise fails the calibration
+    at print start while it passes from the menu, and the nozzle can be seen stopping
+    short. One owner on stock 6.9.2 ended the failures that rewiring had left by
+    switching the bed's status light off from the menu
+    ([firmware issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526)).
+    `provisional`, a single report.
 
 ## Verification
 
@@ -128,7 +148,15 @@ both at the 6.9.1-beta tag. Neither file changed in the
 [stable 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1-beta...v6.9.1)
 or in [6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2),
 which on the INDX changes only the filament presets, so the reading applies to both.
-What Z Alignment Calibration is for, and the menu path, are from the vendor's
+Prusa has not yet published the source of
+[7.0.0](https://help.prusa3d.com/downloads/core-one-indx), so whether either file
+changed there cannot be checked. Its notes list automatic Z-axis alignment on an uneven
+bed and say nothing about tool offset calibration. The status-light report is from one
+owner on stock 6.9.2 on
+[firmware issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526).
+That issue's opener also logged which check rejected the touches, but on firmware they
+had modified, so this page does not use it. What Z Alignment Calibration is for, and
+the menu path, are from the vendor's
 [uneven bed article](https://help.prusa3d.com/article/uneven-bed-31111-core-one-35111-core-one-l-36111-core-one-indx_856294).
 
 If your machine matches this and Z alignment fixes it, that second report is what

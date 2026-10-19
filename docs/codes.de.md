@@ -1,7 +1,7 @@
 ---
 title:        Fehlercodes der Werkzeug-Offset-Kalibrierung
 confidence:   provisional
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -20,8 +20,13 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://help.prusa3d.com/downloads/core-one-indx
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5548
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518
 superseded_by:
-source_sha:   a7f4b4b32a75191b13b038c885335f7ad4e0ba65062b73356d62c19c9ffa3933
+source_sha:   8b76f1b8f7769127b64b51d15e04fa66c616a3368f91688f306e1327274ebd46
 ---
 # Fehlercodes der Werkzeug-Offset-Kalibrierung
 
@@ -216,7 +221,9 @@ eines Drucks, der mehr als ein Werkzeug verwendet.
    eine Berührung auf der Druckplatte wird vermutlich auf dieselbe Weise verworfen,
    aber bisher hat das niemand gemeldet.
 4. Wenn die Düse sichtbar vor der Druckplatte stehen bleibt, siehe
-   [Wägezellen-Störungen](issues/loadcell-emi-noise.md).
+   [Wägezellen-Störungen](issues/loadcell-emi-noise.md) sowie die beiden
+   Störquellen, die Besitzer für diese Kalibrierung gemeldet haben, unter
+   [36193](#36193).
 
 ## 36193 · 37193 · Abtasten des Sensors fehlgeschlagen {#36193}
 
@@ -233,8 +240,24 @@ Wiederholungen der Abtastung nicht akzeptiert.
 3. Wenn beides sauber ist und nichts geladen ist, führen Sie Z Alignment Calibration
    aus. Das ist der Fehler, der unter
    [Bett in Z nicht ausgerichtet](issues/tool-offset-bed-z-alignment.md) beschrieben ist.
-4. Wenn die Düse vor dem Sensor stehen bleibt, siehe
-   [Wägezellen-Störungen](issues/loadcell-emi-noise.md).
+4. Wenn die Düse vor dem Sensor stehen bleibt oder dieser Schritt aus dem
+   Kalibriermenü gelingt, beim Start eines Drucks aber scheitert, siehe
+   [Wägezellen-Störungen](issues/loadcell-emi-noise.md). Besitzer haben für diese
+   Kalibrierung zwei Störquellen gemeldet. Die eine ist der Extrudermotor. Ein Besitzer
+   hat unter 7.0.0 diesen Fehler beim Druckstart protokolliert und bei bestromtem Motor
+   deutlich mehr Störungen an der Wägezelle gemessen, allerdings nicht während der
+   fehlgeschlagenen Berührung selbst, und festgestellt, dass das Abschalten seines
+   Treibers vor dem Abtasten die Fehler selten machte, eine Umgehung, keine Behebung
+   ([Firmware-Issue 5548](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5548)).
+   Ein separater Bericht unter 6.9.1 führt Störungen im Selbsttest der Wägezelle nach
+   einem Werkzeugwechsel darauf zurück, dass derselbe Motor eingeschaltet bleibt
+   ([Firmware-Issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518)).
+   Die andere ist die Statusleuchte am Bett, die laut einem Besitzer während eines
+   Drucks leuchtet, bei einer Kalibrierung aus dem Menü aber nicht. Mit
+   Standard-Firmware berichten ein Besitzer, der sie im Menü ausgeschaltet hat, und ein
+   weiterer, der zusätzlich Ferritperlen angebracht hat, dass ihre Fehler aufhörten
+   ([Firmware-Issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526),
+   [Thread zur Werkzeug-Offset-Kalibrierung](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/)).
 
 ## 36194 · 37194 · Keine Daten vom Offsetsensor {#36194}
 
@@ -342,10 +365,19 @@ des Quellcodes, der oben verlinkt ist. Codes und Titel der Vergleichsprüfungen 
 aus der
 [Fehlercode-Liste](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml)
 der Standard-Firmware beim selben Tag. Die Meldung eines sauberen Werkzeugs am Kopf
-stammt von einem einzelnen Besitzer, in einem Issue, das offen ist und auf das der
-Hersteller nicht geantwortet hat. Die Anzahl der Versuche stammt aus den
+stammt von einem einzelnen Besitzer. Zwei weitere Besitzer haben inzwischen im selben
+Issue gesagt, dass sie dasselbe sehen, ohne zu sagen, welchen Teil, und der Hersteller
+hat nicht geantwortet. Die Anzahl der Versuche stammt aus den
 Versionshinweisen zu 6.9.1-beta, und für welche Berührung sie gilt, ist aus dem
-Quellcode beim Tag 6.9.1 gelesen.
+Quellcode beim Tag 6.9.1 gelesen. Von den beiden Störquellen unter 36193 ist der
+Extrudermotor für diese Kalibrierung der Bericht eines einzelnen Besitzers, und
+Firmware-Issue 5518 meldet, dass derselbe Motor den Selbsttest der Wägezelle stört;
+dessen Melder vermutet einen Zusammenhang mit Fehlern beim Druckstart, hat ihn aber
+nicht nachgewiesen. Die Statusleuchte stützt sich auf zwei Besitzer mit
+Standard-Firmware, in Firmware-Issue 5526 und in einem Forenthread, die berichten,
+dass das Ausschalten der Leuchte, allein oder zusammen mit Ferritperlen, ihre Fehler
+beendet hat. Der Ersteller jenes Issues hat sie auf einer selbst veränderten Firmware
+getestet, auf die sich diese Seite nicht stützt.
 
 Was bei jedem Code zu tun ist, ist die Lesart dieser Prüfungen durch den Autor. Wo ein
 Abschnitt Sie auf eine andere Seite schickt, gilt deren eigene Stufe. Der Rest wurde
@@ -363,7 +395,15 @@ bereits daran arbeite, ohne Liefertermin. Die Meldung des fehlgeschlagenen Schri
 erschienen am 7. Oktober 2026, nicht enthalten; diese Version
 [ändert am INDX nur](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
 die Filament-Presets: Die Standard-Firmware 6.9.2 zeigt für jeden Fehler auf dieser
-Seite weiterhin 36130 und schreibt dieselben Log-Zeilen wie 6.9.1. Was die
+Seite weiterhin 36130 und schreibt dieselben Log-Zeilen wie 6.9.1.
+[7.0.0](https://help.prusa3d.com/downloads/core-one-indx), am 15. Oktober 2026 auf
+Prusas Download-Seite veröffentlicht, führt die Meldung des fehlgeschlagenen Schritts
+ebenfalls nicht auf: Ihre Versionshinweise sagen nichts zu Fehlern der
+Werkzeug-Offset-Kalibrierung. Ihr Quellcode ist noch nicht veröffentlicht, daher lassen sich ihre Log-Zeilen nicht mit
+dieser Seite abgleichen. Ein Besitzer meldet unter 7.0.0 den Bildschirm 36130 zusammen
+mit der Log-Zeile, die diese Seite 36193 zuordnet
+([Firmware-Issue 5548](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5548)),
+für diesen Fehler sind also zumindest beide unverändert. Was die
 Standard-Firmware am Ende anzeigt, muss nicht den Codes auf dieser Seite entsprechen.
 
 ## Verwandt
