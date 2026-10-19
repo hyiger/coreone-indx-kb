@@ -1,7 +1,7 @@
 ---
 title:        Fehlgeschlagenes Entladen und Auswerfen — zu enge Bohrung der Filamentführung
 confidence:   provisional
-updated:      2026-09-25
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -11,8 +11,10 @@ firmware:     unknown
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-stuck-with-filament/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/filament-jams-on-first-load/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/1st-time-filament-loading-doesn%cb%8bt-work/
 superseded_by:
-source_sha:   16f15fa56d01c8882e0a979a613399f92d6966ea2ce3f585ec9bced61ac02c99
+source_sha:   a3e5e1503a1691e62c40d4f91888f91f7d6f78c8bb9b5c817301b9e29f023630
 ---
 # Fehlgeschlagenes Entladen und Auswerfen — zu enge Bohrung der Filamentführung
 
@@ -114,8 +116,16 @@ erst nach mehreren Versuchen durch.
 
 Ein anderer Besitzer im selben Thread konnte eines seiner Werkzeuge nie laden. Ein
 Laden, das nie gelingt, ist nicht das, was dieser Mechanismus erwarten lässt, und eine
-ab Werk verstopfte Düse (siehe [Düsenhärte](nozzle-hardness.md)) würde es ebenso gut
-erklären; es wird hier daher nicht gezählt.
+Verstopfung, die schon beim allerersten Laden des Werkzeugs bestand, würde es ebenso gut
+erklären; es wird hier daher nicht gezählt. Spätere Threads beschreiben Verklemmungen
+beim oder kurz nach dem ersten Laden: an
+[mehreren neuen Werkzeugen zugleich](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/filament-jams-on-first-load/)
+und an Werkzeugen, die sich
+[weder laden noch entladen ließen](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/1st-time-filament-loading-doesn%cb%8bt-work/),
+während der Antrieb klickte. Die meisten ließen sich schließlich lösen, durch erneute
+Versuche mit zusätzlicher Wärme oder indem das Filament von Hand nachgeschoben wurde, und
+ein Besitzer bekam vom Support Ersatz geschickt. Auch dort schlägt das Laden fehl; sie
+passen also ebenfalls nicht zu diesem Mechanismus und werden nicht gezählt.
 
 Inzwischen wurde ein zweiter Bericht aus dem Discord des Herstellers weitergegeben,
 unabhängig vom Forums-Thread. Er stimmt im Mechanismus überein — ein
@@ -136,6 +146,8 @@ Nützlichste, was Sie dieser Seite hinzufügen können.
 
 ## Verwandte Seiten
 
-- [Düsenhärte](nozzle-hardness.md) — die übrigen düsennahen Fertigungsfehler,
-  einschließlich ab Werk verstopfter Düsen
+- [Düsenhärte](nozzle-hardness.md) — das andere Manko an der Düse: Düsen, die nicht wie
+  beworben gehärtet sind
+- [Werkzeug entriegelt sich oder fällt aus dem Kopf](tool-unlocks-or-ejects.md) — wenn
+  das Entladen scheitert, weil das Werkzeug selbst aus dem Kopf fällt
 - [Wen Sie kontaktieren](support-and-warranty-path.md)

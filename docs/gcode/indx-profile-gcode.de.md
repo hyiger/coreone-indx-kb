@@ -1,7 +1,7 @@
 ---
 title:        Kommentierter G-Code für Start, Schichtwechsel und Werkzeugwechsel
 confidence:   measured
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -24,8 +24,15 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
   - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/49
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.12.ini
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/index.idx
+  - https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/libslic3r/GCode/GCodeProcessor.cpp
+  - https://help.prusa3d.com/downloads/core-one-indx
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.10.1/ProjectOptions.cmake
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.10.1/src/gui/MItem_hardware.hpp
 superseded_by:
-source_sha:   1f0017fa59bc5acc40d07cabf1f4d900c084f1537436d9ce0add6799d2d69343
+source_sha:   0e8e14bf77172f20e1c690d71fe7c85bfaf206bee570101aa6e24d34e3910da8
 ---
 # Kommentierter G-Code für Start, Schichtwechsel und Werkzeugwechsel
 
@@ -44,16 +51,16 @@ source_sha:   1f0017fa59bc5acc40d07cabf1f4d900c084f1537436d9ce0add6799d2d69343
     genannte Version gegen Ihre — das Profil von 6.6.3 wich an mehreren Stellen von
     diesem ab.
 
-!!! warning "Für 6.9.0 geschrieben; die Firmware ist inzwischen bei 6.9.2"
+!!! warning "Für 6.9.0 geschrieben; die Firmware ist inzwischen bei 7.0.0"
     Firmware 6.9.1 erschien am 25. September 2026 als stabile Version, 6.9.2 folgte
-    am 7. Oktober. Die Blöcke auf dieser Seite sind weiterhin das Profil von 6.9.0 und
-    wurden bewusst nicht anhand der Release Notes von 6.9.1 angepasst. Prusas
+    am 7. Oktober und 7.0.0 am 15. Oktober. Die Blöcke auf dieser Seite sind weiterhin
+    das Profil von 6.9.0 und wurden bewusst nicht an spätere Versionen angepasst. Prusas
     Profilpaket 2.5.10 vom 17. September liefert diese Blöcke unverändert aus. Ebenso
     2.5.11, das am 2. Oktober, eine Woche nach 6.9.1, in Prusas Profil-Repository
     erschien: Alle fünf INDX-Blöcke sind mit denen aus 2.5.10 identisch, und die
-    `M115`-Zeile nennt weiterhin 6.9.0. Am 8. Oktober war 2.5.11 weiterhin das neueste
-    Paket. Ein späteres kann die Blöcke ändern; weicht das Profil in Ihrem Slicer von
-    dem hier gezeigten ab, ist Ihres das aktuelle.
+    `M115`-Zeile nennt weiterhin 6.9.0. **Paket 2.5.12 vom 15. Oktober ist das erste, das
+    sie ändert**; siehe den Hinweis unten. Weicht das Profil in Ihrem Slicer von dem hier
+    gezeigten ab, ist Ihres das aktuelle.
 
     Die Firmware-Seite wurde gegen den öffentlichen Quellcode geprüft, durch einen
     Vergleich [der Release-Tags 6.9.0 und 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1).
@@ -74,6 +81,64 @@ source_sha:   1f0017fa59bc5acc40d07cabf1f4d900c084f1537436d9ce0add6799d2d69343
     fügt es die PVA- und BVOH-Filament-Presets des Druckers hinzu, die die Release Notes
     von 6.9.1 angekündigt hatten, die im Build dieser Version aber fehlten, und
     berührt keinen G-Code-Handler.
+
+    7.0.0 ist nicht auf dieselbe Weise geprüft. Prusa hatte den Quellcode bis zum
+    18. Oktober nicht auf GitHub veröffentlicht, daher ist jede Befehlserläuterung hier
+    nur bis einschließlich 6.9.2 verifiziert. Zwei Einträge in den
+    [Versionshinweisen](https://help.prusa3d.com/downloads/core-one-indx) liegen nahe an
+    dieser Seite, und beide sind als Übernahmen aus früheren Versionen gekennzeichnet.
+    Das schnellere Anheben von Z beim Parken, gekennzeichnet mit 6.9.1 und 6.10.2, ist
+    die `G27`-Änderung, die schon 6.9.1 brachte. Die verbesserte Reinigung mit dem Nozzle
+    Wiper, gekennzeichnet mit 6.10.1, stammt aus der Firmware-Linie des XL, in der
+    [6.10.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1)
+    den Nozzle Wiper als Hardware des XL+ einführte. Laut einem Kommentar im
+    [Quellcode des Hardware-Menüs](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.10.1/src/gui/MItem_hardware.hpp)
+    dieser Version heißt der Abstreifer intern Nozzle Cleaner Lite, und in ihren
+    [Build-Optionen](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.10.1/ProjectOptions.cmake)
+    ist das eine von der Reinigungsstation des INDX getrennte Funktion, die für den INDX
+    nicht gebaut wird. Keiner der beiden Einträge ist neu in 7.0.0. Nur ein neuer Eintrag
+    nennt den Düsenreiniger: Lade- und Entladepositionen nutzen nun dessen kalibrierten
+    Versatz. Er betrifft die eigenen Lade- und Entladebewegungen der Firmware; ob er etwas
+    an dem ändert, was die `G12`-Zeilen unten tun, lässt sich erst prüfen, wenn der
+    Quellcode vorliegt.
+
+!!! note "Paket 2.5.12 hat zwei dieser Blöcke geändert, nachdem diese Seite entstand"
+    Prusas Profilpaket 2.5.12, eingecheckt am 15. Oktober 2026, dem Tag, an dem Firmware
+    7.0.0 erschien, nennt in seinem
+    [Änderungsprotokoll](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/index.idx)
+    ein überarbeitetes INDX-Werkzeugwechsel-Skript und einen neuen
+    Firmware-Versionshinweis. Ein Vergleich
+    [der Datei](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.12.ini)
+    mit 2.5.11 ergibt:
+
+    - **Start:** Nur die `M115`-Zeile hat sich geändert. Sie nennt jetzt 6.9.2, als
+      `M115 U6.9.2+16336`, statt des unten gezeigten 6.9.0, und nicht 7.0.0.
+    - **Werkzeugwechsel:** an drei Stellen geändert, keine davon im Spülmuster.
+        - Die Park-Zeile mit `G27` und vier Filamentbewegungen rund um den Wechsel sind
+          jetzt von Kommentarzeilen `;EXCLUDE_E_START` und `;EXCLUDE_E_END` eingefasst:
+          der Schub, der ein bereits vorgefülltes Werkzeug verriegelt, der Schub vor den
+          Wischturm-Bewegungen und, auf beiden Pfaden, eine neue Bewegung, die
+          zurückgibt, was `G27 R` beim Parken zurückgezogen hat. Der G-Code-Prozessor von
+          PrusaSlicer liest diese Markierungen nur aus Kommentarzeilen und lässt die
+          Extruderbewegungen dazwischen aus seiner Zählung des Filamentverbrauchs heraus
+          ([Quellcode von PrusaSlicer 2.9.6](https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/libslic3r/GCode/GCodeProcessor.cpp)).
+          In 2.5.11 fehlte dem einzigen vorhandenen Paar, um den Verriegelungsschub, das
+          Semikolon; es war also kein Kommentar, und der Prozessor reagierte nicht darauf.
+        - Das Vorschieben vor dem Spülen ist bei einem bereits vorgefüllten Werkzeug in
+          zwei Schritte geteilt: zuerst die Länge, die `G27 R` beim Parken zurückgenommen
+          hat, dann der Rest. Die Summe ist unverändert; nur der erste Teil liegt
+          innerhalb der Markierungen. Ein noch nicht vorgefülltes Werkzeug behält das
+          einzelne Vorschieben. Der Wischturm-Pfad teilt sein Vorschieben auf dieselbe
+          Weise.
+        - Der Rückzug nach dem Spülen auf dem Pfad über die Reinigungsstation fügt das
+          zusätzliche `+ 0.04` nicht mehr hinzu; siehe die Anmerkung dazu im Start-Block
+          weiter unten. Der Rückzug im Start-Block selbst fügt es weiterhin hinzu.
+    - **Vor dem Schichtwechsel, nach dem Schichtwechsel und Ende:** unverändert.
+
+    Die Blöcke unten sind weiterhin der Text aus 2.5.11, und die Auszüge zum
+    Werkzeugwechsel stimmen mit 2.5.12 nicht mehr überein. Sie wurden hier nicht neu
+    geschrieben: Diese Seite gibt ein Profil wortgetreu wieder und kommentiert es, und eine
+    neue Wiedergabe wäre eine neue Fassung der Seite, keine Änderung daran.
 
 ## Worum es sich handelt
 
@@ -525,13 +590,16 @@ zurückgesetzt wird, damit die Änderung nicht mitten in einer Bewegung greift.
 
 Der Rückzug nach dem Spülen zieht etwas mehr Filament zurück, als die Zeile danach in
 `e_retracted` als zurückgezogen vermerkt, und nichts im ausgelieferten Profil schiebt
-die Differenz wieder vor. Der Pfad über die Reinigungsstation im Werkzeugwechsel-Block
-macht es genauso. Das ist Absicht. Auf die Frage im Profil-Repository von Prusa, wozu
-der zusätzliche Rückzug dient, antwortete ein Profil-Betreuer von Prusa am 7. Oktober
-2026, er baue nach dem Spülen etwas mehr Druck ab und sei zusammen mit dem Abschalten
-von Pressure Advance für das Spülen eingeführt worden. In derselben Antwort hieß es,
-Prusa erwäge, ihn nach weiteren Tests zu entfernen; ein späteres Paket könnte ihn also
-streichen ([Issue 49](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/49)).
+die Differenz wieder vor. Bis Paket 2.5.11 machte es der Pfad über die
+Reinigungsstation im Werkzeugwechsel-Block genauso. Das ist Absicht. Auf die Frage im
+Profil-Repository von Prusa, wozu der zusätzliche Rückzug dient, antwortete ein
+Profil-Betreuer von Prusa am 7. Oktober 2026, er baue nach dem Spülen etwas mehr Druck ab
+und sei zusammen mit dem Abschalten von Pressure Advance für das Spülen eingeführt
+worden. In derselben Antwort hieß es, Prusa erwäge, ihn nach weiteren Tests zu entfernen
+([Issue 49](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/49)).
+Paket 2.5.12 vom 15. Oktober hat ihn inzwischen aus dem Werkzeugwechsel-Block gestrichen,
+in diesem Start-Block aber beibehalten; das Issue selbst hatte keine weitere Antwort
+erhalten und war am 18. Oktober noch offen.
 
 !!! important "Die letzte interessante Zeile ist `{tool_init[initial_tool] = 1}`"
     Damit wird das Startwerkzeug als bereits gereinigt und vorgefüllt markiert. Nichts in
@@ -639,6 +707,9 @@ beheizten Kammer in seinem Dock steht, ist das Risiko am größten, dass das Fil
 weich wird.
 
 ## Werkzeugwechsel
+
+*Die Auszüge in diesem Abschnitt sind der Text aus 2.5.11. Paket 2.5.12 ändert diesen
+Block an mehreren Stellen; der Hinweis oben auf dieser Seite führt sie auf.*
 
 ```gcode
   G1 F{speed_tc}
@@ -896,7 +967,10 @@ Fassung von 6.6.3 hatte im Ausdruck für die Antasttemperatur einen falsch gesch
 Variablennamen, verwendete einen anderen Offset für PC und PA, ließ die globale Variable
 `low_temp_types` weg, von der der Block nach dem Schichtwechsel abhängt, und enthielt
 Befehle für die Kammerbeleuchtung, die diese Fassung weglässt. Weicht Ihre Firmware von der
-Version im Front Matter ab, rechnen Sie mit Unterschieden.
+Version im Front Matter ab, rechnen Sie mit Unterschieden. Das Profil ändert sich zudem
+zwischen Paketen nach eigenem Zeitplan: 2.5.12 hat den Werkzeugwechsel-Block überarbeitet
+und nennt 6.9.2, nicht das am selben Tag erschienene 7.0.0, wie der Hinweis oben
+beschreibt.
 
 ## Verwandte Seiten
 

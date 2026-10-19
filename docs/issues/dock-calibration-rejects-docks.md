@@ -1,13 +1,13 @@
 ---
 title:        Dock calibration rejects some or all docks
 confidence:   reported
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One, Core One+, Core One+ (Gen 2)
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0, 6.9.1-beta, 6.9.1
+firmware:     6.9.0, 6.9.1-beta, 6.9.1; 6.9.2 by source comparison; checked against the 7.0.0 release notes
 sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5444
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5445
@@ -31,6 +31,10 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/gantry-squaring-failing/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5520
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/tree/v6.9.1-beta/src/feature
+  - https://help.prusa3d.com/downloads/core-one-indx
 superseded_by:
 ---
 
@@ -42,9 +46,10 @@ superseded_by:
     every dock in one report, and in the other a Y reading that would not move.
     Correcting it, directly or through the printer variant, fixed both. That part is
     `reported`. A dock row that fails only at one end, blamed on gantry skew, comes from
-    one unresolved machine. The slack-belt fix rests on one owner, and the belt and
-    homing advice for a failing first dock comes from a single forum thread. Those parts
-    are `provisional` and are marked where they appear.
+    one unresolved machine, and a squareness wizard held back by the docks themselves
+    from one other. The slack-belt fix for a uniform shift rests on one owner, and the
+    belt and homing advice for a failing first dock comes from several owners, all in a
+    single forum thread. Those parts are `provisional` and are marked where they appear.
 
 ## Summary
 
@@ -65,7 +70,11 @@ cannot adapt to a machine whose docks sit outside it. So when docks are rejected
   straight but rotated against the X axis. A Prusa developer suspects an out-of-square
   gantry; the one owner with this pattern has not resolved it. `provisional`.
 - **The first dock fails and nothing else looks wrong.** Owners in one thread point at
-  slack belts, gantry squareness and homing calibration. `provisional`.
+  slack belts, gantry squareness and homing calibration. Two later owners in the same
+  thread got dock calibration to pass by tightening the belts a step at a time between
+  attempts, though neither described a first-dock-only failure: one found every dock
+  off, after a stuck tool and repeated homing failures (compare the slack-belt case in
+  the first bullet). `provisional`.
 
 ## Error codes that lead here
 
@@ -241,6 +250,37 @@ docks, rather than one fixed Y, so a uniformly rotated row could pass while a si
 displaced dock would still stand out. That request is open and labeled as an INDX
 enhancement, with no commitment from Prusa.
 
+### The squareness wizard held back by the docks
+
+`provisional` — one owner, one thread.
+
+A second report on the squareness wizard comes from another machine, and there the docks
+themselves were plainly involved. On an original Core One fitted with the Gen 2 and INDX
+upgrades in one go, the wizard failed with a skew many times beyond its limit, and one
+that changed widely from run to run ([gantry squaring failing](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/gantry-squaring-failing/)).
+Watching it, the owner saw the head stop short on the left, against the spring-loaded
+buttons of docks 1 and 2, while on the right it traveled all the way in, every time.
+Neither button felt stiffer than the one on dock 8, and nothing else was in the way.
+With docks 1 and 2 taken off, the wizard passed.
+
+That fits how the wizard measures, described above: it takes wherever the head stalls as
+that dock's position, so anything that holds the head back on one side reads as skew.
+This is the page's reading of the 6.9.1 source alongside one owner's account; why the
+buttons stopped the head on that machine was not established, and whether anything
+similar played a part on the rotated-row machine is not known.
+
+Another owner suggested checking that the plate the docks are mounted on sits flush at
+both ends, and swapping docks 1 and 8 to see whether the fault moves with the dock. The
+reporter did not say whether they tried either.
+
+After the belts were retuned, the same machine went on to fail the homing calibration
+with an early endstop trigger, a separate homing fault tracked in
+[#5520](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5520). The owner cleared
+that by going back to 6.9.1-beta. That release predates the squareness wizard, so the
+downgrade settled the homing fault but says nothing about the wizard's reading. When
+this page was updated, #5520 was still open, and two owners there reported the same
+homing fault on 7.0.0.
+
 ### The first dock fails, nothing else obviously wrong
 
 `provisional` — several owners, but all in one forum thread.
@@ -261,8 +301,26 @@ collects the advice owners gave and the fixes that worked:
 
 One owner posted on 30 September 2026 that five attempts at retuning the belts,
 realigning the gantry and rerunning the homing calibration had not brought the first
-dock's Y into range, with no reply yet. They do not say whether they checked the belt
-setting raised earlier in the same thread.
+dock's Y into range. They do not say whether they checked the belt setting raised
+earlier in the same thread, and they have not posted since.
+
+The next posts, on 11 October 2026, describe a slower way to tighten. An owner whose dock
+calibration had gone wrong across the board, after a tool got stuck and homing kept
+failing, tightened both belt tensioners a little at a time, rerunning dock calibration
+on a single tool after each step until it passed. They caution that the answer might
+instead lie in loosening, and warn against over-tightening. A second owner then got all
+eight docks through the same way. Neither describes a failure confined to the first
+dock: the first had every dock off (compare the slack-belt account above, though they
+give no direction or amount), and the second does not say how theirs failed, so this
+does not show that a lone failing first dock yields to the same treatment. That is
+a way of searching for a tension, not a target for one, and it is still one thread:
+`provisional`. Prusa's belt-tension guide remains the reference, and since tension
+feeds into the other calibrations, rerunning them from the start once the docks pass is
+this page's suggestion; neither owner says whether they did.
+
+TODO(verify): the size of each tightening step and the total tensioner rotation one
+owner needed, from the toolhead docking calibration thread. Withheld as a tensioning
+setting.
 
 ## What to do
 
@@ -283,11 +341,16 @@ calibrations from the start, since the change resets several of them. If the set
 was already right, belt tension is next.
 
 **Error growing along the row: check squareness.** On 6.9.1 or 6.9.2, run the gantry
-squareness wizard, with the nozzles taken out of docks 1 and 8 as it asks. If it reports
-significant skew, square the gantry by the guide first and treat the dock failure as
+squareness wizard, with the nozzles taken out of docks 1 and 8 as it asks. The 7.0.0
+release notes do not mention the wizard, and the 7.0.0 source is not yet public, so
+this page has not confirmed that it behaves the same there. If it reports significant
+skew, square the gantry by the guide first and treat the dock failure as
 most likely a symptom of that. Because the wizard measures against those same docks, it
 is not an independent check on them; if squaring the gantry by the guide will not
-satisfy it, tell support that, along with the dock values.
+satisfy it, tell support that, along with the dock values. If the skew it reports is
+implausibly large, or jumps between runs, watch where the head stops at each end before
+touching the gantry: on one machine the dock buttons were stopping it short
+(`provisional`, see above).
 
 **Neither pattern:** work through belt tension, gantry squareness and homing
 calibration, then rerun the calibrations from the start rather than retrying the dock
@@ -312,7 +375,14 @@ same source, as do how the gantry squareness wizard measures and the limit it pa
 against. Firmware 6.9.2, released on 7 October 2026, adds the PVA and BVOH filament
 presets to 6.9.1 and nothing else that reaches an INDX
 ([compare](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)),
-so everything read here at the 6.9.1 tag holds for it unchanged. The warning text for
+so everything read here at the 6.9.1 tag holds for it unchanged. Firmware 7.0.0,
+published on 15 October 2026, says nothing about dock calibration, the belt setting or
+the squareness wizard in its
+[release notes](https://help.prusa3d.com/downloads/core-one-indx). Prusa has not yet
+published its source, so this page cannot confirm that what was read at 6.9.1 still
+holds on 7.0.0. The squareness wizard is absent from the
+[6.9.1-beta source](https://github.com/prusa3d/Prusa-Firmware-Buddy/tree/v6.9.1-beta/src/feature),
+which is why a downgrade to that release cannot speak to it. The warning text for
 the belt setting is the printer's own. An earlier
 request ([#5445](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5445)) to
 validate docks against a reference measured on the machine was closed as not planned.
@@ -322,16 +392,19 @@ explained the original case.
 
 `provisional`: the rotated-row case is one machine; the owner reports being unable to
 square the gantry by the guide without breaking gantry calibration, support has not yet
-resolved it, and the developer's follow-up questions are unanswered. The belt-tension
-and homing advice comes from several owners, but all in one thread, and the slack-belt
-fix is a single owner's account.
+resolved it, and the developer's follow-up questions are unanswered. The squareness
+wizard held back by the dock buttons is one owner in one thread. The belt-tension
+and homing advice comes from several owners, but all in one thread, including the two
+who tightened in steps until the docks passed, and the slack-belt fix for a uniform
+shift is a single owner's account.
 
 Still unverified: whether flashing the INDX firmware counts as the first run that
 applies the Gen2 default, which would explain both owners who found their printer set
 for Gen 2; whether docks 1 and 8 were empty in the owner's wizard runs; whether the
 skew the wizard reports on the rotated-row machine lies in the gantry or in the dock row
-itself; and whether any Core One left the factory with a dock row far enough out of line
-that no squaring brings it inside the window.
+itself; why the dock buttons stopped the head short on the machine whose wizard passed
+only with docks 1 and 2 removed; and whether any Core One left the factory with a dock
+row far enough out of line that no squaring brings it inside the window.
 
 ## Related
 

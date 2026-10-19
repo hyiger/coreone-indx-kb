@@ -1,7 +1,7 @@
 ---
 title:        Tool unlocks or ejects from the head
 confidence:   provisional
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -13,27 +13,37 @@ sources:
   - https://forum.prusa3d.com/forum/postid/804782/
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/filament-stuck-with-asa-pla-support/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-toolhead-looses-tool-when-unloading-filament-and-blobs-after-every-colorchange/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/flex-filament-stuck-and-cannot-dock-tool/
+  - https://help.prusa3d.com/article/nozzle-tool-remains-attached-to-the-print-head-core-one-indx_1077657
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5532
+  - https://help.prusa3d.com/downloads/core-one-indx
 superseded_by:
 ---
 
 # Tool unlocks or ejects from the head
 
-!!! warning "Two ejection reports, one teardown, and two stuck-tool reports with different suspects"
-    Two owners describe the active tool coming loose from the toolhead. One of them
-    opened the head and found a physical cause on their own machine. That is strong
-    evidence for that unit and says nothing yet about how common the defect is. A third
-    owner in the same thread reports the opposite fault, a tool that will not release,
-    and a fourth, in a separate thread, had a tool stuck in the head with its filament,
-    not the lock, as the suspect. `provisional`.
+!!! warning "Three ejection reports in two threads, one teardown, and stuck-tool reports with different suspects"
+    Three owners describe the active tool coming loose from the toolhead, two of them in
+    one thread and the third in a separate one. One opened the head and found a physical
+    cause on their own machine. The owner in the separate thread opened theirs too and
+    believes the lock is not closing fully, but names no damaged part. The teardown is
+    strong evidence for that one unit and says nothing yet about how common the defect
+    is. Other owners report the opposite fault, a tool that will not release: one, in
+    the first thread, suspects the lock, and owners in two further threads suspect
+    filament caught in the drive. `provisional`.
 
 ## Summary
 
 On some INDX toolheads the active tool works loose from the head — sometimes dropping
 out entirely — when the extruder runs backward. It tends to strike during filament
-loading and nozzle cleaning, where a retraction follows forward extrusion, and it can
-leave the printer unable to recover by itself. One owner traced it to a gear in the
-toolhead's locking train with its last tooth missing or malformed. The remedy they
-expect is a replacement gear or a replacement toolhead from the vendor.
+loading, unloading and nozzle cleaning, where a retraction follows forward extrusion,
+and it can leave the printer unable to recover by itself. One owner traced it to a gear
+in the toolhead's locking train with its last tooth missing or malformed. The remedy
+they expect is a replacement gear or a replacement toolhead from the vendor. Another
+owner, in a separate thread, sees the same release in their own toolhead and also ties
+it to blobs after every tool change; they say support confirmed a toolhead problem and
+offered a replacement head.
 
 ## Detail
 
@@ -44,7 +54,12 @@ motor. The owners' understanding is that a magnet at the dock shifts part of tha
 gearing, so reversing the extruder there releases the tool instead of retracting
 filament — and that away from a dock, reversing should only ever retract. That is how
 the owners in the thread describe it, not vendor documentation, but it is what makes
-the failure below make sense.
+the failure below make sense. Prusa's
+[manual-release article](https://help.prusa3d.com/article/nozzle-tool-remains-attached-to-the-print-head-core-one-indx_1077657)
+does bear out part of it: the release works only with the tool lined up at its dock or
+with a magnet at the front notch where the dock's magnet acts, and away from there,
+turning the mechanism can end up driving just the extruder motor while the tool stays
+locked. The gear, cam and pin detail remains the owners' account.
 
 ### What went wrong on one machine
 
@@ -73,9 +88,31 @@ They have not opened their toolhead, so whether this is the same gear defect is
 unknown. A pattern that depends on the material is not what a missing gear tooth alone
 would predict, and this page does not assume the two share a cause.
 
+### A separate thread: a second toolhead opened
+
+In a [separate thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-toolhead-looses-tool-when-unloading-filament-and-blobs-after-every-colorchange/),
+called the unloading thread on the rest of this page, an owner who converted their
+Core One to the INDX reports the tool often coming out of the head during filament
+unloading. They took one side of the toolhead off and filmed the mechanism. Their
+reading is that the lock never closes all the way: the gear at the back does not turn
+far enough, and the pin that runs to the front does not rise far enough. In one of their
+videos, drawing the filament back released the tool instead of moving the filament —
+the same trigger the first owner reproduced by turning the E axis by hand.
+
+They add a quieter symptom. Multi-color prints come out with blobs right after every
+tool change, and they put that down to the same fault: the short retraction after the
+newly picked-up tool is primed briefly loosens the tool instead of pulling the filament
+back, so the filament is barely retracted, if at all. That link is their interpretation
+of their own videos; nobody else has reported it.
+
+They do not report a missing or deformed tooth, or any other damaged part. A Prusa staff
+member on the forum suggested taking the videos to support. A week after the first post
+the owner wrote that support had agreed the head was at fault and offered a new one,
+which they were still waiting for on 18 October 2026.
+
 ### A third owner, the opposite fault
 
-Later in the same thread a third owner reports the reverse: the tool stays locked in the
+Later in the first owner's thread a third owner reports the reverse: the tool stays locked in the
 head when it should be released at its dock. Their suspect, which they flag as a guess,
 is the small wire that the dock magnet moves. On their head it seems to slip out of the
 notch it should sit in and ride up onto the gear, and it has a lot of side-to-side play.
@@ -92,7 +129,7 @@ is not the symptom the rest of this page describes. It is recorded here because 
 involves the same locking train — the first owner, too, had tools that would not
 release as well as tools that fell out.
 
-### A separate thread: a tool stuck in the head, filament suspected
+### Separate threads: a tool stuck in the head, filament suspected
 
 In a [separate thread](https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/filament-stuck-with-asa-pla-support/),
 an owner printing ASA with PLA as the support material reports that after a few dozen
@@ -104,11 +141,26 @@ changes, softening the PLA high up in the tool. The PLA was already a heat-resis
 grade. The owner asked whether PETG would do better as the support, and the one reply
 agreed; no outcome has been posted.
 
-That is the third owner's symptom, a tool that will not leave the head, with a
-different suspect, and nobody opened the head. Whether the tangled strand is what held
-the tool in, or followed from a release that failed for another reason, is not
-established. It is recorded because it points to a cause outside the locking train
-that is cheap to rule out, particularly on mixed-material prints in a warm chamber.
+In [another thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/flex-filament-stuck-and-cannot-dock-tool/),
+an owner printing flexible filament heard the drive start clicking as extrusion
+stopped, and the tool would then not dock. They believe the filament had wound around
+the gears and was holding the tool in the head; running the extruder backward only
+produced more clicking. They freed it with Prusa's published manual-release procedure (see "What
+to do" below). A second owner in that thread hit the same fault with an ordinary TPU.
+The published steps did not free their tool at first; with help from Prusa's support
+chat they did, and they found the very fine screwdriver they had tried first was too
+small to turn the mechanism. They add that the head's side panels come off, which gives
+access to pull tangled filament out of the gears.
+
+Both are the third owner's symptom, a tool that will not leave the head, with a
+different suspect. Nobody opened a head and confirmed that the filament was what held
+the tool, and only in the ASA case was the tangle actually seen; there it could equally
+have followed from a release that failed for another reason. Because the release is
+driven from the extruder motor through the same gearing (see above), filament jammed in
+the drive blocking it is plausible, but that is inference. The pairing is recorded
+because it now comes from two unrelated threads and points to a cause outside the
+locking train that is cheap to rule out, particularly with flexible filament or with
+mixed materials in a warm chamber.
 
 ### Recovery can loop
 
@@ -118,22 +170,48 @@ without knowing which one, and went straight back to trying to dock it — which
 them away from the "Release Stuck Tool" menu item. When they did try that item, the
 gears ground and nothing moved.
 
+A [firmware bug report](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5532)
+filed by the second owner in the flexible-filament thread, on the day of their stuck
+tool, describes another dead end. After an unload had failed, a second unload attempt
+asked for the filament type and then sat waiting for the nozzle to heat, which it never
+did; the tool could not be parked either. It was filed against 6.9.2 and was still open
+on 18 October 2026. The release notes for firmware 7.0.0 list no change to this, to the
+docking retry loop, or to the "Release Stuck Tool" item.
+
 ## What to do
 
 **Contact support early, and film it.** A tool releasing when the extruder is turned
-backward by hand is the kind of evidence that settles the question. The owner here had
-an escalated ticket open well before finding the cause. See
+backward by hand is the kind of evidence that settles the question. The first owner had
+an escalated ticket open well before finding the cause. The owner in the unloading
+thread contacted support and, by their account, came away with a confirmed toolhead
+problem and a replacement offer. See
 [who to contact](support-and-warranty-path.md).
 
 **Expect a hardware fix.** No firmware or settings change can put a tooth back on a
 gear. The realistic outcomes are a replacement gear with instructions for taking the
-toolhead apart, or a replacement toolhead. The third owner above, whose fault is the
-opposite one (a tool that stays locked), says Prusa's live chat told them a replacement
-head would be sent. In a [later thread on another topic](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/)
+toolhead apart, or a replacement toolhead; the owner in the unloading thread was offered
+the latter. The third owner above, whose fault is the opposite one (a tool that stays
+locked), says Prusa's live chat told them a replacement head would be sent. In a [later thread on another topic](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/)
 they say the new head reached them a few days after a short online chat and that they
 fitted it. They describe the stuck tool, which meant taking parts off to free it each
 time, in the past tense, but do not say in so many words that the new head cured it. It
 remains one owner's account of their own case, and it names no defect.
+
+The [release notes for firmware 7.0.0](https://help.prusa3d.com/downloads/core-one-indx),
+dated 15 October 2026, list nothing on the tool lock. They do move the filament load and
+unload positions to the calibrated nozzle cleaner offset. The notes do not connect that
+to this fault, and no owner has yet said whether it changes the ejections near the wiper
+that the second owner describes.
+
+**If a tool is stuck in the head, use the vendor's manual release.** Prusa publishes a
+[procedure for a tool that stays attached](https://help.prusa3d.com/article/nozzle-tool-remains-attached-to-the-print-head-core-one-indx_1077657).
+In outline: with the printer off, unplugged and cooled, take off the print fan and its
+shroud, bring the head to the tool's dock, and turn the release mechanism with a thin
+flat screwdriver through the access hole at the center behind the fan, not the rectangular
+side hole; a magnet held at the front notch where the dock's magnet acts can help.
+Follow the article itself rather than this summary. The article warns that forcing a
+screwdriver that is too large can damage the mechanism; one of the flexible-filament
+owners above found that one that is too fine will not turn it either.
 
 **Ask before you open the head.** Dismantling the toolhead may complicate a warranty
 claim the vendor would otherwise honor. And rule out the simpler reasons a tool comes
@@ -142,13 +220,15 @@ loose first: a plate or wiper fouling the docks, covered under
 calibration, covered under
 [tool detection and park failures](tool-detection-ringdown-decay.md). If a tool will
 not leave the head, look at the filament where the extruder drive grips it before
-suspecting the lock; that rests on the single report from the separate thread above.
+suspecting the lock; that rests on the two filament reports in separate threads above.
 
 ## Verification
 
-`provisional` — three owners in one thread, and a physical cause found on one machine
-only; one owner reports only the opposite fault, a tool that will not release; a fourth
-owner, in a separate thread, reports a stuck tool and suspects the filament.
+`provisional` — three owners report the tool coming loose, two in one thread and one in
+a separate thread; a physical cause was found on one machine only, and the owner in the
+separate thread, who also opened their head, names no damaged part. One owner reports
+only the opposite fault, a tool that will not release; owners in two further threads
+report a stuck tool and suspect the filament.
 
 The teardown is first-hand and specific: a named component, a described failure, and a
 reproduction that isolates the mechanism by driving the extruder by hand. For that one
@@ -158,17 +238,34 @@ how widespread the defect is — one bad gear, or a batch.
 The second owner's report shares the symptom but not, so far, the cause, and its
 PLA-only pattern is a reason for caution before treating the two as one fault.
 
-The third owner's report comes from the same thread, describes the opposite fault, and
-suspects a different part, so it does not bear on the tier. The replacement head they
+The unloading thread comes closest to the bar below without meeting it. It is a second
+opened toolhead, in a different thread, from an owner unconnected to the first, with the
+same trigger — the extruder reversing away from a dock — and the same reading of the
+mechanism, a lock that never closes fully. But no missing or deformed tooth was found or
+reported. A lock that does not close fully is what a bad tooth would produce, but it is
+not the only thing that could. Support's confirmation and replacement offer reach this
+page only through the owner's own post and name no defect, so, like the third owner's
+replacement head, they are not the vendor statement asked for below. The link to blobs
+after tool changes is that owner's interpretation alone.
+
+Taken by itself, the symptom — a tool released by reverse extrusion away from a dock —
+now comes from independent owners in two different threads, which meets `reported` for
+the symptom. The page stays `provisional` because what it adds beyond the symptom is a
+cause, and that still rests on one teardown.
+
+The third owner's report comes from the first owner's thread, describes the opposite
+fault, and suspects a different part, so it does not bear on the tier. The replacement head they
 say they were promised, and later say they received, is their own account rather than
 the vendor's, and it names no defect, so it is not the vendor statement asked for below.
 That later post sits in a different thread but comes from the same owner, so it is not a
 second source either.
 
-The separate-thread report is a single account with no teardown. It describes a tool
-that would not leave the head rather than one that fell out, and blames softened
-filament rather than any part of the head, so it neither raises the tier nor counts as
-a second report of the third owner's fault.
+The two filament reports, from the ASA thread and the flexible-filament thread, are
+independent of each other and of the lock reports, and neither involved a teardown. They
+describe a tool that would not leave the head rather than one that fell out, and blame
+filament rather than any part of the head, so they neither raise the tier nor count as
+further reports of the third owner's fault. The firmware report on the stuck unload
+comes from one of the flexible-filament owners, so it is not a separate source.
 
 The teardown post was still awaiting moderation on the forum when this page was first
 written; it has since been published, and the link shows it. The owner's video and a set
@@ -177,7 +274,8 @@ personal drive, and the animations are on Reddit, which this site does not cite.
 
 What would move this to `reported`: the same missing or deformed tooth found in a
 second toolhead, reported in a different thread — or a vendor statement acknowledging
-the defect.
+the defect. A second head whose lock does not close fully, with no damaged part
+identified, is not enough on its own.
 
 ## Related
 
@@ -185,4 +283,6 @@ the defect.
   the other ways a tool fails to stay put
 - [Build plate compatibility](../reference/build-plate-compatibility.md) — plates
   that knock tools out of their docks
+- [Unload failures from the filament guide bore](filament-guide-bore-unload-failure.md) —
+  when an unload fails but the tool stays in the head
 - [Who to contact](support-and-warranty-path.md)

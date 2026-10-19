@@ -1,7 +1,7 @@
 ---
 title:        Probleme
 confidence:   unknown
-updated:      2026-10-04
+updated:      2026-10-18
 author:       hyiger
 printer:      unknown
 toolhead:     unknown
@@ -10,7 +10,7 @@ nozzle:       unknown
 firmware:     unknown
 sources:      []
 superseded_by:
-source_sha:   256b5670888b4ee4e37969d66e77f913d28e2a187ab751584448ed4358cc9411
+source_sha:   c5b59ef1d51f2d2da0c368e633adc84fd67f02a783c35b7e5b7c93cdc2c92d36
 ---
 # Probleme
 
@@ -74,9 +74,10 @@ falscher Wert kostet den Leser ein Bauteil, einen Druck oder eine Gewährleistun
   Docks scheitern und in welche Richtung, verrät die Ursache; liegen alle Docks in Y um
   denselben Betrag daneben, passt meist die Riemeneinstellung nicht zu den Riemen.
 - [Input-Shaper-Kalibrierung bricht mit „Measurement failed“ ab](input-shaper-measurement-failed.md)
-  — der Beschleunigungssensor kalibriert, dann scheitert die erste Achsmessung, meist
-  unter 6.9.x. Prüfen Sie die Riemeneinstellung; eine Ursache ist noch nicht gefunden.
-  *Einzelquelle.*
+  — die erste Achsmessung scheitert direkt nach der Kalibrierung des
+  Beschleunigungssensors, meist unter 6.9.x; bei einem Besitzer scheitert inzwischen schon
+  die Kalibrierung des Beschleunigungssensors selbst. Prüfen Sie die Riemeneinstellung;
+  eine Ursache ist noch nicht gefunden. *Einzelquelle.*
 - [Oozing verdirbt Bettabtastung und Werkzeugkalibrierung](oozing-during-probing-and-calibration.md)
   — Material dort, wo die Maschine eine Messung vornehmen will. Beginnen Sie damit, das
   Fenster des Offsetsensors zu reinigen.

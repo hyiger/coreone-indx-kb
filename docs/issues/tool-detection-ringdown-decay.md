@@ -1,7 +1,7 @@
 ---
 title:        Phantom tools, "tool not detected" and park failures
 confidence:   reported
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -17,6 +17,7 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://help.prusa3d.com/downloads/core-one-indx
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/6-9-0-firmware-tool-docking/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/will-the-prusa-indxs-wave1-ship-with-fixed-induction-coils/
@@ -221,7 +222,11 @@ reading of the source rather than a result from a machine.
 [Firmware 6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2),
 released on 7 October 2026, does not change it either: between the
 [6.9.1 and 6.9.2 tags](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
-the only change that reaches an INDX is the PVA and BVOH filament presets.
+the only change that reaches an INDX is the PVA and BVOH filament presets. Firmware
+7.0.0, dated 15 October 2026 on
+[Prusa's downloads page](https://help.prusa3d.com/downloads/core-one-indx), lists nothing
+on nozzle-presence detection or the park check. Prusa had not published its source when
+this was written, so that is the notes' silence, not a reading of the code.
 
 ## Verification
 

@@ -1,7 +1,7 @@
 ---
 title:        Wen Sie kontaktieren — Support vs. Gewährleistung bei einem INDX-Kit
 confidence:   reported
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -14,8 +14,9 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/
 superseded_by:
-source_sha:   1935eb41a3feb457a171b52f76663a9f3fbb557c158d0e8fb4246a0ab25d7d9b
+source_sha:   a3314bd296f5d3ac238289df73a3335c188ab3ae2fdb4100a8bfb038117fd48b
 ---
 # Wen Sie kontaktieren — Support vs. Gewährleistung bei einem INDX-Kit
 
@@ -64,7 +65,10 @@ Antwort ist also nicht zwangsläufig ein verlorenes Ticket.
 Gleich, bei welchem Unternehmen Ihr Fall liegt: Fragen Sie, mit welcher Bearbeitungszeit
 zu rechnen ist, und haken Sie nach, wenn sie verstrichen ist. Einem Besitzer sagte
 Prusas Support, ein eskalierter Fall dauere normalerweise einige Tage, und knapp eine
-Woche nach der ersten Meldung wartete er noch immer.
+Woche nach der ersten Meldung wartete er noch immer. Videos helfen, erledigen aber nicht
+jeden Fall schnell: Ein anderer Besitzer, bei dem Antasten und Werkzeugkalibrierung meist
+fehlschlagen, berichtet, Prusas Support zehn Videos geschickt zu haben und noch immer keine
+abschließende Antwort zu haben.
 
 Ein Besitzer, bei dem sich Werkzeuge am Dock wiederholt nicht aus dem Kopf lösten — siehe
 [Werkzeug entriegelt sich oder fällt aus dem Kopf](tool-unlocks-or-ejects.md) — berichtet,
@@ -90,17 +94,28 @@ Prusa deren Entschädigung selbst abwickelt: Shop-Guthaben, verschickt als Gutsc
 E-Mail, oder stattdessen eine Barerstattung. Ist der Gutschein für das Shop-Guthaben
 einige Tage nach Eintreffen des Kits nicht da, wenden Sie sich an Prusas technischen
 Support; wenn Sie statt Guthaben die Barerstattung möchten, fragen Sie Prusas Support
-per Live-Chat oder E-Mail. Ob auch Kits abgedeckt sind, die nach diesem Update bei Prusa
-bestellt wurden, hat Prusa nicht gesagt.
+per Live-Chat oder E-Mail. Ein dem Kit beiliegender gedruckter Hinweis nennt dieselbe
+Erwartung von einigen Tagen, laut einem Besitzer, der die E-Mail danach nicht finden
+konnte. Durchsuchen Sie Ihr Postfach, bevor Sie nachhaken: Ein anderer Besitzer im
+selben Thread berichtet, dass seine mit einem Betreff kam, der sie als
+INDX-Entschädigungsgutschein bezeichnet, was sich leichter finden lässt als alles, was
+nur unter Prusas Namen eingeht. Beides stammt aus einem einzigen Thread, ist also
+vorläufig. Ob auch Kits abgedeckt sind, die nach diesem Update bei Prusa bestellt
+wurden, hat Prusa nicht gesagt.
 
-Der Kauf von Ersatzdüsen ist eine eigene Sache. Besitzer in zwei getrennten Threads
-berichten, dass sich Prusas Shop-Guthaben nicht für INDX-Düsen einsetzen lässt; diese
-kommen aus dem Shop des Herstellers, gleich welche Edition Sie besitzen, und der frühere
-der beiden erklärte im August, Prusa verkaufe sie nicht. Eine hängende Shop-Bestellung
-ist ein Fall für ein Ticket beim Hersteller. Ein Besitzer, dessen Bestellung im Oktober
-knapp drei Wochen gewartet hatte, eröffnete ein Ticket und erhielt noch am selben Tag
-eine Antwort mit einer Versandschätzung. Das ist vorläufig, ein Einzelbericht, und die
-Schätzung war zum Zeitpunkt des Beitrags noch nicht eingelöst.
+Der Kauf von Ersatzdüsen ist eine eigene Sache. INDX-Düsen kommen aus dem Shop des
+Herstellers, gleich welche Edition Sie besitzen. Stand Mitte Oktober ließ sich Prusas
+Shop-Guthaben nicht für sie einsetzen, weil Prusas Shop sie nicht führte; das berichten
+Besitzer in drei getrennten Threads, der früheste im August. Ein Besitzer erwartet, dass
+Prusa sie irgendwann führt, und derselbe Besitzer gibt von Prusa wieder, dass der
+Gutschein eine Gültigkeitsfrist hat; beides ist ein vorläufiger Einzelbericht und wird
+auf der Seite zur [Düsenhärte](nozzle-hardness.md) behandelt. Eine hängende
+Shop-Bestellung ist ein Fall für ein Ticket beim Hersteller. Ein Besitzer, dessen
+Bestellung im Oktober knapp drei Wochen gewartet hatte, eröffnete ein Ticket und erhielt
+noch am selben Tag eine Antwort mit einer Versandschätzung; die Bestellung ging wie
+geschätzt Anfang der folgenden Woche hinaus und kam einen Tag später an. Das bleibt
+vorläufig, ein Einzelbericht. Mitte Oktober sahen andere Besitzer im selben Thread, dass
+im Oktober aufgegebene Bestellungen innerhalb von ein bis zwei Wochen versandt wurden.
 
 ### Zur Dauer der Gewährleistung — prüfen Sie das selbst
 
@@ -137,20 +152,28 @@ berichtet. Dass Prusa die Düsenentschädigung für Kits abwickelt, die im Augus
 Prusa bestellt waren, stammt aus erster Hand: aus Prusas Update vom August an diese
 Kunden, zitiert im Thread „nozzlegate communications“.
 
-Schwächer: Das Ersatzangebot über den Live-Chat und die genannte Eskalationsdauer beruhen
-jeweils auf dem Bericht eines einzelnen Besitzers im Thread mit der Zusammenfassung
-häufiger Probleme. Der spätere Beitrag desselben Besitzers, der Kopf sei angekommen und
-eingebaut, in einem
+Schwächer: Das Ersatzangebot über den Live-Chat, die genannte Eskalationsdauer und der
+Fall mit den zehn Videos beruhen jeweils auf dem Bericht eines einzelnen Besitzers im
+Thread mit der Zusammenfassung häufiger Probleme. Der spätere Beitrag des Besitzers mit
+dem Live-Chat-Angebot, der Kopf sei angekommen und eingebaut, in einem
 [Thread zur Frage, ob sich das INDX-Upgrade lohnt](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/),
 ist wiederum dessen eigene Schilderung und keine zweite Quelle, und keiner der beiden
-Beiträge nennt, um welche Edition es sich beim Kit handelt. Dass sich Prusas Shop-Guthaben nicht für INDX-Düsen einsetzen lässt, beruht auf
-zwei Besitzern in getrennten Threads, dem Thread
-[nozzlegate communications](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/)
-und einem
-[Thread zu langsamen Düsenbestellungen](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/),
-nicht auf einer Aussage von Prusa; dass Prusa sie im August nicht verkaufte, beruht
-allein auf dem ersten davon. Die Antwort des Herstellers am selben Tag ist ein
-Einzelbericht aus dem zweiten.
+Beiträge nennt, um welche Edition es sich beim Kit handelt. Dass sich Prusas
+Shop-Guthaben nicht für INDX-Düsen einsetzen ließ, weil Prusas Shop sie nicht führte,
+beruht auf drei Besitzern in drei getrennten Threads, dem Thread
+[nozzlegate communications](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/),
+einem
+[Thread zu langsamen Düsenbestellungen](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/)
+und Prusas
+[Thread zu Versand-Updates](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/),
+nicht auf einer Aussage von Prusa; für August beruht es allein auf dem ersten davon. Die
+Antwort des Herstellers am selben Tag und der Versand der Bestellung wie geschätzt sind
+der Bericht eines einzelnen Besitzers aus dem zweiten, in dem der seither schnellere
+Versand von mehreren Besitzern stammt. Der beiliegende Hinweis und der Betreff der
+Gutschein-E-Mail stammen von zwei Besitzern im dritten. Die Erwartung, dass Prusa
+INDX-Düsen später führen wird, stammt von einem einzelnen Besitzer und nicht erkennbar
+von Prusa; die Gültigkeitsfrist von Prusas Gutschein ist dessen Wiedergabe, beides in
+eben diesem dritten Thread.
 
 Wo die Quellen sich widersprechen: bei der Gewährleistungsdauer. Der UK-Thread kommt zu
 keinem Ergebnis, und seine Teilnehmer sagen das deutlich. Behandeln Sie jede Dauerangabe

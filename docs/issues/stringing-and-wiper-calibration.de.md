@@ -1,13 +1,13 @@
 ---
 title:        In den Druck geschleppte Blobs — Düsenwischer und Spülvorgang
 confidence:   reported
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       0.4mm reported
-firmware:     6.9.0, re-checked against 6.9.1 and 6.9.2; earlier behavior noted throughout
+firmware:     6.9.0, re-checked against 6.9.1, 6.9.2 and the 7.0.0 release notes; earlier behavior noted throughout
 sources:
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
@@ -30,8 +30,11 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5477
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/cleaning-nozzle-2/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-review/
 superseded_by:
-source_sha:   848b25d0bf75c53e4e88b3647c085211a9bb8af0515f0d1f046be0581724a742
+source_sha:   78a7711ecad8ae0ac3de51558af08a22dfd0de7c96555e37f49c95d4db482729
 ---
 # In den Druck geschleppte Blobs — Düsenwischer und Spülvorgang
 
@@ -63,7 +66,8 @@ source_sha:   848b25d0bf75c53e4e88b3647c085211a9bb8af0515f0d1f046be0581724a742
     Kalibrierung früher von Hand erledigt wurde, schlecht und ohne jede Möglichkeit zu
     sehen, was man tut. Wenn Sie etwas Älteres als 6.9.0 einsetzen, aktualisieren Sie und
     testen Sie erneut, bevor Sie Zeit in manuelle Ausrichtung investieren. Die Höhe ist
-    die Ausnahme: Sie bleibt auch in 6.9.0, 6.9.1 und 6.9.2 ein manueller Schritt.
+    die Ausnahme: Sie bleibt auch in 6.9.0, 6.9.1 und 6.9.2 ein manueller Schritt, und die
+    Notes zu 7.0.0 sagen nicht, dass sich daran etwas geändert hätte.
 
     Die Release Notes der stabilen Version 6.9.1 nennen keine Änderung am Wischer oder am
     Spülvorgang. Die Beta hat für den Reiniger eine Sache geändert: Das Bett fährt während
@@ -77,6 +81,20 @@ source_sha:   848b25d0bf75c53e4e88b3647c085211a9bb8af0515f0d1f046be0581724a742
     nichts: Es ist 6.9.1 plus die Filament-Presets für PVA und BVOH, die die Notes zu
     6.9.1 angekündigt, aber nicht mitgeliefert hatten, und sonst nichts, was einen INDX
     erreicht ([Vergleich](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)).
+
+    Firmware 7.0.0 vom 15. Oktober 2026 (laut
+    [Prusas Download-Seite](https://help.prusa3d.com/downloads/core-one-indx)) enthält
+    zwei Zeilen zum Reiniger. Die eine verspricht eine
+    verbesserte Reinigung durch den Düsenwischer, ohne zu sagen, was sich geändert hat;
+    die Notes kennzeichnen sie als bereits in
+    [6.10.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1)
+    ausgeliefert, einer Firmware für den XL und XL+, nicht für den INDX. Die andere verlegt
+    das Laden und Entladen von Filament an Positionen, die den kalibrierten
+    Reiniger-Offset berücksichtigen. Prusa hatte den Quellcode von 7.0.0 bei Abfassung
+    dieses Textes nicht veröffentlicht, und noch kein Anwender hat berichtet, wie sich das
+    Wischen damit verhält; ob eine der beiden Zeilen etwas von dem unten Beschriebenen
+    erledigt, ist also offen.
+
     Auf einem 6.9.1-Build fand ein Anwender PLA,
     das zu langen Fäden ausgezogen an der Düse hing, woraufhin das Antasten der Düsen
     scheiterte; mit 6.9.0 lief es anscheinend besser, er vermutete aber seine
@@ -104,10 +122,20 @@ source_sha:   848b25d0bf75c53e4e88b3647c085211a9bb8af0515f0d1f046be0581724a742
     Spitze fest geworden ist. Die Beschwerde über die Reihenfolge stützt sich damit auf
     zwei Berichte in zwei Issues. Ob der Melder von #5505 unabhängig vom PETG-Bericht oben
     ist, wurde nicht geprüft, und ob ein Wischen vor dem Abkühlen hilft, ist nicht
-    getestet. Der Melder von #5500 fügt hinzu, dass 6.9.0 und 6.9.1 beide mehr spülen als
+    getestet. Im Oktober ging ein Anwender im Forum die Sache von der Temperaturseite an:
+    Die automatische Reinigung laufe weit unterhalb der Drucktemperatur, nach seiner
+    Einschätzung zu kühl, um PETG weich genug zum Abwischen zu machen, und er regte an,
+    sie stattdessen bei der Temperatur des geladenen Materials laufen zu lassen
+    ([Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/cleaning-nozzle-2/)).
+    Das ist der Vorschlag eines einzelnen Anwenders, ohne Angabe der Firmware, kein Test.
+    Der Melder von #5500 fügt hinzu, dass 6.9.0 und 6.9.1 beide mehr spülen als
     nötig, sodass nach dem Wischen oft noch Material an der Düse hängt, und dass die
     Firmware das im Slicer eingestellte Spülvolumen nicht verwendet. Das ist ein
-    Einzelbericht, nicht am Quellcode geprüft.
+    Einzelbericht, nicht am Quellcode geprüft. Zwei spätere Kommentatoren dort melden
+    dasselbe Problem, einer auf einem Gen 2 mit vier Werkzeugen, einer, bei dem ASA noch
+    stärker haftet, ohne zu sagen, welche der Beschwerden sie meinen; es bleibt also ein
+    Einzelbericht. Ob die verbesserte Wischerreinigung in 7.0.0 die Reihenfolge, das
+    Abkühlen oder die Spülmenge ändert, sagen ihre Notes nicht.
     Zu Fehlern beim Antasten allgemein siehe
     [Ausschwitzen beim Antasten und Kalibrieren](oozing-during-probing-and-calibration.md).
 
@@ -251,6 +279,16 @@ eine Richtungsangabe („tiefer als nur berührend“), die keine Zahl benötigt
     mehr Kontakt hilft. Er sagt nichts darüber aus, ob die automatische Routine zu kurz
     greift.
 
+    Ein weiterer Anwender schreibt Mitte Oktober, mit nicht genannter Firmware, aber noch
+    vor seinem Wechsel auf 7.0.0, dass seine anfänglichen Fäden und Blobs deutlich
+    nachließen, nachdem er die Höhe so eingestellt hatte, dass die Düse kräftig in das Pad
+    drückt
+    ([Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-review/)).
+    Von ihm stammt auch die frühere Antwort oben, die zum Anheben des Pads riet; dafür
+    kommt damit keine unabhängige zweite Stimme hinzu. `provisional` — ein einzelner Bericht,
+    nur eine Richtungsangabe, und wie der vorige zeigt er nicht, ob die automatische
+    Routine zu kurz greift.
+
 ### Behelfslösungen ohne Kalibrierung
 
 - **Drucken Sie einen Skirt oder Brim.** Mehrere Anwender berichten, dass das die
@@ -312,7 +350,13 @@ eine Richtungsangabe („tiefer als nur berührend“), die keine Zahl benötigt
   Blobs entstehen. Anfang Oktober wurde #5412 als veraltet markiert — derselbe
   automatische Schritt, der der Schließung von #5391 vorausgegangen war; einer dieser
   beiden Anwender meldete, dass das Problem weiterhin auftritt, und die Markierung wurde
-  wieder entfernt. Beide Anfragen sind weiterhin offen und ohne Antwort von Prusa. Eine
+  wieder entfernt. Beide Anfragen sind weiterhin offen und ohne Antwort von Prusa, und die
+  Notes zu 7.0.0 nennen keine Änderung an diesem Ablauf: Die nächstliegenden Einträge
+  beheben einen zusätzlichen Blob beim Fortsetzen nach einem Stromausfall, als bereits in
+  6.9.0 enthalten gekennzeichnet, das Fortsetzen mit kaltem Werkzeug nach einem
+  Filamentwechsel an einem anderen Werkzeug und einen Versatz in Z nach einem Spool Join
+  bei sofortigem Filamentende. Keiner davon ändert die Reihenfolge von Bettfahrt,
+  Aufnehmen und Vorspülen, nach der #5412 und #5477 fragen. Eine
   Behelfslösung ist nicht bestätigt: Ein Kommentator schlug für Aufträge mit Pause einen
   kleinen Reinigungsturm vor, hatte das aber nicht ausprobiert. `reported` — zwei
   Anwender führen den Blob in separaten Issues auf das Ausschwitzen während der
@@ -370,6 +414,16 @@ Keine der beiden widerspricht etwas auf dieser Seite. Das
 fügt die Presets für PVA und BVOH hinzu und sonst nichts, was einen INDX erreicht; keine
 der unten zitierten Quelldateien unterscheidet sich zwischen den Git-Tags v6.9.1 und
 v6.9.2, die folgende Lesart gilt also auch für 6.9.2.
+
+Die Nachprüfung gegen 7.0.0 stützt sich
+[allein auf die Notes](https://help.prusa3d.com/downloads/core-one-indx): Prusa hatte bei
+Abfassung dieses Textes kein 7.0.0-Tag auf GitHub veröffentlicht, die Lesart des
+Quellcodes unten endet also bei 6.9.2. Von den beiden im Hinweis oben beschriebenen
+Einträgen zum Reiniger sagt keiner, was sich am Wischen geändert hat, und die Notes
+nennen keine Änderung an der Wischerhöhe, an der Reihenfolge von Spülen, Abkühlen und
+Wischen oder an der Reihenfolge von Bettfahrt und Vorspülen beim Fortsetzen, um die
+#5412 und #5477 bitten. Noch kein INDX-Anwender hat berichtet, wie sich
+Wischen oder Spülen unter 7.0.0 verhalten.
 
 Was die automatische Kalibrierung abdeckt und was nicht, sowie die Reihenfolge von
 Spülen, Abkühlen und Wischen bei der Reinigung je Werkzeug zu Beginn eines Drucks, sind
@@ -431,9 +485,17 @@ Ebenso wenig ein Bericht an den Hersteller, wonach der Wischpfad der Firmware in
 durchgehend neben der Mitte des Silikonpads landet
 ([#5496](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5496)). Er klingt nach
 der Frage zum Nozzle Cleaner Y Offset weiter oben, betrifft aber einen Core One+ (Gen 2)
-ohne INDX mit eigenem Wischer-Zubehör, auf der Nicht-INDX-Firmware 6.8.1. Er belegt
-keinen systematischen Y-Fehler am INDX, und die Lesart, dass der Y-Offset
-maschinenspezifisch ist, bleibt bestehen.
+ohne INDX mit eigenem Wischer-Zubehör, auf der Nicht-INDX-Firmware 6.8.1. Ein zweiter
+Anwender hat ihn inzwischen bestätigt, ebenfalls auf einem Gen 2 ohne INDX. Prusas
+Entwickler nahmen sich der Sache im Oktober an: Laut dem ersten, der antwortete, wischt
+die Firmware an jener Maschine an einer von Hand in der Firmware festgelegten Position,
+und ein anderer bat die Anwender, die Riemeneinstellung des Druckers zu prüfen. Nach dem
+Update auf 7.0.0 fand der Melder das Wischen noch immer außermittig. Kein INDX-Anwender
+hat dort dasselbe gemeldet. Der INDX misst dagegen, wo sein Reiniger sitzt (siehe die
+Auswertung des Quellcodes weiter oben); dass sich der Bericht deshalb nicht übertragen
+lässt, ist der Schluss dieser Seite, nicht der der Entwickler. Der Bericht belegt keinen
+systematischen Y-Fehler am INDX, und die Lesart, dass der Y-Offset maschinenspezifisch
+ist, bleibt bestehen.
 
 ## Verwandte Seiten
 

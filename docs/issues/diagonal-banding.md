@@ -1,7 +1,7 @@
 ---
 title:        Diagonal banding across print walls
 confidence:   reported
-updated:      2026-10-04
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -12,6 +12,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
+  - https://help.prusa3d.com/downloads/core-one-indx
 superseded_by:
 ---
 
@@ -25,8 +26,9 @@ rather than the motion system. There is a two-print test that settles it in abou
 hour without any disassembly, and it is worth running before you open a support case.
 A faint version of this artifact appears to be normal for a dual-gear extruder; a
 pronounced one is a hardware fault, and the reported remedy is a replacement toolhead —
-not yet a dependable one, since one owner's replacement arrived showing the same lines
-(a single report).
+not yet a dependable one, since by mid-October three owners had received replacements,
+two of them the newer injection-molded version, that did not cure it (all in one
+thread, so `provisional`).
 
 ## Detail
 
@@ -95,6 +97,13 @@ extrusion differs. So if the banding changes, the cause cannot be in the XY moti
 system, and you have eliminated belts, rails, steppers and gantry alignment in one
 step. That is a lot of expensive suspects ruled out by two test cubes.
 
+**Comparing two heads.** One owner who had just received a replacement found that a
+standard VFA (vertical fine artifacts) test print shows the same pattern, perhaps more
+clearly, and posted prints of it made from identical G-code (`provisional`, a single
+report). A fixed test file like that suits a before-and-after comparison of two heads,
+but it does not replace the protocol: a single print cannot separate extrusion from
+motion.
+
 ### What this rules out, and what people chased first
 
 The thread's author explicitly retracted the early theories and asked readers to
@@ -134,6 +143,13 @@ So the question is not *whether* the artifact exists but *how pronounced* it is.
 Faint and only visible on glossy filament at the right angle is expected. Clearly
 visible across all four walls of a stock-profile test cube is not.
 
+Nor is a pronounced case only a vase-mode curiosity. One owner with clear banding sees
+it on any wall printed at 45° whose outline does not change from layer to layer.
+Several owners in the thread say that on ordinary parts, where perimeter length varies,
+it shows up instead as generally uneven, fuzzy-looking walls — easy to blame on damp
+filament or an untuned profile, which is why some of them took weeks or months to
+notice it (`provisional`: one thread).
+
 ### What it appears to be
 
 The most detailed analysis in the thread, and the most recent, attributes it to poor
@@ -164,6 +180,14 @@ comes from is not established. The motor mounts to a CNC-milled steel plate, so 
 surface is an unlikely culprit; the owner's own guess is the swing arm not sitting
 perpendicular to the plate, possibly from the pivot thread being tapped slightly
 off-axis. Nothing confirms any of that.
+
+The misalignment itself now has a second, weaker observation. In mid-September a
+second owner thought a top-down photo of their extruder showed a slight angle between
+the gears; the shim's owner thought so too but could not be sure from the photo. In
+October the same owner reported the gear axes visibly out of parallel on both their
+original head and its replacement, and took it for a quality-control fault. That is a
+check by eye on an assembled extruder, not a measurement, and it comes from the same
+thread (`provisional`).
 
 If it holds, it reframes the fault: not a gear that was made badly, but a stack-up that
 depends on machining being perfect and offers no adjustment when it is not.
@@ -210,6 +234,20 @@ round of routine motion-system troubleshooting questions that, in that owner's v
 largely repeated the initial chat. Each of these is again one owner's account, and none
 names a part.
 
+October brought no part either. The owner with the open Prusa case received a new head
+that did not cure the banding but changed it: a single band where the original showed
+two, possibly a stronger one. Prusa support had that owner redo belt tuning, then
+pointed them back to the email thread, since the case sits with its INDX specialists.
+Another owner received a replacement of the newer injection-molded style, found it did
+not help and in their view made things worse, said support went quiet after hearing
+so, and in mid-October was waiting on a second replacement. A further owner said
+support had added them to a list of owners awaiting a solution. Each is one owner's
+account, all in the same thread, and none names a part.
+
+Firmware 7.0.0, published on 15 October, does not change that picture: none of the
+items in its [release notes](https://help.prusa3d.com/downloads/core-one-indx) concerns
+the extruder drive, wall quality, or this artifact.
+
 #### The shim workaround
 
 One owner corrected the misalignment by shimming the motor: unscrew the standoffs that
@@ -227,6 +265,12 @@ Thickness mattered, and the reported results were not monotonic:
 So there is a window rather than a "more is better" relationship, which is what you would
 expect if the shim is correcting an angle rather than taking up a gap. The owner's best
 result still showed the faintest banding if you went looking for it.
+
+How long the correction lasts is unknown. The shim's owner treats it as a stopgap, to
+come out once the vendor fixes the part, and their reports through mid-September
+describe it still working. Another owner has since suggested, as a personal theory,
+that the misaligned contact could wear the motor side and let the banding return;
+nobody has reported that happening.
 
 !!! warning "One owner, one machine, and an invasive fix"
     `provisional`, inline on an otherwise `reported` page. This is a single first-hand
@@ -260,10 +304,11 @@ result still showed the faintest banding if you went looking for it.
     — see [loadcell noise](loadcell-emi-noise.md), where a ferrite core is the usual
     answer. A ferrite treats interference; it will not fix a bad loadcell.
 
-    Nor is the banding itself certain to be gone: one owner's replacement, covered
-    above, showed the diagonal lines again, severity not described (`provisional`, a
-    single report). Run a probing and homing check on any replacement head, and run the
-    first print of the two-print protocol on it, before you commit a long print to it.
+    Nor is the banding itself certain to be gone: as covered above, three other owners'
+    replacements did not cure it, two of them the newer injection-molded version
+    (`provisional`: several owners, but all in one thread). Run a probing and homing
+    check on any replacement head, and run the first print of the two-print protocol on
+    it, before you commit a long print to it.
 
 ## Verification
 
@@ -274,7 +319,7 @@ claims on this page.
 [the diagonal banding thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/)
 when this page was first written, and by several more since, ranging from severe to
 barely perceptible on glossy filament, so the phenomenon is not one person's
-imagination. The thread is marked answered and runs to 125 posts. The two-print
+imagination. The thread is marked answered and runs to 142 posts. The two-print
 protocol is its accepted answer, written by the owner who worked the problem with
 vendor and Prusa support involvement, and the reasoning for why it isolates extrusion
 from motion is sound on its own terms.
@@ -292,9 +337,11 @@ replacements. The
 [common problems summary](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/)
 independently records a severe banding case as vendor-confirmed to be a defective
 extruder unit, which corroborates the conclusion but may well be describing the same
-case rather than a second one. The replacement that arrived with the lines is a second
-owner's experience, also single-source and in the same thread. The replacement outcomes
-on record point in opposite directions, and none rises above `provisional`.
+case rather than a second one. The replacements that did not cure the banding come from
+three further owners, two of them reporting the newer injection-molded version; the
+reports are independent of one another but all in the same thread. On balance the
+outcomes on record lean against a replacement being a dependable cure, and none rises
+above `provisional`.
 
 **Analysis, not measurement.** The gear-meshing explanation is one owner's calculation,
 posted shortly before this page was written, with the vendor not yet having responded.
@@ -312,9 +359,11 @@ diagonal, and which yields the cheap gear-cleaning check.
 What would strengthen this page: more owners running the two-print protocol and
 reporting the result, the shim working on a second toolhead, a vendor statement
 naming the specific part, and a replacement known to carry a fix. At this update nobody
-has reported a shim result on another toolhead or a further run of the protocol. The
-vendor replies relayed in the thread acknowledge the fault without naming a part, and
-Prusa's replies through the end of September likewise name none.
+has reported a shim result on another toolhead, though one owner said they would try it
+on their original head, nor a further run of the protocol. The vendor replies relayed in
+the thread acknowledge the fault without naming a part, Prusa's replies through
+mid-October likewise name none, and no replacement batch is known to carry a fix: the
+two injection-molded replacements reported so far did not.
 
 ## Related
 

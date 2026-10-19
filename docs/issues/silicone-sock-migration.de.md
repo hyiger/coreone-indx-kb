@@ -1,7 +1,7 @@
 ---
 title:        Verrutschen der Silikonsocke über den Temperatursensor
 confidence:   provisional
-updated:      2026-09-25
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -14,8 +14,9 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/problems-with-nozzle-socks/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/filament-blobs-can-tear-the-silicon-sock-on-indx-nozzles/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/missing-layers-5/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/
 superseded_by:
-source_sha:   1eaf60be689d2404a0585aa59504fee8594a97c9afd407a4095c69ab5c954c7f
+source_sha:   987d4e76b582f322cedec6175df19736c211c2feba88f6305ec2aed37619bdcb
 ---
 # Verrutschen der Silikonsocke über den Temperatursensor
 
@@ -154,8 +155,11 @@ Maschine des Autors wurde ein an der Düsenspitze haftender PCTG-Klumpen so fest
 den Abstreifer gezogen, dass die Socke riss. Ersatzsocken lagen dem Bausatz nicht bei. Der Hersteller teilte dem Autor
 dieser Seite inzwischen mit, dass Socken bald als Fünferpack in seinem Shop erhältlich
 sein werden, zu 4,90 USD laut Angabe vom September 2026; wenige Tage später waren sie
-dort gelistet, mit Stand 19. September allerdings nicht lieferbar; ein anderer Besitzer erhielt vom
-Prusa-Support die Auskunft, dass Socken auch dort später ins Sortiment kommen; der Prusa-Shop führt
+dort gelistet, mit Stand 19. September allerdings nicht lieferbar. Mindestens eine
+Bestellung ist inzwischen verschickt worden: Ein Besitzer berichtet, dass Socken, die er dort am 8. Oktober
+2026 zusammen mit Düsen bestellt hatte, eine Woche später versandt wurden. Ein anderer
+Besitzer erhielt vom Prusa-Support die Auskunft, dass Socken später auch im Prusa-Shop
+ins Sortiment kommen; der Prusa-Shop führt
 inzwischen einzelne INDX-Teile, darunter einen [Werkzeughalter mit Magneten](https://www.prusa3d.com/product/tool-holder-with-magnets-2/) und
 das [Filamentsensor-Kabel für den INDX](https://www.prusa3d.com/product/filament-sensor-cable-for-indx/); Sensorplatinen und Silikonabstreifer
 sollen dort ebenfalls erhältlich sein. Beim Autor dieser Seite kosteten Versand und Einfuhrabgaben ein Mehrfaches der
@@ -212,7 +216,10 @@ markiert. Sie ersetzen eine frühere Warnung davor, die Socke zu entfernen, die 
 getestete Schlussfolgerung des Autors aus dem Firmware-Quellcode war. Was der
 Prusa-Support zur Aufnahme von Socken ins Sortiment sagte, ist aus Antworten eines
 anderen Besitzers in einem [vom Autor eröffneten Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/filament-blobs-can-tear-the-silicon-sock-on-indx-nozzles/) weitergegeben und von
-keinem der Unternehmen veröffentlicht.
+keinem der Unternehmen veröffentlicht. Dass inzwischen eine Sockenbestellung aus dem Shop
+des Herstellers verschickt wurde, stützt sich auf den Beitrag eines einzelnen Besitzers
+in einem
+[Thread über Düsenlieferungen](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/).
 
 Was diese Seite auf `reported` heben würde: ein zweiter Besitzer, der die vollständige
 Abfolge — verschobene Socke, dann Überhitzung, dann Anbackungen, dann fehlgeschlagene

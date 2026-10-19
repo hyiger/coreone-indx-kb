@@ -1,13 +1,13 @@
 ---
 title:        Tool offset calibration fails — contactless offset sensor
 confidence:   reported
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1 and 6.9.2; the board fault is not version-specific
+firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1 and 6.9.2; first owner reports on 7.0.0; the board fault is not version-specific
 sources:
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
@@ -23,7 +23,12 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5500
-  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/
+  - https://forum.prusa3d.com/forum/ceske-forum-obecna-diskuze-oznameni-a-novinky/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/
+  - https://help.prusa3d.com/downloads/core-one-indx
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5548
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-firmware-7-0-0-stuck-on-reset/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5544
 superseded_by:
 ---
 
@@ -113,6 +118,12 @@ tension, which support may suggest, has not fixed a single reported case.
     [changes nothing](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
     but the PVA and BVOH filament presets, which the 6.9.1 notes had announced and
     which that release left out.
+    [7.0.0](https://help.prusa3d.com/downloads/core-one-indx), published on Prusa's
+    downloads page on 15 October 2026, says nothing in its notes about tool offset
+    calibration or the offset sensor. Prusa has not yet published its source, so unlike
+    6.9.1 and 6.9.2 there is no way to check whether it carries the same code. The notes
+    do list improved nozzle wiper cleaning, marked as first shipped in 6.10.1; nobody
+    has reported whether it leaves less material on INDX nozzles.
 
     The beta was not clean for everyone, and the stable notes mention none of what
     follows. One owner finds calibration passing reliably but nozzles coming out
@@ -133,7 +144,25 @@ tension, which support may suggest, has not fixed a single reported case.
     nozzle after wiping. That is material on the tip, the cause the on-screen message names;
     it says nothing about the sensor dropouts or a failing board. They also report the
     failure screen presenting the wrong tool to clean, see [error codes](../codes.md).
-    It is a single report, and the issue is open with no reply from the vendor.
+    Two more owners have since added to the issue that they see the same, one on a
+    four-tool Gen 2 machine and one who finds ASA, which sticks more, close to
+    unprintable, neither with more detail. The issue is open with no reply from the
+    vendor.
+
+    **The first reports on 7.0.0 do not point at the board.** Each is a single report.
+    One owner in the
+    [tool offset thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/),
+    who had no failures on the 6.9.1 beta or the stable, saw calibration fail on their
+    first print after updating and pass on the first retry; they were not at the printer
+    when it failed. Another, with an eight-tool Gen 2 machine, reports in
+    [firmware issue 5548](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5548)
+    that on 7.0.0 multi-tool prints often stop at the start with 36130. Their log places
+    it at the touch on the sensor board, before any sensor sweep, which is a loadcell
+    measurement, and they suspect loadcell noise that they measured rising when the
+    extruder motor is energized. They later report that switching the extruder driver
+    off before the probe made the failures rare on their printer, a workaround rather
+    than a fix. See [error codes](../codes.md#36193) and
+    [loadcell noise](loadcell-emi-noise.md).
 
     For owners with the newer belts the fix also removes the dilemma above: 6.9.1 is INDX
     firmware that keeps 1.5 GT support, so moving forward replaces downgrading as the
@@ -225,7 +254,7 @@ What makes this fault confusing:
   cable, found it electrically fine, and the board was still the fault. Cable
   replacements on their own have not fixed reported cases.
 - **Not every hardware case ends at the sensor board.** `provisional`, one report.
-  [One owner](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/)
+  [One owner](https://forum.prusa3d.com/forum/ceske-forum-obecna-diskuze-oznameni-a-novinky/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/)
   on 6.6.0 and 6.6.1 had 36130 whenever a print started, although the calibration
   itself could complete, and their loadcell test showed unstable readings, though a
   press on the nozzle still registered once the warning was dismissed. Belt tension
@@ -234,6 +263,36 @@ What makes this fault confusing:
   everything has worked since. The post does not say which part that is. The same
   split, calibration completing while the print start fails, is listed above as a
   sign of the 6.9.0 regression; here it came before that release and was hardware.
+- **Passing from the menu and failing at print start also fits loadcell noise.**
+  `provisional`, owners in one forum thread, most of whom changed several things at
+  once. Owners in the
+  [tool offset thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/)
+  cleared failures at print start by rerouting and twisting supply and heater wires
+  and fitting ferrite chokes. One of them, on stock 6.9.2, still had the odd failure
+  after the rewiring. They read
+  [firmware issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526),
+  whose opener blames the bed's status light on the strength of testing done on
+  firmware they had modified, switched the light off from the menu, and had no more
+  failures. Another owner in the thread switched the lights off and fitted ferrite
+  beads at the same time, and their failures stopped too. One owner describes the light
+  as lit during a print and not during a calibration from the menu. That is the other
+  sensor, see [loadcell noise](loadcell-emi-noise.md).
+- **A startup that hangs at the offset sensor on 7.0.0 is a separate problem.**
+  `reported`, two sources. Several owners on 7.0.0 report the printer stopping
+  during startup at the offset sensor stage after they reset it with a print starting
+  or a tool on the head
+  ([thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-firmware-7-0-0-stuck-on-reset/)),
+  and the owner who opened
+  [firmware issue 5544](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5544)
+  describes the same hang on every boot after resetting the printer during a crash in
+  Z homing. Every report that says how it began follows a reset, and nothing in either
+  source points at the sensor board. Two owners got the printer to start by flashing
+  6.9.2 again. Two others found that neither a downgrade nor a factory reset helped,
+  and one of them recovered by unplugging the main INDX connector with the printer
+  off, switching on once, then switching off, reconnecting it and switching on again.
+  The owner on the issue recovered in a similar way, by disconnecting the toolhead
+  cable at the xBuddy board and power-cycling. Their report does not say whether the
+  printer was off at the time; switch it off before you unplug either connector.
 
 ### What to do, in order
 
@@ -294,7 +353,7 @@ Where the sources disagree: support's own first suggestions varied between cable
 board, and in one case belt tension was raised. Owner experience points consistently
 at the board, with one exception: a single owner whose fault was in what they call the
 tool holder
-([thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/)),
+([thread](https://forum.prusa3d.com/forum/ceske-forum-obecna-diskuze-oznameni-a-novinky/core-one-indx-tool-offset-out-of-bounds-36130-loadcell-test-issue/)),
 marked `provisional` where it appears.
 
 **Added since first publication.** The 6.9.0 calibration regression comes from the
@@ -315,7 +374,10 @@ and 6.9.2 after it, carry the same code, which the release tags show and the not
 not say. That makes it the vendor's released fix, not a verified cure: one owner on the
 report still saw occasional failures on the beta, and the first owner to report on the
 stable, in a separate issue, still sees calibration fail often on prints that use
-several tools, which they put down to purge material left on the nozzles.
+several tools, which they put down to purge material left on the nozzles. The 7.0.0
+notes say nothing about it and its source is not yet published. The first two reports
+on 7.0.0, one in the forum and one on the issue tracker, each describe a failure at
+print start, and neither is put down to the sensor board.
 
 The LDC1612 reference-frequency lead is a separate single report from a different
 owner, and is marked `provisional` where it appears. The vendor's own commit confirms

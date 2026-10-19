@@ -1,7 +1,7 @@
 ---
 title:        Tool offset calibration error codes
 confidence:   provisional
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -20,6 +20,11 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1-beta
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://help.prusa3d.com/downloads/core-one-indx
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5548
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518
 superseded_by:
 ---
 
@@ -195,7 +200,8 @@ one tool.
    [bed not aligned in Z](issues/tool-offset-bed-z-alignment.md); a touch on the sheet
    is presumably rejected the same way, but no one has reported that yet.
 4. If the nozzle stops short of the sheet where you can see the gap, see
-   [loadcell noise](issues/loadcell-emi-noise.md).
+   [loadcell noise](issues/loadcell-emi-noise.md), and the two noise sources owners
+   have reported for this calibration under [36193](#36193).
 
 ## 36193 · 37193 · Sensor probing failed {#36193}
 
@@ -210,7 +216,23 @@ surface before the sweeps, was not accepted, even after the probe's own retries.
 2. Keep the door closed, for the same reason as under [36192](#36192).
 3. If both are clean and nothing is loaded, run Z Alignment Calibration. This is the
    failure described on [bed not aligned in Z](issues/tool-offset-bed-z-alignment.md).
-4. If the nozzle stops short of the sensor, see [loadcell noise](issues/loadcell-emi-noise.md).
+4. If the nozzle stops short of the sensor, or this passes from the calibration menu
+   but fails once a print starts, see [loadcell noise](issues/loadcell-emi-noise.md).
+   Owners have reported two noise sources for this calibration. One is the extruder
+   motor. An owner on 7.0.0 logged this failure at print start and measured much more
+   noise on the loadcell with that motor energized, though not during the failing
+   touch itself, and found that switching its driver off before the probe made the
+   failures rare, a workaround rather than a fix
+   ([firmware issue 5548](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5548)).
+   A separate report on 6.9.1 traces noise in the loadcell self-test after a toolchange
+   to the same motor being left on
+   ([firmware issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518)).
+   The other is the bed's status light, which one owner describes as lit during a print
+   and not during a calibration from the menu. On stock firmware, one owner who switched
+   it off from the menu, and another who also fitted ferrite beads, report that their
+   failures stopped
+   ([firmware issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526),
+   [tool offset thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/)).
 
 ## 36194 · 37194 · No offset sensor data {#36194}
 
@@ -308,9 +330,17 @@ fails, and the log lines are taken from the stock source at the 6.9.1 tag. That 
 is only as reliable as the reading of the source, which is linked above. The codes and
 titles of the comparison checks are from the stock
 [error code list](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml)
-at the same tag. The report of a clean tool on the head is a single owner's, on an issue
-that is open with no reply from the vendor. The attempt counts are from the 6.9.1-beta
+at the same tag. The report of a clean tool on the head is a single owner's. Two more
+owners have since said on the same issue that they see the same, without saying which
+part, and the vendor has not replied. The attempt counts are from the 6.9.1-beta
 release notes, and which touch they apply to is read from the source at the 6.9.1 tag.
+Of the two noise sources under 36193, the extruder motor is one owner's report for this
+calibration, and firmware issue 5518 reports the same motor upsetting the loadcell
+self-test; its reporter suspects, but has not shown, a link to failures at print
+start. The status light rests on two owners on stock firmware, on firmware issue 5526
+and in a forum thread, who report that switching it off, alone or together with
+ferrite beads, ended their failures. That issue's opener tested it on firmware they had
+modified, which this page does not rely on.
 
 What to do about each code is the author's reading of those checks. Where a section
 sends you to another page, that page's own tier applies. The rest has not been tested
@@ -327,8 +357,15 @@ with no delivery date. It is not in
 on 7 October 2026, which on the INDX
 [changes only](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
 the filament presets: stock 6.9.2 still shows 36130 for every failure on this page, and
-logs the same lines as 6.9.1. Whatever stock firmware ends up showing need not match
-the codes on this page.
+logs the same lines as 6.9.1.
+[7.0.0](https://help.prusa3d.com/downloads/core-one-indx), published on Prusa's
+downloads page on 15 October 2026, does not list it either: its notes say nothing about
+tool offset calibration errors. Its source is not yet published, so its log lines cannot be checked
+against this page. One owner on 7.0.0 reports the 36130 screen together with the log
+line this page maps to 36193
+([firmware issue 5548](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5548)),
+so for that failure at least, both are unchanged. Whatever stock firmware ends up
+showing need not match the codes on this page.
 
 ## Related
 

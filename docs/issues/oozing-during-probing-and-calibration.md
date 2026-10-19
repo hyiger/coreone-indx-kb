@@ -1,7 +1,7 @@
 ---
 title:        Oozing spoils bed probing and tool calibration
 confidence:   reported
-updated:      2026-10-08
+updated:      2026-10-18
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -24,6 +24,8 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
+  - https://help.prusa3d.com/downloads/core-one-indx
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1
 superseded_by:
 ---
 
@@ -146,12 +148,12 @@ print that begins on T3; the filament to look at is the one your print starts wi
 Whether the earlier T1 report describes an older profile or a different machine state is
 not established.
 
-**Neither 6.9.1 release lists a change here.** The beta lowered the temperature used
-for *tool offset calibration* — a different step, and one that firmware controls. The
-bed-probing temperature comes from the slicer profile, so owners on the beta still see
-PC Blend probe hot, and the
+**No firmware release so far lists a change here.** The 6.9.1 beta lowered the
+temperature used for *tool offset calibration* — a different step, and one that firmware
+controls. The bed-probing temperature comes from the slicer profile, so owners on the
+beta still see PC Blend probe hot, and the
 [bug report](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5483) filed against
-the beta is still open and unanswered. The
+the beta is still open, with no reply from Prusa. The
 [stable 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1),
 published 2026-09-25, lists a gantry-squaring wizard and a homing fix, and nothing about probing temperature. Its notes also do not repeat the beta's
 calibration changes, but the stable carries them all the same: in the firmware
@@ -162,7 +164,12 @@ the notes. 6.9.2, released 2026-10-07, changes nothing here either: on the INDX 
 stable 6.9.1 plus the PVA and BVOH filament presets that the 6.9.1 notes announced but
 left out
 ([compare](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)).
-No owner has yet reported how PC Blend probes on stable 6.9.1 or 6.9.2.
+Firmware 7.0.0, dated 15 October 2026 on
+[Prusa's downloads page](https://help.prusa3d.com/downloads/core-one-indx), lists nothing
+on probing temperature either, which fits the value coming from the slicer profile. On
+18 October a further commenter on the bug report hit the failure as soon as they tried
+PC Blend, without naming a machine or a firmware version. No owner has yet reported how
+PC Blend probes on stable 6.9.1, 6.9.2 or 7.0.0.
 
 **Adjusting it.** One owner widened the PC offset in the printer's start G-code and the
 failures stopped. The catch, which they pointed out themselves, is that a printer
@@ -171,7 +178,10 @@ one. The same expression also checks the initial tool's filament notes for an ov
 marker before it ever reaches the PC case, which suggests a per-filament route that would
 survive those updates — but that is a reading of the profile, not something an owner has
 reported testing. And the slicer's own **oozing-prevention option did not help**, so
-reaching for it first will cost you a print.
+reaching for it first will cost you a print. The owner who filed the PC Blend bug report
+suggests a stopgap that touches no file: as soon as bed probing starts, turn the nozzle
+temperature down from the Tune menu. It is the hand-lowered temperature described above,
+timed to the probing, and it has to be repeated on every print.
 
 TODO(verify): these accounts state the temperature PC probed at, the lower ones that
 worked, and the adjusted offset. None of them is published here. Forum posts and a bug
@@ -219,9 +229,14 @@ In practice: a failed bed leveling will not clean the nozzle for you, and after 
 tool offset calibration, cleaning by hand is followed by a fresh purge. An
 [upstream report](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5505) against
 the beta asks for the calibration retry to skip the purge and only reheat and wipe,
-since purging again feeds the problem back in; it is open and unanswered. This is a
-reading of the code at the v6.9.1 tag, not something an owner has confirmed by watching
-both failures on one machine.
+since purging again feeds the problem back in; it is open and unanswered, as is the
+feature request. This is a reading of the code at the v6.9.1 tag, not something an owner
+has confirmed by watching both failures on one machine. Firmware 7.0.0's notes mention
+neither retry. Their only item on the wipe itself, improved nozzle wiper cleaning, is
+tagged as carried over from
+[6.10.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1) (XL and
+XL+ firmware) and does not say what changed, and Prusa had not published the 7.0.0
+source when this was written. Whether a retry still purges on 7.0.0 is therefore open.
 
 ### If none of that helps
 
@@ -271,7 +286,9 @@ but it shows what the code does, not what an owner has watched happen.
 Neither source file (the bed leveling command or the tool offset calibration) differs
 between the v6.9.1 and
 [v6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2) tags, so
-the reading holds for 6.9.2 as well.
+the reading holds for 6.9.2 as well. Prusa had published no 7.0.0 tag on GitHub when
+this was written, so the reading has not been checked against 7.0.0, whose notes name
+no change to either retry.
 
 Where the sources disagree: drying was offered confidently as the likely cause for
 PETG, but the case that was actually resolved was resolved by cleaning, not drying.
