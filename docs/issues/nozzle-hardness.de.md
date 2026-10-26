@@ -1,7 +1,7 @@
 ---
 title:        Düsenhärte und abrasive Filamente
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -19,8 +19,9 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/hardened-nozzle/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-refund-voucher-doesnt-work-with-free-shipping/
 superseded_by:
-source_sha:   5cf006da171d7b2d76192e60421ce411c354e513e58e28444ab66802c404e8ea
+source_sha:   e0e6f24e142769b4757060c8e49e221e1299e98bce2216d8dd0f834095f69aec
 ---
 # Düsenhärte und abrasive Filamente
 
@@ -153,16 +154,37 @@ versäumte Frist kostet — holen Sie sie aus der aktuellen Erklärung des Herst
 nicht von dieser Seite. Unabhängig davon hat Prusa eine verlängerte Rückgabefrist für
 Kit-Bestellungen aus der ersten Charge veröffentlicht; TODO(verify) auch deren Länge.
 
-**Wenn Ihr Kit im August bereits bei Prusa bestellt war, richtet sich der Anspruch an
-Prusa.** Prusas Update vom August ging an Kunden, die ihre Kit-Bestellung schon
-aufgegeben hatten, also an die ersten Chargen, und besagt, dass Prusa und nicht der
-Hersteller deren Entschädigung abwickelt: Guthaben im Prusa-Shop oder eine geringere
-Barerstattung, festgelegt je Kit und gestaffelt nach dessen Werkzeuganzahl. Das Guthaben
-kommt als Gutschein per E-Mail, verschickt in Wellen, die den Versandchargen folgen; ist
-Ihr Gutschein einige Tage nach Eintreffen des Kits nicht da, ist Prusas technischer
-Support der Ansprechpartner. Bargeld statt Guthaben beantragen Sie bei Prusas Support per
-Live-Chat oder E-Mail. Ob auch Kits abgedeckt sind, die nach diesem Update bei Prusa
-bestellt wurden, hat Prusa nicht gesagt.
+**Wenn Ihr Kit zu Prusas Bestellungen der ersten Chargen gehört, richtet sich der
+Anspruch an Prusa.** Prusas Update vom August ging an Kunden, die ihre Kit-Bestellung
+schon aufgegeben hatten, und besagt, dass Prusa und nicht der Hersteller deren
+Entschädigung abwickelt: Guthaben im Prusa-Shop oder eine geringere Barerstattung,
+festgelegt je Kit und gestaffelt nach dessen Werkzeuganzahl. Diese Kunden waren die
+ersten Chargen: Prusa öffnete die Kit-Bestellungen erst danach wieder, in seiner
+[Ankündigung vom 20. August](https://blog.prusa3d.com/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders_137623/),
+für Besitzer, die die erste Charge verpasst hatten. Das Guthaben kommt als Gutschein per
+E-Mail, verschickt in Wellen, die den Versandchargen folgen; ist Ihr Gutschein einige
+Tage nach Eintreffen des Kits nicht da, ist Prusas technischer Support der
+Ansprechpartner. Bargeld statt Guthaben beantragen Sie bei Prusas Support per Live-Chat
+oder E-Mail. Dasselbe Update gab den Bestellungen der ersten Chargen außerdem die
+Hardware für das Upgrade auf den Core One+ Gen 2 (neue Riemen, Riemenscheiben und
+Elemente zum Ausgleich der Wärmeausdehnung), auf Prusas eigene Kosten.
+
+Ob auch Kits abgedeckt sind, die nach diesem Update bei Prusa bestellt wurden, hat Prusa
+nicht veröffentlicht. Ein Besitzer, dessen Bestellung offenbar nach der Frühjahrswelle
+lag, fragte Prusas Support nach der Gen-2-Hardware und gibt die Antwort in Prusas
+[Thread zu Versand-Updates](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/)
+wieder: Das kostenlose Upgrade galt allein den Bestellungen aus dem Frühjahr, als
+Wiedergutmachung für den verspäteten Versand und für die Düsenhärte, und Bestellungen
+ab August, eine zweite Welle, bekommen es nicht kostenlos. Derselbe Besitzer sagt, dass
+neue Bestellungen die Gen-2-Hardware inzwischen zusammen mit dem INDX enthalten; ob
+deren Kosten im Preis stecken, ist nicht bestätigt. Das muss nicht für jede neue
+Bestellung gelten: Prusas Ankündigung vom 20. August nennt getrennte Versionen des
+Umrüstkits für den CORE One+ und den CORE One+ (Gen 2), passend zum Drucker zu wählen,
+ohne zu sagen, was jede enthält, und ein weiterer Besitzer im Thread zu Versand-Updates
+schrieb im August, dass sich der INDX mit oder ohne das Gen-2-Upgrade bestellen ließ.
+Die wiedergegebene Antwort sagt nichts über Guthaben oder Bargeld für die späteren
+Bestellungen; dieser Teil der Frage bleibt also offen. Vorläufig: die Wiedergabe einer
+privaten E-Mail durch einen einzelnen Besitzer.
 
 TODO(verify): Prusas Guthaben- und Barbeträge für jede Kit-Größe, aus Prusas Update vom
 August an die Kit-Kunden, wie im Thread „nozzlegate communications“ wiedergegeben.
@@ -191,13 +213,31 @@ hervor. Der Zeitpunkt, vielleicht im Frühjahr, ist seine eigene Schätzung. Der
 Besitzer fragte Prusa außerdem, wie lange der Gutschein gültig bleibt, und gibt die
 Antwort wieder: Es gibt eine Frist; prüfen Sie sie, bevor Sie Guthaben für Düsen
 zurückhalten, die Prusa vielleicht später führt. Ob für Prusas Gutschein auch die
-weiteren, weiter unten beschriebenen Bedingungen des Herstellers gelten, ist nicht
-berichtet. Das ist vorläufig, der Beitrag eines einzelnen Besitzers und seine
-Wiedergabe einer privaten Antwort.
+weiteren, weiter unten beschriebenen Bedingungen des Herstellers gelten, ist nur
+teilweise bekannt; siehe den folgenden Bericht. Das ist vorläufig, der Beitrag eines
+einzelnen Besitzers und seine Wiedergabe einer privaten Antwort.
 
 TODO(verify): die Gültigkeitsdauer von Prusas Entschädigungsgutschein — von einem
 Besitzer in Prusas Thread zu Versand-Updates als Prusas Antwort auf eine Frage
 wiedergegeben; eine veröffentlichte Fassung davon ist nicht bekannt.
+
+Prusas Gutschein deckte, wie der des Herstellers, keine Versandkosten, im bisher einzigen
+berichteten Fall, dem eines Besitzers, der seinen Ende Oktober einlöste, in einem
+[Thread zum Gutschein und zum kostenlosen Versand](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-refund-voucher-doesnt-work-with-free-shipping/).
+Dieser Besitzer stieß noch auf ein zweites Hindernis. Prusas Shop bot gerade eine Aktion
+mit kostenlosem Versand ab einem Mindestbestellwert, und mit der Eingabe des Gutscheins
+kehrten die Versandkosten zurück; der Besitzer schloss daraus, dass der Teil der
+Bestellung, den der Gutschein bezahlte, nicht zu diesem Mindestwert zählte. Prusas
+Support, per Live-Chat erreicht, löste das noch am selben Tag, indem er den Wert des
+Gutscheins um die Versandkosten erhöhte. Der Versand wurde trotzdem gesondert berechnet,
+und der Gutschein deckte nur die Ware; im Ergebnis entsprach das dem kostenlosen Versand
+also im Wert, nicht aber in der Form. Ein Vertreter von Prusa hatte im Thread an den
+Support verwiesen und ergänzt, dass mehrere Gutscheine auf einer Bestellung dazu führen
+können, dass ein Angebot ein anderes verdrängt; dieser Besitzer hatte nur einen
+verwendet. Von dem Gutschein blieb nach der Bestellung ein kleiner Rest, und der Beitrag
+sagt nicht, was daraus wurde; ob Prusas Gutschein wie der des Herstellers mit einer
+einzigen Bestellung aufgebraucht ist, ist daher nicht berichtet. Vorläufig: ein
+Besitzer, eine Bestellung.
 
 **Wie ein Anspruch beim Hersteller abläuft, nach Angaben von Besitzern, die einen
 gestellt haben.** Sein Kontaktformular hat keine offensichtlich passende Kategorie;
@@ -236,9 +276,10 @@ ebenfalls Bargeld zu verlangen. Der Beitrag sagt nicht, ob dieser Besitzer zuvor
 Guthaben beantragt hatte; ob sich eine bereits eingereichte Wahl für Guthaben noch ändern
 lässt, ist daher nicht geklärt. Zwei dort gestellte Fragen blieben unbeantwortet: ob
 dieselben Bedingungen für Guthaben auf bei Prusa gekaufte Kits gelten und ob eine
-Barerstattung auf das ursprüngliche Zahlungsmittel zurückfließt. Die oben aus einem
-anderen Thread wiedergegebene Gültigkeitsfrist von Prusas Gutschein beantwortet die
-erste Frage nur zum Teil.
+Barerstattung auf das ursprüngliche Zahlungsmittel zurückfließt. Die oben wiedergegebene
+Gültigkeitsfrist von Prusas Gutschein und der Bericht eines Besitzers, dass der
+Gutschein keine Versandkosten deckte, beide aus jeweils einem anderen Thread,
+beantworten die erste Frage nur zum Teil.
 
 !!! note "Shop-Guthaben kauft Düsen, die Sie vielleicht noch nicht nutzen können"
     Wissenswert, bevor Sie Guthaben statt Bargeld wählen: PrusaSlicer bietet für den INDX
@@ -268,7 +309,12 @@ erste Frage nur zum Teil.
     Im Oktober aufgegebene Bestellungen gingen nach Angaben dreier weiterer Besitzer dort
     innerhalb von ein bis zwei Wochen hinaus, und eine davon enthielt eine Düse mit
     glatter Bohrung. Mitte Oktober sagten zwei Besitzer dort, die 0.4mm- und
-    0.6mm-Düsen seien offenbar gut verfügbar. Der erste der wartenden Besitzer hält
+    0.6mm-Düsen seien offenbar gut verfügbar. Zwei spätere Berichte, beide ohne
+    Bestelldatum, weisen in beide Richtungen: Ein weiterer Besitzer dort sagte Ende
+    Oktober, seine Lieferung habe rund drei Wochen gebraucht, und er warte vor dem Einsatz
+    noch auf Profile; und im Thread zu Ersatzdüsen berichtete ein anderer von einer
+    Bestellung, die innerhalb weniger Tage versandt wurde und wenige Tage später in den USA
+    ankam, wobei Einfuhrzölle die Kosten erhöhten. Der erste der wartenden Besitzer hält
     weiterhin Düsen mit glatter Bohrung für den Grund der Verzögerungen und hatte
     gewarnt, dass der Shop Düsen als vorrätig anzeigen kann, die nicht versandbereit
     sind; ein Muster nach Typ ist nicht belegt. Die Erklärungen des Herstellers gibt
@@ -357,8 +403,10 @@ Oberflächenbehandlung und der Härtewert, der Messingeinsatz, Existenz und Aufb
 Entschädigungsangebots sowie die Erklärung über Induktion und Permeabilität — all das
 erscheint in den Threads als zitiertes Material des Herstellers und nicht als
 Schlussfolgerung von Besitzern. Dasselbe gilt dafür, dass Prusa die Entschädigung für
-bereits bei Prusa bestellte Kits abwickelt, zitiert aus Prusas Update vom August an diese
-Kunden.
+seine Kit-Bestellungen der ersten Chargen abwickelt, die Gen-2-Upgrade-Hardware
+eingeschlossen, zitiert aus Prusas Update vom August an diese Kunden; dass die
+Kit-Bestellungen erst nach diesem Update wieder öffneten, in getrennten Versionen für den
+CORE One+ und den CORE One+ (Gen 2), ist Prusas eigene Ankündigung.
 
 !!! note "Warum hier Härtewerte stehen, andere Zahlen aber nicht"
     Diese Website hält Kalibrierwerte, Temperaturen und Druckeinstellungen zurück, bis ein
@@ -390,7 +438,9 @@ einem Gespräch auf einer Messe. Langsame Lieferungen von Ersatzdüsen bis Anfan
 berichten vier Besitzer in zwei Threads, einer dieser Threads enthält aber auch eine
 schnelle Lieferung, und die Gründe des Herstellers für die Verzögerungen gibt jeweils ein
 einzelner Besitzer wieder. Der seither schnellere Versand und die veränderte äußere
-Oberfläche der Düsen beruhen auf Besitzern in diesem einen späteren Thread. Die
+Oberfläche der Düsen beruhen auf Besitzern in diesem einen späteren Thread. Eine
+schnelle Lieferung im Thread zu Ersatzdüsen und eine dreiwöchige im späteren Thread,
+beide ohne Bestelldatum, lassen sich weder vor noch nach Anfang Oktober einordnen. Die
 Bezeichnung „gehärtet“ an gelieferten Ersatzdüsen stammt aus einem einzigen Thread. Dass
 sich mit Prusas Guthaben keine INDX-Düsen kaufen ließen, weil Prusas Shop sie nicht
 führte, beruht auf drei Besitzern in drei getrennten Threads, nicht auf einer Aussage
@@ -398,7 +448,14 @@ von Prusa: für August auf dem Besitzer vom August, für Mitte Oktober auf zwei 
 Die Erwartung, dass Prusa sie später führen wird, stammt von einem einzelnen Besitzer
 und nicht erkennbar von Prusa; die Gültigkeitsfrist von Prusas Gutschein ist dessen
 Wiedergabe. Dass sich das Guthaben nicht beim US-Händler von Prusa einlösen lasse, ist
-die vorsichtig geäußerte Annahme eines einzelnen Besitzers.
+die vorsichtig geäußerte Annahme eines einzelnen Besitzers. Dass Prusas Gutschein keine
+Versandkosten deckte und, nach der Lesart dieses Besitzers, nicht zu einem Mindestwert
+für kostenlosen Versand zählte, ist der Bericht eines einzelnen Besitzers über eine
+einzige Bestellung. Dass die kostenlose Gen-2-Hardware nur den Frühjahrsbestellungen
+galt, ist die Wiedergabe einer privaten Antwort von Prusas Support durch einen anderen
+Besitzer, und dass neue Bestellungen diese Hardware enthalten, ist dessen eigene
+Beobachtung; dass sich der INDX mit oder ohne das Upgrade bestellen ließ, ist der
+Beitrag eines weiteren Besitzers vom August.
 
 Wo die Quellen sich widersprechen: Besitzer sind sich deutlich uneins darüber, ob die
 Entschädigung angemessen ist und wie groß die praktische Auswirkung der Härte für jemanden

@@ -1,7 +1,7 @@
 ---
 title:        Hardware
 confidence:   unknown
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One, Core One Plus, Core One L
 toolhead:     INDX
@@ -71,12 +71,21 @@ separately: stable firmware 6.9.1, published 25 September 2026, lists the Core O
 (Gen 2) INDX and the Core One/+ INDX as the machines it supports, and 6.9.2, published
 7 October 2026, names the same two. Firmware 7.0.0 for the INDX, dated 15 October 2026,
 had by 18 October appeared only on Prusa's downloads page, not as a GitHub release.
-There it sits under a single Core One INDX entry, on a page headed for the Core One/+
-INDX, and its notes do not list the two generations separately. The same page carries
+There it sat under a single Core One INDX entry, on a page headed for the Core One/+
+INDX, and its notes do not list the two generations separately. The same page carried
 a separate 7.0.0 for the Core One L+, dated 5 October 2026, whose notes do not mention
-the INDX at all. None of these releases names an INDX-equipped Core One L. Take the
-same care between generations as between models wherever a finding involves the belts,
-their pulleys or the bed's expansion joints, which are among the parts Gen 2 changes.
+the INDX at all. Firmware 7.0.1, dated 19 October 2026 and carrying a single fix for a
+freeze at startup, is likewise on the downloads page only: as of 25 October it is listed
+among the older versions under that same Core One INDX entry, and its notes do not
+separate the generations either. Firmware 8.0.0, dated 22 October 2026, follows the same
+pattern: as of 25 October it too is on the downloads page only, under the same single
+Core One INDX entry on a page still headed for the Core One/+ INDX, with notes that do
+not separate the generations, and the page's Core One L+ entry moved to its own 8.0.0 on
+the same date, again with notes that never mention the INDX. None of these releases
+names an INDX-equipped Core One L, even though as of 25 October the site menu on that
+same page links to a Core One L+ INDX printer in the shop. Take the same care between
+generations as between models wherever a finding involves the belts, their pulleys or
+the bed's expansion joints, which are among the parts Gen 2 changes.
 
 **Four tools or eight.** Prusa's listing describes the two kit sizes as sharing the
 Smart Head and docking hardware and differing only in how many passive tools come with
@@ -101,7 +110,8 @@ and the firmware naming from the
 [6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2) releases
 and, for 7.0.0, from Prusa's
 [downloads page](https://help.prusa3d.com/downloads/core-one-indx) as it stood on
-18 October 2026. The difference in Founders Edition kits is what their owners report, in
+18 October 2026, and for 7.0.1 and 8.0.0, from the same page as it stood on
+25 October 2026. The difference in Founders Edition kits is what their owners report, in
 [a thread on growing a four-tool kit](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/)
 and in [one on sourcing dock hardware](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/sourcing-tool-dock-hardware/).
 That Prusa's four-tool kit lacks the sensor too is stated in the
@@ -124,9 +134,9 @@ from the storefront.
     reading this. The Gen 2 paragraph rests on more — Prusa's own posts and release
     notes — and so does the kit-size paragraph, with owners in two separate threads and
     that edition's own guide for the Founders Edition, and Prusa's guide for Prusa's
-    kit, but both sit in this section and take its tier. The 7.0.0 naming rests on a
-    downloads page that Prusa edits in place, not on a tagged release, and should be
-    checked again once a GitHub release appears.
+    kit, but both sit in this section and take its tier. The 7.0.0, 7.0.1 and 8.0.0
+    naming rests on a downloads page that Prusa edits in place, not on a tagged release,
+    and should be checked again once a GitHub release appears.
 
 ## Verification
 

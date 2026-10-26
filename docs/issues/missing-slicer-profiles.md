@@ -1,7 +1,7 @@
 ---
 title:        Only one nozzle size has a slicer profile
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -35,6 +35,8 @@ sources:
   - https://github.com/Zsoldier/PrusaSlicer-OpenPrintTagImport
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/flex-filament-stuck-and-cannot-dock-tool/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-review/
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/i-printed-tpu-on-my-indx/
 superseded_by:
 ---
 
@@ -51,15 +53,16 @@ same nozzle only, and owners who tried the alphas found no other size either (se
 OrcaSlicer's first INDX profiles, in its 2.5.0 alpha of 16 October, likewise cover only
 the high-flow 0.4mm. Two requests to add the sizes are open upstream, the first since
 July 2026; neither has had a response from Prusa, only more commenters asking for the same.
-Prusa's latest profile bundle, 2.5.12 of 15 October 2026, still declares only that one
-variant, though it and 2.5.11 before it add more groundwork for other sizes, none of it
-reachable.
+Prusa's latest profile bundle, 2.5.13 of 22 October 2026, still declares only that one
+variant, though 2.5.11 and 2.5.12 before it added more groundwork for other sizes, none of
+it reachable.
 
 The material side has moved since this page was first written: flexible filament and
 BVOH gained INDX slicer presets in September, and PVA a generic one in October with
 bundle 2.5.12. HIPS still has none. Printer-side PVA and BVOH presets, announced for
 firmware 6.9.1 but left out of it, arrived with 6.9.2 on 7 October and carry over into
-7.0.0; those are the printer's own presets, not slicer profiles.
+7.0.0 (the 7.0.1 and 8.0.0 notes do not mention them); those are the printer's own
+presets, not slicer profiles.
 
 Variable nozzle sizes across tools was a headline capability for this toolchanger, so
 it is worth knowing before you buy nozzles, and particularly before you take store
@@ -71,8 +74,8 @@ credit as nozzle compensation.
 
 This is checkable rather than a matter of report. Prusa publishes its profile bundle,
 and in the current release
-([2.5.12](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.12.ini),
-checked on 18 October 2026) both INDX printer models — the four-tool and the
+([2.5.13](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini),
+checked on 25 October 2026) both INDX printer models — the four-tool and the
 eight-tool — declare a single variant:
 
 ```ini
@@ -104,7 +107,7 @@ also describe a different mechanism in 3.0: the nozzle size and high-flow status
 chosen per tool in the printer profile rather than declared as printer variants. What
 limits the INDX there is therefore which nozzle values its 3.0 profile carries presets
 for, not a `variants =` line. In alpha 12, published on 21 September and still the
-newest 3.0 alpha on 18 October, the file holding the INDX's
+newest 3.0 alpha on 25 October, the file holding the INDX's
 [per-tool print presets](https://github.com/prusa3d/PrusaSlicer/blob/version_3.0.0-alpha12/resources/presets/prusa-research-fff/PrusaResearch/preset-tool-coreone-indx.yaml)
 has live named print presets for a high-flow 0.4mm nozzle only; those for high-flow 0.5,
 0.6 and 0.8 and for a standard 0.25 are there, commented out, though the shared base
@@ -187,6 +190,22 @@ templates. It also begins separate templates whose
 conditions name Core One L INDX models, which the bundle does not declare as printers.
 None of that can be reached on a Core One INDX.
 
+Bundle 2.5.13, published on 22 October, the day firmware 8.0.0 came out, again leaves the
+nozzle side alone: the same single `HF0.4` variant, and the same twenty filament, ten
+print and two printer presets live. Its
+[changelog](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/index.idx)
+lists an updated INDX layer script, which fixes the profile's dock-fan test so that it
+takes in PETG (see the [annotated G-code page](../gcode/indx-profile-gcode.md)), and
+another firmware version notice. Underneath, it revises one value in the shared template
+for 0.8mm nozzles, which only switched-off presets use, and adds two more commented-out
+entries, Prusament PA11 at HF0.4 for the Core One INDX and for a Core One L INDX. The
+first follows the same pattern as the owner's hand-made entry in the nylon thread
+described below, with a Core One nylon preset as the parent and the bundle's INDX nylon
+template on top. Prusa's parent is its Core One preset for Prusament PA11, where the
+owner's was a different nylon with a second INDX template, for PA6, added; Prusa's entry
+also overrides several settings with values of its own. Switched off, it adds nothing
+you can select; nylon still has no live INDX preset.
+
 ### Materials
 
 The same upstream request also asks for materials, and here the bundle has moved.
@@ -210,7 +229,7 @@ and the file itself:
   G-code calls `M906 P2`, the FLEX extruder-current profile that firmware 6.9.0 added.
 - **BVOH** has two, both for third-party spools (Verbatim and Fiberlogy). Their start
   G-code calls `M906 P2` too.
-- **HIPS** is still absent as of 2.5.12. As in 2.5.7, INDX entries for it exist, but
+- **HIPS** is still absent as of 2.5.13. As in 2.5.7, INDX entries for it exist, but
   only among the commented-out ones. PVA was in the same position until 2.5.12.
 
 **Since bundle 2.5.12** (committed 15 October 2026), per the same changelog and the file:
@@ -220,7 +239,7 @@ and the file itself:
   calls `M906 P2`. The commented-out INDX entries for a branded PVA stay switched off.
 
 The user-facing default material list for both INDX models was described here as the
-usual PLA and PETG family, which understated it even in August. As of 2.5.12 it takes
+usual PLA and PETG family, which understated it even in August. As of 2.5.13 it takes
 in PLA, PETG, ASA, the PC Blends and Woodfill, and since 2.5.9 TPU 95A, all at the one
 available variant; neither soluble material is on it.
 
@@ -236,7 +255,7 @@ profile to PrusaSlicer. So 6.9.2 left BVOH covered at both ends and PVA only at 
 printer; since bundle 2.5.12, PVA is covered at both ends too. Firmware 7.0.0 of 15
 October keeps the presets, which its
 [release notes](https://help.prusa3d.com/downloads/core-one-indx) mark as carried over
-from 6.9.2.
+from 6.9.2. The notes for 7.0.1 and 8.0.0 do not mention them.
 
 That matters beyond convenience: HIPS and the soluble materials are what you would reach
 for to print support interfaces on a toolchanger, which is a large part of why someone
@@ -326,11 +345,11 @@ machine changes.
   open since 31 July 2026 for sizes and materials. It had no comment at all until
   October, when two further commenters added theirs, one asking whether other sizes and
   non-CHT nozzles were coming and one saying their standard nozzles from the vendor
-  still had nothing to run on; Prusa had not responded by 18 October. The second,
+  still had nothing to run on; Prusa had not responded by 25 October. The second,
   [issue 48](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/48), was
   filed on 29 September by someone else and asks for the nozzle sizes alone, listing
   0.25, 0.5, 0.6, 0.8 and 1.0; its only comment is the first of those commenters
-  repeating the question, and it too had no response from Prusa by 18 October. An issue
+  repeating the question, and it too had no response from Prusa by 25 October. An issue
   with one reporter and no engagement is easy to leave unattended; several owners saying
   which sizes and materials they actually need is harder to. Note that the September
   material presets arrived with issue 45 untouched, and the 0.25 groundwork in 2.5.11 and
@@ -364,11 +383,11 @@ profile in ways that are not obvious.
 **The central claim is verified, not reported.** That only `HF0.4` is offered comes from
 reading Prusa's own published profile bundle, where both INDX printer models declare that
 one variant. That is first-party published data, in the same class as a firmware release
-note — not somebody's account of their machine. It was re-read at 2.5.12 on 18 October
+note — not somebody's account of their machine. It was re-read at 2.5.13 on 25 October
 2026, as were the material presets, the commented-out entries and the compatibility
 conditions described above. The 3.0 alpha 12 print-preset file and OrcaSlicer's 2.5.0
-alpha printer presets were read the same day, in their published source; neither slicer
-was run.
+alpha printer presets were read on 18 October, in their published source, and neither
+slicer had a newer release by 25 October; neither was run.
 
 **The impact is reported**, by six owners in
 [one forum thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/missing-profiles-in-slicer-for-non-0-4-nozzles-and-other-materials/),
@@ -390,9 +409,11 @@ profiles, is still building their kit. It shows the same gap from a second direc
 but adds only two new owners: the one who asked, and the one still building. A
 [third thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/where-are-all-the-print-profiles/),
 opened on 18 October, adds one more owner who bought other sizes and found nothing to
-select; its only reply so far came from this page's author.
-On the upstream requests, two further commenters in October added their own need, one of
-them on both issues; nothing in the sources ties either to the forum threads.
+select. The only reply from anyone other than the opener came from this page's author;
+the opener's follow-up added that none of Prusa's profiles for other printers had been
+carried over to the INDX. On the upstream requests, two further commenters in October
+added their own need, one of them on both issues; nothing in the sources ties either to
+the forum threads.
 
 **The symptom is reported; the other-brands case is provisional.** Two owners in two
 threads found that filaments installed through the wizard could not be selected on the
@@ -438,12 +459,24 @@ day later repeated that TPU had worked for them; they did not say which flex pre
 they chose. In a
 [thread about a tool that would not dock](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/flex-filament-stuck-and-cannot-dock-tool/),
 two owners had a tool stuck on the head with flexible filament jammed around its extruder
-gears, one of them while using the Generic FLEX preset. None of the threads settles
-whether the presets are sound; they show that flex on the INDX can work and can also
-jam. The successes come from two owners in two threads, only one of whom names the
-preset, so treat them as provisional; the jams come from three owners across two
-threads, counting the first owner's first attempt. Nobody in the sources reports
-printing BVOH or PVA with the presets yet.
+gears, one of them while using the Generic FLEX preset. On 24 October, in a
+[thread about printing TPU on the INDX](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/i-printed-tpu-on-my-indx/),
+a further owner said in passing that they have no trouble printing Prusament TPU 95A,
+while asking how to print a softer TPU; the thread is about the INDX, but they named
+neither the machine nor the preset. It had opened in August, before the INDX flex
+presets existed, with another owner printing a third-party TPU on a standard 0.4 nozzle
+the printer did not yet recognize, using a filament profile copied from their
+single-tool Core One. None of the threads settles whether the presets are sound; they
+show that flex on the INDX can work and can also jam. The successes with the presets
+available come from two owners in two threads, enough to call it reported that flex can
+print on the INDX, and a third owner implies one; only one of them names the preset, so
+anything about the presets themselves stays provisional. The jams come from three owners
+across two threads, counting the first owner's first attempt. Firmware 8.0.0,
+released on 22 October, slows flexible filament less during nozzle cleaning than earlier
+releases did, per its [notes](https://help.prusa3d.com/downloads/core-one-indx); every
+report above except the one of 24 October predates it, and that one does not say which
+firmware it was on. Nobody in the sources reports printing BVOH or PVA with the presets
+yet.
 
 This will date quickly. It is a configuration gap that a profile release closes in a
 single update, so check the current bundle before acting on it. It already has, in part:

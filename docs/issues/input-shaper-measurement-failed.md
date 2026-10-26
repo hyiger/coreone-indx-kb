@@ -1,7 +1,7 @@
 ---
 title:        Input shaper calibration stops with "Measurement failed"
 confidence:   provisional
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One / Core One+ with INDX, mostly Founders Edition; one Founders Edition with the Gen 2 upgrade
 toolhead:     INDX (one report is an 8-tool head; the rest do not say)
@@ -47,10 +47,11 @@ accelerometer has just calibrated without complaint. Prusa is investigating and 
 issue is open; nothing in the 6.9.1 release notes addresses it, 6.9.2, released on
 7 October 2026, changes only the printer's filament presets, and the notes for
 [7.0.0](https://help.prusa3d.com/downloads/core-one-indx), published on 15 October 2026,
-do not mention input shaping or the accelerometer. The only report since 6.9.2 came out
+do not mention input shaping or the accelerometer, and neither do those for 7.0.1 and
+8.0.0, published on 19 and 22 October. The only report since 6.9.2 came out
 is an update from an owner who had reported on the beta: since they flashed 6.9.2 the
 calibration fails one step earlier, at the accelerometer, and it still did after going
-back to 6.9.1. Nobody has reported on 7.0.0. A Prusa developer's
+back to 6.9.1. Nobody has reported on 7.0.0 or later. A Prusa developer's
 first check was the **1.5GT Belts** setting, which must match the belts actually on the
 printer. Going back to firmware 6.6.3 got the calibration working for two owners, though
 one of them now finds it failing there too. A
@@ -131,10 +132,10 @@ mention input shaping or the accelerometer. The only input shaper source file th
 changed between the two tags is a small refactor of how filter names are looked up.
 On the INDX, 6.9.2 changes nothing but the PVA and BVOH filament presets, which the
 6.9.1 notes had announced and which that release left out. 6.9.2 touches no input
-shaper or accelerometer code. The 7.0.0 notes do not mention input shaping or the
-accelerometer either, and Prusa has not yet published the 7.0.0 source, so whether it
-changes that code cannot be checked. Prusa has not commented on the issue since saying
-it was tracking the problem.
+shaper or accelerometer code. The notes for 7.0.0, 7.0.1 and 8.0.0 do not mention input
+shaping or the accelerometer either, and Prusa has not yet published the source of any
+of them, so whether they change that code cannot be checked. Prusa has not commented
+on the issue since saying it was tracking the problem.
 
 Earlier, Prusa's notes for 6.6.0, the first INDX firmware, listed occasional errors in
 the Input Shaper and Phase Stepping calibrations as a known issue, which a restart and
@@ -209,8 +210,8 @@ the Gen 2 owner does not say how their 1.5GT Belts setting is set. The disagreem
 whether 6.6.3 alone fixes it is unresolved, and one of the two owners it fixed has since
 reported it failing there. That owner's update is the only report on 6.9.2 or on a
 return to 6.9.1, and it describes the failure moving to the accelerometer calibration.
-Nobody has reported on 7.0.0. Rechecked on 18 October 2026, the issue had no comments
-newer than that update.
+Nobody has reported on 7.0.0, 7.0.1 or 8.0.0. Rechecked on 25 October 2026, the issue
+had no comments newer than that update.
 
 The two reports about the belt setting in the assembly notes concern the setting and
 dock calibration; neither reported this failure. The two forum threads in the sources

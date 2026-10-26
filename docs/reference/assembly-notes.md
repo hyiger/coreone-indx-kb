@@ -1,7 +1,7 @@
 ---
 title:        Assembly notes — INDX conversion kit
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One, Core One Plus
 toolhead:     INDX
@@ -32,6 +32,10 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-fe-upgrading-to-gen2/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/calibration-issues-from-beginning/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/the-worst-experience-of-any-3d-printer-assembly/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/upgrade-core1-to-indx-gen2/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/indx-assembly-guide/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/mk4s-to-core-one-with-indx-conversion/
 superseded_by:
 ---
 
@@ -63,7 +67,9 @@ that a printed part needed tapping after you have already started driving screws
 
 - **A snap-rivet remover.** Disassembly means pulling a lot of nylon snap rivets, and
   this is the most-praised pre-print by a wide margin. It stops you scratching panels
-  or firing rivets across the room. Small and quick.
+  or firing rivets across the room. Small and quick. Not everyone sticks with it: one
+  owner who had printed the rivet tools found a flat wood chisel, used bevel down, got
+  under the rivet heads more easily. *Single report.*
 - **A belt helper jig.** Community-made to the official mounting-plate geometry. It
   holds both belts together so they end up the same length under the same tension,
   lets you trim them level with the mounting plate, and lets you return them to the
@@ -99,7 +105,10 @@ downloads will not match the current guide.
   build and, with no second printer, had to wait for support to send one. Prusa's
   edition of the guide has you take the tensioning screws out and lubricate them
   during the belt work, to head off trouble later; the Founders Edition guide only
-  loosens them.
+  loosens them. A self-printed replacement is not risk-free either: one owner fitted a
+  community remix of the tensioner pulley holder that takes heat-set inserts instead of
+  square nuts, had those printed parts split apart, and had to go through belt
+  tensioning, homing and gantry squaring again. *Single report.*
 
 **Check your build plate now, not afterwards.** If you print on an oversized
 third-party flex sheet, it may stop clearing the tool docks once they are installed —
@@ -187,6 +196,17 @@ than several builders received. People have had to source or cut their own. This
 the reason for the screw assortment above — running out mid-step is the difference
 between an evening and a weekend.
 
+Kits vary. One owner whose upgrade kit arrived in late September 2026 found a single
+spare of almost every fastener but no spare rivets, so one dropped screw would use up
+the only spare; a Founders Edition builder in the same thread finished with screws left
+over, though by their account some were left from building their Core One as a kit. An
+owner who built the INDX and Gen 2 from a batch 7 upgrade kit was two screws short, one
+bag holding a sheet-metal screw where the right one should have been, and nozzle wiper
+parts were missing. Support sent a photo of the bag those parts should have been in,
+then asked for photos of every remaining bag and part before sending replacements; the
+owner photographed the empty bags too, so keeping them until the build is finished
+lets you do the same. *Provisional*: each of these is one owner.
+
 **There is no consolidated fastener list.** Fasteners are itemized step by step in the
 guide and nowhere else, so if you like to pre-sort into labeled bins you will be
 extracting that list yourself. Prusa's
@@ -257,9 +277,10 @@ Gen 2 parts were not yet fitted, and it made dock calibration fail; see
 [dock calibration](../issues/dock-calibration-rejects-docks.md). Prusa's firmware source,
 as published for 6.9.1, applies the Gen 2 variant on a first run, which would explain
 both, though that flashing the INDX firmware counts as a first run is inferred, not
-confirmed. The source for 7.0.0 has not been published, and its
-[release notes](https://help.prusa3d.com/downloads/core-one-indx) mention no change to
-this default, so check the screen on 7.0.0 as well.
+confirmed. None of 7.0.0, 7.0.1 (19 October 2026, a single fix for a freeze at startup)
+or 8.0.0 (22 October 2026) has had its source published, and none of their
+[notes](https://help.prusa3d.com/downloads/core-one-indx) mentions a change to this
+default, so check the screen on any of them as well.
 
 ## Steps to slow down on
 
@@ -274,7 +295,36 @@ TODO(verify): the length of pull-string to feed before securing the cover.
 Prusa confirmed this in the guide comments. Do not fully unscrew them: the center
 block can drop out, and reassembling it is genuinely miserable. This is a good moment
 to re-lubricate the rail while you have access. Tighten the bottom gantry screw again
-before you continue.
+before you continue. Look over the rest of the motion system while it is apart: one
+owner converting a factory-assembled Core One found one Y-axis rod slipped out of its
+holder, the other loose, and loose screws on the X carriage, none of which they had
+noticed before. *Single report.*
+
+**Belt ends at the head's mounting plate.** The INDX head sits on a printed mounting
+plate of its own, in place of the aluminum one, and that plate clamps the belt ends. Two
+owners in one thread had belt ends pull out of it during belt tension calibration, one
+of them again and again, even after squaring the gantry. Replies there were firm that a
+correctly fitted belt does not come out: the two ends lie teeth to teeth so they lock
+into each other, and running them right to the edge of the plate lets you see that
+neither has slipped while you screw the plate down. The belt helper jig listed above is
+one way to trim them level with that edge. Several owners, in three threads, back the
+tensioners right off first, for enough slack to pull each end deep into the plate so
+that plenty of teeth engage; that is what made the belts stay put for one of the two
+owners above. Neither of them has said what was wrong in their case. *Provisional* for
+the belts coming out: two owners, one thread; the slack technique is reported (see
+Verification).
+
+Belts set too tight bring their own trouble. The owner whose belts kept coming out
+found the X axis calibration failed with the belts too tight, and another owner in the
+same thread found the starting point they had been given for the tensioners far
+tighter than where theirs ended up. *Provisional*: two owners, one thread. If the
+gantry keeps drifting out of square, Prusa's handbook for the INDX lists a gantry
+squareness wizard among the additions in its revision of 22 October 2026, published on
+the [downloads page](https://help.prusa3d.com/downloads/core-one-indx) beside firmware
+8.0.0; this page has not checked what it says.
+
+TODO(verify): the starting tensioner setting one owner was given and where theirs
+ended up. Both are stated in the source thread and are withheld here.
 
 **Raising Z for the spoolholder screws.** The guide's stated Z height reportedly
 exposes only two of the four screws. Builders report needing to go noticeably higher.
@@ -282,6 +332,15 @@ exposes only two of the four screws. Builders report needing to go noticeably hi
 TODO(verify): the Z height the guide specifies and the height that actually works.
 Both are stated in the source thread. Getting this wrong costs you nothing but
 access, so the qualitative form — go higher than the guide says — is the usable part.
+
+**Spool holder nuts at the back.** These nuts go in blind. You cannot hold the nut
+holder and look along the side to line up the holes at the same time, and on the lower
+holders the nuts end up behind the bed's drive parts. One owner building the INDX and
+Gen 2 together recommends a second pair of hands, and found that a community-designed
+backplate for the spool holders, printed beforehand, made fitting them much easier.
+Printed nut helpers and a scrap of double-sided tape on a fingertip, from a separate
+thread, are under adding Gen 2 to a finished Founders Edition build below.
+*Single report*: the difficulty, the helper and the backplate are all one owner's.
 
 **Offset sensor cabling.** Thread the offset sensor cable through the hole **first**,
 then the thicker RGB LED cable. The other order does not fit. Watch the screw at that
@@ -296,6 +355,20 @@ mount it; checking afterwards is much harder.
 the holes run tight. Pre-tap with a spare M3 bolt. The tool-holder front face alone
 has upwards of two dozen holes to tap, so settle in and go slowly — slipping scars the
 front panel.
+
+How you tap matters as much as whether you do. One owner who built the INDX and Gen 2
+together cut the tool holders' holes with a proper M3 tap in a tap wrench, drove the
+screws with screwdriver-style drivers rather than an L-shaped hex key, and says to blow
+the holes clean; the spare tool holders they had printed went unused. In that owner's
+view the L-key is the problem whether it turns a tap or a bolt cutting its own thread,
+so use a tap wrench or a screwdriver-style driver either way. A screw turned by an
+L-key, they say, often leaves the hole worn and oversized, which is how they explain
+the many replacement holders other owners have printed. That explanation is their
+reading, not a tested cause. The same owner says to buy good drivers, since a cheap T10
+tip needed grinding back more than once. A Founders Edition builder in another thread
+found the screw holes in some of the kit's printed dock parts could have been better
+made, and one owner's screws melted into dock parts, as noted under Sourcing below: two
+different symptoms, each a single report.
 
 ## Tool dock magnets
 
@@ -404,11 +477,15 @@ the block's top part:
 
 **There is no filament sensor at the toolhead.** The INDX has side sensors only, which
 is confirmed in the firmware source as published for 6.9.1; nothing in the
-[7.0.0 release notes](https://help.prusa3d.com/downloads/core-one-indx) suggests a
-change. In practice: auto-load works only for the
+[7.0.0, 7.0.1 or 8.0.0 release notes](https://help.prusa3d.com/downloads/core-one-indx)
+suggests a change. In practice: auto-load works only for the
 currently picked tool, you feed each filament to the head manually with only the last
 short section pulled in, and there is **no clog or runout detection at the head
-itself**. This surprises people coming from a Nextruder.
+itself**. This surprises people coming from a Nextruder. Prusa's INDX handbook, in
+its revision 1.03 of 22 October 2026 on the
+[downloads page](https://help.prusa3d.com/downloads/core-one-indx), updated the
+filament loading procedure; this page has not checked that against the description
+here.
 
 **Four-tool and eight-tool kits share a guide.** Steps illustrating eight PTFE tubes
 or eight cables are normal — a four-tool kit uses half, and only one wire runs to the
@@ -470,6 +547,26 @@ the owner who made it:
   ([thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/)).
 
 *Provisional.* Each of these is a single report, from its own thread.
+
+A third failure at the back right of the bed may also come down to assembly, though its
+cause is not confirmed. In the
+[same thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/)
+as the spacer, an owner whose probing failed at that corner every time a print used more
+of the bed watched the heated bed's cable bunch up beneath it, leaving the back of the
+bed lower than the front. They later said they had found their issue in how that cable
+was routed: still behind a rod, but moved from under the heated bed to above it, as
+best their wording can be read. They were still sorting out leveling afterwards. A
+later owner in that thread has the same failure on prints that cover the whole bed,
+still undiagnosed, and the spacer owner above first reported the same symptom in that
+thread, so it has more than one cause. Another owner, who had just finished their
+build, says the guide does not make clear that the bed cable should hang behind the
+rear Z lead screw; they let it drape in a loose, even curve with its wires lying side
+by side and none crossing, and bend it tightly where it enters the chamber and tie it
+down firmly there, so that the bed can travel freely. If probing fails only at the back
+right, checking how the heated bed's cable is routed, and that nothing pinches it, costs
+little; that is a suggestion drawn from these reports, not a confirmed fix.
+*Provisional*: one owner's account of the routing, one owner's routing advice and one
+undiagnosed repeat, all in one thread, with the cause unconfirmed.
 
 ## Adding Gen 2 to a finished Founders Edition build
 
@@ -603,6 +700,31 @@ The support for each claim, item by item:
   on swapping an MMU3 for the INDX linked above and one in Prusa's shipping
   announcement thread. The same advice appears in the latter from this page's author,
   and is not counted.
+- **Slack when fitting the belt ends** rests on four owners in three threads: the owner
+  whose belts stayed put once they had slack, one who says they always work that way and
+  one who agrees it is standard on a stock Core One are in
+  [a thread on a difficult build](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/the-worst-experience-of-any-3d-printer-assembly/);
+  the one who always works that way gives the same advice in the
+  [thread on adding Gen 2 to a Founders Edition build](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-fe-upgrading-to-gen2/),
+  so counts once; and a further owner, who had found it helped when building a
+  Core One, gives it in
+  [a thread on the published guide](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/indx-assembly-guide/).
+  That the head's mounting plate is printed and clamps the belt ends is from an owner
+  reading the guide in that last thread and an owner who printed the plate in advance, in
+  [a thread on converting an MK4S](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/mk4s-to-core-one-with-indx-conversion/).
+  This page's author also replied in the first thread, and is not counted. The belts
+  coming out at all are two owners in that one thread, so *provisional*, as is the note
+  on belts set too tight. The handbook's gantry squareness wizard, like its updated
+  filament loading procedure noted under first boot, is from the change list on
+  Prusa's downloads page, as it stood on 25 October 2026.
+- **Screw-hole trouble in printed dock parts** is two different symptoms, each a
+  single report: one Founders Edition builder found the screw holes in some of the
+  kit's printed dock parts could have been better made, in the thread on a difficult
+  build, and one owner had screws melt into dock parts, in the thread on growing a
+  four-tool kit to eight. The owner who tapped the tool holders, in
+  [a thread on an INDX and Gen 2 build](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/upgrade-core1-to-indx-gen2/),
+  had no trouble of their own; their explanation of others' reprints is their reading
+  alone.
 
 Weaker: the MK4S bootloader lockout is one owner's experience, and is flagged as such
 in place. It comes from the general discussion thread, which is overwhelmingly
@@ -612,7 +734,14 @@ single reports, and marked in place: the belt setting after the first flash, the
 assembled printer that arrived without tools, the screws that melted into dock parts,
 the sensor-housing spacer workaround, the countersunk magnet measurement along with the
 two listings found at that size and the near match still awaiting a test, and both
-assembly mistakes, each from its own thread. The activation magnet size rests on one
+assembly mistakes, each from its own thread, along with the heated bed cable routing
+that may be a third and one owner's advice on routing that cable, both from the
+spacer's thread. From the thread on an INDX and Gen 2 build, all from the one owner
+who started it: the wood chisel for rivets, the split tensioner remix, the loose rod
+and carriage screws, the short screws and missing wiper parts with support's request
+for photos, and the spool holder backplate. The kit with one spare of nearly every
+fastener and the Founders Edition build with screws left over are one owner each in
+the thread on a difficult build. The activation magnet size rests on one
 owner's measurement set against a figure nobody measured. Where in the INDX sequence
 the Gen 2 parts go is now Prusa's own, in the combined article; this page's author's
 earlier practice is close to it but is not evidence. Leaving out the nozzle wiper is

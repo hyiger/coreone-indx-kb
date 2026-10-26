@@ -1,13 +1,13 @@
 ---
 title:        Tool offset calibration fails — contactless offset sensor
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1 and 6.9.2; first owner reports on 7.0.0; the board fault is not version-specific
+firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1 and 6.9.2; first owner reports on 7.0.0; the 7.0.0 startup hang fixed in 7.0.1; no reports yet on 8.0.0; the board fault is not version-specific
 sources:
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
@@ -29,6 +29,8 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-firmware-7-0-0-stuck-on-reset/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5544
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518
 superseded_by:
 ---
 
@@ -122,8 +124,16 @@ tension, which support may suggest, has not fixed a single reported case.
     downloads page on 15 October 2026, says nothing in its notes about tool offset
     calibration or the offset sensor. Prusa has not yet published its source, so unlike
     6.9.1 and 6.9.2 there is no way to check whether it carries the same code. The notes
-    do list improved nozzle wiper cleaning, marked as first shipped in 6.10.1; nobody
-    has reported whether it leaves less material on INDX nozzles.
+    do list improved nozzle wiper cleaning, marked as first shipped in 6.10.1; the one
+    report since that ties what cleaning leaves on INDX nozzles to calibration failures
+    groups 7.0.0 with 6.9.2, both much worse than 6.9.0, without comparing the two or
+    mentioning the cleaning change, see below. Neither of the two releases since says
+    anything more about tool offset calibration. 7.0.1, published on 19 October 2026,
+    lists a single fix, for the startup hang described further down this page. The notes
+    for 8.0.0, published on 22 October 2026, mention neither tool offset calibration nor
+    the offset sensor; their one item on nozzle cleaning slows flexible filaments down
+    less while they are cleaned. Neither source is published, and no owner has yet
+    reported on calibration under 8.0.0.
 
     The beta was not clean for everyone, and the stable notes mention none of what
     follows. One owner finds calibration passing reliably but nozzles coming out
@@ -149,6 +159,23 @@ tension, which support may suggest, has not fixed a single reported case.
     unprintable, neither with more detail. The issue is open with no reply from the
     vendor.
 
+    **One owner says the lower temperature makes things worse with PETG.**
+    `provisional`, a single report. On a Gen 2 machine, they report in
+    [firmware issue 5567](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567)
+    that PETG still clings to the nozzle once the cleaning has finished and probing is
+    about to start, and that it gives a Z offset that is too high and failed probing. On
+    6.9.0 that happened now and then; on 6.9.2 and 7.0.0 they find it much more
+    frequent, and going back to 6.9.0 helps a good deal without curing it. They put it
+    down to the lower calibration temperature that 6.9.1 introduced: at that temperature
+    PETG left on the tip has set hard, so it upsets the measurement more. They add that
+    the stock start G-code runs this calibration ahead of the print's own nozzle
+    cleaning step, and suggest cleaning first. The calibration still runs its own
+    per-tool clean before measuring, so the request is for an extra clean ahead of
+    it. If they are right, then for a sticky material the lower temperature, the
+    half of the vendor's fix aimed at ooze, works against its own purpose. Nobody has
+    tested that, and the vendor has not replied. It is material on the tip again, not
+    the board.
+
     **The first reports on 7.0.0 do not point at the board.** Each is a single report.
     One owner in the
     [tool offset thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/),
@@ -161,8 +188,15 @@ tension, which support may suggest, has not fixed a single reported case.
     measurement, and they suspect loadcell noise that they measured rising when the
     extruder motor is energized. They later report that switching the extruder driver
     off before the probe made the failures rare on their printer, a workaround rather
-    than a fix. See [error codes](../codes.md#36193) and
-    [loadcell noise](loadcell-emi-noise.md).
+    than a fix. Their later setup switches the bed's status light off as well, which
+    they describe on
+    [firmware issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518)
+    as very reliable so far; that result does not separate the motor from the light. A
+    second owner on firmware issue 5548, with an eight-tool machine on which no firmware
+    so far has made the calibration reliable, switched only the extruder driver off and
+    had the probing pass first time after several failures; that is one attempt, and
+    their firmware is not given.
+    See [error codes](../codes.md#36193) and [loadcell noise](loadcell-emi-noise.md).
 
     For owners with the newer belts the fix also removes the dilemma above: 6.9.1 is INDX
     firmware that keeps 1.5 GT support, so moving forward replaces downgrading as the
@@ -264,8 +298,8 @@ What makes this fault confusing:
   split, calibration completing while the print start fails, is listed above as a
   sign of the 6.9.0 regression; here it came before that release and was hardware.
 - **Passing from the menu and failing at print start also fits loadcell noise.**
-  `provisional`, owners in one forum thread, most of whom changed several things at
-  once. Owners in the
+  `provisional`, owners in one forum thread and on one issue, most of whom changed
+  several things at once. Owners in the
   [tool offset thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/)
   cleared failures at print start by rerouting and twisting supply and heater wires
   and fitting ferrite chokes. One of them, on stock 6.9.2, still had the odd failure
@@ -273,26 +307,45 @@ What makes this fault confusing:
   [firmware issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526),
   whose opener blames the bed's status light on the strength of testing done on
   firmware they had modified, switched the light off from the menu, and had no more
-  failures. Another owner in the thread switched the lights off and fitted ferrite
-  beads at the same time, and their failures stopped too. One owner describes the light
-  as lit during a print and not during a calibration from the menu. That is the other
-  sensor, see [loadcell noise](loadcell-emi-noise.md).
-- **A startup that hangs at the offset sensor on 7.0.0 is a separate problem.**
-  `reported`, two sources. Several owners on 7.0.0 report the printer stopping
-  during startup at the offset sensor stage after they reset it with a print starting
-  or a tool on the head
+  failures. They then fitted ferrite beads to the bed and chamber light cables as well,
+  and their latest summary, on
+  [firmware issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518),
+  credits their complete fix to the rewiring, those beads and a lower probing
+  temperature in the start G-code. Switching the light off is not on that list, though
+  they think the bed light's cable was the likeliest source, so their result does not
+  show that switching it off is needed.
+  Another owner in the thread switched the lights off and fitted
+  ferrite beads at the same time, and their failures stopped too. A further owner, on
+  firmware issue 5526, found that ferrite beads did not help and that switching the
+  light off has so far seemed to help every time; they do not give their firmware.
+  One owner describes the light as lit during a print and not during a calibration
+  from the menu. That is the other sensor, see [loadcell noise](loadcell-emi-noise.md).
+- **A startup that hangs at the offset sensor on 7.0.0 is a separate problem, fixed
+  in 7.0.1.** `reported`, two sources. Several owners on 7.0.0 report the printer
+  stopping during startup at the offset sensor stage after they reset it with a print
+  starting or a tool on the head
   ([thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-firmware-7-0-0-stuck-on-reset/)),
   and the owner who opened
   [firmware issue 5544](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5544)
   describes the same hang on every boot after resetting the printer during a crash in
   Z homing. Every report that says how it began follows a reset, and nothing in either
-  source points at the sensor board. Two owners got the printer to start by flashing
-  6.9.2 again. Two others found that neither a downgrade nor a factory reset helped,
-  and one of them recovered by unplugging the main INDX connector with the printer
-  off, switching on once, then switching off, reconnecting it and switching on again.
-  The owner on the issue recovered in a similar way, by disconnecting the toolhead
-  cable at the xBuddy board and power-cycling. Their report does not say whether the
-  printer was off at the time; switch it off before you unplug either connector.
+  source points at the sensor board. Prusa's notes for
+  [7.0.1](https://help.prusa3d.com/downloads/core-one-indx), published on
+  19 October 2026, list one change: a fix for Core One INDX printers hanging at
+  startup on the screen that reports the tool offset sensor as ready. The owner who
+  opened the thread reports bringing the hang about again and finding that 7.0.1
+  fixes it. No owner has said whether, or how, they put 7.0.1 onto a printer that was
+  already stuck. The flashes onto stuck printers that owners describe were downgrades:
+  two owners got their printers starting again by flashing 6.9.2, one of them with a
+  forced flash, and a third, whose first attempt to downgrade had stopped at the same
+  boot screen, got 6.9.1 installed by pressing reset and then holding the knob down
+  until the installation began. Two others found that going back did not help, and a
+  factory reset helped nobody who tried it. Three owners, two in the thread and the one
+  on the issue, recovered without new firmware by booting once with the INDX cable
+  disconnected, at the main INDX connector or at the xBuddy board. In the thread the
+  steps are: with the printer off, unplug it, switch on once, switch off, reconnect it
+  and switch on again. The issue's report does not say whether the printer was off when
+  they unplugged it; switch it off before you unplug either connector.
 
 ### What to do, in order
 
@@ -374,10 +427,14 @@ and 6.9.2 after it, carry the same code, which the release tags show and the not
 not say. That makes it the vendor's released fix, not a verified cure: one owner on the
 report still saw occasional failures on the beta, and the first owner to report on the
 stable, in a separate issue, still sees calibration fail often on prints that use
-several tools, which they put down to purge material left on the nozzles. The 7.0.0
-notes say nothing about it and its source is not yet published. The first two reports
-on 7.0.0, one in the forum and one on the issue tracker, each describe a failure at
-print start, and neither is put down to the sensor board.
+several tools, which they put down to purge material left on the nozzles. The notes
+for 7.0.0, 7.0.1 and 8.0.0 say nothing about it, and none of their sources is
+published yet. The first two reports on 7.0.0, one in the forum and one on the issue
+tracker, each describe a failure at print start, and neither is put down to the sensor
+board. A third, on another issue, blames the lower calibration temperature for PETG
+left on the nozzle; that is a single report. There are none yet on 8.0.0. The startup
+hang on 7.0.0 rests on the forum thread and the issue linked where it appears; that
+7.0.1 fixes it is Prusa's notes and one owner's test.
 
 The LDC1612 reference-frequency lead is a separate single report from a different
 owner, and is marked `provisional` where it appears. The vendor's own commit confirms

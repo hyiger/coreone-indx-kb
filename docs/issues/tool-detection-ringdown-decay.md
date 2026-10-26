@@ -1,7 +1,7 @@
 ---
 title:        Phantom tools, "tool not detected" and park failures
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -225,8 +225,10 @@ released on 7 October 2026, does not change it either: between the
 the only change that reaches an INDX is the PVA and BVOH filament presets. Firmware
 7.0.0, dated 15 October 2026 on
 [Prusa's downloads page](https://help.prusa3d.com/downloads/core-one-indx), lists nothing
-on nozzle-presence detection or the park check. Prusa had not published its source when
-this was written, so that is the notes' silence, not a reading of the code.
+on nozzle-presence detection or the park check, and neither do the notes for 7.0.1
+(19 October 2026, a single fix for a freeze at startup on the offset sensor screen) or
+8.0.0 (22 October 2026). Prusa had not published the source for either when this was
+written, so that is the notes' silence, not a reading of the code.
 
 ## Verification
 

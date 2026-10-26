@@ -1,7 +1,7 @@
 ---
 title:        Input-Shaper-Kalibrierung bricht mit „Measurement failed“ ab
 confidence:   provisional
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One / Core One+ with INDX, mostly Founders Edition; one Founders Edition with the Gen 2 upgrade
 toolhead:     INDX (one report is an 8-tool head; the rest do not say)
@@ -30,7 +30,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/toolhead-docking-calibration-fails/
   - https://help.prusa3d.com/downloads/core-one-indx
 superseded_by:
-source_sha:   8557aa57f6bb1f0f8ee8144aa555f6904b2cb445c6027b91ff958fcbbb058ad9
+source_sha:   d0f77f8ea75f07c24384fd81d7bc1ecc789568257ca9af3b5df7b72e101b5fbe
 ---
 # Input-Shaper-Kalibrierung bricht mit „Measurement failed“ ab
 
@@ -48,11 +48,12 @@ das Problem, und das Issue ist offen; in den Versionshinweisen zu 6.9.1 geht nic
 darauf ein, 6.9.2, erschienen am 7. Oktober 2026, ändert nur die
 Filament-Presets des Druckers, und die Versionshinweise zu
 [7.0.0](https://help.prusa3d.com/downloads/core-one-indx), veröffentlicht am
-15. Oktober 2026, erwähnen weder Input Shaping noch den Beschleunigungssensor. Der
+15. Oktober 2026, erwähnen weder Input Shaping noch den Beschleunigungssensor, und
+ebenso wenig die zu 7.0.1 und 8.0.0, veröffentlicht am 19. und 22. Oktober. Der
 einzige Bericht seit dem Erscheinen von 6.9.2 ist ein Nachtrag eines Besitzers, der
 zur Beta berichtet hatte: Seit er 6.9.2 geflasht hat, scheitert die Kalibrierung einen
 Schritt früher, beim Beschleunigungssensor, und das blieb auch nach der Rückkehr zu
-6.9.1 so. Zu 7.0.0 hat noch niemand berichtet. Die erste Prüfung, die ein
+6.9.1 so. Zu 7.0.0 oder neuer hat noch niemand berichtet. Die erste Prüfung, die ein
 Prusa-Entwickler nannte, galt der Einstellung **1.5GT Belts**, die zu den tatsächlich im
 Drucker eingebauten Riemen passen muss. Die Rückkehr zur Firmware 6.6.3 brachte die
 Kalibrierung bei zwei Besitzern wieder zum Laufen, wobei einer von ihnen sie dort
@@ -144,9 +145,9 @@ Shapers, die sich zwischen den beiden Tags geändert hat, enthält lediglich ein
 Refactoring der Art, wie Filternamen nachgeschlagen werden. Am INDX ändert 6.9.2 nichts
 außer den Filament-Presets für PVA und BVOH, die in den Versionshinweisen zu 6.9.1
 angekündigt waren, in jener Version selbst aber fehlten. 6.9.2 berührt keinen Code des
-Input Shapers oder des Beschleunigungssensors. Auch die Versionshinweise zu 7.0.0
-erwähnen weder Input Shaping noch den Beschleunigungssensor, und Prusa hat den
-Quellcode von 7.0.0 noch nicht veröffentlicht; ob sie diesen Code ändert, lässt sich
+Input Shapers oder des Beschleunigungssensors. Auch die Versionshinweise zu 7.0.0, 7.0.1
+und 8.0.0 erwähnen weder Input Shaping noch den Beschleunigungssensor, und Prusa hat den
+Quellcode keiner dieser Versionen veröffentlicht; ob sie diesen Code ändern, lässt sich
 also nicht prüfen. Seit der Aussage, das Problem werde intern verfolgt, hat sich Prusa
 im Issue nicht mehr geäußert.
 
@@ -237,8 +238,9 @@ machen nur wenige Angaben; der Gen-2-Besitzer sagt nicht, wie bei ihm die Einste
 und einer der beiden Besitzer, bei denen es half, hat es dort inzwischen scheitern
 sehen. Sein Nachtrag ist der einzige Bericht zu 6.9.2 oder zu einer Rückkehr zu 6.9.1,
 und er beschreibt, dass der Fehler zur Kalibrierung des Beschleunigungssensors
-gewandert ist. Zu 7.0.0 hat noch niemand berichtet. Bei einer erneuten Prüfung am
-18. Oktober 2026 hatte das Issue keine Kommentare, die neuer waren als dieser Nachtrag.
+gewandert ist. Zu 7.0.0, 7.0.1 oder 8.0.0 hat noch niemand berichtet. Bei einer
+erneuten Prüfung am 25. Oktober 2026 hatte das Issue keine Kommentare, die neuer waren
+als dieser Nachtrag.
 
 Die beiden Berichte über die Riemeneinstellung in den Montagehinweisen betreffen die
 Einstellung und die Dock-Kalibrierung; keiner von beiden berichtete diesen Fehler. Die

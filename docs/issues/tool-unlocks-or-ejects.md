@@ -1,7 +1,7 @@
 ---
 title:        Tool unlocks or ejects from the head
 confidence:   provisional
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -18,14 +18,15 @@ sources:
   - https://help.prusa3d.com/article/nozzle-tool-remains-attached-to-the-print-head-core-one-indx_1077657
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5532
   - https://help.prusa3d.com/downloads/core-one-indx
+  - https://help.prusa3d.com/article/hotend-thermal-runaway-36204-indx_1088706
 superseded_by:
 ---
 
 # Tool unlocks or ejects from the head
 
-!!! warning "Three ejection reports in two threads, one teardown, and stuck-tool reports with different suspects"
-    Three owners describe the active tool coming loose from the toolhead, two of them in
-    one thread and the third in a separate one. One opened the head and found a physical
+!!! warning "Four ejection reports in two threads, one teardown, and stuck-tool reports with different suspects"
+    Four owners describe the active tool coming loose from the toolhead, three of them in
+    one thread and one in a separate thread. One opened the head and found a physical
     cause on their own machine. The owner in the separate thread opened theirs too and
     believes the lock is not closing fully, but names no damaged part. The teardown is
     strong evidence for that one unit and says nothing yet about how common the defect
@@ -87,6 +88,16 @@ in the same nozzle. They ruled out friction in the PTFE path and tried a hotter 
 They have not opened their toolhead, so whether this is the same gear defect is
 unknown. A pattern that depends on the material is not what a missing gear tooth alone
 would predict, and this page does not assume the two share a cause.
+
+### A newly converted machine, on 7.0.1 firmware
+
+On 20 October 2026 a fourth owner, replying in the same thread to the first owner's
+earliest post there, wrote that they had the same problem. They had just finished
+converting their printer and run its calibrations. Tools 1 and 2 loaded filament
+normally; on tools 3 and 4 the head made a grinding noise and then the tool came off.
+They give their firmware as 7.0.1. They have not opened the head and offer no cause,
+and they do not say at which step of the load the tool came off. Like the second
+owner, they add the symptom, not the gear.
 
 ### A separate thread: a second toolhead opened
 
@@ -174,9 +185,24 @@ A [firmware bug report](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5
 filed by the second owner in the flexible-filament thread, on the day of their stuck
 tool, describes another dead end. After an unload had failed, a second unload attempt
 asked for the filament type and then sat waiting for the nozzle to heat, which it never
-did; the tool could not be parked either. It was filed against 6.9.2 and was still open
-on 18 October 2026. The release notes for firmware 7.0.0 list no change to this, to the
-docking retry loop, or to the "Release Stuck Tool" item.
+did; the tool could not be parked either. It was filed against 6.9.2 and was still open,
+with no reply, on 25 October 2026. Neither the release notes for firmware 7.0.0, nor
+those for 7.0.1, dated 19 October 2026, whose single fix is for a printer freezing at
+startup, nor those for [8.0.0](https://help.prusa3d.com/downloads/core-one-indx), dated
+22 October 2026, list a change to this, to the docking retry loop, or to the "Release
+Stuck Tool" item.
+
+A separate owner describes a similar dead end with a different start, in a comment of
+22 October 2026 under
+[Prusa's article on the INDX hotend thermal runaway error](https://help.prusa3d.com/article/hotend-thermal-runaway-36204-indx_1088706).
+A large blob on their nozzle seemed to be stopping the printer from reading its
+temperature, and they could not park the tool, because, as they understand it, the
+nozzle has to heat before the extruder motor will run backward to release it. Their
+explanation is unconfirmed, but taken with the bug report above it is a second,
+unrelated case where a nozzle the printer could not heat, or could not read, came with a
+tool that would not leave the head. If yours will not heat, the vendor's manual release
+under "What to do" below may be the way out rather than another attempt from the menu;
+that is inference from these two reports.
 
 ## What to do
 
@@ -198,10 +224,13 @@ time, in the past tense, but do not say in so many words that the new head cured
 remains one owner's account of their own case, and it names no defect.
 
 The [release notes for firmware 7.0.0](https://help.prusa3d.com/downloads/core-one-indx),
-dated 15 October 2026, list nothing on the tool lock. They do move the filament load and
-unload positions to the calibrated nozzle cleaner offset. The notes do not connect that
-to this fault, and no owner has yet said whether it changes the ejections near the wiper
-that the second owner describes.
+dated 15 October 2026, list nothing on the tool lock. Nor do those for 7.0.1, dated
+19 October 2026, whose single fix is for a startup freeze, or those for 8.0.0, dated
+22 October 2026. The 7.0.0 notes do move the filament load and unload positions to
+the calibrated nozzle cleaner offset. The notes do not connect that to this fault, and no
+owner has yet said whether it changes the ejections near the wiper that the second owner
+describes. The owner of the newly converted machine above was on 7.0.1 when two of their
+tools came off during a load, but does not say where the head was at the time.
 
 **If a tool is stuck in the head, use the vendor's manual release.** Prusa publishes a
 [procedure for a tool that stays attached](https://help.prusa3d.com/article/nozzle-tool-remains-attached-to-the-print-head-core-one-indx_1077657).
@@ -224,7 +253,7 @@ suspecting the lock; that rests on the two filament reports in separate threads 
 
 ## Verification
 
-`provisional` — three owners report the tool coming loose, two in one thread and one in
+`provisional` — four owners report the tool coming loose, three in one thread and one in
 a separate thread; a physical cause was found on one machine only, and the owner in the
 separate thread, who also opened their head, names no damaged part. One owner reports
 only the opposite fault, a tool that will not release; owners in two further threads
@@ -236,7 +265,10 @@ toolhead it is about as conclusive as a forum report gets. What it does not esta
 how widespread the defect is — one bad gear, or a batch.
 
 The second owner's report shares the symptom but not, so far, the cause, and its
-PLA-only pattern is a reason for caution before treating the two as one fault.
+PLA-only pattern is a reason for caution before treating the two as one fault. The
+fourth owner's report, in the same thread, also shares only the symptom: no teardown, no
+cause. It does not bear on the tier, but it shows the symptom on a newly converted
+machine running 7.0.1.
 
 The unloading thread comes closest to the bar below without meeting it. It is a second
 opened toolhead, in a different thread, from an owner unconnected to the first, with the
@@ -265,7 +297,10 @@ independent of each other and of the lock reports, and neither involved a teardo
 describe a tool that would not leave the head rather than one that fell out, and blame
 filament rather than any part of the head, so they neither raise the tier nor count as
 further reports of the third owner's fault. The firmware report on the stuck unload
-comes from one of the flexible-filament owners, so it is not a separate source.
+comes from one of the flexible-filament owners, so it is not a separate source. The
+comment under Prusa's thermal runaway article is from a different owner. It is a
+single account, and its reason for the tool staying put is that owner's understanding,
+not anything Prusa's article says.
 
 The teardown post was still awaiting moderation on the forum when this page was first
 written; it has since been published, and the link shows it. The owner's video and a set

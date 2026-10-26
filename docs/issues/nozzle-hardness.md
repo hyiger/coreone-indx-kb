@@ -1,7 +1,7 @@
 ---
 title:        Nozzle hardness and abrasive filaments
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -19,6 +19,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/hardened-nozzle/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-refund-voucher-doesnt-work-with-free-shipping/
 superseded_by:
 ---
 
@@ -142,14 +143,33 @@ window — get them from the vendor's own current statement, not from this page.
 Separately, Prusa published an extended return period for initial-batch kit orders;
 TODO(verify) that length too.
 
-**If your kit was already on order from Prusa in August, the claim goes to Prusa.**
-Prusa's August update went to customers who already had kit orders in, the initial
-batches, and says that Prusa, not the vendor, handles their compensation: Prusa Store
-credit, or a smaller cash refund, set per kit and scaled to its tool count. The credit
-arrives as an emailed voucher, sent in waves that follow the shipping batches; if yours
-has not appeared a few days after the kit arrived, Prusa's tech support is the contact.
-Cash instead of credit is requested from Prusa's support by live chat or email. Prusa
-has not said whether kits ordered from it after that update are covered.
+**If your kit is one of Prusa's initial-batch orders, the claim goes to Prusa.**
+Prusa's August update went to customers who already had kit orders in, and says that
+Prusa, not the vendor, handles their compensation: Prusa Store credit, or a smaller cash
+refund, set per kit and scaled to its tool count. Those customers were the initial
+batches: Prusa reopened kit orders only afterward, in its
+[20 August announcement](https://blog.prusa3d.com/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders_137623/),
+for owners who had missed the first batch. The credit arrives as an emailed voucher,
+sent in waves that follow the shipping batches; if yours has not appeared a few days
+after the kit arrived, Prusa's tech support is the contact. Cash instead of credit is
+requested from Prusa's support by live chat or email. The same update also gave the
+initial-batch orders the hardware for the Core One+ Gen 2 upgrade (new belts, belt
+pulleys and thermal expansion joints), at Prusa's own expense.
+
+Prusa has not published whether kits ordered from it after that update are covered.
+One owner whose order apparently fell after the spring wave asked Prusa's support about
+the Gen 2 hardware and relays the reply in Prusa's
+[shipping update thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/):
+the free upgrade belonged to the spring orders alone, making amends to them for the late
+shipping and for the nozzle hardness, and orders placed from August on, a second wave,
+do not get it free. The same owner says that new orders now come with the Gen 2
+hardware alongside the INDX; whether its cost is in the price has not been confirmed.
+That may not hold for every new order: Prusa's 20 August announcement lists separate
+conversion kit versions for the CORE One+ and the CORE One+ (Gen 2), to be matched to
+the printer, without saying what each contains, and one more owner in the shipping
+update thread wrote in August that the INDX could be ordered with or without the Gen 2
+upgrade. The reply as relayed says nothing about credit or cash for the later orders, so
+that part of the question stays open. Provisional: one owner's relay of a private email.
 
 TODO(verify): Prusa's credit and cash amounts for each kit size, from Prusa's August
 update to its kit customers as relayed in the nozzlegate communications thread.
@@ -175,12 +195,28 @@ clears; the post does not make clear whether Prusa said so. The timing, perhaps 
 is that owner's own guess. The same owner also asked Prusa how long its voucher stays
 valid, and relays the answer: there is a limit, so check it before holding credit back
 for nozzles Prusa may stock later. Whether Prusa's voucher carries the vendor's other
-conditions, described below, has not been reported. This is provisional, one owner's
-post and their relay of a private answer.
+conditions, described below, is only partly known; see the report that follows. This is
+provisional, one owner's post and their relay of a private answer.
 
 TODO(verify): the validity period of Prusa's compensation voucher — relayed by one owner
 in Prusa's shipping update thread as Prusa's answer to a question; no published statement
 of it has been found.
+
+Prusa's voucher, like the vendor's, did not pay for shipping in the one case reported so
+far, that of an owner who spent theirs in late October, in a
+[thread on the voucher and free shipping](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-refund-voucher-doesnt-work-with-free-shipping/).
+That owner hit a second snag as well. Prusa's store was running a sale with free
+shipping above an order minimum, and entering the voucher brought the shipping charge
+back; the owner took this to mean that the share of the order the voucher paid for did
+not count toward that minimum. Prusa's support, reached by live chat, settled it the
+same day by adding the shipping charge to the voucher's value. Shipping was still billed
+separately, with the voucher covering only the goods, so the outcome matched free
+shipping in value but not in form. A Prusa representative in the thread had pointed them
+to support, adding that more than one voucher on an order can make one offer displace
+another; this owner had used only one. The order left a little of the voucher unspent,
+and the post does not say what became of it, so whether Prusa's voucher, like the
+vendor's, is used up in a single order has not been reported. Provisional: one owner,
+one order.
 
 **How a claim to the vendor goes, from owners who have filed one.** Its contact form
 has no category that obviously fits, and owners report submitting under the generic
@@ -213,8 +249,8 @@ whether the owner had already filed for credit, so whether a credit choice alrea
 submitted can still be changed has not been established. Two questions raised there
 went unanswered: whether the same conditions apply to credit on kits bought from
 Prusa, and whether a cash refund returns to the original payment method. The validity
-limit on Prusa's voucher, relayed above from another thread, answers the first only in
-part.
+limit on Prusa's voucher, relayed above, and one owner's report that it did not pay for
+shipping, each from another thread, answer the first only in part.
 
 !!! note "Store credit buys nozzles you may not be able to use yet"
     Worth knowing before you choose credit over cash: PrusaSlicer currently offers the
@@ -240,12 +276,16 @@ part.
     later, and the first in mid-October, about a month after it was placed. Orders
     placed in October went out within one to two weeks, by the accounts of three more
     owners there, and one of those orders included a plain-bore nozzle. By mid-October
-    two owners there said the 0.4mm and 0.6mm nozzles looked readily available. The
-    first waiting owner still believes plain-bore nozzles were what held orders up, and
-    had warned that the shop can show nozzles in stock that are not ready to ship; no
-    pattern by type is established. The vendor's explanations are each relayed by one
-    owner. When the first waiting owner's nozzles arrived, they found no PrusaSlicer
-    profile for them, as described above.
+    two owners there said the 0.4mm and 0.6mm nozzles looked readily available. Two
+    later reports, neither giving an order date, point both ways: one more owner there
+    said in late October that theirs took about three weeks to arrive, and is waiting
+    for profiles before using them; and in the spare nozzles thread another reported an
+    order that shipped within a few days and reached the US days after that, with import
+    tariffs adding to the cost. The first waiting owner still believes plain-bore
+    nozzles were what held orders up, and had warned that the shop can show nozzles in
+    stock that are not ready to ship; no pattern by type is established. The vendor's
+    explanations are each relayed by one owner. When the first waiting owner's nozzles
+    arrived, they found no PrusaSlicer profile for them, as described above.
 
     The nozzles' outside finish has also differed between deliveries, by two owners'
     accounts in that thread. One received in mid-October looked smooth, which its owner
@@ -322,8 +362,10 @@ Strongly sourced: the marketing claim and its removal, the surface-treatment nat
 and hardness figure, the brass insert, the existence and structure of the remediation
 offer, and the induction/permeability explanation — all appear as quoted vendor
 material in the threads rather than as owner inference. So does Prusa's handling of
-compensation for kits already on order from Prusa, quoted from its August update to
-those customers.
+compensation for its initial-batch kit orders, Gen 2 upgrade hardware included,
+quoted from its August update to those customers; that kit orders reopened only after
+that update, in separate versions for the CORE One+ and the CORE One+ (Gen 2), is
+Prusa's own announcement.
 
 !!! note "Why hardness figures appear here when other numbers do not"
     This site withholds calibration values, temperatures and print settings until a
@@ -351,14 +393,21 @@ rests on one owner's notes from a trade-show conversation. Slow spare-nozzle del
 through early October is reported in two threads by four owners, but one of those
 threads also has a quick delivery, and the vendor's reasons for the delays are each one
 owner's relay. The faster shipping since, and the change in the nozzles' outside
-finish, rest on owners in that one later thread. The "hardened" description on
+finish, rest on owners in that one later thread. A quick delivery in the spare
+nozzles thread and a three-week one in that later thread, neither giving an order
+date, cannot be placed on either side of early October. The "hardened" description on
 delivered spares comes from a single thread. That Prusa's credit could not buy INDX
 nozzles, because Prusa's shop did not stock them, rests on three owners in three
 separate threads, not on a statement from Prusa: the August owner for August, and two
 owners for mid-October. The expectation that Prusa will stock them later is one owner's,
 not clearly from Prusa, and the validity limit on Prusa's voucher is that owner's relay.
 That the credit cannot be spent at Prusa's US reseller is one owner's hedged
-understanding.
+understanding. That Prusa's voucher did not pay for shipping, or, as that owner read
+it, count toward a free-shipping minimum, is one owner's report of one order. That the
+free Gen 2 hardware was for the spring orders only is another owner's relay of a
+private reply from Prusa's support, and that new orders come with that hardware is the
+same owner's observation; that the INDX could be ordered with or without the upgrade is
+one further owner's post from August.
 
 Where the sources disagree: owners differ sharply on whether the remediation is
 adequate, and on how much practical impact the hardness actually has for someone who

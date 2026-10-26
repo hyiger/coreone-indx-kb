@@ -1,7 +1,7 @@
 ---
 title:        Diagonale Bänderung auf den Druckwänden
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -14,7 +14,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://help.prusa3d.com/downloads/core-one-indx
 superseded_by:
-source_sha:   075d004eb23d9b661b77bd15dd8ecf3509ac8a96055518b2a3b2253c8ad9e82b
+source_sha:   ee2d7d91dddc75c447165e971848cbc2653a9d8e2c6b843682fa644854f7a755
 ---
 # Diagonale Bänderung auf den Druckwänden
 
@@ -129,6 +129,16 @@ Keine davon erklärte ein Muster, das über verschiedene Materialien hinweg best
 und der Perimeterrichtung folgte. Wenn Ihre Bänderung *doch* auf das Trocknen des
 Filaments reagiert, haben Sie ein anderes und weit billigeres Problem.
 
+Allerdings ist eine allgemeine Verbesserung durch Trocknen nicht dasselbe wie eine
+Bänderung, die auf das Trocknen reagiert. Ein Besitzer, nach dessen Angabe gründlich
+getrocknetes Filament seine Drucke erheblich verbessert, fand die diagonalen Linien
+dennoch auf einem kürzlich gedruckten Teil. Feuchtes Filament und dieser Fehler können
+womöglich gleichzeitig vorliegen; eine Verbesserung durch Trocknen spricht den Extruder
+für sich genommen also nicht frei (`provisional`: ein einzelner Bericht, selbst
+diagnostiziert an einer Maschine, an der dieser Besitzer zudem ein Werkzeug meldet, das
+klickt und Schritte verliert, und dieser Besitzer hat nicht über einen Durchlauf des
+Protokolls berichtet).
+
 ### Prüfen Sie zuerst das Billige
 
 Bevor Sie einen Austausch verfolgen, **prüfen und reinigen Sie die Extruderzahnräder**.
@@ -161,7 +171,11 @@ sich von Lage zu Lage nicht ändert. Mehrere Besitzer im Thread berichten, dass 
 an gewöhnlichen Bauteilen, bei denen die Perimeterlänge variiert, stattdessen als
 allgemein ungleichmäßige, unscharf wirkende Wände zeigt — leicht feuchtem Filament oder
 einem nicht abgestimmten Profil zuzuschreiben, weshalb einige von ihnen Wochen oder
-Monate brauchten, um sie zu bemerken (`provisional`: ein einziger Thread).
+Monate brauchten, um sie zu bemerken (`provisional`: ein einziger Thread). Der oben
+erwähnte Besitzer, dem das Trocknen half, sah die diagonalen Linien an einem runden,
+behälterförmigen Druck und beschreibt bei kleineren Drucken etwas, das eher dieser
+Erscheinungsform an gewöhnlichen Bauteilen entspricht: eine Oberfläche, die wie von
+einer Seite zur anderen zerkratzt wirkt.
 
 ### Was es offenbar ist
 
@@ -272,10 +286,30 @@ Ein weiterer Besitzer gab an, der Support habe ihn auf eine Liste von Besitzern 
 die auf eine Lösung warten. Jeder dieser Berichte stammt von einem einzelnen Besitzer,
 alle aus demselben Thread, und keiner benennt ein Teil.
 
-Die am 15. Oktober veröffentlichte Firmware 7.0.0 ändert an diesem Bild nichts: Keiner
-der Punkte in ihren
-[Versionshinweisen](https://help.prusa3d.com/downloads/core-one-indx) betrifft den
-Extruderantrieb, die Wandqualität oder dieses Artefakt.
+Ende Oktober gab es weder ein benanntes Teil noch viel Neues. Der Besitzer, dem
+mitgeteilt worden war, Austauschköpfe würden erst verschickt, wenn der Hersteller sich
+einer Lösung sicher sei, wartete am 24. Oktober noch immer: Der Hersteller hatte
+erklärt, an einer Lösung zu arbeiten, doch eine Bitte um einen Zwischenstand war seit
+zwei Wochen unbeantwortet geblieben, obwohl der Hersteller demselben Besitzer in dieser
+Zeit zweimal wegen einer ab Werk verstopften Düse geantwortet hatte. Dieser Besitzer
+wartet lieber, als auf einen Kopf zu setzen, der womöglich denselben Fehler hat. Ein
+anderer Besitzer, seit mehr als sechs Wochen betroffen, gab an, offizielle Stellen hätten
+sich seit einem Monat nicht mehr zu einer Lösung geäußert. Der Besitzer, der Mitte
+Oktober auf einen zweiten Austauschkopf wartete, hatte sich seither nicht mehr gemeldet;
+ob der Kopf eingetroffen ist oder geholfen hat, ist unbekannt. Der Besitzer mit dem
+offenen Prusa-Fall sagte lediglich, der Support nehme die Sache ernst. Jeder dieser
+Berichte stammt von einem einzelnen Besitzer, alle aus demselben Thread, und keiner
+benennt ein Teil.
+
+Weder die am 15. Oktober veröffentlichte Firmware 7.0.0 noch die am 22. Oktober
+veröffentlichte 8.0.0 ändert an diesem Bild etwas: Keiner der Punkte in ihren
+[Versionshinweisen](https://help.prusa3d.com/downloads/core-one-indx) nennt eine
+Korrektur am Extruderantrieb oder an diesem Artefakt, und die Hinweise zu der dazwischen
+am 19. Oktober veröffentlichten 7.0.1 nennen nur eine Korrektur für ein Einfrieren beim
+Start. Am nächsten kommt dem Thema eine
+neue, standardmäßig aktive Beschleunigungsgrenze für Filamente in 8.0.0; die Hinweise
+führen sie als neue Funktion und nicht als Korrektur der Druckqualität, und bis zum
+25. Oktober hat kein Besitzer im Thread berichtet, dass sie die Bänderung verändert.
 
 #### Der Behelf mit dem Distanzstück
 
@@ -361,7 +395,7 @@ verschiedenen Teilnehmern im
 [Thread zur diagonalen Bänderung](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/)
 beschrieben worden, seitdem von mehreren weiteren, von massiv bis kaum wahrnehmbar auf
 glänzendem Filament; das Phänomen ist also nicht die Einbildung einer einzelnen Person.
-Der Thread ist als beantwortet markiert und umfasst 142 Beiträge. Das
+Der Thread ist als beantwortet markiert und umfasst 151 Beiträge. Das
 Zwei-Druck-Protokoll ist seine als Lösung markierte Antwort, verfasst von dem Besitzer,
 der das Problem unter Beteiligung des Herstellers und des Prusa-Supports bearbeitet hat,
 und die Begründung, warum es Extrusion von Bewegung trennt, ist in sich schlüssig.
@@ -405,14 +439,19 @@ durch Zahnradreinigung ergibt.
 Was diese Seite stärken würde: weitere Besitzer, die das Zwei-Druck-Protokoll durchführen
 und das Ergebnis melden, ein Distanzstück, das auch an einem zweiten Werkzeugkopf wirkt,
 eine Aussage des Herstellers, die das konkrete Teil benennt, und ein Austauschkopf, der
-nachweislich eine Korrektur enthält. Zum Zeitpunkt dieser Aktualisierung hat niemand ein
-Ergebnis mit Distanzstück an einem anderen Werkzeugkopf gemeldet, auch wenn ein Besitzer
-angekündigt hat, es an seinem ursprünglichen Kopf zu versuchen, und auch keinen weiteren
-Durchlauf des Protokolls. Die im Thread wiedergegebenen Antworten des Herstellers
-erkennen den Fehler an, ohne ein Teil zu benennen, auch die bis Mitte Oktober
-wiedergegebenen Antworten von Prusa benennen keines, und von keiner Ersatzcharge ist
-bekannt, dass sie eine Korrektur enthält: Die beiden bisher gemeldeten spritzgegossenen
-Austauschköpfe taten es nicht.
+nachweislich eine Korrektur enthält. Zum Zeitpunkt dieser Aktualisierung, am
+25. Oktober, ist nichts davon eingetreten. Niemand hat ein Ergebnis mit Distanzstück an
+einem anderen Werkzeugkopf gemeldet; ein Besitzer kündigte am 10. Oktober an, es an
+seinem ursprünglichen Kopf zu versuchen, und hat sich seither nicht dazu geäußert. Einen
+weiteren Durchlauf des Protokolls hat ebenfalls niemand gemeldet. Die im Thread
+wiedergegebenen Antworten des Herstellers erkennen den Fehler an und sprechen von einer
+Lösung, an der gearbeitet werde, ohne ein Teil zu benennen; auch die bis Mitte Oktober
+wiedergegebenen Antworten von Prusa benennen keines, und nichts seither Wiedergegebene
+benennt eines. Von keiner Charge ist bekannt, dass sie eine Korrektur enthält: Die
+beiden bisher gemeldeten spritzgegossenen Austauschköpfe taten es nicht, für einen
+weiteren, Mitte Oktober erwarteten Austauschkopf ist kein Ergebnis gemeldet, und ein
+Besitzer mit einem Bausatz, den er als Charge 5 bezeichnet, glaubt den Fehler zu haben,
+hat allerdings nicht über einen Durchlauf des Protokolls berichtet.
 
 ## Verwandte Seiten
 

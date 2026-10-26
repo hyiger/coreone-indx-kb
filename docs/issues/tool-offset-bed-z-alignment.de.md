@@ -1,7 +1,7 @@
 ---
 title:        Werkzeug-Offset-Kalibrierung schlägt fehl: Bett in Z nicht ausgerichtet
 confidence:   provisional
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -17,8 +17,9 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518
 superseded_by:
-source_sha:   0a2fd6f898bd651c3ceaa41d917aca248854a5ac1daaf0025646b836739c5c30
+source_sha:   25d74179e3ea5623d62e061c57eb3314116caeaf4545db166e92a8d2d79b3e2b
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl: Bett in Z nicht ausgerichtet
 
@@ -100,8 +101,9 @@ Was diesen Fehler leicht fehldeuten lässt:
   Z-Achse bei unebenem Bett auf. Was sie auslöst, sagen die Versionshinweise nicht, und
   der Quellcode ist noch nicht veröffentlicht. Tritt sie an die Stelle jenes Angebots,
   bliebe ein Schlitten, der weniger als diesen Betrag verkantet ist, vermutlich weiterhin
-  unbehandelt. Das ist erschlossen, und noch kein Besitzer hat über das neue Verhalten
-  berichtet.
+  unbehandelt. Das ist erschlossen. Die Versionshinweise zu 7.0.1 und zu 8.0.0,
+  veröffentlicht am 19. und 22. Oktober 2026, fügen dazu nichts hinzu, und noch kein
+  Besitzer hat über das neue Verhalten berichtet.
 
 ### Was zu tun ist
 
@@ -112,8 +114,8 @@ Was diesen Fehler leicht fehldeuten lässt:
    sitzt. Das ist es, was die Ausrichtung zurücksetzt. Der Besitzer beschrieb das
    eigene Vorgehen als das Fahren des Betts an den Boden des Druckers, um die Ebene
    zurückzusetzen; genau diesen Schritt führt der Vorgang aus. Führen Sie ihn auch
-   unter 7.0.0 von Hand aus: Nichts in deren Versionshinweisen sagt, dass die
-   automatische Ausrichtung diesen Fall abdeckt.
+   unter 7.0.0 und späteren Versionen von Hand aus: Nichts in deren Versionshinweisen
+   sagt, dass die automatische Ausrichtung diesen Fall abdeckt.
 2. **Führen Sie die Werkzeug-Offset-Kalibrierung erneut aus.** An der gemeldeten
    Maschine war der Fehler danach verschwunden.
 3. **Wenn sie weiterhin fehlschlägt**, empfiehlt der Artikel des Herstellers zum
@@ -139,7 +141,16 @@ Was diesen Fehler leicht fehldeuten lässt:
     Neuverlegen der Kabel geblieben waren, indem er die Statusleuchte am Bett im Menü
     ausschaltete
     ([Firmware-Issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526)).
-    `provisional`, ein Einzelbericht.
+    Seine neueste Zusammenfassung in
+    [Firmware-Issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518)
+    führt seine vollständige Behebung auf das Neuverlegen der Kabel, Ferritkerne an den
+    Kabeln der Bett- und der Kammerbeleuchtung und eine niedrigere Abtasttemperatur im
+    Start-G-Code zurück. Das Ausschalten der Leuchte steht nicht auf dieser Liste, obwohl
+    er das Kabel der Bettbeleuchtung für die wahrscheinlichste Quelle hält; sein Ergebnis
+    zeigt also nicht, dass das Ausschalten nötig ist. Ein zweiter Besitzer in Issue 5526,
+    bei dem Ferritperlen nicht
+    halfen, berichtet, dass das Ausschalten der Leuchte bisher anscheinend jedes Mal
+    hilft. `provisional`, zwei Besitzer in einem Issue.
 
 ## Verifizierung
 
@@ -164,13 +175,17 @@ beide am Tag 6.9.1-beta. Keine der beiden Dateien hat sich in der
 oder in [6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)
 geändert, die am INDX nur die Filament-Presets ändert; die Lesart gilt also für beide.
 Prusa hat den Quellcode von
-[7.0.0](https://help.prusa3d.com/downloads/core-one-indx) noch nicht veröffentlicht,
-daher lässt sich nicht prüfen, ob sich eine der beiden Dateien dort geändert hat. Die
-Versionshinweise nennen eine automatische Ausrichtung der Z-Achse bei unebenem Bett und
-sagen nichts zur Werkzeug-Offset-Kalibrierung. Der Bericht zur Statusleuchte stammt
-von einem Besitzer auf Standard-Firmware 6.9.2 in
-[Firmware-Issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526).
-Der Ersteller dieses Issues hat zwar auch aufgezeichnet, welche Prüfung die Berührungen
+[7.0.0](https://help.prusa3d.com/downloads/core-one-indx), 7.0.1 und 8.0.0 noch nicht
+veröffentlicht, daher lässt sich nicht prüfen, ob sich eine der beiden Dateien darin
+geändert hat. Die Versionshinweise zu 7.0.0 nennen eine automatische Ausrichtung der
+Z-Achse bei unebenem Bett und sagen nichts zur Werkzeug-Offset-Kalibrierung; die zu
+7.0.1 und 8.0.0 erwähnen keines von beiden. Die Berichte zur Statusleuchte stammen von
+einem Besitzer auf Standard-Firmware 6.9.2 und einem zweiten, der seine Firmware nicht
+nennt, beide in
+[Firmware-Issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526);
+der erste von ihnen hat seine vollständige Behebung später in
+[Firmware-Issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518) zusammengefasst.
+Der Ersteller von Issue 5526 hat zwar auch aufgezeichnet, welche Prüfung die Berührungen
 verwarf, aber auf einer selbst veränderten Firmware; diese Seite verwendet das daher
 nicht. Wozu Z Alignment Calibration dient und der Menüpfad stammen aus dem
 [Artikel des Herstellers zum unebenen Bett](https://help.prusa3d.com/article/uneven-bed-31111-core-one-35111-core-one-l-36111-core-one-indx_856294).

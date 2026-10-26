@@ -1,7 +1,7 @@
 ---
 title:        Phantom-Werkzeuge, „Werkzeug nicht erkannt“ und Park-Fehler
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -22,7 +22,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/will-the-prusa-indxs-wave1-ship-with-fixed-induction-coils/
 superseded_by:
-source_sha:   1d3114d0d938cb9e3f96e9c81ff0634ef8c9df27fcb84c0434aed80bae33d3a0
+source_sha:   415dedc6a40ce203fde57f7446342e8969db75773a4223639b065aebd5a3962f
 ---
 # Phantom-Werkzeuge, „Werkzeug nicht erkannt“ und Park-Fehler
 
@@ -244,9 +244,12 @@ erschienen am 7. Oktober 2026, ändert daran ebenfalls nichts: Zwischen den
 betrifft die einzige Änderung, die einen INDX erreicht, die Filament-Presets für PVA und
 BVOH. Die Firmware 7.0.0, auf
 [Prusas Download-Seite](https://help.prusa3d.com/downloads/core-one-indx) auf den
-15. Oktober 2026 datiert, führt nichts zur Düsenerkennung oder zur Park-Prüfung auf. Prusa
-hatte ihren Quellcode beim Schreiben dieses Abschnitts noch nicht veröffentlicht; das ist
-also das Schweigen der Versionshinweise, keine Lesart des Codes.
+15. Oktober 2026 datiert, führt nichts zur Düsenerkennung oder zur Park-Prüfung auf, und
+ebenso wenig die Versionshinweise zu 7.0.1 (19. Oktober 2026, eine einzige Korrektur für
+ein Einfrieren beim Start auf dem Bildschirm des Offset-Sensors) oder zu 8.0.0
+(22. Oktober 2026). Prusa hatte den Quellcode
+beider Versionen beim Schreiben dieses Abschnitts noch nicht veröffentlicht; das ist also
+das Schweigen der Versionshinweise, keine Lesart des Codes.
 
 ## Überprüfung
 
