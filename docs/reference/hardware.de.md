@@ -1,7 +1,7 @@
 ---
 title:        Hardware
 confidence:   unknown
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One, Core One Plus, Core One L
 toolhead:     INDX
@@ -19,7 +19,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/sourcing-tool-dock-hardware/
 superseded_by:
-source_sha:   4c9f9b3567bede0a88b46bbcaef447293411c2635e03c7e4d5c90984be771420
+source_sha:   c602c4a83315d570a36592ed537c7f94369e662fe199be7cfd23652a41e4e08d
 ---
 # Hardware
 
@@ -73,15 +73,25 @@ getrennt auf: Die stabile Firmware 6.9.1, veröffentlicht am 25. September 2026,
 die Core One+ (Gen 2) INDX und die Core One/+ INDX als die Maschinen, die sie
 unterstützt, und 6.9.2, veröffentlicht am 7. Oktober 2026, nennt dieselben beiden. Die
 Firmware 7.0.0 für den INDX, datiert auf den 15. Oktober 2026, war bis zum 18. Oktober
-nur auf Prusas Download-Seite erschienen, nicht als Release auf GitHub. Dort steht sie
+nur auf Prusas Download-Seite erschienen, nicht als Release auf GitHub. Dort stand sie
 unter einem einzigen Eintrag Core One INDX, auf einer Seite mit der Überschrift
 Core One/+ INDX, und ihre Release Notes führen die beiden Generationen nicht getrennt
-auf. Dieselbe Seite enthält eine eigene 7.0.0 für die Core One L+, datiert auf den
-5. Oktober 2026, deren Release Notes den INDX überhaupt nicht erwähnen. Keines dieser
-Releases nennt eine Core One L mit INDX. Lassen Sie zwischen den Generationen
-dieselbe Sorgfalt walten wie zwischen den Modellen, wo immer ein Befund die Riemen,
-ihre Riemenscheiben oder die Ausgleichselemente des Betts betrifft, die zu den Teilen
-gehören, die Gen 2 ändert.
+auf. Dieselbe Seite enthielt eine eigene 7.0.0 für die Core One L+, datiert auf den
+5. Oktober 2026, deren Release Notes den INDX überhaupt nicht erwähnen. Die Firmware
+7.0.1, datiert auf den 19. Oktober 2026, mit einer einzigen Korrektur für ein Einfrieren
+beim Start, steht ebenfalls nur auf der Download-Seite: Stand 25. Oktober ist sie unter
+demselben Eintrag Core One INDX bei den älteren Versionen aufgeführt, und auch ihre
+Release Notes trennen die Generationen nicht. Die Firmware 8.0.0, datiert auf
+den 22. Oktober 2026, folgt demselben Muster: Stand 25. Oktober steht auch sie nur auf
+der Download-Seite, unter demselben einzigen Eintrag Core One INDX auf einer Seite, die
+weiterhin die Überschrift Core One/+ INDX trägt, mit Release Notes, die die Generationen
+nicht trennen, und der Eintrag Core One L+ dieser Seite ist am selben Tag auf eine
+eigene 8.0.0 gewechselt, wiederum mit Release Notes, die den INDX nie erwähnen. Keines
+dieser Releases nennt eine Core One L mit INDX, obwohl das Website-Menü auf derselben
+Seite Stand 25. Oktober auf einen Drucker Core One L+ INDX im Shop verweist. Lassen Sie
+zwischen den Generationen dieselbe Sorgfalt walten wie zwischen den Modellen, wo immer
+ein Befund die Riemen, ihre Riemenscheiben oder die Ausgleichselemente des Betts
+betrifft, die zu den Teilen gehören, die Gen 2 ändert.
 
 **Vier oder acht Werkzeuge.** Prusas Produktseite beschreibt die beiden Satzgrößen so,
 dass sie sich Smart Head und Docking-Hardware teilen und sich nur darin unterscheiden,
@@ -107,7 +117,8 @@ die Firmware-Bezeichnungen aus den Releases
 [6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.1) und
 [6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2) und, für
 7.0.0, von Prusas [Download-Seite](https://help.prusa3d.com/downloads/core-one-indx) in
-ihrem Stand vom 18. Oktober 2026. Der Unterschied bei den Sätzen der Founders Edition
+ihrem Stand vom 18. Oktober 2026, für 7.0.1 und 8.0.0 von derselben Seite in ihrem
+Stand vom 25. Oktober 2026. Der Unterschied bei den Sätzen der Founders Edition
 ist das, was deren Besitzer berichten, in
 [einem Thread über die Erweiterung eines Vier-Werkzeug-Satzes](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/)
 und in [einem über die Beschaffung von Dock-Hardware](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/sourcing-tool-dock-hardware/).
@@ -134,9 +145,9 @@ dem Shop entnommen.
     Satzgrößen, mit Besitzern in zwei getrennten Threads und der eigenen Anleitung
     dieser Edition für die Founders Edition und Prusas Anleitung für Prusas Satz; beide
     stehen aber in diesem Abschnitt und übernehmen seine Stufe. Die Bezeichnungen zu
-    7.0.0 stützen sich auf eine Download-Seite, die Prusa an Ort und Stelle ändert,
-    nicht auf ein getaggtes Release, und sollten erneut geprüft werden, sobald ein
-    Release auf GitHub erscheint.
+    7.0.0, 7.0.1 und 8.0.0 stützen sich auf eine Download-Seite, die Prusa an Ort und
+    Stelle ändert, nicht auf ein getaggtes Release, und sollten erneut geprüft werden,
+    sobald ein Release auf GitHub erscheint.
 
 ## Überprüfung
 

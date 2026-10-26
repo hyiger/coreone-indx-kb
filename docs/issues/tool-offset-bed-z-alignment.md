@@ -1,7 +1,7 @@
 ---
 title:        Tool offset calibration fails: bed not aligned in Z
 confidence:   provisional
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -17,6 +17,7 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518
 superseded_by:
 ---
 
@@ -91,8 +92,9 @@ What makes this fault easy to misread:
   2026, lists automatic Z-axis alignment on an uneven bed among its new features. Its
   notes do not say what triggers it, and its source is not yet published. If it takes
   the place of that offer, a carriage racked by less than the margin would presumably
-  still be left alone. That is an inference, and no owner has reported on the new
-  behavior yet.
+  still be left alone. That is an inference. The notes for 7.0.1 and for 8.0.0,
+  published on 19 and 22 October 2026, add nothing about it, and no owner has reported
+  on the new behavior yet.
 
 ### What to do
 
@@ -101,8 +103,8 @@ What makes this fault easy to misread:
    distance past the hard stop, so that the Z drive skips against the frame until the
    carriage sits square. That is what resets the alignment. The owner described what
    they did as moving the bed to the bottom of the printer to reset the level, which
-   is the step this procedure performs. Run it by hand on 7.0.0 too: nothing in its
-   notes says the automatic alignment covers this case.
+   is the step this procedure performs. Run it by hand on 7.0.0 and later too: nothing
+   in their notes says the automatic alignment covers this case.
 2. **Run tool offset calibration again.** On the reported machine the failure was gone
    afterwards.
 3. **If it still fails**, the vendor's uneven bed article says to move the bed down,
@@ -125,7 +127,15 @@ What makes this fault easy to misread:
     short. One owner on stock 6.9.2 ended the failures that rewiring had left by
     switching the bed's status light off from the menu
     ([firmware issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526)).
-    `provisional`, a single report.
+    Their latest summary, on
+    [firmware issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518),
+    credits their complete fix to the rewiring, ferrite cores on the cables of the bed
+    and chamber lights and a lower probing temperature in the start G-code. Switching
+    the light off is not on that list, though they think the bed light's cable was the
+    likeliest source, so their result does not show that switching it off is needed. A
+    second owner on issue
+    5526, for whom ferrite beads did not help, reports that switching the light off has
+    so far seemed to help every time. `provisional`, two owners on one issue.
 
 ## Verification
 
@@ -149,14 +159,17 @@ both at the 6.9.1-beta tag. Neither file changed in the
 or in [6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2),
 which on the INDX changes only the filament presets, so the reading applies to both.
 Prusa has not yet published the source of
-[7.0.0](https://help.prusa3d.com/downloads/core-one-indx), so whether either file
-changed there cannot be checked. Its notes list automatic Z-axis alignment on an uneven
-bed and say nothing about tool offset calibration. The status-light report is from one
-owner on stock 6.9.2 on
-[firmware issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526).
-That issue's opener also logged which check rejected the touches, but on firmware they
-had modified, so this page does not use it. What Z Alignment Calibration is for, and
-the menu path, are from the vendor's
+[7.0.0](https://help.prusa3d.com/downloads/core-one-indx), 7.0.1 or 8.0.0, so whether
+either file changed in them cannot be checked. The 7.0.0 notes list automatic Z-axis
+alignment on an uneven bed and say nothing about tool offset calibration; the notes for
+7.0.1 and 8.0.0 mention neither. The status-light reports are from one owner on stock
+6.9.2 and a second who does not give their firmware, both on
+[firmware issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526);
+the first of them later summed up their complete fix on
+[firmware issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518).
+The opener of issue 5526 also logged which check rejected the touches, but on firmware
+they had modified, so this page does not use it. What Z Alignment Calibration is for,
+and the menu path, are from the vendor's
 [uneven bed article](https://help.prusa3d.com/article/uneven-bed-31111-core-one-35111-core-one-l-36111-core-one-indx_856294).
 
 If your machine matches this and Z alignment fixes it, that second report is what

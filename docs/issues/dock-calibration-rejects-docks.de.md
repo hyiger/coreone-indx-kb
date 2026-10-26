@@ -1,13 +1,13 @@
 ---
 title:        Dock-Kalibrierung lehnt einige oder alle Docks ab
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One, Core One+, Core One+ (Gen 2)
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0, 6.9.1-beta, 6.9.1; 6.9.2 by source comparison; checked against the 7.0.0 release notes
+firmware:     6.9.0, 6.9.1-beta, 6.9.1; 6.9.2 by source comparison; checked against the 7.0.0, 7.0.1 and 8.0.0 release notes
 sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5444
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5445
@@ -35,8 +35,9 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5520
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/tree/v6.9.1-beta/src/feature
   - https://help.prusa3d.com/downloads/core-one-indx
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-firmware-7-0-0-stuck-on-reset/
 superseded_by:
-source_sha:   6767df38c2c7465e6352372af714bc87171c941b67ddcf8d142b2be93e37dea9
+source_sha:   eff2317357837e3dcb694b3bf45510f4e7cb03df98d25d6053822ad4f69c30cb
 ---
 # Dock-Kalibrierung lehnt einige oder alle Docks ab
 
@@ -130,6 +131,15 @@ einen Messfehler aus, nicht aber einen Konfigurationsfehler.
 Der Melder des ersten Falls sagt, die Maschine habe weder andere Kalibrierungen ausführen
 noch drucken können, solange die Docks abgelehnt blieben. Das ist ein einzelner Bericht;
 dass die Firmware das Werkzeug eines nicht kalibrierten Docks deaktiviert, passt dazu.
+
+Firmware 8.0.0 widmet dieser Kalibrierung eine Zeile in ihren
+[Versionshinweisen](https://help.prusa3d.com/downloads/core-one-indx) vom 22. Oktober
+2026: Der Kopf nähert sich nun dem Dock sanfter. Mehr sagt Prusa dazu nicht. Die Zeile
+lässt offen, ob sich Geschwindigkeit, Kraft oder Weg geändert haben, und erwähnt weder
+die erwarteten Positionen noch das Fenster; diese Seite hat also keinen Grund zu der
+Annahme, dass sich die oben beschriebenen Prüfungen geändert haben, kann es aber erst
+bestätigen, wenn Prusa den Quellcode von 8.0.0 veröffentlicht. Ob die Änderung
+beeinflusst, welche Docks bestehen, hat bisher kein Besitzer berichtet.
 
 ### Docks in Y um denselben Betrag abgelehnt: die Riemeneinstellung
 
@@ -315,8 +325,19 @@ Homing-Fehler, der in
 [#5520](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5520) verfolgt wird. Der
 Besitzer behob das, indem er zu 6.9.1-beta zurückkehrte. Diese Version ist älter als der
 Assistent zur Rechtwinkligkeit; die Rückkehr erledigte also den Homing-Fehler, sagt aber
-nichts über die Messung des Assistenten aus. Als diese Seite aktualisiert wurde, war
-#5520 noch offen, und zwei Besitzer meldeten dort denselben Homing-Fehler unter 7.0.0.
+nichts über die Messung des Assistenten aus. Am 25. Oktober 2026 war #5520 noch offen.
+Zwei Besitzer meldeten dort denselben Homing-Fehler unter 7.0.0, zwei weitere betroffene
+Besitzer stellten Logs von 7.0.1 ein, einer davon mit der Angabe, dass der Fehler
+bleibt, und ein späterer Kommentator berichtet, dass er an zwei Druckern auch unter 8.0.0
+noch auftritt. Die Versionshinweise zu 7.0.1 und 8.0.0 sagen nichts zum Homing. Ein
+weiterer Besitzer berichtet dort, dass an seinem Drucker, der ebenfalls den Homing-Fehler
+zeigt, auch die Dock-Kalibrierung stockte: Unter 6.9.2 war er kaum über das vierte Dock
+hinausgekommen, und nach der Rückkehr zu 6.9.0, wo der Homing-Fehler schwächer ausfiel,
+aber weiterhin auftrat, schaffte er den Dock-Schritt. Dass der Homing-Fehler das
+Scheitern der Docks verursachte, sagt er nicht, und ein anderer Kommentator vermutet bei
+dieser Maschine mehr als nur den Motorfehler, da die meisten Besitzer mit diesem Fehler
+unter 6.9.1-beta offenbar jede Kalibrierung bestehen. Das ist ein Besitzer
+(`provisional`), und er sagt nicht, wie die Docks scheiterten.
 
 ### Das erste Dock scheitert, sonst ist nichts offensichtlich falsch
 
@@ -389,13 +410,18 @@ der Reihe.
 
 **Fehler, der entlang der Reihe wächst: Prüfen Sie die Rechtwinkligkeit.** Führen Sie
 unter 6.9.1 oder 6.9.2 den Assistenten zur Rechtwinkligkeit des Portals aus, nachdem Sie
-wie verlangt die Düsen aus den Docks 1 und 8 genommen haben. Die Versionshinweise zu
-7.0.0 erwähnen den Assistenten nicht, und der Quellcode von 7.0.0 ist noch nicht
-öffentlich; diese Seite hat also nicht bestätigt, dass er sich dort gleich verhält.
-Meldet er eine deutliche Schiefstellung, richten Sie zuerst das Portal nach der
+wie verlangt die Düsen aus den Docks 1 und 8 genommen haben. Weder die Versionshinweise
+zu 7.0.0 noch die zu 7.0.1 oder 8.0.0 erwähnen den Assistenten, und der Quellcode
+keiner dieser Versionen ist bislang öffentlich; diese Seite hat also nicht bestätigt,
+dass er sich dort gleich verhält. Die Revision des INDX-Handbuchs vom 22. Oktober 2026
+auf derselben [Download-Seite](https://help.prusa3d.com/downloads/core-one-indx) führt
+den Assistenten unter ihren Ergänzungen auf; Prusa dokumentiert ihn also inzwischen.
+Ein Besitzer berichtet, dass der Assistent unter 7.0.x mit einem internen Fehler
+abstürzt (`provisional`, siehe Überprüfung). Meldet der Assistent eine deutliche
+Schiefstellung, richten Sie zuerst das Portal nach der
 Anleitung rechtwinklig aus, und behandeln Sie das Scheitern der Docks als
-wahrscheinliches Symptom davon. Da der
-Assistent an denselben Docks misst, ist er keine unabhängige Prüfung der Docks; lässt er
+wahrscheinliches Symptom davon. Da er
+an denselben Docks misst, ist er keine unabhängige Prüfung der Docks; lässt er
 sich durch ein Ausrichten des Portals nach der Anleitung nicht zufriedenstellen, teilen
 Sie das dem Support mit, zusammen mit den Dock-Werten. Ist die gemeldete Schiefstellung
 unplausibel groß oder springt sie zwischen den Durchläufen, beobachten Sie, wo der Kopf
@@ -433,7 +459,15 @@ am 15. Oktober 2026 veröffentlichte Firmware 7.0.0 sagt in ihren
 [Versionshinweisen](https://help.prusa3d.com/downloads/core-one-indx) nichts zur
 Dock-Kalibrierung, zur Riemeneinstellung oder zum Assistenten zur Rechtwinkligkeit.
 Prusa hat ihren Quellcode noch nicht veröffentlicht, sodass diese Seite nicht bestätigen
-kann, dass das bei 6.9.1 Gelesene auch unter 7.0.0 gilt. Im
+kann, dass das bei 6.9.1 Gelesene auch unter 7.0.0 gilt. Die am 19. Oktober 2026
+veröffentlichte Firmware 7.0.1 führt eine einzige Korrektur auf, für ein Hängenbleiben
+beim Start, und berührt nichts davon. Firmware 8.0.0 vom 22. Oktober 2026 erwähnt die
+Dock-Kalibrierung in ihren Hinweisen nur mit der Angabe, dass sich der Kopf nun dem Dock
+sanfter nähert, und sagt nichts zu den erwarteten Positionen, zum Fenster, zur
+Riemeneinstellung oder zum Assistenten zur Rechtwinkligkeit. Der Quellcode keiner der
+beiden Versionen ist öffentlich, sodass für beide derselbe Vorbehalt gilt. Die Revision
+des INDX-Handbuchs, die am selben Tag wie 8.0.0 auf derselben Seite erschien, führt den
+Assistenten zur Rechtwinkligkeit unter ihren Ergänzungen auf. Im
 [Quellcode von 6.9.1-beta](https://github.com/prusa3d/Prusa-Firmware-Buddy/tree/v6.9.1-beta/src/feature)
 fehlt der Assistent zur Rechtwinkligkeit, weshalb eine Rückkehr zu dieser Version nichts
 über ihn aussagen kann. Der Warntext zur Riemeneinstellung ist der des Druckers selbst.
@@ -448,9 +482,16 @@ nachdem die Riemeneinstellung den ursprünglichen Fall erklärt hatte.
 das Portal nicht nach der Anleitung rechtwinklig ausrichten zu können, ohne die
 Portalkalibrierung scheitern zu lassen, der Support hat es noch nicht gelöst, und die
 Rückfragen des Entwicklers sind unbeantwortet. Der von den Knöpfen der Docks
-aufgehaltene Assistent zur Rechtwinkligkeit ist ein Besitzer in einem Thread. Die
-Hinweise zu Riemenspannung und Homing stammen von mehreren Besitzern, aber alle aus einem
-Thread, einschließlich der beiden, die schrittweise nachspannten, bis die Docks
+aufgehaltene Assistent zur Rechtwinkligkeit ist ein Besitzer in einem Thread, und der
+Dock-Schritt, der neben dem Homing-Fehler kaum über das vierte Dock hinauskam, ist ein
+Besitzer in #5520. Der Absturz des Assistenten unter 7.0.x ist ein Besitzer in
+[einem anderen Forenthread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-firmware-7-0-0-stuck-on-reset/):
+Nach dem Update auf 7.0.0 oder 7.0.1, die er gemeinsam nennt, sah er den Test zur
+Rechtwinkligkeit auf einem Bildschirm mit internem Fehler stehen bleiben, sobald der Kopf
+die Position von Werkzeug 8 erreicht hatte, und will nach eigener Aussage zu 6.9.2
+zurückkehren. Ob das an anderen Maschinen oder unter 8.0.0 auftritt, ist nicht bekannt.
+Die Hinweise zu Riemenspannung und Homing stammen von mehreren Besitzern, aber alle aus
+einem Thread, einschließlich der beiden, die schrittweise nachspannten, bis die Docks
 bestanden, und die Behebung einer gleichmäßigen Verschiebung durch Nachspannen zu
 lockerer Riemen ist der Bericht eines einzelnen Besitzers.
 
@@ -460,8 +501,9 @@ eingestellt vorfanden; ob die Docks 1 und 8 leer waren, als der Besitzer den Ass
 ausführte; ob die Schiefstellung, die der Assistent an der Maschine mit der verdrehten
 Reihe meldet, im Portal oder in der Dock-Reihe selbst liegt; warum die Knöpfe der Docks
 den Kopf an der Maschine zu früh aufhielten, deren Assistent erst ohne die Docks 1 und 2
-bestand; und ob eine Core One das Werk mit einer Dock-Reihe verlassen hat, die so weit
-aus der Linie liegt, dass kein Rechtwinkligstellen sie ins Fenster bringt.
+bestand; was die sanftere Annäherung an das Dock in 8.0.0 ändert und ob sie beeinflusst,
+welche Docks bestehen; und ob eine Core One das Werk mit einer Dock-Reihe verlassen hat,
+die so weit aus der Linie liegt, dass kein Rechtwinkligstellen sie ins Fenster bringt.
 
 ## Verwandte Seiten
 

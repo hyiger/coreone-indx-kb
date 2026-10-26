@@ -1,7 +1,7 @@
 ---
 title:        Oozing spoils bed probing and tool calibration
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -26,6 +26,9 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/marlin_stubs/G427.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/marlin_stubs/M865.cpp
 superseded_by:
 ---
 
@@ -94,6 +97,24 @@ confirmed cause in these threads — but the INDX is reported to be more
 moisture-sensitive than the Nextruder it replaces, so it is worth ruling out before
 chasing anything more complicated.
 
+### Residue the pre-calibration clean leaves behind
+
+`provisional` — a single report. Before tool offset calibration measures a tool it
+purges, cools and wipes that tool's nozzle, so whatever the wipe misses is on the nozzle
+when it is measured. One INDX owner, filing in October against 6.9.2 and 7.0.0, found
+PETG left on the nozzle ahead of probing now and then on 6.9.0 and often on the two
+later releases, and traced a Z offset that came out too high to it
+([#5567](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567)). Going back to
+6.9.0 helped a good deal but did not cure it. They blame the worsening on the lower
+calibration temperature that arrived with 6.9.1, at which leftover PETG is fully hard.
+Neither the 7.0.0 nor the 8.0.0 notes list a change to that temperature or to the order
+of the clean. Their only items on the clean itself, improved wiper cleaning in 7.0.0 and
+a smaller slowdown for flexible filament in 8.0.0, say nothing about PETG left on the
+nozzle.
+Other owners report the same residue and put it down to the order of the clean or to its
+temperature; that evidence is collected under *Residue left by the clean before
+calibration* on [blobs dragged into the print](stringing-and-wiper-calibration.md).
+
 ### The probe temperature may not be the one you expect
 
 There is a reported firmware and slicer behavior where the temperature used for
@@ -119,8 +140,21 @@ Two further reported details in this area, worth knowing before you go hunting: 
 slicer configuration update corrected how that temperature is worked out, for most
 materials — though one engineering material still probes hot; and the temperature used for tool offset
 calibration is fixed in firmware and cannot be changed from G-code, so this workaround
-does not help that failure mode. That second detail is still single-source. There is
-also a sibling slicer trap in which the **bed** temperature follows T1 in the same way.
+does not help that failure mode. The firmware source bears out only part of that second
+detail. At the v6.9.1 tag the calibration sets its own probing temperatures, at or below
+a built-in ceiling, and the calibration command `G427` reads no temperature argument, so
+through 6.9.2 no G-code can raise the probing temperature above that ceiling. Below it,
+the Z-probe temperature follows the preheat value of the filament loaded in that tool,
+and `M865` can change that value, and the temperature the tool purges at, for a
+user-defined or ad hoc filament, though not for a built-in preset. The XY-probe
+temperature is fixed. So the calibration temperature is capped rather than fixed:
+G-code can lower the Z-probe temperature, but cannot raise it or move the XY one (see
+*Verification*). An October bug report, which holds that the lower calibration
+temperature makes leftover PETG worse, suggests among its fixes a temperature parameter
+for the calibration command, or a temperature that follows the filament as the
+bed-probing one does
+([#5567](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567)). There is also a
+sibling slicer trap in which the **bed** temperature follows T1 in the same way.
 
 **The engineering material is PC.** A [second owner](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/printing-pc-on-indx-oozing-at-bed-probing-leveling/) hit this with PC Blend and
 described it from the other end: probing ran hot enough to ooze onto the sheet and fail
@@ -166,10 +200,11 @@ left out
 ([compare](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)).
 Firmware 7.0.0, dated 15 October 2026 on
 [Prusa's downloads page](https://help.prusa3d.com/downloads/core-one-indx), lists nothing
-on probing temperature either, which fits the value coming from the slicer profile. On
+on probing temperature either, and nor does 8.0.0, dated 22 October, which fits the
+value coming from the slicer profile. On
 18 October a further commenter on the bug report hit the failure as soon as they tried
 PC Blend, without naming a machine or a firmware version. No owner has yet reported how
-PC Blend probes on stable 6.9.1, 6.9.2 or 7.0.0.
+PC Blend probes on stable 6.9.1, 6.9.2, 7.0.0, 7.0.1 or 8.0.0.
 
 **Adjusting it.** One owner widened the PC offset in the printer's start G-code and the
 failures stopped. The catch, which they pointed out themselves, is that a printer
@@ -231,12 +266,13 @@ tool offset calibration, cleaning by hand is followed by a fresh purge. An
 the beta asks for the calibration retry to skip the purge and only reheat and wipe,
 since purging again feeds the problem back in; it is open and unanswered, as is the
 feature request. This is a reading of the code at the v6.9.1 tag, not something an owner
-has confirmed by watching both failures on one machine. Firmware 7.0.0's notes mention
-neither retry. Their only item on the wipe itself, improved nozzle wiper cleaning, is
-tagged as carried over from
+has confirmed by watching both failures on one machine. Neither the 7.0.0 nor the 8.0.0
+notes mention either retry. The only 7.0.0 item on the wipe itself, improved nozzle wiper
+cleaning, is tagged as carried over from
 [6.10.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1) (XL and
-XL+ firmware) and does not say what changed, and Prusa had not published the 7.0.0
-source when this was written. Whether a retry still purges on 7.0.0 is therefore open.
+XL+ firmware) and does not say what changed, and Prusa had not published the source of
+either release when this was written. Whether a retry still purges on 7.0.0 or 8.0.0 is
+therefore open.
 
 ### If none of that helps
 
@@ -271,7 +307,24 @@ declare-a-cool-filament workaround, the G-code override, the slicer configuratio
 fix, and the hard-coded calibration temperature all come from the
 [common problems summary](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/),
 a condensation of a now-offline community knowledge base. None of it is separately
-confirmed in the forum corpus, and no numbers from it are reproduced here.
+confirmed in the forum corpus, and no numbers from it are reproduced here. The last of
+them has now been partly checked, and the check narrows it. A GitHub bug report states
+that the calibration temperature changed in 6.9.1 and asks for it to become adjustable
+([#5567](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567)). The firmware
+source supports a capped calibration temperature, not one that cannot be changed from
+G-code. The
+[tool offset calibration](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp)
+at the v6.9.1 tag holds its Z-probe temperature at or below a ceiling of its own and its
+XY-probe temperature fixed, and the
+[`G427` handler](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/marlin_stubs/G427.cpp)
+reads only its jitter and repeat arguments, `R` and `P`, so nothing raises either one.
+Below the ceiling, though, the Z probe follows the loaded filament's preheat value, and
+the
+[`M865` handler](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/marlin_stubs/M865.cpp)
+sets that value, and the purge temperature, on any user-defined or ad hoc filament. The
+source comparison on the [annotated profile G-code](../gcode/indx-profile-gcode.md) page
+likewise finds that temperature capped in firmware. None of the three files differs
+between the v6.9.1 and v6.9.2 tags, and the source of later releases is not public.
 
 The retry behavior is read from the firmware source at the v6.9.1 tag — the
 [bed leveling command](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/gcode/bedlevel/ubl/G29.cpp)
@@ -286,9 +339,11 @@ but it shows what the code does, not what an owner has watched happen.
 Neither source file (the bed leveling command or the tool offset calibration) differs
 between the v6.9.1 and
 [v6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2) tags, so
-the reading holds for 6.9.2 as well. Prusa had published no 7.0.0 tag on GitHub when
-this was written, so the reading has not been checked against 7.0.0, whose notes name
-no change to either retry.
+the reading holds for 6.9.2 as well. Prusa had published no 7.0.0 or 8.0.0 tag on GitHub
+when this was written, so the reading has not been checked against either release, and
+neither set of notes names a change to either retry. Firmware 7.0.1, published on
+19 October 2026 between the two, lists a single fix, for a hang at startup, and touches
+nothing on this page.
 
 Where the sources disagree: drying was offered confidently as the likely cause for
 PETG, but the case that was actually resolved was resolved by cleaning, not drying.

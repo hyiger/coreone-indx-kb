@@ -1,7 +1,7 @@
 ---
 title:        Wen Sie kontaktieren — Support vs. Gewährleistung bei einem INDX-Kit
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -15,8 +15,10 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-refund-voucher-doesnt-work-with-free-shipping/
+  - https://blog.prusa3d.com/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders_137623/
 superseded_by:
-source_sha:   a3314bd296f5d3ac238289df73a3335c188ab3ae2fdb4100a8bfb038117fd48b
+source_sha:   248daef1f6a95c86c0127afbced0045a325330f2914204b7828fd26bbdc770b8
 ---
 # Wen Sie kontaktieren — Support vs. Gewährleistung bei einem INDX-Kit
 
@@ -101,7 +103,25 @@ selben Thread berichtet, dass seine mit einem Betreff kam, der sie als
 INDX-Entschädigungsgutschein bezeichnet, was sich leichter finden lässt als alles, was
 nur unter Prusas Namen eingeht. Beides stammt aus einem einzigen Thread, ist also
 vorläufig. Ob auch Kits abgedeckt sind, die nach diesem Update bei Prusa bestellt
-wurden, hat Prusa nicht gesagt.
+wurden, hat Prusa nicht veröffentlicht. Ein Besitzer, dessen Bestellung offenbar nach
+der Frühjahrswelle lag, gibt eine Antwort von Prusas Support wieder, die nur einen Teil
+davon berührt: Die Gen-2-Upgrade-Hardware, die das Update vom August den Bestellungen
+der ersten Chargen kostenlos zusagte, galt allein den Frühjahrsbestellungen, und
+Bestellungen ab August bekommen sie nicht kostenlos. Derselbe Besitzer sagt, dass neue
+Bestellungen diese Hardware inzwischen zusammen mit dem INDX enthalten; ob deren Kosten
+im Preis stecken, ist nicht bestätigt. Das muss allerdings nicht für jede Bestellung
+gelten: Prusas
+[Ankündigung vom 20. August](https://blog.prusa3d.com/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders_137623/)
+nennt getrennte Kit-Versionen für den CORE One+ und den CORE One+ (Gen 2). Das ist eine
+einzelne, vorläufige Wiedergabe, und sie sagt nichts über Guthaben oder Bargeld; sie
+wird auf der Seite zur [Düsenhärte](nozzle-hardness.md) behandelt.
+
+Auch Probleme beim Einlösen von Prusas Gutschein sind ein Fall für Prusas Support. Ein
+Besitzer, bei dem der Gutschein den kostenlosen Versand einer Shop-Aktion von der
+Bestellung verdrängte, sprach das per Live-Chat an, und der Support löste es noch am
+selben Tag, indem er den Wert des Gutscheins um die Versandkosten erhöhte; die
+Einzelheiten, auch dass der Gutschein keine Versandkosten deckte, stehen auf der Seite
+zur [Düsenhärte](nozzle-hardness.md). Vorläufig, ein Einzelbericht.
 
 Der Kauf von Ersatzdüsen ist eine eigene Sache. INDX-Düsen kommen aus dem Shop des
 Herstellers, gleich welche Edition Sie besitzen. Stand Mitte Oktober ließ sich Prusas
@@ -148,9 +168,11 @@ reale Fälle durcharbeiten, der das Muster aus technischem Support beim einen un
 Ersatzteilen beim anderen Unternehmen unabhängig bestätigt. Erfahrungen mit Eskalationen
 und Bearbeitungszeiten werden in den beiden großen
 [nozzlegate](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/)-Threads
-berichtet. Dass Prusa die Düsenentschädigung für Kits abwickelt, die im August bereits bei
-Prusa bestellt waren, stammt aus erster Hand: aus Prusas Update vom August an diese
-Kunden, zitiert im Thread „nozzlegate communications“.
+berichtet. Dass Prusa die Düsenentschädigung für seine Kit-Bestellungen der ersten
+Chargen abwickelt, stammt aus erster Hand: aus Prusas Update vom August an diese
+Kunden, zitiert im Thread „nozzlegate communications“. Dasselbe gilt für die getrennten
+Kit-Versionen für den CORE One+ und den CORE One+ (Gen 2), laut Prusas Ankündigung
+vom 20. August.
 
 Schwächer: Das Ersatzangebot über den Live-Chat, die genannte Eskalationsdauer und der
 Fall mit den zehn Videos beruhen jeweils auf dem Bericht eines einzelnen Besitzers im
@@ -173,7 +195,12 @@ Versand von mehreren Besitzern stammt. Der beiliegende Hinweis und der Betreff d
 Gutschein-E-Mail stammen von zwei Besitzern im dritten. Die Erwartung, dass Prusa
 INDX-Düsen später führen wird, stammt von einem einzelnen Besitzer und nicht erkennbar
 von Prusa; die Gültigkeitsfrist von Prusas Gutschein ist dessen Wiedergabe, beides in
-eben diesem dritten Thread.
+eben diesem dritten Thread. Dort steht auch die von einem anderen Besitzer
+wiedergegebene Antwort des Supports, nach der die kostenlose Gen-2-Hardware nur den
+Frühjahrsbestellungen galt, zusammen mit dessen Hinweis, dass neue Bestellungen die
+Hardware inzwischen enthalten. Die Behandlung des Gutscheins an der Kasse und der Chat, der
+sie löste, sind der Bericht eines einzelnen Besitzers in einem
+[Thread zum Gutschein und zum kostenlosen Versand](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-refund-voucher-doesnt-work-with-free-shipping/).
 
 Wo die Quellen sich widersprechen: bei der Gewährleistungsdauer. Der UK-Thread kommt zu
 keinem Ergebnis, und seine Teilnehmer sagen das deutlich. Behandeln Sie jede Dauerangabe

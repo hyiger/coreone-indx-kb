@@ -1,7 +1,7 @@
 ---
 title:        Who to contact — support vs warranty on an INDX kit
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
@@ -15,6 +15,8 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-refund-voucher-doesnt-work-with-free-shipping/
+  - https://blog.prusa3d.com/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders_137623/
 superseded_by:
 ---
 
@@ -91,8 +93,23 @@ sets the same few-day expectation, according to one owner who could not find the
 afterward. Search your mail before you chase it: another owner in the same thread
 reports that theirs arrived with a subject line calling it an INDX compensation voucher,
 which is easier to find than anything sent under Prusa's name alone. Both are from one
-thread, so provisional. Prusa has not said whether kits ordered from it after that
-update are covered.
+thread, so provisional. Prusa has not published whether kits ordered from it after that
+update are covered. One owner whose order apparently fell after the spring wave relays
+a reply from Prusa's support that touches only part of it: the Gen 2 upgrade hardware
+that the August update promised the initial-batch orders free was for the spring orders
+alone, and orders placed from August on do not get it free. The same owner says new
+orders now come with that hardware alongside the INDX; whether its cost is in the price
+has not been confirmed. That may not hold for every order, though: Prusa's
+[20 August announcement](https://blog.prusa3d.com/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders_137623/)
+lists separate kit versions for the CORE One+ and the CORE One+ (Gen 2).
+That is a single provisional relay, and it says nothing about credit or cash; it is
+covered on the [nozzle hardness](nozzle-hardness.md) page.
+
+Trouble spending Prusa's voucher is a question for Prusa's support too. One owner whose
+voucher knocked a store sale's free shipping off their order raised it over live chat,
+and support settled it the same day by adding the shipping charge to the voucher's
+value; the details, including that the voucher did not pay for shipping, are on the
+[nozzle hardness](nozzle-hardness.md) page. Provisional, a single report.
 
 Buying spare nozzles is a separate matter. INDX nozzles come from the vendor's shop
 whichever edition you own. As of mid-October, Prusa store credit could not be used for
@@ -135,9 +152,10 @@ thread, which independently confirms the pattern of technical support from one
 company and parts replacement from the other. Escalation experience and turnaround
 times are reported across the two large
 [nozzlegate](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/)
-threads. Prusa's handling of nozzle compensation for kits already on order from it in
-August is first-party: Prusa's August update to those customers, quoted in the
-nozzlegate communications thread.
+threads. Prusa's handling of nozzle compensation for its initial-batch kit orders is
+first-party: Prusa's August update to those customers, quoted in the nozzlegate
+communications thread. So are the separate kit versions for the CORE One+ and the CORE
+One+ (Gen 2), from Prusa's 20 August announcement.
 
 Weaker: the live-chat replacement offer, the quoted escalation time and the ten-video
 case each rest on a single owner's report in the common problems summary thread. The
@@ -157,7 +175,11 @@ report from the second, where the faster shipping since comes from several owner
 packed note and the voucher email's subject line come from two owners in the third.
 The expectation that Prusa will stock INDX nozzles later is one owner's, not clearly
 from Prusa, and the validity limit on Prusa's voucher is that owner's relay, both in
-that same third thread.
+that same third thread. So is the support reply limiting the free Gen 2 hardware to the
+spring orders, relayed by another owner there, along with that owner's note that new
+orders now include the hardware. The voucher's handling at checkout, and
+the chat that resolved it, are one owner's report in a
+[thread on the voucher and free shipping](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-refund-voucher-doesnt-work-with-free-shipping/).
 
 Where the sources disagree: warranty duration. The UK thread reaches no conclusion
 and its participants say so plainly. Treat every duration figure on the forum as

@@ -1,7 +1,7 @@
 ---
 title:        Probing fails or nozzle never touches the bed — loadcell noise
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -48,10 +48,12 @@ interference in the loadcell signal rather than anything mechanical. The vendor 
 acknowledged interference from the heater as the working theory. The community fix,
 which vendor support now also recommends, is a clamp-on ferrite core on the main
 toolhead cable close to where it enters the controller board. Several owners report
-this resolving the fault outright. Owners have since named further sources, the bed
-heater wiring and the LED status strip among them; those are covered below and are
-less well supported. A loadcell self-test that reports noise straight after a
-toolchange (possibly also one the test makes itself) may be a different matter: noise
+this resolving the fault outright. Owners have since named further sources. Switching
+the LED status strip off has stopped the failures for several of them, costs nothing and
+is easily undone, so it is worth trying first; the bed heater wiring and the toolhead
+power wires are less well supported. All of these are covered below. A loadcell
+self-test that reports noise straight after a toolchange (possibly also one the test
+makes itself) may be a different matter: noise
 from the extruder motor, which one issue traced to the motor being left switched on
 after a toolchange and a second measured on 7.0.0. See below before buying hardware
 for that.
@@ -162,31 +164,53 @@ test can make it quiet. With the head standing still on a cold tool and no heate
 they recorded the loadcell with the extruder motor commanded off, then on, then off
 again: the noise was about three times as high while the motor was on.
 
-Whether the same motor also upsets probing when a print starts is open. The probing
-code switches the motor off first, yet owners in both issues have seen print-start
-probing fail right after a tool pickup. The first reporter saw tool offset calibration
-fail when a toolchange came before it, and got prints going by selecting the starting
-tool and homing before printing. The owner who heard the head later had a replacement
-head cable from Prusa support, which changed nothing; they now start prints by picking
-up the first tool from the Control menu, running the loadcell test, aborting it once it
-fails, and only then starting the print, so that no pickup comes just before homing. The
-7.0.0 owner's prints stop on 36130 during the loadcell probe of the offset sensor; the
-motor was off once nozzle cleaning had finished, but they could not record its state
-during the failing probe. None of them has shown that the motor is the cause there, and the
-first reporter says as much. The 7.0.0 owner replaced the nozzle-cleaning macro with
-their own version on the USB stick, which switches the motor off before that probe, and
-added start G-code lines that restore the driver afterwards; they report far fewer
-failed starts, though not none. The macro writes the motor driver's configuration
-directly, nobody else has checked it, and it is not reproduced here.
+Whether the same motor also upsets probing when a print starts is open, and the newest
+reports point partly elsewhere. The probing code switches the motor off first, yet owners
+in both issues have seen print-start probing fail right after a tool pickup. The first
+reporter saw tool offset calibration fail when a toolchange came before it, and got
+prints going by selecting the starting tool and homing before printing. The 7.0.0
+owner's prints stop on 36130 during the loadcell probe of the offset sensor; the motor
+was off once nozzle cleaning had finished, but they could not record its state during
+the failing probe. They replaced the nozzle-cleaning macro with their own version on the
+USB stick, which switches the motor off before that probe, and added start G-code lines
+that restore the driver afterwards; they report far fewer failed starts, though not
+none. The macro writes the motor driver's configuration directly, nobody else has
+checked it, and it is not reproduced here. A third owner in that issue has had tool
+offset calibration trouble on their eight-tool machine since the first release; no
+firmware release has cured it reliably, and it still turned up on nearly every print.
+They switched the extruder motor off, changing nothing else, and the probing passed at
+the first attempt after several failures. That is a single attempt.
+
+The owner who heard the head has a different result. A replacement head cable from Prusa
+support changed nothing. Their routine of picking up the first tool from the Control
+menu, running the loadcell test, aborting it once it failed and only then starting the
+print worked only while the print needed no other tool before homing; once a print had
+the printer pick up a second tool first, which on their machine happened when the
+chamber vent had to be opened, it failed again. Switching the extruder motor off in the
+start G-code (`M84 E`) before Z homing seemed to help at first, but homing at print
+start went on failing, even with the nozzle heater switched off too and the wiring at
+the back wrapped in foil tape and kept clear of the bed's power wiring. Prusa support
+then advised replacing the head because the loadcell appeared defective. Before doing
+so, they switched the LED status strip off: homing passed on four prints in a row with
+the strip off, from the second of them with the motor and heater changes taken back out,
+and mesh probing needed far fewer repeat probes. The self-test still reports noise while
+the motor is on, so on that machine the two look separate: the motor upsets the
+self-test, while the strip appears to be what upset print-start probing. Four prints on
+one machine is a small test, `provisional`. The 7.0.0 owner now also switches the strip
+off with `M150` in the start G-code before homing and back on once probing is done,
+alongside the motor change, and finds starts very reliable so far; that changes two
+things at once, so it does not separate them. None of these owners has shown that the
+motor causes print-start failures, and the first reporter says as much.
 
 The effect on the self-test now rests on two separate issues, which makes it
 `reported`. The code reading behind it is the first reporter's and this page's, not
 Prusa's, and the link to print-start failures is `provisional`. Prusa had not answered
 in either issue by the date above. 6.9.2 changes nothing that reaches an INDX beyond
-filament presets, and the
-[7.0.0 release notes](https://help.prusa3d.com/downloads/core-one-indx) list no change to
-the loadcell self-test or to the extruder motor after a toolchange; the second issue
-shows the effect on 7.0.0.
+filament presets, and none of the 7.0.0, 7.0.1 and 8.0.0
+[release notes](https://help.prusa3d.com/downloads/core-one-indx), published on
+2026-10-15, 2026-10-19 and 2026-10-22, list a change to the loadcell self-test or to
+the extruder motor after a toolchange. The second issue shows the effect on 7.0.0;
+nobody has yet reported on it under 8.0.0.
 In practice: if the self-test reports noise after a toolchange, or when the test had to
 pick up a tool first, home all axes, not only X and Y, or abort the test, and run it
 again before suspecting interference or the loadcell.
@@ -196,7 +220,16 @@ two earlier reports and a third, in
 [a separate thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/loadcell-noise-and-mesh-bed-levelling/),
 both linked the self-test's noise complaints to first-layer trouble and asked whether
 one causes the other. The second owner has one area of the bed where the first layer
-consistently fails to attach and suspects the loadcell, without a diagnosis. The third,
+consistently fails to attach and suspects the loadcell, without a diagnosis. In that
+owner's thread, two other machines had probing fail at one place, the back right of the
+bed. One owner saw wires bunching under the bed there and later found the heated bed's
+cable routed wrongly where it passes behind the rod, though they named other faults too
+and were still sorting out leveling afterwards. On the other machine, an old bed spacer
+had been refitted, and the correct spacer cured it (see the
+[assembly notes](../reference/assembly-notes.md)). A later owner has the same failure on
+prints that cover the whole bed, still undiagnosed. Each is one report, `provisional`. A
+fault that stays tied to one spot is more likely mechanical than electrical, so check
+that first; that is an inference. The third,
 whose self-test often complains of noise, tried to check: they ran the same mesh bed
 leveling twice in a row, changing nothing except cleaning the sheet between runs, and
 read back the probed values. They found the two runs close at every point, judged that
@@ -218,20 +251,24 @@ whether that was their case.
 
 ### What to try
 
-1. **Fit a clamp-on ferrite core to the main toolhead cable**, positioned near the
+1. **Switch the LED status strip off as a free first test.** Several owners' failures
+   stopped with it off; the details and the menu option are under the next heading. It
+   costs nothing and is undone in the same menu, so try it before buying or fitting
+   anything.
+2. **Fit a clamp-on ferrite core to the main toolhead cable**, positioned near the
    controller board end. This is the fix with the most independent confirmation, and
    it is now what vendor support suggests. A plain clamp-on core over the outside of
    the cable has been enough for several machines.
-2. **If a plain core is not enough**, stubborn cases have responded to routing the
+3. **If a plain core is not enough**, stubborn cases have responded to routing the
    cable through a higher-grade toroid for several turns instead of a single pass.
    TODO(verify): the specific ferrite material grade and the number of turns.
    Reported in the common-problems summary thread; not independently confirmed here.
-3. **Recalibrate or factory-reset afterwards.** On several machines the ferrite
+4. **Recalibrate or factory-reset afterwards.** On several machines the ferrite
    appeared to do nothing until the stored calibration data was discarded — by a
    factory reset or a full recalibration — because the printer was still working from
    figures it had captured while the signal was noisy. If you fit a core and nothing
    changes, do this before concluding the core did not help.
-4. **Mind the placement.** At least one reported position — at the controller's
+5. **Mind the placement.** At least one reported position — at the controller's
    extension-board connector rather than on the main cable — made the problem worse.
    If your first placement degrades things, move it rather than abandoning the idea.
 
@@ -239,9 +276,12 @@ whether that was their case.
 
 A ferrite on the main toolhead cable treats one path for the noise. Owners in the
 [tool offset calibration thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/)
-and in [#5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526) have since
-found others. Each rests on a few owners, most of whom changed several things at once, so
-all of them are `provisional`.
+and in [#5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526) and
+[#5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518) have since found
+others. The bed heater wiring and the toolhead power wires each rest on a few owners,
+most of whom changed several things at once, so they are `provisional`. Switching the
+status strip off now has different owners behind it in both issues, and one more in the
+forum thread alongside other changes, `reported`.
 
 - **The bed heater wiring.** One owner, whose INDX failed tool offset calibration from
   its very first print, separated the two heater wires out of the main bundle in the
@@ -270,17 +310,28 @@ all of them are `provisional`.
   firmware they had modified themselves, which this page does not rely on. The owner
   who twisted the toolhead power wires, on stock 6.9.2, still had an occasional
   failure after that; switching the strip off (the RGB Status Bar option, in the
-  settings or under Tune > Lights during a print) stopped it, and they later fitted
-  ferrite beads to both the bed LED and the chamber LED cables and have had no trouble
-  since. A further owner switched the LEDs off and put ferrites on every cable they
-  could reach at the same time, and their failures stopped too. Switching the strip off
-  costs nothing and is easily undone, which makes it a cheap test before opening the
-  wiring.
+  settings or under Tune > Lights during a print) stopped it, as they reported both in
+  the forum thread and in #5526, and they later fitted ferrite beads to both the bed LED
+  and the chamber LED cables and have had no trouble since. They have since added that
+  they also lowered the probing temperature in their start G-code, against oozing (see
+  [oozing during probing](oozing-during-probing-and-calibration.md)), so their result
+  mixes several changes. A further owner switched the LEDs off and put ferrites on every
+  cable they could reach at the same time, and their failures stopped too. Another owner
+  in #5526, for whom ferrite beads (placement not stated) did not help, finds that
+  switching the strip off seems to work every time; and the owner in #5518 described
+  above had their print-start homing failures stop with it off. Whether ferrites on the
+  strip's own cable help rests on one owner, whose result mixes several changes, while
+  switching the strip off has not failed anyone who reported it. It costs nothing and is
+  easily undone, which makes it a cheap test before opening the wiring.
 
 The pattern of failing in a print and passing from the menu fits both the heaters and
 the strip, since owners describe both as off during the menu run; the owner who twisted
-the power wires first read it as heater interference. Outside the strip owner's own
-testing, nobody has told the two apart on one machine.
+the power wires first read it as heater interference. The owner in #5518 is the first
+outside the strip owner's own testing to tell the strip and the nozzle heater apart on
+one machine: homing at print start still failed with the nozzle heater off, and passed
+with the strip off and the heater working as normal. The report mentions switching off
+only the nozzle heater, so it does not separate the strip from the bed heater. That is
+one machine over three or four prints, `provisional`.
 
 !!! tip "How to tell interference from a genuinely bad loadcell"
     A ferrite core treats electrical interference. It will not fix a failed loadcell,
@@ -291,6 +342,16 @@ testing, nobody has told the two apart on one machine.
     in the toolhead. See [diagonal banding](diagonal-banding.md), where that swap is
     described. If your board is recent and the fault moves with the head, go to the
     vendor rather than buying ferrites.
+
+    The reverse also happens. In
+    [#5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518), Prusa support
+    advised an owner to replace the head because the loadcell appeared defective; before
+    the swap, switching the status strip off stopped their print-start homing failures
+    over the four prints since (`provisional`, described above). Their self-test still
+    reports noise while the extruder motor is on, which fits the separate motor effect
+    described above; that alone is no sign of a bad loadcell (an inference). Before
+    accepting a head swap, try switching the strip off and aborting and rerunning the
+    self-test, both of which cost nothing.
 
     A report from another thread ended in a hardware fix rather than interference. An
     owner on 6.6.0 and 6.6.1 whose loadcell
@@ -333,16 +394,21 @@ testing, nobody has told the two apart on one machine.
     takes longer. For some it still finishes and prints run normally; for others the
     homing calibration fails, which stops the setup. Calibrating homing again after the
     update, Prusa's first suggestion, did not help; going back to the 6.9.1 beta or to
-    6.9.0 made it stop for every owner who reported trying it, and several ran the
+    6.9.0 made it stop for most of the owners who reported trying it. One still saw it
+    on 6.9.0, though less often, and another still had slow homing at times during
+    prints on the beta. Several ran the
     homing calibration again after going back. Prusa says it did not see this on the
     printers it tested the change on, has said it is looking into the reports, and has
     asked owners who see it to stay on the earlier firmware in the meantime; the
     comment names 6.9.1, while the owners had gone back to the 6.9.1 beta or to 6.9.0.
+    Prusa has since asked affected owners for photos of their X and Y motor labels and
+    a homing log, to narrow it down to particular motor batches.
     Going back to either also gives up the gantry squareness wizard, which the
-    comparison above shows arriving after the beta. Two owners say 7.0.0 behaves the
-    same, and the
-    [7.0.0 release notes](https://help.prusa3d.com/downloads/core-one-indx) list no
-    change to homing currents. In the
+    comparison above shows arriving after the beta.
+    Several owners report the same on 7.0.0 and 7.0.1 and one on 8.0.0, and none of the
+    7.0.0, 7.0.1 and 8.0.0
+    [release notes](https://help.prusa3d.com/downloads/core-one-indx) list a change to
+    homing currents. In the
     [6.9.1 source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/module/prusa/homing_corexy.cpp)
     that message marks an X/Y homing bump that stopped short and is being repeated;
     the measurement gives up only if the repeats run out. It comes from the X/Y homing,
@@ -385,8 +451,12 @@ their machine is faulty.
     the self-test, the extruder motor after a toolchange or the status strip. Prusa had
     not published its source on GitHub by the date above, so what it changes is known
     only from those notes and from owners: the extruder motor effect has been measured
-    on it. If you are reading this well after the date above, check whether a newer
-    firmware has addressed it before adding hardware.
+    on it. [7.0.1](https://help.prusa3d.com/downloads/core-one-indx), published on
+    2026-10-19, lists a single fix, for a freeze at startup, and so names none of
+    those either. [8.0.0](https://help.prusa3d.com/downloads/core-one-indx), published
+    on 2026-10-22 and likewise without source on GitHub, is the same: its notes name
+    none of those, nor homing currents. If you are reading this well after the date
+    above, check whether a newer firmware has addressed it before adding hardware.
 
 ## Verification
 
@@ -410,16 +480,20 @@ could not reproduce the first. The extruder motor's effect on the self-test is n
 two separate issues, one of them on 7.0.0, with a further owner in the first confirming
 the abort-and-retry part; the firmware source is consistent with it, but Prusa has not
 confirmed it, neither earlier owner tested it, and its link to print-start failures is
-unproven. Homing before the retry, the
-repeated-mesh check, the warranty claim and the tool-detection case under Related are
-one report each.
+unproven: one owner's print-start failures stopped with the status strip off rather than
+with the motor off. Homing before the retry, the
+repeated-mesh check, the back-right probing cases, the warranty claim, the advised head
+swap and the tool-detection case under Related are one report each.
 None of those owners fitted a ferrite, so they neither strengthen nor weaken the case
 for it. The bed heater wiring and the toolhead power wires come from one forum thread,
-and the status strip from one issue and that same thread, with the first owner's
-testing partly on modified firmware; the owners mostly changed several things at once.
-The early-trigger homing message is reported by several owners across one issue
-and two forum threads. The homing fix rests on the vendor's release notes, its firmware
-repository and a developer's explanation, not on owner reports.
+with the owners mostly changing several things at once. The status strip comes from two
+issues and that same thread; the first owner's testing was partly on modified firmware,
+but switching the strip off stopped the failures for different owners in both issues,
+and in the forum thread alongside other changes, which makes that part `reported`.
+Whether ferrites on the strip's own cable help rests on one owner, whose result mixes
+several changes. The early-trigger homing message is reported by several owners across
+one issue and two forum threads. The homing fix rests on the vendor's release notes, its
+firmware repository and a developer's explanation, not on owner reports.
 
 ## Related
 
@@ -442,5 +516,6 @@ repository and a developer's explanation, not on owner reports.
   [one report](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/loadcell-test-tool-crash-on-calibration/)
   on 6.9.1, the test step picked a tool and drove it into the other docks, and the
   owner found the printer never registered a fitted tool (`provisional`). A check of
-  the head's wiring found nothing, and the case was still open with Prusa support at
-  the date above.
+  the head's wiring found nothing; Prusa then replaced the toolhead, and with the new
+  one the owner reports everything working as expected. The fault was in the head, and
+  nothing in the report points at interference.
