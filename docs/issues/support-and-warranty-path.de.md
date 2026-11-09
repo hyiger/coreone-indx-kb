@@ -1,13 +1,13 @@
 ---
 title:        Wen Sie kontaktieren — Support vs. Gewährleistung bei einem INDX-Kit
 confidence:   reported
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     unknown
+firmware:     not version-specific; 8.0.0 for the two diagnostic screens noted under Detail
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/warranty-concern-uk/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
@@ -17,8 +17,17 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-refund-voucher-doesnt-work-with-free-shipping/
   - https://blog.prusa3d.com/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders_137623/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bondtech-indx-conversion-kit-assembly-pain-points-prep-notes/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-woes-and-a-shoutout-to-prusa-support/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/are-you-happy-with-your-indx-purchase/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/gui/screen_menu_cyphal_info.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_wizard/screen_tool_offset_wizard.cpp
 superseded_by:
-source_sha:   248daef1f6a95c86c0127afbced0045a325330f2914204b7828fd26bbdc770b8
+source_sha:   9f4985972db89a889daaad5af768a5d85b0d797777c288ebe231692ba4337b92
 ---
 # Wen Sie kontaktieren — Support vs. Gewährleistung bei einem INDX-Kit
 
@@ -57,12 +66,36 @@ Die praktische Konsequenz ist eine Reihenfolge:
    hergeschoben. Wenn Sie von beiden eine Stellungnahme haben, packen Sie beide ins
    Ticket, statt sie getrennt entdecken zu lassen.
 
+Mit Firmware 8.0.0 liefert Ihnen der Drucker selbst zwei weitere Dinge, die Sie Prusas
+Support zeigen können. Eine fehlgeschlagene Werkzeug-Offset-Kalibrierung sagt Ihnen mehr
+darüber, was schiefgegangen ist. Prusas
+[Versionshinweise](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0)
+geben jeder Art von Fehler einen eigenen Bildschirm mit dem Fehlercode und dem betroffenen
+Werkzeug; der
+[Quellcode der Kalibrierung](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_calibration/tool_offset_calibration.cpp)
+ist enger gefasst. Von den Fehlern in den Schritten eines Werkzeugs haben ein nicht
+aufgenommenes Werkzeug, ein nicht gefundener Sensor und ein Sensorausfall je einen eigenen
+Code, alle übrigen zeigen weiterhin 36130. Die
+[beiden Sensor-Bildschirme](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_wizard/screen_tool_offset_wizard.cpp)
+nennen kein Werkzeug, die anderen beiden schon; siehe
+[was die Standard-Firmware 8.0.0 zeigt](../codes.md#stock-800). So oder so sagt ein Foto
+des Bildschirms mehr als eine Beschreibung. Und ein neuer Bildschirm „Cyphal Info“, unter
+Info und dann Version Info, listet die Zusatzplatinen am CAN-Bus des Druckers auf; öffnet
+man einen Eintrag, zeigt er die Node-ID und den Zustand dieser Platine. Prusa beschreibt
+ihn als vor allem eine Diagnosehilfe für den Kontakt mit dem Support. Im
+[Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/gui/screen_menu_cyphal_info.cpp)
+ist der Werkzeug-Offset-Sensor eine der Platinen, die er aufführen kann.
+
 Zwei Dinge sollte man vorab wissen. Prusa hat es abgelehnt, Ersatzteile für die Founders
 Edition direkt zu versenden; eine Ersatzteilanfrage dorthin zu leiten ist also eine
 Sackgasse, selbst wenn dort Einigkeit besteht, dass das Teil defekt ist. Und Bondtechs
 Supportteam ist klein im Verhältnis zur Zahl der Kits im Feld; die berichtete
 Bearbeitungsdauer reichte von über Nacht bis zu mehreren Wochen Funkstille, eine langsame
-Antwort ist also nicht zwangsläufig ein verlorenes Ticket.
+Antwort ist also nicht zwangsläufig ein verlorenes Ticket. Die Größe des Teams und die
+zwischen beiden Unternehmen hin- und hergeschobenen Dock-Teile stammen allein aus der
+Zusammenfassung der Community, einer Zusammenstellung des Autors dieser Website; die
+abgelehnten Ersatzteilsendungen und die Spanne der Bearbeitungsdauer berichten auch
+Besitzer in anderen Threads.
 
 Gleich, bei welchem Unternehmen Ihr Fall liegt: Fragen Sie, mit welcher Bearbeitungszeit
 zu rechnen ist, und haken Sie nach, wenn sie verstrichen ist. Einem Besitzer sagte
@@ -78,11 +111,27 @@ dass Prusas Live-Chat angeboten habe, einen kompletten Ersatz-Werkzeugkopf zu sc
 In einem
 [späteren Thread zu einem anderen Thema](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/)
 schreibt derselbe Besitzer, der neue Kopf sei wenige Tage nach einem kurzen Online-Chat
-von Prusa gekommen und eingebaut worden. Keiner der beiden Beiträge nennt die Edition des
-Kits oder, wo es gekauft wurde; der Bericht bestätigt das oben beschriebene Muster der
-Founders Edition also weder, noch widerlegt er es. Es ist ein Besitzer, der seinen
-eigenen Fall zweimal schildert, keine zweite Quelle: Behandeln Sie ihn als Einzelbericht,
-`provisional`.
+von Prusa gekommen und eingebaut worden. Das ist ein Besitzer, der seinen eigenen Fall
+zweimal schildert, keine zweite Quelle, doch zwei weitere Besitzer in zwei weiteren
+Threads berichten inzwischen dasselbe Ergebnis. Der eine, dessen Kopf sich zunehmend
+verklemmte, bis er kein Werkzeug mehr freigeben oder aufnehmen konnte, schreibt, Prusas
+Live-Chat sei zu dem Schluss gekommen, der Kopf sei beschädigt oder defekt, und habe Ersatz
+geschickt, mit dem er wieder druckt, in einem
+[Thread mit Lob für Prusas Support](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-woes-and-a-shoutout-to-prusa-support/).
+Der andere schrieb dem Support mit einem Video, in dem der Kopf beim Entladen ein Werkzeug
+verliert, und berichtet, umgehend einen Ersatzkopf erhalten zu haben; die Kalibrierung
+laufe seither einwandfrei, in einem
+[Thread mit der Frage, ob Besitzer mit dem INDX zufrieden sind](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/are-you-happy-with-your-indx-purchase/);
+dieser Beitrag nennt das Unternehmen nicht. Ein kompletter Ersatzkopf für einen Kopf, der
+seine Werkzeuge nicht hält oder nicht freigibt, ist damit `reported`: drei Besitzer in
+vier Threads. Keiner der Beiträge nennt die Edition des Kits oder, wo es gekauft wurde; sie
+bestätigen das oben beschriebene Muster der Founders Edition also weder, noch widerlegen
+sie es.
+
+Der Besitzer mit dem verklemmten Kopf ergänzt eine Faustregel: Wenn Sie ein festsitzendes
+Werkzeug mehr als einmal von Hand über die Rückseite des Kopfes lösen müssen, hören Sie
+auf, wenden Sie sich an den Support und halten Sie jedes Ereignis fest, damit der Fall
+dokumentiert ist. Das ist der Rat eines einzelnen Besitzers, `provisional`.
 
 ### Düsenentschädigung und Ersatzdüsen
 
@@ -160,27 +209,53 @@ Fall früh, damit das Meldedatum festgehalten ist.
 
 ## Überprüfung
 
-`reported` — die Aufteilung zwischen Support und Gewährleistung wird unabhängig in der
-[Zusammenfassung häufiger Probleme](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/)
-beschrieben und von Besitzern bestätigt, die im Thread
+`reported` — die Aufteilung zwischen Support und Gewährleistung beschreiben Besitzer, die
+reale Fälle durcharbeiten, mindestens drei von ihnen, in vier getrennten Threads. Im Thread
 [Warranty Concern (UK)](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/warranty-concern-uk/)
-reale Fälle durcharbeiten, der das Muster aus technischem Support beim einen und
-Ersatzteilen beim anderen Unternehmen unabhängig bestätigt. Erfahrungen mit Eskalationen
+legt ein Besitzer das Muster aus technischem Support beim einen und Ersatzteilen beim
+anderen Unternehmen dar, und im
+[Thread zum Härtungsdebakel der Düsen](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/)
+kommt derselbe Besitzer von Prusas Triage zu einem Garantieersatz von Bondtech, der am
+nächsten Morgen bestätigt wurde. Im
+[Thread zu Schwachstellen bei der Montage](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bondtech-indx-conversion-kit-assembly-pain-points-prep-notes/)
+berichten Besitzer, wie Prusas Support defekte Offset-Sensoren an Kits der Founders Edition
+diagnostizierte und sie dann für das Teil an Bondtech verwies, und im
+[Thread zur diagonalen Bänderung](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/)
+wartet einer von ihnen darauf, dass Prusas Support den Extruder als Ursache bestätigt,
+bevor er ein Ticket bei Bondtech eröffnet. Die
+[Zusammenfassung häufiger Probleme](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/)
+legt dasselbe Muster dar, ihr Eröffnungsbeitrag ist aber eine Zusammenstellung des Autors
+dieser Website und zählt daher nicht als unabhängige Quelle; frühere Fassungen dieser Seite
+zählten sie als solche. Erfahrungen mit Eskalationen
 und Bearbeitungszeiten werden in den beiden großen
 [nozzlegate](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/)-Threads
 berichtet. Dass Prusa die Düsenentschädigung für seine Kit-Bestellungen der ersten
 Chargen abwickelt, stammt aus erster Hand: aus Prusas Update vom August an diese
 Kunden, zitiert im Thread „nozzlegate communications“. Dasselbe gilt für die getrennten
 Kit-Versionen für den CORE One+ und den CORE One+ (Gen 2), laut Prusas Ankündigung
-vom 20. August.
+vom 20. August, und für die beiden Bildschirme in 8.0.0, laut Prusas Versionshinweisen,
+wobei die Fehler mit eigenem Code, die Bildschirme, die ein Werkzeug nennen, und die Liste
+der Platinen aus dem Quellcode gelesen sind. Bei den ersten beiden ist der Quellcode enger
+gefasst als die Versionshinweise, und diese Seite folgt dem Quellcode.
 
-Schwächer: Das Ersatzangebot über den Live-Chat, die genannte Eskalationsdauer und der
-Fall mit den zehn Videos beruhen jeweils auf dem Bericht eines einzelnen Besitzers im
-Thread mit der Zusammenfassung häufiger Probleme. Der spätere Beitrag des Besitzers mit
-dem Live-Chat-Angebot, der Kopf sei angekommen und eingebaut, in einem
+Ebenfalls `reported`: ein kompletter Ersatzkopf für einen Kopf, der seine Werkzeuge nicht
+hält oder nicht freigibt, berichtet von drei Besitzern in vier Threads. Es sind der
+Besitzer mit dem Live-Chat-Angebot im Thread mit der Zusammenfassung häufiger Probleme und,
+mit demselben Fall noch einmal, in einem
 [Thread zur Frage, ob sich das INDX-Upgrade lohnt](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/),
-ist wiederum dessen eigene Schilderung und keine zweite Quelle, und keiner der beiden
-Beiträge nennt, um welche Edition es sich beim Kit handelt. Dass sich Prusas
+ein Besitzer im Thread mit Lob für Prusas Support und einer im Thread mit der Frage, ob
+Besitzer mit dem INDX zufrieden sind, der das Unternehmen nicht nennt. Kein Beitrag nennt,
+um welche Edition es sich beim Kit handelt.
+
+Schwächer: Die Größe von Bondtechs Supportteam, die zwischen beiden Unternehmen hin- und
+hergeschobenen Dock-Teile und der Rat, ein Video sei der größte Beschleuniger, beruhen auf
+der Zusammenfassung des Autors dieser Website; zum Video ergänzt ein Besitzer im Thread
+mit der Frage, ob Besitzer mit dem INDX zufrieden sind, dass auf ein Video umgehend ein
+Ersatzkopf folgte. Die genannte Eskalationsdauer und der Fall mit den zehn Videos beruhen
+jeweils auf dem Bericht eines einzelnen Besitzers im Thread mit der Zusammenfassung
+häufiger Probleme. Der Rat, nach mehr als einem manuellen Lösen eines festsitzenden
+Werkzeugs aufzuhören, stammt allein von dem Besitzer im Thread mit Lob für Prusas Support.
+Dass sich Prusas
 Shop-Guthaben nicht für INDX-Düsen einsetzen ließ, weil Prusas Shop sie nicht führte,
 beruht auf drei Besitzern in drei getrennten Threads, dem Thread
 [nozzlegate communications](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/),

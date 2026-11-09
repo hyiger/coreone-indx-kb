@@ -1,13 +1,13 @@
 ---
 title:        Input-Shaper-Kalibrierung bricht mit „Measurement failed“ ab
 confidence:   provisional
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One / Core One+ with INDX, mostly Founders Edition; one Founders Edition with the Gen 2 upgrade
 toolhead:     INDX (one report is an 8-tool head; the rest do not say)
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0 and 6.9.1-beta; one report also on 6.6.3, and an update from another reporter on 6.9.2, 6.9.1 and 6.6.3
+firmware:     6.9.0 and 6.9.1-beta; one report also on 6.6.3, and an update from another reporter on 6.9.2, 6.9.1 and 6.6.3; no reports on 7.0.0 or later, whose calibration and accelerometer code is unchanged from 6.9.2 (source-checked)
 sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5436
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.6.0
@@ -29,8 +29,16 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/coreone-with-mmu-upgrade-to-indx/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/toolhead-docking-calibration-fails/
   - https://help.prusa3d.com/downloads/core-one-indx
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v7.0.0...v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/ProjectOptions.cmake
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/AddMarlin.cmake
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/accelerometer_remote.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/a738685d8ddafbe135315874988ef5dcbf047e81
 superseded_by:
-source_sha:   d0f77f8ea75f07c24384fd81d7bc1ecc789568257ca9af3b5df7b72e101b5fbe
+source_sha:   fcd97c1a81ca4c67eef9ed47b0a82b5e965f4029439a8db4b2b6568ca1dde12f
 ---
 # Input-Shaper-Kalibrierung bricht mit „Measurement failed“ ab
 
@@ -49,7 +57,15 @@ darauf ein, 6.9.2, erschienen am 7. Oktober 2026, ändert nur die
 Filament-Presets des Druckers, und die Versionshinweise zu
 [7.0.0](https://help.prusa3d.com/downloads/core-one-indx), veröffentlicht am
 15. Oktober 2026, erwähnen weder Input Shaping noch den Beschleunigungssensor, und
-ebenso wenig die zu 7.0.1 und 8.0.0, veröffentlicht am 19. und 22. Oktober. Der
+ebenso wenig die zu 7.0.1. Die ausführlichen GitHub-Hinweise zu
+[8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0),
+das am 22. Oktober auf Prusas Download-Seite erschien, führen zwar eine Behebung für
+einen Beschleunigungssensor auf, der bis zu einem Neustart ausfällt, wodurch die
+Input-Shaper-Kalibrierung scheiterte, kennzeichnen sie aber für die MK4-Familie sowie
+den Core One und den Core One L, nicht für den INDX, und der Quellcode bestätigt das:
+Die Behebung liegt in Code, den die INDX-Firmware nicht baut, siehe unten. Der nun
+öffentliche Quellcode von 7.0.0 und 8.0.0 lässt den Kalibrier- und
+Beschleunigungssensor-Code des INDX so, wie er in 6.9.2 war. Der
 einzige Bericht seit dem Erscheinen von 6.9.2 ist ein Nachtrag eines Besitzers, der
 zur Beta berichtet hatte: Seit er 6.9.2 geflasht hat, scheitert die Kalibrierung einen
 Schritt früher, beim Beschleunigungssensor, und das blieb auch nach der Rückkehr zu
@@ -145,11 +161,36 @@ Shapers, die sich zwischen den beiden Tags geändert hat, enthält lediglich ein
 Refactoring der Art, wie Filternamen nachgeschlagen werden. Am INDX ändert 6.9.2 nichts
 außer den Filament-Presets für PVA und BVOH, die in den Versionshinweisen zu 6.9.1
 angekündigt waren, in jener Version selbst aber fehlten. 6.9.2 berührt keinen Code des
-Input Shapers oder des Beschleunigungssensors. Auch die Versionshinweise zu 7.0.0, 7.0.1
-und 8.0.0 erwähnen weder Input Shaping noch den Beschleunigungssensor, und Prusa hat den
-Quellcode keiner dieser Versionen veröffentlicht; ob sie diesen Code ändern, lässt sich
-also nicht prüfen. Seit der Aussage, das Problem werde intern verfolgt, hat sich Prusa
-im Issue nicht mehr geäußert.
+Input Shapers oder des Beschleunigungssensors. Auch die Versionshinweise zu 7.0.0 und
+7.0.1 erwähnen weder Input Shaping noch den Beschleunigungssensor.
+
+Die ausführlichen GitHub-Hinweise zu
+[8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0) tun es.
+Sie führen eine Behebung für einen Beschleunigungssensor auf, der nach einem
+Kommunikationsfehler unter hoher Last bis zu einem Neustart unbrauchbar blieb, sodass
+die Input-Shaper- und die Phase-Stepping-Kalibrierung scheiterten. Das passt zum
+Fehlerbild hier, doch die Hinweise kennzeichnen es für die MK4-Familie sowie den Core
+One und den Core One L, nicht für den INDX, und der Quellcode stimmt damit überein. Die
+[Build-Optionen der Firmware](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/ProjectOptions.cmake)
+geben diesen Druckern einen Beschleunigungssensor, der direkt an der Hauptplatine
+hängt, während die INDX-Drucker ihren über die INDX-Kopfplatine auslesen. Die
+[Commits hinter der Behebung](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/a738685d8ddafbe135315874988ef5dcbf047e81)
+überarbeiten den Treiber für den direkt angeschlossenen Beschleunigungssensor, den die
+INDX-Firmware
+[nicht baut](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/AddMarlin.cmake);
+einer von ihnen passt außerdem Interrupt-Prioritäten auf der Hauptplatine an, die der
+INDX mit ihnen teilt, um desselben Beschleunigungssensors willen. Die Behebung, wie sie
+beschrieben ist, erreicht den INDX also nicht. Auf der Seite des INDX sind die
+Kalibrierung selbst, der
+[Code, der den Beschleunigungssensor über die Kopfplatine ausliest](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/accelerometer_remote.cpp),
+und die Behandlung des Beschleunigungssensors in der Firmware der Kopfplatine selbst in
+[7.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v7.0.0), 7.0.1
+und [8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v7.0.0...v8.0.0)
+gegenüber 6.9.2 unverändert, abgesehen von einer Code-Bereinigung im Input-Shaper-Menü.
+Andere Teile der Kommunikation zwischen Hauptplatine und Kopfplatine haben sich
+geändert, und diese Seite hat nicht nachverfolgt, ob einer davon die Daten des
+Beschleunigungssensors auf ihrem Weg berührt. Seit der Aussage, das Problem werde
+intern verfolgt, hat sich Prusa im Issue nicht mehr geäußert.
 
 Zuvor hatten Prusas Versionshinweise zu 6.6.0, der ersten INDX-Firmware, gelegentliche
 Fehler bei der Input-Shaper- und der Phase-Stepping-Kalibrierung als bekanntes Problem
@@ -239,7 +280,7 @@ und einer der beiden Besitzer, bei denen es half, hat es dort inzwischen scheite
 sehen. Sein Nachtrag ist der einzige Bericht zu 6.9.2 oder zu einer Rückkehr zu 6.9.1,
 und er beschreibt, dass der Fehler zur Kalibrierung des Beschleunigungssensors
 gewandert ist. Zu 7.0.0, 7.0.1 oder 8.0.0 hat noch niemand berichtet. Bei einer
-erneuten Prüfung am 25. Oktober 2026 hatte das Issue keine Kommentare, die neuer waren
+erneuten Prüfung am 8. November 2026 hatte das Issue keine Kommentare, die neuer waren
 als dieser Nachtrag.
 
 Die beiden Berichte über die Riemeneinstellung in den Montagehinweisen betreffen die
@@ -252,8 +293,10 @@ Fehler.
 Common Misconfigurations umfasst, der gespeicherte Standardwert der Riemeneinstellung,
 die Gen-2-Variante, die bei einem ersten Start und nach einem Zurücksetzen der
 Hardwarekonfiguration angewendet wird, und was eine Änderung der Riemeneinstellung
-zurücksetzt, stammen alle aus Prusas Firmware-Quellcode beim Git-Tag 6.9.1; dass 6.6.3
-keine Riemeneinstellung hat, stammt aus dem Quellcode bei dessen Tag. Dass 6.9.2 nur die
+zurücksetzt, stammen alle aus Prusas Firmware-Quellcode beim Git-Tag 6.9.1 und sind
+für den INDX beim Tag 8.0.0 unverändert, abgesehen davon, wie der Reset-Bildschirm
+gezeichnet wird; dass 6.6.3 keine Riemeneinstellung hat, stammt aus dem Quellcode bei
+dessen Tag. Dass 6.9.2 nur die
 Filament-Presets ändert, ergibt sich aus dem
 [Vergleich ihres Tags mit dem von 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2),
 und was die stabile 6.9.1 gegenüber der Beta hinzufügt, aus dem Vergleich dieser
@@ -262,7 +305,11 @@ den [Versionshinweisen zu 7.0.0](https://help.prusa3d.com/downloads/core-one-ind
 erstmals mit 6.9.0 ausgeliefert gekennzeichnet, und im Quellcode von 6.9.1. Die Warnung
 beim Ändern der Riemeneinstellung ist die des Druckers selbst. Das bekannte
 Problem mit Fehlern bei der Input-Shaper-Kalibrierung stammt aus Prusas
-Versionshinweisen zu 6.6.0.
+Versionshinweisen zu 6.6.0. Die Behebung am Beschleunigungssensor in 8.0.0 und ihre
+Kennzeichnung stammen aus den ausführlichen Hinweisen zu 8.0.0; dass sie den INDX nicht
+erreicht und dass der Kalibrier- und Beschleunigungssensor-Code des INDX von 6.9.2 bis
+8.0.0 unverändert ist, ergibt sich aus den Build-Optionen und dem Vergleich der Tags.
+Das ist, was der Code sagt, kein Test an einem Drucker.
 
 Was weiterhelfen würde: dass Prusa eine Ursache nennt oder eine Behebung ausliefert,
 oder ein Bericht in einem separaten Thread oder Issue.

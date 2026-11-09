@@ -1,13 +1,13 @@
 ---
 title:        Silicone sock migration over the temperature sensor
 confidence:   provisional
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     unknown
+firmware:     unknown on the reporting machines; nozzle temperature sensing read in the 6.9.2 and 8.0.0 source
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-maintenance/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/
@@ -17,6 +17,10 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/
   - https://help.prusa3d.com/article/hotend-thermal-runaway-36204-indx_1088706
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/core-1-indx-generic-petg-preset-hotend-thermal-runaway-error/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/module/tpis/include/tpis/tpis.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/puppy/indx_head/src/app.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_hotend_temp_model/hotend_temp_model.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0
 superseded_by:
 ---
 
@@ -78,10 +82,26 @@ implies. The article does not name the sensing principle and does not mention th
 Owners commenting under it, like this page's author elsewhere, call the sensor
 infrared; the vendor does not say so there.
 
+Prusa's firmware source does. The INDX head board takes the nozzle's temperature from an
+infrared thermopile sensor, a CaliPile TPiS by the part the driver names, converts the
+reading using one fixed emissivity, and runs the induction heater on the result, adjusted
+by a hotend temperature model that runs on the main board and sends the head its correction
+([sensor driver](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/module/tpis/include/tpis/tpis.hpp),
+[head firmware](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/puppy/indx_head/src/app.cpp),
+[hotend model](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_hotend_temp_model/hotend_temp_model.cpp)).
+The same sensor code is in the published source of 6.9.2
+([comparison](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0)).
+That settles the sensing principle. It does not show which surface the sensor looks at,
+so it does not by itself confirm that the rectangle is the target. A fixed emissivity
+does fit a dedicated pad with a known surface, and it would explain why a smudged or
+partly covered pad throws the reading off; that is inference from how the method works,
+not something the code states.
+
 TODO(verify): whether the window the maintenance thread's opening post says to keep
-clean is the measuring pad on the nozzle or some other part of the head, and what
-sensing principle the toolhead's temperature sensor actually uses. Prusa's article
-points to what the pad does but describes neither.
+clean is the measuring pad on the nozzle or some other part of the head, and whether
+the pad is the surface the infrared sensor reads. Prusa's article points to what the
+pad does, and the firmware to how the temperature is read, but neither says which
+surface the sensor views.
 
 ## Detail
 
@@ -117,14 +137,23 @@ A thermal runaway error is not by itself evidence of a slipped sock. In that sam
 thread, an owner whose PETG prints were stopped by the error on more than one nozzle
 judged from a photo they posted that their socks were properly seated. By their account,
 Prusa's support put it down to the generic PETG profile. Drying the filament got one
-small print through, but a larger one failed again, and the cause was still open on
-24 October 2026.
+small print through, but a larger one failed again. On 4 November 2026 they reported
+printing PETG without the error after setting the nozzle cooler than the profile does.
+Even at that setting their PETG looked as though printed too hot, and it only came out
+clean once they went cooler still; their PLA looked the same at the profile's own
+temperature. They were still working with support on the cause.
+A nozzle running hotter than set, with the socks seated, would fit that, but it is one
+owner's impression of their prints, nothing was measured, and the case still says
+nothing about the sock.
 
 ### Overheating and caking
 
 A partially covered thermal sensor reads low, so the heater drives harder to reach a
 target the machine believes it has not met. The nozzle then runs above the commanded
-temperature.
+temperature. The firmware does run the heater on the infrared reading (see above), so a
+reading that comes out low would have that effect. That a sock over the pad makes the
+reading come out low, and not high, is the inference this chain rests on; nothing has
+measured it.
 
 Filament caking on INDX nozzle tips is reported apart from this page's chain and does
 not depend on the chain being right, though the support for it is thin: one other owner
@@ -244,8 +273,13 @@ conclusion, not a vendor position, and is recorded as opinion rather than findin
 are two later additions, the author's own and from a single machine: the sock torn by a
 blob, and what spares cost to ship. So, too, is the author's suggestion that brushing
 the tip drags the sock up. The PETG thermal runaway case in the same thread is one
-owner's and unresolved. It is cited only as a caution against reading every such error
+owner's and unresolved, and their later report that a cooler nozzle avoids the error is
+their own impression. It is cited only as a caution against reading every such error
 as a slipped sock, not as evidence about the sock.
+
+The sensing principle, an infrared thermopile reading converted with a fixed
+emissivity, now rests on Prusa's firmware source, which is first-party. That the
+rectangle is the surface it reads is still inferred from Prusa's article.
 
 The guidance on running without a sock, and the coming five-pack, are the vendor's —
 but they arrived as a private reply to this page's author, so they are first-party yet

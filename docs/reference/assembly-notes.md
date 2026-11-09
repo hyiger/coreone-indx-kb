@@ -1,13 +1,13 @@
 ---
 title:        Assembly notes — INDX conversion kit
 confidence:   reported
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One, Core One Plus
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     unknown
+firmware:     unknown on most reports; Gen 2 first-run default and side-sensor-only build source-checked on 6.9.1, 7.0.0, 7.0.1 and 8.0.0
 sources:
   - https://help.prusa3d.com/manual/bondtech-indx-conversion-kit-for-the-prusa-core-one-founders-edition_2397
   - https://help.prusa3d.com/manual/prusa-indx-conversion-kit-for-the-prusa-core-one_2432
@@ -36,6 +36,21 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/upgrade-core1-to-indx-gen2/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/indx-assembly-guide/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/mk4s-to-core-one-with-indx-conversion/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/any-recommended-parts-or-upgrades-to-print-before-installing-indx-and-gen2-upgrades/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/filament-sensor-improvement-adding-ptfe-tube-fittings-into-the-original-filament-sensor/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/when-should-firmware-be-updated/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/printer_variant/coreone.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/persistent_stores/store_instances/config_store/store_definition.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/ProjectOptions.cmake
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_gantry_squareness/screen_gantry_squareness.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v7.0.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_gantry_squareness/indx_gantry_squareness.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_gantry_squareness/screen_gantry_squareness.cpp
 superseded_by:
 ---
 
@@ -108,7 +123,11 @@ downloads will not match the current guide.
   loosens them. A self-printed replacement is not risk-free either: one owner fitted a
   community remix of the tensioner pulley holder that takes heat-set inserts instead of
   square nuts, had those printed parts split apart, and had to go through belt
-  tensioning, homing and gantry squaring again. *Single report.*
+  tensioning, homing and gantry squaring again. *Single report.* Another owner, in a
+  separate thread, says they have run the same remix for many months, and a third,
+  asked there whether the kit includes spare tensioner pulleys, said it does not and
+  pointed to a different community modification that takes a hex nut. *Single report*
+  each.
 
 **Check your build plate now, not afterwards.** If you print on an oversized
 third-party flex sheet, it may stop clearing the tool docks once they are installed —
@@ -269,18 +288,29 @@ asks the same question and says their Z cable sat one socket right of where the 
 puts it. Which is right is unresolved, so plug each cable by the labels printed on the
 board. *Provisional*: two comments on a single article, with no answer from Prusa.
 
+One owner, in two threads, recommends printing community motor mounts with more room
+around the Gen 2's 1.5GT drive pulleys before you start, saying several owners have had
+a pulley rub against its housing. No owner in the threads this page draws on reports the
+rubbing first-hand, so treat it as a reason to check that each pulley turns without
+touching once it is fitted, rather than as a known fault. *Single report*, second-hand.
+
 After the first flash, check the hardware configuration screen: one owner, on the INDX
 firmware current in mid-September 2026, before the stable 6.9.1 release, found it had
 assumed the Gen 2 belts were fitted — rightly, in that case, but it had no means of
 telling. A second owner, in a separate thread, found the same setting on a machine whose
 Gen 2 parts were not yet fitted, and it made dock calibration fail; see
-[dock calibration](../issues/dock-calibration-rejects-docks.md). Prusa's firmware source,
-as published for 6.9.1, applies the Gen 2 variant on a first run, which would explain
-both, though that flashing the INDX firmware counts as a first run is inferred, not
-confirmed. None of 7.0.0, 7.0.1 (19 October 2026, a single fix for a freeze at startup)
-or 8.0.0 (22 October 2026) has had its source published, and none of their
-[notes](https://help.prusa3d.com/downloads/core-one-indx) mentions a change to this
-default, so check the screen on any of them as well.
+[dock calibration](../issues/dock-calibration-rejects-docks.md). Prusa's firmware source
+applies the Gen 2 variant, with the Gen 2 expansion joints and 1.5GT belts both switched
+on, on a first run, which it takes to be a configuration store with nothing saved in it,
+and again after a factory reset that clears the hardware configuration. That is so in
+6.9.1 and unchanged in the source of 7.0.0, 7.0.1 and 8.0.0, published with their GitHub
+releases on 3 November 2026
+([variant](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/printer_variant/coreone.hpp),
+[first run](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/persistent_stores/store_instances/config_store/store_definition.cpp)).
+It would explain both reports, though that flashing the INDX firmware leaves nothing
+saved, and so counts as a first run, is inferred, not confirmed. Check the screen after
+the first flash, whichever of these versions it is, and again after any factory reset
+of the hardware configuration.
 
 ## Steps to slow down on
 
@@ -318,10 +348,23 @@ Belts set too tight bring their own trouble. The owner whose belts kept coming o
 found the X axis calibration failed with the belts too tight, and another owner in the
 same thread found the starting point they had been given for the tensioners far
 tighter than where theirs ended up. *Provisional*: two owners, one thread. If the
-gantry keeps drifting out of square, Prusa's handbook for the INDX lists a gantry
-squareness wizard among the additions in its revision of 22 October 2026, published on
-the [downloads page](https://help.prusa3d.com/downloads/core-one-indx) beside firmware
-8.0.0; this page has not checked what it says.
+gantry keeps drifting out of square, the firmware's gantry squareness check, on the INDX
+since 6.9.1, does more from 8.0.0. Its GitHub release notes, which say more here than
+the downloads page did, have it guide you through re-aligning the gantry, and in the
+[source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_gantry_squareness/screen_gantry_squareness.cpp)
+a check that finds the gantry out of square now adds a step and then measures again:
+it has you push the head to the back, look at each end for a gap between the gantry and
+the belt tensioner, and follow Prusa's belt calibration guide if you find a gap.
+Releasing the motors after every measurement, so the gantry can be moved by hand, and
+pointing a skewed result to that guide were already in 6.9.1. 8.0.0 also
+drops the bed further for this check and for dock and nozzle cleaner calibration, to
+leave room for your hands. As the
+[downloads page](https://help.prusa3d.com/downloads/core-one-indx) stood on
+25 October 2026, Prusa's handbook for the INDX listed a gantry squareness wizard among
+the additions in a revision of 22 October 2026, published there beside firmware 8.0.0;
+by 8 November 2026 the page showed handbook 1.02 of 8 October 2026 instead, its changes
+given only as minor fixes, with no mention of the wizard. This page has not checked
+what either revision says, and the source reading is not a report of the check in use.
 
 TODO(verify): the starting tensioner setting one owner was given and where theirs
 ended up. Both are stated in the source thread and are withheld here.
@@ -402,11 +445,13 @@ wondered whether the smaller figure belongs to a different kit. A community thim
 remix takes the 5 mm magnet, and worked in the compiling owner's dock. Measure one of
 your own docks before you order. Two spring sizes are also needed, a large one in each
 thimble and two small ones in each holder, which both editions of the guide list as
-0.5 × 8.5 × 30 × 15 and 0.63 × 5 × 15 × 11. Note that the
+0.5 × 8.5 × 30 × 15 and 0.63 × 5 × 15 × 11. One owner who could not find exact matches
+used springs of nearby sizes and reports that they work. *Single report.* Note that the
 printed parts collection contains **a separate nozzle seal holder for each edition**,
 Founders Edition and Prusa, so check which you need before printing. The seal itself
 has a known substitute: owners in two threads point to the Prusa XL's spare nozzle
-seal, whose blade is slightly shorter, in a remixed holder that compensates.
+seal, whose blade is slightly shorter, in a remixed holder that compensates, and one
+owner who finished an expansion found the XL's parking plates work with that holder.
 
 Buying the parts has since become simpler. Prusa's shop now lists INDX components
 individually — among them a [tool holder with magnets](https://www.prusa3d.com/product/tool-holder-with-magnets-2/), a side filament sensor,
@@ -416,7 +461,10 @@ hunting down magnets separately; what exactly it includes is worth confirming on
 listing. Not everyone would buy it, though. One owner, who had two screws melt into the
 kit-supplied dock parts despite pre-threading them by hand, recommends printing a
 community variant that takes nyloc nuts and sourcing the magnets yourself. Whether the
-holder now sold on its own shares that weakness has not been reported.
+holder now sold on its own shares that weakness has not been reported. One owner who
+finished an expansion used four of the ready-made holders, without comment on how they
+fare; another, in a separate thread, plans to print a nyloc variant instead and move the
+3 × 8 mm magnets over from the kit's own holders.
 
 **Going from four tools to eight.** No dedicated upgrade kit has been announced.
 Prusa's product listing describes the two kit sizes as sharing the Smart Head and
@@ -441,22 +489,42 @@ the block's top part:
   all. The author of this page has not found a source and suspects they are custom; a
   further owner is still looking. That first owner notes the sensor depends on magnet
   strength more than the dock does, because it works by Hall effect. Yet another
-  owner, who believes they now have the parts for a do-it-yourself expansion, settled
-  on a near match for the sensor's ring-shaped magnets (presumably the countersunk
-  ones, though the post does not say) in early October 2026 and has yet to learn
-  whether the sensor calibrates with it. No substitute has so far been reported
-  working in the sensor.
+  owner, gathering parts for a do-it-yourself expansion in early October 2026, settled
+  on a near match for the sensor's countersunk ring magnets and, at the end of that
+  month, reported the new sensors calibrating with it: two thinner N52 countersunk
+  magnets of an inch size, 3/8 in across and 1/8 in thick, stacked in each position. A
+  further owner who built the expansion found the new right-hand sensors unreliable or
+  dead during calibration and traced it to polarity: their countersunk magnets had the
+  south pole on the countersunk face, and magnets the other way round, with north on
+  that face, made the sensors work. They do not say which magnets they used, only that
+  theirs was a do-it-yourself build from the parts list shared in the thread. The
+  owner sourcing in the US, in the next item, then checked the countersunk magnets from
+  one of the listings and found them split half and half between the two. Check which
+  pole faces the countersink on every magnet before you fit it. *Provisional*: one
+  owner names a substitute that calibrated, a second do-it-yourself build in the same
+  thread does not name its magnets, and the polarity rests on that second owner's fix.
 - **The 7 × 8 mm rod magnets.** They are the size one owner measured for the dock's
   activation magnet, and they can be hard to find: an owner sourcing in the US in
   October 2026 found the dock's smaller rods online but no 7 × 8 mm rod at a sensible
   price, and settled on two stacked 7 × 4 mm magnets in each 7 × 8 mm position, in the
-  sensor and the dock thimble alike. Their kit had not arrived by mid-October, so the stack is
-  untested. *Single report.*
+  sensor and the dock thimble alike. Their kit arrived in early November and they have
+  not yet reported on the stack, so it is untested. Another owner, who finished an
+  expansion, did find 7 × 8 mm rods online, and bought the steel balls from Prusa's
+  shop, which lists a [7 mm stainless ball](https://www.prusa3d.com/product/ball-7mm-stainless-steel/).
+  *Single report* each.
 - **The plain plastic spacers inside the printed housing** — not the collets the PTFE
   plugs into. No source is known. The guide lists a small sleeve for each lane
   alongside the collets, designated 2 × 5, which may be these. One owner went a
   different way, with a community adapter that takes standard PC4-M10 push fittings and
-  lets the PTFE tube pass straight through. *Single report.*
+  lets the PTFE tube pass straight through. *Single report.* Two more owners have since
+  done without the sleeves. One, who finished an expansion, printed a community sensor
+  body that takes ECAS-type push fittings and has no room for sleeves. The other, in a
+  separate thread, took the 2 × 5 sleeves out of the kit's own sensor housings, which
+  supports reading them as these parts, opened the outer hole by hand to take a PC4-M6
+  push fitting in stainless steel, which they note is non-magnetic, and lined the bore
+  with PTFE tube from the fitting to just short of the ball. They report most lanes now
+  run so smoothly they can barely feel the ball, even feeding TPU. *Single report*
+  each.
 
 !!! warning "Reports of a magnet grade substitution"
     The author of this page replaced the original dock magnets with a stronger grade
@@ -476,16 +544,18 @@ the block's top part:
 ## Expectations to set before first boot
 
 **There is no filament sensor at the toolhead.** The INDX has side sensors only, which
-is confirmed in the firmware source as published for 6.9.1; nothing in the
-[7.0.0, 7.0.1 or 8.0.0 release notes](https://help.prusa3d.com/downloads/core-one-indx)
-suggests a change. In practice: auto-load works only for the
+the firmware source confirms: the INDX build's options give it side sensors and no
+extruder filament sensor in 6.9.1, and still do in 7.0.0, 7.0.1 and
+[8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/ProjectOptions.cmake).
+In practice: auto-load works only for the
 currently picked tool, you feed each filament to the head manually with only the last
 short section pulled in, and there is **no clog or runout detection at the head
 itself**. This surprises people coming from a Nextruder. Prusa's INDX handbook, in
 its revision 1.03 of 22 October 2026 on the
-[downloads page](https://help.prusa3d.com/downloads/core-one-indx), updated the
-filament loading procedure; this page has not checked that against the description
-here.
+[downloads page](https://help.prusa3d.com/downloads/core-one-indx) as it stood on
+25 October 2026, updated the filament loading procedure; by 8 November 2026 that page
+listed revision 1.02 of 8 October 2026 instead, with only minor fixes noted. This page
+has not checked either against the description here.
 
 **Four-tool and eight-tool kits share a guide.** Steps illustrating eight PTFE tubes
 or eight cables are normal — a four-tool kit uses half, and only one wire runs to the
@@ -503,7 +573,15 @@ calibrating every tool, is on the [profile G-code page](../gcode/indx-profile-gc
 
 **Flash firmware from a USB drive** (the one in the kit for the Founders Edition, your
 own for Prusa's), not over the network. Some firmware instructions were inherited from
-the plain Core One guide and sit awkwardly here.
+the plain Core One guide and sit awkwardly here. The guide has you flash once the build
+is done, and the INDX runs a build of its own, published as a separate file under the
+same version number: the 8.0.0 release, for one, carries one file for the plain Core One
+and another for both INDX machines. An owner who asked whether to update a plain Core One
+before converting it was told, in the one reply, to wait for the INDX for that reason.
+Nobody in that thread says whether a plain Core One on older firmware can take the INDX
+file directly; the MK4S case above is one conversion where firmware left unraised did
+get in the way. Prusa's notes for 7.0.0 and 7.0.1 recommend going
+straight to 8.0.0. *Single reply* for the advice to wait.
 
 ## If the first selftest fails
 
@@ -515,7 +593,16 @@ own pages:
   shape of a firmware issue rather than a build error.
 - **Tool offset out of bounds**, sometimes alongside an unstable loadcell test. See
   [tool offset calibration](../issues/offset-sensor-board-failure.md) and
-  [loadcell noise](../issues/loadcell-emi-noise.md).
+  [loadcell noise](../issues/loadcell-emi-noise.md). From 8.0.0, Retry after a
+  failure in one tool's steps repeats that tool alone. Before, only a failed sensor
+  measurement was retried that way; a failed cleaning or touch on the sheet started the
+  whole pass again, and the checks made once every tool is measured still do. The
+  8.0.0 release notes give each kind of failure its own screen, but in the source, of
+  the failures within one tool's steps, only a tool not picked (36146), the sensor not
+  found (36144) and a sensor failure (36145) have one, and the rest share 36130; see
+  [what stock 8.0.0 shows](../codes.md#stock-800). The two sensor screens do not name
+  the tool. The checks made once every tool is measured keep their own screens, as
+  before.
 
 TODO(verify): the temperature the heater test reports and the acceptance window it is
 checked against. Both appear in the source thread and are withheld here.
@@ -655,7 +742,16 @@ The support for each claim, item by item:
   edition's kit, which also confirms the owners' reports. The Prusa chapter is the
   source for the steel ball and 7 × 8 mm magnet in each lane, the sleeves and the
   countersunk magnets' designations. The US owner's stacked magnets appear in both of
-  those threads, from the same owner, so they count once.
+  those threads, from the same owner, so they count once. The sensor substitute that
+  calibrated, the polarity fix and the listing split between polarities, the near-match
+  springs, the XL parking plates, the ECAS sensor body, the ready-made holders in a
+  finished expansion, the 7 × 8 mm rods found online and the US owner's kit arriving are
+  all later posts in the thread on growing a four-tool kit, so the working substitute is
+  one owner's stated near match, with a second do-it-yourself build in the same thread
+  that does not name its magnets. The sleeves taken out of the kit's own housings are from
+  [a thread on fitting push fittings to the sensors](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/filament-sensor-improvement-adding-ptfe-tube-fittings-into-the-original-filament-sensor/),
+  and the plan to move the magnets into nyloc holders is in
+  [a thread on what to print before the build](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/any-recommended-parts-or-upgrades-to-print-before-installing-indx-and-gen2-upgrades/).
 - **Kits without tools** rest on a single thread,
   [one about the missing tools](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/no-tools-in-my-indx-upgrade-kit/),
   but it carries the vendor's own statement: two owners report it there, and a Prusa
@@ -699,7 +795,31 @@ The support for each claim, item by item:
 - **Spare belt tensioners** rest on two owners in separate threads, one in the thread
   on swapping an MMU3 for the INDX linked above and one in Prusa's shipping
   announcement thread. The same advice appears in the latter from this page's author,
-  and is not counted.
+  and is not counted. The remix that has lasted many months and the hex-nut
+  modification are one owner each, in the thread on what to print before the build
+  linked above; this page's author replied there too, and is not counted.
+- **Firmware facts.** The Gen 2 default on a first run or after a hardware-configuration
+  reset, the side-sensor-only build, the 8.0.0 gantry check and the tool offset retry
+  and screens are readings of Prusa's source at the 6.9.1, 7.0.0, 7.0.1 and 8.0.0 tags, the last three published with their
+  GitHub releases on 3 November 2026: first-party, but what the code does, not an
+  observed outcome. That 6.9.1 already released the motors and pointed to the belt
+  calibration guide is from its gantry check
+  [measurement](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_gantry_squareness/indx_gantry_squareness.cpp)
+  and [screens](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_gantry_squareness/screen_gantry_squareness.cpp),
+  compared with 8.0.0. The tool offset retry is from the 8.0.0
+  [calibration source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_calibration/tool_offset_calibration.cpp),
+  compared with [that of 7.0.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v7.0.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp),
+  and its screens from the files [what stock 8.0.0 shows](../codes.md#stock-800) cites.
+  A screen for every failure and the gantry guidance in outline are from the
+  [8.0.0 release notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0),
+  the advice to go straight to 8.0.0 from those of
+  [7.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0) and
+  [7.0.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1), and the
+  separate INDX firmware file from the files attached to those releases. That the
+  gantry check has been on the INDX since 6.9.1 is from that version's notes on Prusa's
+  downloads page and from its source. The advice to wait for the INDX before updating a
+  plain Core One is one reply in
+  [a thread asking when to update](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/when-should-firmware-be-updated/).
 - **Slack when fitting the belt ends** rests on four owners in three threads: the owner
   whose belts stayed put once they had slack, one who says they always work that way and
   one who agrees it is standard on a stock Core One are in
@@ -716,7 +836,8 @@ The support for each claim, item by item:
   coming out at all are two owners in that one thread, so *provisional*, as is the note
   on belts set too tight. The handbook's gantry squareness wizard, like its updated
   filament loading procedure noted under first boot, is from the change list on
-  Prusa's downloads page, as it stood on 25 October 2026.
+  Prusa's downloads page, as it stood on 25 October 2026; handbook 1.02 and its note of
+  minor fixes are from the same page on 8 November 2026.
 - **Screw-hole trouble in printed dock parts** is two different symptoms, each a
   single report: one Founders Edition builder found the screw holes in some of the
   kit's printed dock parts could have been better made, in the thread on a difficult
@@ -733,13 +854,17 @@ only two durable technical items that survived review out of that entire thread.
 single reports, and marked in place: the belt setting after the first flash, the
 assembled printer that arrived without tools, the screws that melted into dock parts,
 the sensor-housing spacer workaround, the countersunk magnet measurement along with the
-two listings found at that size and the near match still awaiting a test, and both
+two listings found at that size, and both
 assembly mistakes, each from its own thread, along with the heated bed cable routing
 that may be a third and one owner's advice on routing that cable, both from the
 spacer's thread. From the thread on an INDX and Gen 2 build, all from the one owner
 who started it: the wood chisel for rivets, the split tensioner remix, the loose rod
 and carriage screws, the short screws and missing wiper parts with support's request
-for photos, and the spool holder backplate. The kit with one spare of nearly every
+for photos, and the spool holder backplate. The motor mounts for the Gen 2 pulleys are
+one owner's advice, given in the thread on what to print before the build and in
+[Prusa's launch thread for the Gen 2 INDX](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders/),
+so it counts once, and the rubbing it guards against reaches this page second-hand. The
+kit with one spare of nearly every
 fastener and the Founders Edition build with screws left over are one owner each in
 the thread on a difficult build. The activation magnet size rests on one
 owner's measurement set against a figure nobody measured. Where in the INDX sequence

@@ -1,21 +1,35 @@
 ---
 title:        Werkzeugkopf kollidiert mit fertigen Teilen — "Complete individual objects"
 confidence:   reported
-updated:      2026-10-08
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     unknown
+firmware:     unknown; G27 and tool change lift options read in the 6.9.1 and 8.0.0 source
 sources:
   - https://github.com/prusa3d/PrusaSlicer/issues/14298
   - https://github.com/prusa3d/PrusaSlicer/issues/15672
   - https://github.com/prusa3d/PrusaSlicer/issues/15778
   - https://kb.nomadsgalaxy.com/topics/core-one/indx/issues/2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/marlin_stubs/pause/G27.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/pause/G27.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/planner.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/calibrate/G28.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/marlin_server.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/control/T.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/P.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_common.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/e229b682a5d9ba6420ed9613295eb19a53d50dc4
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/00ae9687682b855b7ff22ad25611a4a632334a54
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.14.ini
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5571
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.4.0/src/common/feature/emergency_stop/emergency_stop.cpp
 superseded_by:
-source_sha:   91630f830310a016ecf14ebc4d7b74204a8fcdf3ddcd4730beb471e8e0701b49
+source_sha:   177577f35c4cb8c11183548261bb6b0be230f0cb154885e8d4c4aab1341c0d37
 ---
 # Werkzeugkopf kollidiert mit fertigen Teilen — "Complete individual objects"
 
@@ -78,7 +92,9 @@ des sequenziellen Drucks gehört, die die Verfahrwege zwischen Objekten steuert,
 der Verfahrweg beim Werkzeugwechsel aus dem Toolchange-G-Code und Firmware-Makros
 zusammengesetzt wird. Diese Makros arbeiten schichtrelativ — bezogen darauf, wo der Kopf
 gerade ist — und wissen nichts darüber, wie hoch die fertigen Objekte auf dem Druckbett
-sind.
+sind. Der Firmware-Quellcode schränkt den letzten Teil ein: Die Firmware merkt sich sehr
+wohl den höchsten gedruckten Punkt, und der Standard-Toolchange-Block weist sie an,
+diesen Wert nicht zu nutzen (siehe unten).
 
 TODO(verify): der feste Sicherheitsabstand, den die Maschine über der Objekthöhe
 hinzufügt, wenn sie das Anheben tatsächlich ausführt. Er wird im Quell-Thread genannt,
@@ -131,13 +147,45 @@ diese drei Zeilen beziehen.
     `P0` das Problem löst. Widerstehen Sie dem, bis jemand geklärt hat, was die Firmware
     mit „above print“ meint. Bezieht sich das nur auf das gerade entstehende Objekt,
     ändert `P0` für diesen Fall nichts. Bezieht es sich auf alles Fertiggestellte,
-    könnte es die Antwort sein. Niemand hat das geprüft.
+    könnte es die Antwort sein. Der Firmware-Quellcode äußert sich inzwischen dazu,
+    siehe unten, aber nur auf dem Papier: Niemand hat es auf einem sequenziellen
+    Druckbett ausprobiert.
 
     Die beiden `G0`-Anhebungen blieben ohnehin schichtrelativ, `P0` allein könnte also
     nicht die ganze Geschichte sein.
 
-    TODO(verify): ob `G27 P0` bei einem sequenziellen Druck bereits fertiggestellte
-    Objekte berücksichtigt oder nur das gerade in Arbeit befindliche.
+    TODO(verify): ob `G27 P0` bei einem sequenziellen Druck in der Praxis über bereits
+    fertiggestellte Objekte hinweghebt oder nur über das gerade in Arbeit befindliche.
+    Die Lesart des Quellcodes unten sagt, dass es über sie hinweghebt; das ist
+    ungeprüft.
+
+**Was der Firmware-Quellcode zeigt.** Prusas Firmware-Quellcode, gelesen bei den Git-Tags
+6.9.1 und 8.0.0, klärt, was „above print“ bedeutet, und die Logik ist in beiden gleich.
+Die Firmware führt für den gesamten Druck eine einzige Höchstmarke: das höchste Z, das
+irgendeine extrudierende Bewegung im Druckbereich erreicht hat. Nur der Beginn eines
+Drucks und das Referenzieren von Z setzen sie zurück. `G27 P0` behandelt sein Z als
+Abstand über dieser Marke
+([`G27`](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/pause/G27.cpp),
+[Parken](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp)).
+Ebenso das eigene Anheben der Firmware bei einem Werkzeugwechsel. Der Parameter `L` des
+Park-Befehls `P0` und von `T` wählt es aus, und jede Einstellung außer `L0` hebt den
+Kopf mindestens bis zu dieser Marke an; die Voreinstellung, ein volles Anheben, legt
+noch einen Abstand darauf
+([`T`](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/control/T.cpp),
+[Anheben beim Werkzeugwechsel](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_common.cpp)).
+Bei einem sequenziellen Druckbett sollte die Marke auf dem höchsten bis dahin fertigen
+Objekt stehen bleiben, es sei denn, etwas zwischen den Objekten referenziert Z, was
+diese Seite nicht geprüft hat. Der Standard-Block nutzt keins von beidem. Er parkt mit
+`P2`, und sowohl `P0 S1 L0 D0` als auch `T{next_extruder} S1 L0 D0` übergeben `L0`,
+kein Anheben. `P0` fährt den Kopf nach dem Parken nie zurück, und das `S1` an
+`T{next_extruder}` weist die Firmware ebenfalls an, nicht zurückzufahren, sodass der
+Rückweg zum Druck aus der geslicten Datei kommt. Bundle
+2.5.14, Stand 8. November 2026, enthält diese Zeilen und die beiden `G0`-Anhebungen
+weiterhin unverändert ([Profil](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.14.ini)).
+Kurz gesagt: Die Firmware hat den Sicherheitsabstand, nach dem diese Seite sucht, und das
+Profil fordert ihn nicht an. Das ist die Lesart dieser Seite aus dem Code, kein
+beobachtetes Ergebnis, und sie macht `G27 P0` oder ein Anheben mit `L2` aus den Gründen
+im Kasten oben nicht zur Lösung.
 
 Der kommentierte Block, aus dem diese Zeilen stammen, mit Erläuterung der übrigen
 Werkzeugwechsel-Sequenz, findet sich unter
@@ -245,11 +293,15 @@ sequenziellen Druck Druckbetten mit einem einzigen Werkzeug vor.
     unbeaufsichtigt laufen zu lassen.
 
 !!! warning "Versuchen Sie nicht, das im Start-G-Code zu flicken"
-    Es liegt nahe, der Werkzeugwechsel-Sequenz ein Anheben hinzuzufügen. Der
-    kollidierende Verfahrweg entsteht in den Makros der Firmware selbst und nicht in der
-    geslicten Datei, das Bearbeiten des geslicten G-Codes erreicht ihn daher nicht
-    zuverlässig — und ein falsches Anheben auf einer Maschine, die an einer Station parkt
-    und spült, ist eine eigene Gefahr. Warten Sie auf eine Behebung.
+    Es liegt nahe, der Werkzeugwechsel-Sequenz ein Anheben hinzuzufügen. Eine frühere
+    Fassung dieses Kastens sagte, der kollidierende Verfahrweg entstehe in den Makros der
+    Firmware selbst, außer Reichweite der geslicten Datei. Die Lesart des Quellcodes oben
+    sagt für den Standard-Block etwas anderes: Er weist die Firmware an, weder anzuheben
+    noch zurückzufahren, die beteiligten Höhen werden also doch im geslicten G-Code
+    festgelegt. Der Rat gilt aus anderen Gründen weiter. Niemand hat eine Änderung
+    getestet, eine Änderung am Toolchange-Block wirkt auf jeden Werkzeugwechsel in jedem
+    Druck, und ein falsches Anheben auf einer Maschine, die an einer Station parkt und
+    spült, ist eine eigene Gefahr. Warten Sie auf eine Behebung.
 
 ## Verifizierung
 
@@ -276,7 +328,18 @@ sind in jedem Standard-Toolchange-Block sichtbar, und der Parameter `P` von `G27
 Firmware-Quellcode dokumentiert, wobei `P0` als Anheben über den Druck beschrieben ist
 und `P2` — die tatsächlich verwendete Option — als schlichte relative Bewegung. Beides
 lässt sich in wenigen Minuten am eigenen Profil überprüfen. Siehe
-[kommentierter G-Code des Profils](../gcode/indx-profile-gcode.md).
+[kommentierter G-Code des Profils](../gcode/indx-profile-gcode.md). Eine Lesart des
+Quellcodes bei den Git-Tags 6.9.1 und 8.0.0, oben beschrieben, geht einen Schritt
+weiter: „above print“ ist eine Höchstmarke über den ganzen Druck, und das eigene Anheben
+der Firmware beim Werkzeugwechsel nutzt sie ebenfalls, doch der Standard-Block verzichtet
+auf beides. Das ist eine Erstanbieterquelle, aber eine Lesart von Code, kein beobachtetes
+Ergebnis. Eine Firmware-Änderung in der Nähe dieses Pfads erreicht ihn nicht: Die
+Firmware führt ihren eigenen Rückweg nach einem Werkzeugwechsel um den Düsenreiniger
+herum, eine Änderung, die schon in 6.9.0 und in jeder späteren INDX-Version enthalten ist
+([Commit](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/e229b682a5d9ba6420ed9613295eb19a53d50dc4),
+[6.9-Linie](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/00ae9687682b855b7ff22ad25611a4a632334a54)),
+doch der Standard-Block weist sie an, gar nicht zurückzufahren, und die Änderung betrifft
+den Weg in X und Y, nicht die Höhe.
 
 **Auf einer anderen Maschine sind unabhängige Berichte aufgetaucht.**
 [PrusaSlicer-Issue 14298](https://github.com/prusa3d/PrusaSlicer/issues/14298)
@@ -324,7 +387,15 @@ Versionen sind nun festgehalten — 2.9.6 und eine Alpha von 3.0 —, sodass ein
 Leser erkennen kann, ob eine Behebung eingespielt wurde. Im Firmware-Tracker von Prusa
 findet sich für den INDX weiterhin nichts dazu; die dortigen Einträge, die auf den Namen
 der Funktion passen, betreffen die XL und liegen zeitlich vor dem INDX, was dazu passt,
-dass der Fehler im Slicer liegt.
+dass der Fehler im Slicer liegt. Ein neuerer Eintrag vom 24. Oktober 2026 betrifft einen
+anderen Fehler an einer Core One ohne INDX unter Firmware 6.4.0: Das Öffnen der Tür
+während des zweiten Objekts eines sequenziellen Drucks schickte den Kopf beim Anfahren
+der Home-Position in das erste
+([#5571](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5571)). Das passt zum
+Parken der Firmware beim Öffnen der Tür, das den Kopf bei 6.4.0 zur Seite fährt, ohne
+ihn zuvor über fertige Objekte anzuheben
+([Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.4.0/src/common/feature/emergency_stop/emergency_stop.cpp)).
+Es ist kein Werkzeugwechsel, und es ist ein einzelner Bericht.
 
 ## Verwandte Seiten
 

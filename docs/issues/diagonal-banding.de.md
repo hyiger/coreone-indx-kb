@@ -1,20 +1,27 @@
 ---
 title:        Diagonale Bänderung auf den Druckwänden
 confidence:   reported
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       CHT high-flow
 nozzle:       0.4mm reported
-firmware:     unknown
+firmware:     unknown on the reporting machines; 7.0.0, 7.0.1 and 8.0.0 release notes and 6.9.2 and 8.0.0 source checked
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/upgrade-core1-to-indx-gen2/
   - https://help.prusa3d.com/downloads/core-one-indx
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/include/marlin/Configuration_COREONE.h
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.2/include/marlin/Configuration_COREONE.h
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/planner.cpp
 superseded_by:
-source_sha:   ee2d7d91dddc75c447165e971848cbc2653a9d8e2c6b843682fa644854f7a755
+source_sha:   85e36646176aef170eb28032b80515a68e67b6c8edd29dbb404ddebb78df5a9b
 ---
 # Diagonale Bänderung auf den Druckwänden
 
@@ -27,10 +34,14 @@ Es gibt einen Test aus zwei Drucken, der die Frage in etwa einer Stunde und ohne
 Demontage klärt; er lohnt sich, bevor Sie einen Supportfall eröffnen. Eine schwach
 ausgeprägte Form dieses Artefakts scheint für einen Extruder mit zwei Antriebsrädern
 normal zu sein; eine deutlich ausgeprägte ist ein Hardwarefehler, und die berichtete
-Abhilfe ist ein Austausch des Werkzeugkopfs — noch keine verlässliche, denn bis Mitte
-Oktober hatten drei Besitzer Ersatzköpfe erhalten, zwei davon in der neueren
+Abhilfe ist ein Austausch des Werkzeugkopfs — noch keine verlässliche, denn bis Anfang
+November hatten vier Besitzer Ersatzköpfe erhalten, zwei davon in der neueren
 spritzgegossenen Ausführung, die das Problem nicht behoben (alle im selben Thread, daher
-`provisional`).
+`provisional`). Am 7. November gab ein Besitzer die Erklärung des Herstellers wieder:
+kleine Toleranzen im Antriebsstrang, die sich in einer Einheit aufsummieren und
+inzwischen enger gefasst wurden (die Wiedergabe eines einzelnen Besitzers, ohne bekannte
+öffentliche Stellungnahme des Herstellers, daher `provisional`). Über einen Kopf, der
+nach den engeren Toleranzen gefertigt wurde, hat noch kein Besitzer berichtet.
 
 ## Details
 
@@ -152,13 +163,18 @@ Filamenten — einer beschreibt sie als etwas, das man nicht mehr übersehen kan
 es einmal bemerkt hat. Der Konsens unter ihnen ist, dass Dual-Drive-Extruder in dieser
 Preisklasse generell eine gewisse periodische Extrusionssignatur zeigen, und dass die
 Single-Drive-Bauweise des Nextruders der Grund dafür ist, dass Besitzer sie dort nicht
-gesehen haben.
+gesehen haben. Ein neuerer Besitzer, der sie an seinem ersten Funktionsteil mit ebenen
+Flächen bemerkte, druckte dieselben zwei Teile auf einem Core One ohne INDX und auf dem
+INDX und fand den Unterschied frappierend (ein einzelner Bericht).
 
 Der Hersteller scheint es ähnlich zu sehen. Der Besitzer hinter dem unten beschriebenen
 Behelf mit dem Distanzstück gab eine Support-Antwort wieder, die seinen Fall zwar als
 schlimm anerkannte, aber festhielt, ein gewisses Maß an Ungleichmäßigkeit gehöre zur
 Funktionsweise eines Dual-Drive-Extruders. Das ist die Wiedergabe einer privaten Antwort
-durch einen einzelnen Besitzer, keine veröffentlichte Stellungnahme.
+durch einen einzelnen Besitzer, keine veröffentlichte Stellungnahme. Die Darstellung des
+Herstellers vom November, die im nächsten Abschnitt behandelt wird, wiederholt das weder,
+noch widerspricht sie dem: Sie erklärt, warum manche Einheiten stärker betroffen sind als
+andere, und sagt nichts über einen schwachen Rest.
 
 Die Frage ist also nicht, *ob* das Artefakt existiert, sondern *wie stark* es ausgeprägt
 ist. Schwach und nur auf glänzendem Filament im richtigen Winkel sichtbar ist zu erwarten.
@@ -225,14 +241,63 @@ Trifft es zu, rückt das den Fehler in ein anderes Licht: kein schlecht gefertig
 Zahnrad, sondern eine Toleranzkette, die auf perfekter Fertigung beruht und keine
 Nachstellmöglichkeit bietet, wenn diese ausbleibt.
 
+**Die Darstellung des Herstellers, wiedergegeben am 7. November** (`provisional`: die
+Wiedergabe eines einzelnen Besitzers, und die darauf aufbauende Deutung unten erbt diese
+Einstufung). Ein Besitzer stellte eine dem Hersteller zugeschriebene Mitteilung ein, ohne
+zu sagen, auf welchem Weg sie ihn erreicht hatte; darin erklärt der Hersteller seine
+Untersuchung für abgeschlossen. Demnach liegt die Ursache in einer Toleranzkette im
+Antriebsstrang. Kein einzelnes Teil lag außerhalb seiner Toleranz, doch bei einer
+betroffenen Einheit lagen mehrere Maße am weiten Ende ihres Bereichs, und zusammengenommen
+zeigten sich die Abweichungen als das periodische Muster. Die Einheiten erhielten
+unterschiedliche Kombinationen, was der Hersteller als Grund dafür nennt, dass manche
+stärker betroffen sind als andere. Nach eigener Aussage hat er den zulässigen Bereich
+dieser Maße inzwischen verengt und meldet durch die Änderung eine deutliche Verbesserung.
+
+Das stützt die obige Deutung als Toleranzkette ebenso wie die Beobachtung, dass die
+Ausprägung von Exemplar zu Exemplar schwankt. In einem Punkt korrigiert es zudem die
+Deutung als Streuung der Qualitätskontrolle: Wenn jedes Teil seiner Spezifikation
+entsprach, hätte eine Prüfung der einzelnen Teile dies nicht aufgedeckt. Nach dieser
+Darstellung waren die Grenzen selbst zu weit für die Art, wie die Teile zusammenwirken,
+was es eher zu einem Problem der konstruktiven Toleranzen macht als zu einer Streuung
+fehlerhafter Teile (eine Schlussfolgerung aus der Wortwahl des Herstellers, nicht seine
+Aussage; im Thread wird über genau diesen Punkt in beide Richtungen gestritten). Was die
+Darstellung nicht leistet, ist die Benennung des Teils oder der Maße; sie bestätigt also
+weder die Schiefstellung des Ritzels, die die Demontage fand, noch die Schlussfolgerung
+der Analyse zur ersten Stufe, und sie schließt beides auch nicht aus. Es ist die
+Wiedergabe einer an einen betroffenen Besitzer gerichteten Mitteilung durch einen
+einzelnen Besitzer, und ob sie nur an diesen Besitzer oder breiter ging, ist nicht
+gesagt; eine öffentliche Stellungnahme des Herstellers ist dieser Seite nicht bekannt.
+Ende Oktober hatte der Prusa-Support einem anderen Besitzer lediglich mitgeteilt, die
+Zahnräder seien schuld, ohne zu sagen, welche.
+
 TODO(verify): dieselbe Demontage berichtet von einer Abweichung zwischen den
 Extruderschritten je Millimeter, die aus der Toolboard-Dokumentation des Herstellers
-folgen, und dem, was die Firmware verwendet. Die Zahl wird hier zurückgehalten, weil
+folgen, und dem, was die Firmware verwendet. Die Zahlen werden hier zurückgehalten, weil
 Extruderschritte/mm ein Kalibrierwert sind und ein falscher jeden Druck unbemerkt
 verschlechtert — das Gegenteil des Distanzstücks, dessen Ergebnis sofort sichtbar ist.
-Festgehalten, weil es ein echter Hinweis ist, nicht weil es geklärt wäre: Es steht in
-einer Randbemerkung eines einzelnen Beitrags, und niemand hat bestätigt, dass die beiden
-Angaben tatsächlich voneinander abweichen.
+Der seit dem 3. November öffentliche Quellcode von 8.0.0 und schon der von 6.9.2 zeigen,
+dass der Wert der Firmware gar nicht übereinstimmen soll. In 8.0.0 liegt der
+INDX-Standardwert bewusst unter den Schritten/mm, die genau die vom G-Code verlangte
+Länge liefern würden; er tritt an die Stelle einer Flussreduktion, die früher im
+Start-G-Code des Slicers stand
+([Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/include/marlin/Configuration_COREONE.h)).
+6.9.2 verwendete denselben Standardwert, bezeichnete ihn ebenfalls als bewusste Änderung
+und glich die eigenen Extruderbewegungen der Firmware beim Werkzeugwechsel bereits dafür
+aus
+([Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.2/include/marlin/Configuration_COREONE.h));
+8.0.0 dehnt den Ausgleich auf die Erfassung des Filamentverbrauchs und auf
+Extruderbewegungen aus dem Menü Move Axis aus, Letzteres in seinen Versionshinweisen
+aufgeführt. 6.9.2 war hier nicht in sich stimmig: Der Kommentar in der von der Demontage
+zitierten Passage nennt einen Wert für exakte Förderung, während der darunter stehende
+Ausgleich beim Werkzeugwechsel aus einem anderen berechnet wird. 8.0.0 löst das auf, indem
+es den Wert für exakte Förderung nur einmal festlegt, gleich dem, den der Ausgleich in
+6.9.2 verwendete. Der Wert von 8.0.0 für exakte Förderung beim INDX entspricht allerdings
+auch nicht dem, den die Demontage aus der Dokumentation des Herstellers abgeleitet hat,
+und nichts Veröffentlichtes erklärt diesen Unterschied. So
+oder so handelt es sich um einen gleichmäßigen Faktor darauf, wie viel Filament gefördert
+wird, nicht darauf, wie gleichmäßig; für sich genommen könnte er kein periodisches Muster
+erzeugen, und als Spur zur Bänderung taugt er nicht mehr (eine Schlussfolgerung aus dem
+Quellcode, keine Messung).
 
 TODO(verify): die Übersetzungsverhältnisse, der Filamentvorschub pro Ritzelzahn und der
 daraus erwartete Bandabstand. Der Besitzer, der sie hergeleitet hat, bezeichnete eine der
@@ -244,8 +309,10 @@ entspricht — ist der berichtbare Teil und kommt ohne sie aus.
 
 Bei einem deutlich ausgeprägten Fall ist der berichtete Weg ein **Austausch des
 Werkzeugkopfs** über den Hersteller, da der Fehler zum Zeitpunkt der Abfassung nicht auf
-ein einzeln austauschbares Teil eingegrenzt war, und auch bei dieser Aktualisierung ist er
-es noch nicht. Siehe [wen Sie kontaktieren](support-and-warranty-path.md).
+ein einzeln austauschbares Teil eingegrenzt war. Auch bei dieser Aktualisierung ist er es
+noch nicht: Die wiedergegebene Darstellung des Herstellers macht Toleranzen im
+Antriebsstrang verantwortlich und nennt kein Teil. Siehe
+[wen Sie kontaktieren](support-and-warranty-path.md).
 
 Dieser Weg kann dauern. Mitte September berichtete ein anderer Besitzer, ihm sei
 mitgeteilt worden, der Hersteller untersuche zurückgesandte Werkzeugköpfe, um den Fehler
@@ -301,15 +368,54 @@ offenen Prusa-Fall sagte lediglich, der Support nehme die Sache ernst. Jeder die
 Berichte stammt von einem einzelnen Besitzer, alle aus demselben Thread, und keiner
 benennt ein Teil.
 
+Anfang November kam die oben beschriebene Darstellung des Herstellers. Sie gelangte über
+den Besitzer in den Thread, dem mitgeteilt worden war, Austauschköpfe würden erst
+verschickt, wenn der Hersteller sich einer Lösung sicher sei, und mit ihr kam ein Plan,
+von dem dieser Besitzer aus zweiter Hand von anderen betroffenen Besitzern gehört hatte:
+Besitzer der Founders Edition, die den Fehler gemeldet hatten und warteten, sollten einen
+neuen Werkzeugkopf erhalten, dieser Besitzer eingeschlossen, während sich Besitzer, die
+über Prusa gekauft haben, an Prusa wenden. Derselbe Besitzer erwartete, dass jüngere
+Lieferungen die Änderung bereits enthalten, wies aber darauf hin, dass die Mitteilung des
+Herstellers erst wenige Tage alt war, und vermutete, Prusa verschicke womöglich noch
+Austauschköpfe aus Beständen, die vor den engeren Toleranzen gefertigt wurden. Beides sind
+Vermutungen; keines der beiden Unternehmen hat das gesagt.
+
+Die Ergebnisse mit Austauschköpfen blieben derweil schlecht. Ein weiterer Besitzer, dem
+der Prusa-Support Ende Oktober mitgeteilt hatte, die Zahnräder seien schuld, erhielt
+Anfang November über Prusa einen neuen Kopf und fand darauf genau dasselbe Muster, was ihn
+fragen ließ, ob die Ursache woanders liegt; er gab seine Charge mit 1.7 an, ohne zu sagen,
+ob sich das auf den Bausatz oder den Austauschkopf bezog. Der Besitzer mit dem offenen
+Prusa-Fall wiederholte, dass sein neuer Kopf denselben Fehler in einem leicht veränderten
+Muster zeige, und gab an, der Support habe seither nicht mehr geantwortet. Der Besitzer,
+der Mitte Oktober auf einen zweiten Austauschkopf wartete, berichtete, dieser dritte Kopf
+sei annehmbar, aber nie sauber gewesen und werde nun schlechter. Jeder dieser Berichte
+stammt von einem einzelnen Besitzer, alle aus demselben Thread.
+
 Weder die am 15. Oktober veröffentlichte Firmware 7.0.0 noch die am 22. Oktober
-veröffentlichte 8.0.0 ändert an diesem Bild etwas: Keiner der Punkte in ihren
-[Versionshinweisen](https://help.prusa3d.com/downloads/core-one-indx) nennt eine
-Korrektur am Extruderantrieb oder an diesem Artefakt, und die Hinweise zu der dazwischen
-am 19. Oktober veröffentlichten 7.0.1 nennen nur eine Korrektur für ein Einfrieren beim
-Start. Am nächsten kommt dem Thema eine
-neue, standardmäßig aktive Beschleunigungsgrenze für Filamente in 8.0.0; die Hinweise
-führen sie als neue Funktion und nicht als Korrektur der Druckqualität, und bis zum
-25. Oktober hat kein Besitzer im Thread berichtet, dass sie die Bänderung verändert.
+veröffentlichte 8.0.0 ändert an diesem Bild etwas, und ebenso wenig die dazwischen am
+19. Oktober veröffentlichte 7.0.1. Die
+[Hinweise auf der Download-Seite](https://help.prusa3d.com/downloads/core-one-indx) und
+die ausführlicheren GitHub-Versionshinweise zu allen dreien
+([7.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0),
+[7.0.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1),
+[8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0)), die am
+3. November zusammen mit dem Quellcode veröffentlicht wurden, nennen keine Korrektur am
+Extruderantrieb oder an diesem Artefakt; 7.0.1 enthält nur eine Korrektur für ein
+Einfrieren beim Start. Das passt zur Darstellung des Herstellers, die die Ursache in den
+Toleranzen der Teile sieht. Am nächsten kommt dem Thema die neue Beschleunigungsgrenze für
+Filament (`M204 F`) in 8.0.0, standardmäßig aktiv, mit demselben Standardwert für den
+INDX wie für jeden Drucker außer dem MINI; INDX-spezifisch ist daran also nichts.
+Die GitHub-Hinweise und der
+[Planner-Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/planner.cpp)
+nennen ihren Zweck: Mit Pressure Advance wird jede Änderung des Flusses zu einem abrupten
+Sprung der Extrudergeschwindigkeit, daher begrenzt die Firmware bei Druckbewegungen nun,
+wie schnell sich der Fluss ändern darf, und senkt dazu die Beschleunigung der gesamten
+Bewegung, einschließlich der Kurvenfahrt nahe an Extrusionsbewegungen; Leerfahrten
+bleiben unberührt. Das begrenzt, wie schnell sich die befohlene Förderung ändert, nicht,
+wie gleichmäßig der Antriebsstrang eine gleichbleibende liefert, und nichts in den
+Hinweisen oder im Code bringt sie mit periodischer Bänderung in Verbindung (eine Lektüre
+des Quellcodes, kein Test). Bis zum 7. November hat kein Besitzer im Thread berichtet,
+dass sie die Bänderung verändert.
 
 #### Der Behelf mit dem Distanzstück
 
@@ -333,18 +439,22 @@ danach suchte.
 
 Wie lange die Korrektur hält, ist unbekannt. Der Besitzer des Distanzstücks betrachtet
 es als Notbehelf, der wieder herauskommt, sobald der Hersteller das Teil korrigiert, und
-seine Berichte bis Mitte September beschreiben es als weiterhin wirksam. Ein anderer
-Besitzer hat seither als persönliche Theorie geäußert, der schiefe Zahnkontakt könne die
-Motorseite verschleißen und die Bänderung zurückkehren lassen; dass dies eingetreten
-wäre, hat niemand berichtet.
+seine Berichte bis Mitte September beschreiben es als weiterhin wirksam; seither hat er
+sich nicht mehr geäußert. Ein anderer Besitzer hat inzwischen als persönliche Theorie
+geäußert, der schiefe Zahnkontakt könne die Motorseite verschleißen und die Bänderung
+zurückkehren lassen; dass dies an einem unterlegten Kopf eingetreten wäre, hat niemand
+berichtet. Am nächsten kommt dem ein Austauschkopf, von dem keine Unterlegung berichtet
+ist, der nach Angabe eines Besitzers anfangs annehmbar war und nun schlechter wird, ohne
+dass eine Ursache genannt wird.
 
 !!! warning "Ein Besitzer, eine Maschine, und ein invasiver Eingriff"
     `provisional`, inline auf einer ansonsten mit `reported` bewerteten Seite. Dies ist
     ein einzelner Erfahrungsbericht aus erster Hand. Niemand hat ihn reproduziert, der
-    Hersteller hat sich nicht dazu geäußert, und die obigen Dicken sind das, was an
-    **einem** Werkzeugkopf funktioniert hat — wenn die Fehlausrichtung tatsächlich eine
-    Toleranzkette ist, streut sie von Exemplar zu Exemplar, und Ihrer braucht
-    möglicherweise ein anderes Maß oder gar keines.
+    Hersteller hat sich nicht dazu geäußert (auch seine Darstellung vom November erwähnt
+    ihn nicht), und die obigen Dicken sind das, was an **einem** Werkzeugkopf funktioniert
+    hat. Nach der Darstellung des Herstellers, wie ein Besitzer sie wiedergab, geht der
+    Fehler auf eine Toleranzkette zurück, deren Kombination von Exemplar zu Exemplar
+    verschieden ist; Ihrer braucht also möglicherweise ein anderes Maß oder gar keines.
 
     Es bedeutet außerdem, einen Werkzeugkopf zu zerlegen, den der Hersteller andernfalls
     im Rahmen der Gewährleistung ersetzen könnte. Der Besitzer ging diesen Weg erst, als
@@ -378,12 +488,15 @@ wäre, hat niemand berichtet.
     nicht.
 
     Auch die Bänderung selbst ist nicht sicher verschwunden: Wie oben beschrieben,
-    behoben die Ersatzköpfe dreier anderer Besitzer sie nicht, zwei davon in der neueren
+    behoben die Ersatzköpfe von vier anderen Besitzern sie nicht, zwei davon in der neueren
     spritzgegossenen Ausführung (`provisional`: mehrere Besitzer, aber alle im selben
     Thread).
     Prüfen Sie an jedem Austauschkopf Antasten und Referenzfahrt und führen Sie damit den
     ersten Druck des Zwei-Druck-Protokolls aus, bevor Sie ihm einen langen Druck
-    anvertrauen.
+    anvertrauen. Reproduziert ein neuer Kopf das alte Muster exakt, führen Sie auch den
+    zweiten Druck aus: Ein Muster, das sich mit der Extrusionsbreite nicht verschiebt,
+    deutet vom Extruder weg (eine Schlussfolgerung aus dem Protokoll, kein berichtetes
+    Ergebnis).
 
 ## Verifikation
 
@@ -395,7 +508,7 @@ verschiedenen Teilnehmern im
 [Thread zur diagonalen Bänderung](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/)
 beschrieben worden, seitdem von mehreren weiteren, von massiv bis kaum wahrnehmbar auf
 glänzendem Filament; das Phänomen ist also nicht die Einbildung einer einzelnen Person.
-Der Thread ist als beantwortet markiert und umfasst 151 Beiträge. Das
+Der Thread ist als beantwortet markiert und umfasst 165 Beiträge. Das
 Zwei-Druck-Protokoll ist seine als Lösung markierte Antwort, verfasst von dem Besitzer,
 der das Problem unter Beteiligung des Herstellers und des Prusa-Supports bearbeitet hat,
 und die Begründung, warum es Extrusion von Bewegung trennt, ist in sich schlüssig.
@@ -415,17 +528,22 @@ der zwei Austauschköpfe erhielt. Die
 verzeichnet unabhängig davon einen schweren Bänderungsfall, den der Hersteller als defekte
 Extrudereinheit bestätigt hat, was die Schlussfolgerung stützt, aber durchaus denselben
 Fall beschreiben kann und nicht einen zweiten. Die Austauschköpfe, die die Bänderung
-nicht behoben, stammen von drei weiteren Besitzern, von denen zwei die neuere
-spritzgegossene Ausführung angeben; die Berichte sind voneinander unabhängig, stehen aber
-alle im selben Thread. Insgesamt sprechen die dokumentierten Ergebnisse eher dagegen,
-dass ein Austausch eine verlässliche Abhilfe ist, und keines kommt über `provisional`
-hinaus.
+nicht behoben, stammen von vier weiteren Besitzern, von denen zwei die neuere
+spritzgegossene Ausführung angeben, und einer davon meldet inzwischen einen zweiten
+Austauschkopf, der annehmbar ist, aber schlechter wird; die Berichte sind voneinander
+unabhängig, stehen aber alle im selben Thread. Insgesamt sprechen die dokumentierten
+Ergebnisse eher dagegen, dass ein Austausch eine verlässliche Abhilfe ist, und keines
+kommt über `provisional` hinaus. Von keinem ist bekannt, dass es einen nach den engeren
+Toleranzen gefertigten Kopf betrifft.
 
 **Analyse, keine Messung.** Die Erklärung über den Zahneingriff ist die Berechnung eines
 einzelnen Besitzers, veröffentlicht kurz bevor diese Seite entstand, ohne dass der
 Hersteller bis dahin reagiert hätte. Sie ist stimmig und konkret, aber sie wurde von
 niemandem bestätigt, der Zugang zu den Teilen hat. Behandeln Sie sie als die beste
-verfügbare Hypothese.
+verfügbare Hypothese. Die im November wiedergegebene Darstellung des Herstellers passt im
+Großen dazu, eine von Exemplar zu Exemplar verschiedene Toleranzkette im Antriebsstrang,
+nennt aber weder eine Untersetzungsstufe noch ein Teil und bestätigt die Einzelheiten
+daher nicht.
 
 **Ein Vorbehalt zur zweiten Quelle.** Die Bänderungsdiskussion im
 [Thread zur Düsenhärtung](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/)
@@ -440,18 +558,27 @@ Was diese Seite stärken würde: weitere Besitzer, die das Zwei-Druck-Protokoll 
 und das Ergebnis melden, ein Distanzstück, das auch an einem zweiten Werkzeugkopf wirkt,
 eine Aussage des Herstellers, die das konkrete Teil benennt, und ein Austauschkopf, der
 nachweislich eine Korrektur enthält. Zum Zeitpunkt dieser Aktualisierung, am
-25. Oktober, ist nichts davon eingetreten. Niemand hat ein Ergebnis mit Distanzstück an
-einem anderen Werkzeugkopf gemeldet; ein Besitzer kündigte am 10. Oktober an, es an
-seinem ursprünglichen Kopf zu versuchen, und hat sich seither nicht dazu geäußert. Einen
-weiteren Durchlauf des Protokolls hat ebenfalls niemand gemeldet. Die im Thread
-wiedergegebenen Antworten des Herstellers erkennen den Fehler an und sprechen von einer
-Lösung, an der gearbeitet werde, ohne ein Teil zu benennen; auch die bis Mitte Oktober
-wiedergegebenen Antworten von Prusa benennen keines, und nichts seither Wiedergegebene
-benennt eines. Von keiner Charge ist bekannt, dass sie eine Korrektur enthält: Die
-beiden bisher gemeldeten spritzgegossenen Austauschköpfe taten es nicht, für einen
-weiteren, Mitte Oktober erwarteten Austauschkopf ist kein Ergebnis gemeldet, und ein
-Besitzer mit einem Bausatz, den er als Charge 5 bezeichnet, glaubt den Fehler zu haben,
-hat allerdings nicht über einen Durchlauf des Protokolls berichtet.
+8. November, hat sich nur bei der Aussage des Herstellers etwas bewegt, und auch das nur
+teilweise. Niemand hat ein Ergebnis mit Distanzstück an einem anderen Werkzeugkopf
+gemeldet; der Besitzer, der am 10. Oktober ankündigte, es an seinem ursprünglichen Kopf
+zu versuchen, meldete sich am 7. November erneut, ohne es zu erwähnen. Einen weiteren
+Durchlauf des Protokolls hat ebenfalls niemand gemeldet. Die am 7. November
+wiedergegebene Darstellung des Herstellers nennt eine Ursache, eine Toleranzkette im
+Antriebsstrang, und eine Änderung, engere Toleranzen, aber kein Teil, und eine
+öffentliche Stellungnahme des Herstellers ist nicht bekannt; die Ende Oktober
+wiedergegebene Antwort des
+Prusa-Supports besagte nur, die Zahnräder seien schuld. Von keiner Charge ist bekannt,
+dass sie eine Korrektur enthält. Der Hersteller nennt für die engeren Toleranzen weder
+eine Charge noch ein Lieferdatum. Die beiden früher gemeldeten spritzgegossenen
+Austauschköpfe behoben den Fehler nicht, ebenso wenig der Anfang November über Prusa
+erhaltene Kopf eines Besitzers, der seine Charge mit 1.7 angab. Ein Besitzer mit einem
+Bausatz, den er als Charge 5 bezeichnet, glaubt den Fehler zu haben, hat allerdings nicht
+über einen Durchlauf des Protokolls berichtet. In
+[einem anderen Thread zum Umbau](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/upgrade-core1-to-indx-gen2/)
+sah ein Besitzer eines Bausatzes aus Charge 7 bei seinen ersten Drucken keine diagonale
+Bänderung, ebenfalls ohne das Protokoll. Da sich die Toleranzkette laut Hersteller von
+Exemplar zu Exemplar unterscheidet, sagt eine einzelne saubere Einheit wenig über ihre
+Charge aus.
 
 ## Verwandte Seiten
 

@@ -1,19 +1,33 @@
 ---
 title:        Toolhead collides with finished parts — "Complete individual objects"
 confidence:   reported
-updated:      2026-10-08
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     unknown
+firmware:     unknown; G27 and tool change lift options read in the 6.9.1 and 8.0.0 source
 sources:
   - https://github.com/prusa3d/PrusaSlicer/issues/14298
   - https://github.com/prusa3d/PrusaSlicer/issues/15672
   - https://github.com/prusa3d/PrusaSlicer/issues/15778
   - https://kb.nomadsgalaxy.com/topics/core-one/indx/issues/2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/marlin_stubs/pause/G27.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/pause/G27.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/planner.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/calibrate/G28.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/marlin_server.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/control/T.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/P.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_common.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/e229b682a5d9ba6420ed9613295eb19a53d50dc4
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/00ae9687682b855b7ff22ad25611a4a632334a54
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.14.ini
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5571
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.4.0/src/common/feature/emergency_stop/emergency_stop.cpp
 superseded_by:
 ---
 
@@ -70,7 +84,9 @@ The reported explanation is that the clearance calculation belongs to the
 sequential-printing logic, which governs inter-object travel, while tool-change travel
 is assembled from the toolchange G-code and firmware macros. Those macros work in
 layer-relative terms — where the head is now — and have no knowledge of how tall the
-finished objects on the plate are.
+finished objects on the plate are. The firmware source qualifies the last part: the
+firmware does keep track of the highest point printed, and the stock toolchange block
+tells it not to use that figure (see below).
 
 TODO(verify): the fixed clearance the machine adds above an object's height when it
 does apply the lift. It is named in the source thread but is a single-source figure and
@@ -118,13 +134,40 @@ at what those three lines reference.
     It is tempting to read the table above and conclude that changing `P2` to `P0` solves
     it. Resist that until someone establishes what the firmware means by "above print".
     If it tracks only the object currently being built, `P0` changes nothing for this
-    case. If it tracks everything completed, it may be the answer. Nobody has checked.
+    case. If it tracks everything completed, it may be the answer. The firmware source
+    now speaks to that, below, but only on paper: nobody has tried it on a sequential
+    plate.
 
     The two `G0` lifts would also still be layer-relative regardless, so `P0` alone
     could not be the whole story.
 
-    TODO(verify): whether `G27 P0` accounts for objects already completed on a
-    sequential print, or only the one in progress.
+    TODO(verify): whether `G27 P0` in practice clears objects already completed on a
+    sequential print, or only the one in progress. The source reading below says it
+    should clear them; that is untested.
+
+**What the firmware source shows.** Prusa's firmware source, read at the 6.9.1 and 8.0.0
+tags, settles what "above print" means, and the logic is the same in both. The firmware
+keeps one high-water mark for the whole print: the highest Z that any extruding move
+inside the print area has reached. Only the start of a print and homing Z reset it.
+`G27 P0` treats its Z as a clearance above that mark
+([`G27`](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/pause/G27.cpp),
+[parking](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp)).
+So does the firmware's own lift during a tool change. The `L` parameter of the park
+command `P0` and of `T` selects it, and any setting but `L0` raises the head at least to
+that mark; the default, a full lift, adds a clearance on top
+([`T`](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/control/T.cpp),
+[tool change lift](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_common.cpp)).
+On a sequential plate the mark should stay at the tallest object finished so far,
+unless something between objects homes Z, which this page has not checked. The stock
+block asks for neither. It parks with `P2`, and both `P0 S1 L0 D0` and
+`T{next_extruder} S1 L0 D0` pass `L0`, no lift. `P0` never moves the head back after
+parking, and the `S1` on `T{next_extruder}` tells the firmware not to either, so the way
+back to the print comes from the sliced file. Bundle 2.5.14, current on 8 November 2026,
+still has these lines and the two
+`G0` lifts unchanged ([profile](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.14.ini)).
+In short, the firmware has the clearance this page is looking for, and the profile does
+not ask for it. That is this page's reading of the code, not an observed result, and it
+does not make `G27 P0` or an `L2` lift a fix, for the reasons in the box above.
 
 The annotated block these lines come from, with the rest of the toolchange sequence
 explained, is at [annotated profile G-code](../gcode/indx-profile-gcode.md).
@@ -220,10 +263,14 @@ objects rising together, and reserve sequential printing for single-tool plates.
     leaving a long multi-tool sequential job running unattended.
 
 !!! warning "Do not try to patch this in the start G-code"
-    It is tempting to add a lift to the toolchange sequence. The travel that collides
-    is generated inside the firmware's own macros rather than in the sliced file, so
-    editing the sliced G-code does not reliably reach it — and a wrong lift on a
-    machine that parks and purges at a station is its own hazard. Wait for a fix.
+    It is tempting to add a lift to the toolchange sequence. An earlier version of this
+    box said the colliding travel is generated inside the firmware's own macros, out of
+    reach of the sliced file. The source reading above says otherwise for the stock
+    block: it tells the firmware not to lift and not to move back, so the heights
+    involved are set in the sliced G-code after all. The advice stands for other
+    reasons. Nobody has tested an edit, a change to the toolchange block applies to
+    every tool change in every print, and a wrong lift on a machine that parks and
+    purges at a station is its own hazard. Wait for a fix.
 
 ## Verification
 
@@ -247,7 +294,17 @@ longer does: the layer-relative lifts are visible in any stock toolchange block,
 `G27`'s `P` parameter is documented in the firmware source, with `P0` described as
 raising above the print and `P2` — the one actually used — as a plain relative move.
 Anyone can check both against their own profile in a few minutes. See
-[annotated profile G-code](../gcode/indx-profile-gcode.md).
+[annotated profile G-code](../gcode/indx-profile-gcode.md). A reading of the source at
+the 6.9.1 and 8.0.0 tags, described above, goes one step further: "above print" is a
+high-water mark over the whole print, and the firmware's own tool change lift uses it
+too, but the stock block opts out of both. That is first-party, but it is a reading of
+code, not an observed outcome. One firmware change near this path does not reach it:
+the firmware routes its own return after a tool change around the nozzle cleaner, a
+change already present in 6.9.0 and in every INDX release since
+([commit](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/e229b682a5d9ba6420ed9613295eb19a53d50dc4),
+[6.9 line](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/00ae9687682b855b7ff22ad25611a4a632334a54)),
+but the stock block tells it not to return at all, and the change concerns the path in
+X and Y, not the height.
 
 **Independent reports turned up on another machine.**
 [PrusaSlicer issue 14298](https://github.com/prusa3d/PrusaSlicer/issues/14298) documents
@@ -289,7 +346,15 @@ confirmed INDX sightings.
 Versions are now on record — 2.9.6, and a 3.0 alpha — so a later reader can tell whether
 a fix has landed. The Prusa firmware tracker still has nothing on this for the INDX; the
 entries there matching the feature name concern the XL and predate the INDX, which fits
-the fault living in the slicer.
+the fault living in the slicer. One newer entry, filed on 24 October 2026, is a
+different fault on a Core One without the INDX, on firmware 6.4.0: opening the door
+part-way through the second object of a sequential print sent the head into the first
+as the printer moved to home
+([#5571](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5571)). That fits the
+firmware's park when the door opens, which at 6.4.0 moves the head aside without first
+lifting it over finished objects
+([source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.4.0/src/common/feature/emergency_stop/emergency_stop.cpp)).
+It is not a tool change, and it is one report.
 
 ## Related
 

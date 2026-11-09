@@ -1,16 +1,27 @@
 ---
 title:        Nozzle hardness and abrasive filaments
 confidence:   reported
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       CHT high-flow, and plain-bore variants
 nozzle:       0.4mm standard
-firmware:     unknown
+firmware:     6.9.2 and 8.0.0 by source reading, for the hardened-nozzle setting and the error codes; the hardness itself is a property of the part
 sources:
   - https://blog.prusa3d.com/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders_137623/
   - https://help.prusa3d.com/article/unknown-nozzle-36121-core-one-indx_1072730
+  - https://help.prusa3d.com/article/unknown-nozzle-36122-core-one-indx_1072738
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_indx.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/persistent_stores/store_instances/config_store/defaults.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/compatibility_checks/gcode_compatibility.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/filament_presets.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/M865.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/ProjectOptions.cmake
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/are-you-happy-with-your-indx-purchase/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/so-whats-the-story-on-shipping-now/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
@@ -42,8 +53,25 @@ yet: E3D has announced one, but it has not shipped — see *What is coming* belo
 | [`36121`](https://help.prusa3d.com/article/unknown-nozzle-36121-core-one-indx_1072730) | Unknown nozzle |
 | [`36122`](https://help.prusa3d.com/article/unknown-nozzle-36122-core-one-indx_1072738) | Unknown nozzle |
 
-These fire when the nozzle fitted does not match what the sliced file declared —
-the per-tool declaration that also carries the abrasive and high-flow flags.
+Despite the name, neither code has anything to do with nozzle hardness. Both are
+tool-recognition prompts from the toolchanger: the printer has a tool on the head that it
+cannot place, and asks you to pick the dock it came from so that it can park it there.
+Prusa's help articles describe them that way, 36121 during a pickup and 36122 after a
+pause or a settings change mid-print. In the firmware source, 6.9.2 and 8.0.0 alike,
+36121 is the toolchanger's unknown-tool prompt, raised for example when the head reports a
+tool while the printer's stored record says none is picked up; 36122 has no entry in the
+error list of any release from 6.9.0 through 8.0.0. They are of a kind with the dock
+and tool-lost prompts listed on the [tool detection](tool-detection-ringdown-decay.md) page,
+though that page does not itself cover these two codes. A mismatch
+between the sliced file and the nozzle settings stored for each tool, the hardened-nozzle
+check below included, is reported when the print starts, under its own title, with no
+number from this list.
+
+!!! note "Corrected on 8 November 2026"
+    Earlier versions of this page said these codes fire when the fitted nozzle does not
+    match the sliced file's per-tool declaration. Prusa's help articles and the
+    now-public firmware source both contradict that. The codes stay listed here so that
+    a reader who arrives from them finds the correction.
 
 ## Detail
 
@@ -123,9 +151,28 @@ is a statement about their earlier testing rather than independent confirmation.
 ### What to do now
 
 **Turn the printer's "nozzle hardened" setting off**, in the all-tools menu. This
-matters practically: with it off, slicing an abrasive-material profile will raise a
-warning rather than proceeding silently. It is the one setting change that protects
-you from your own muscle memory.
+matters practically: with it off, starting a file sliced with an abrasive-material
+profile raises a warning on the printer rather than proceeding silently. It is the one
+setting change that protects you from your own muscle memory.
+
+With the firmware source now public for 7.0.0, 7.0.1 and 8.0.0, this can be checked
+against the code rather than taken on trust, and for the INDX it reads the same in 8.0.0
+as in 6.9.2.
+The firmware ships with every INDX tool marked hardened, which is why the setting has to
+be turned off by hand; it is a toggle in each tool's settings, and in the all-tools entry
+of the same list. Prusa's INDX printer profiles declare, for each tool a print uses,
+whether its filament profile is marked abrasive. When a file declares that for a tool
+whose setting is off, the printer flags it before the print starts, as strictly as the
+Nozzle entry among its hardware checks is set; that entry defaults to a warning. A
+filament marked abrasive is flagged the same way when it is loaded. On the INDX none of
+the firmware's own presets carry that mark: the two that do, PPS and PPA, are built from
+7.0.0 on only into the firmware for the plain Core One and the Core One L, which
+supports the high-temperature hotend (6.9.2 built them into no release firmware at
+all), and the INDX models are separate builds without them in all of these releases. On the INDX the load check therefore
+applies only to a filament the owner has marked abrasive, which the settings of a
+user-defined or customized filament allow, as does the `M865` G-code command for those
+same filaments; Prusa's 2.5.13 profiles send no such command. This is a reading of the
+code and the profiles, not an observed print start.
 
 **Treat carbon- and glass-filled filament as at-your-own-risk**, and prefer a
 plain-bore nozzle over the high-flow geometry for filled materials — the plain bore
@@ -258,8 +305,11 @@ shipping, each from another thread, answer the first only in part.
     One owner making exactly this decision put it plainly — they had never tried other
     sizes because there are no profiles for them, which makes credit-for-more-nozzles a
     weaker proposition than it looks — both INDX printer models declare a single nozzle
-    variant in Prusa's published profile bundle, so no other size is selectable. See
-    [missing slicer profiles](missing-slicer-profiles.md).
+    variant in Prusa's published profile bundle, so no other size is selectable. Owners
+    were still saying so in late October and early November, one of them with five
+    other sizes on hand, in the spare nozzles thread and in a
+    [thread asking owners whether they are happy with the INDX](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/are-you-happy-with-your-indx-purchase/).
+    See [missing slicer profiles](missing-slicer-profiles.md).
 
     Delivery was slow and uneven through early October, and has picked up since. Two
     owners who ordered spare nozzles from the vendor's shop in mid-July report them
@@ -281,7 +331,10 @@ shipping, each from another thread, answer the first only in part.
     said in late October that theirs took about three weeks to arrive, and is waiting
     for profiles before using them; and in the spare nozzles thread another reported an
     order that shipped within a few days and reached the US days after that, with import
-    tariffs adding to the cost. The first waiting owner still believes plain-bore
+    tariffs adding to the cost. In early November a further owner, in a
+    [thread on Prusa's shipping](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/so-whats-the-story-on-shipping-now/),
+    had the vendor's shipping confirmation for 0.25mm and 0.6mm nozzles ordered on their
+    own, again with no order date. The first waiting owner still believes plain-bore
     nozzles were what held orders up, and had warned that the shop can show nozzles in
     stock that are not ready to ship; no pattern by type is established. The vendor's
     explanations are each relayed by one owner. When the first waiting owner's nozzles
@@ -367,6 +420,22 @@ quoted from its August update to those customers; that kit orders reopened only 
 that update, in separate versions for the CORE One+ and the CORE One+ (Gen 2), is
 Prusa's own announcement.
 
+Also first-party: the meaning of codes 36121 and 36122, from Prusa's help articles for
+them and the error list in the firmware source, and the behavior of the hardened-nozzle
+setting, from a reading of the 6.9.2 and 8.0.0 source and of Prusa's
+[2.5.13 profile bundle](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini).
+The firmware references are the
+[error list](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml),
+the [toolchanger](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_indx.cpp),
+the [setting defaults](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/persistent_stores/store_instances/config_store/defaults.hpp),
+the [print-start checks](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/compatibility_checks/gcode_compatibility.cpp),
+the [filament presets](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/filament_presets.cpp)
+with the [build options](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/ProjectOptions.cmake)
+that leave PPS and PPA out of the INDX builds, the same in 6.9.2, 7.0.1 and 8.0.0, and the
+[`M865` command](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/M865.cpp),
+which changes the abrasive mark only on a user-defined or customized filament.
+A reading shows what the code checks, not what a printer was seen to do.
+
 !!! note "Why hardness figures appear here when other numbers do not"
     This site withholds calibration values, temperatures and print settings until a
     human has verified them on hardware. A hardness rating is a different kind of
@@ -395,7 +464,9 @@ threads also has a quick delivery, and the vendor's reasons for the delays are e
 owner's relay. The faster shipping since, and the change in the nozzles' outside
 finish, rest on owners in that one later thread. A quick delivery in the spare
 nozzles thread and a three-week one in that later thread, neither giving an order
-date, cannot be placed on either side of early October. The "hardened" description on
+date, cannot be placed on either side of early October; the early-November shipping
+confirmation for two sizes, in a thread on Prusa's shipping, is one owner's and undated
+too. The "hardened" description on
 delivered spares comes from a single thread. That Prusa's credit could not buy INDX
 nozzles, because Prusa's shop did not stock them, rests on three owners in three
 separate threads, not on a statement from Prusa: the August owner for August, and two

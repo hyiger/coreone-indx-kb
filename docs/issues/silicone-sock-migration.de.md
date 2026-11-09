@@ -1,13 +1,13 @@
 ---
 title:        Verrutschen der Silikonsocke über den Temperatursensor
 confidence:   provisional
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     unknown
+firmware:     unknown on the reporting machines; nozzle temperature sensing read in the 6.9.2 and 8.0.0 source
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-maintenance/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-wiper-vs-indx-offset-sensor/
@@ -17,8 +17,12 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/bondtech-nozzles-dont-ship/
   - https://help.prusa3d.com/article/hotend-thermal-runaway-36204-indx_1088706
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/core-1-indx-generic-petg-preset-hotend-thermal-runaway-error/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/module/tpis/include/tpis/tpis.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/puppy/indx_head/src/app.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_hotend_temp_model/hotend_temp_model.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0
 superseded_by:
-source_sha:   fb232a9af4b7ec4a9519fa78b4cfdb7fddfc9458f07c68c287062c53c07759cb
+source_sha:   0f29d719a8766665f40b754a46b31775f364ba0bde6a2a1500e608a33b676e2d
 ---
 # Verrutschen der Silikonsocke über den Temperatursensor
 
@@ -82,11 +86,28 @@ Artikel nennt das Messprinzip nicht und erwähnt die Socke nicht. Besitzer, die 
 kommentieren, nennen den Sensor ebenso wie der Autor dieser Seite an anderer Stelle
 einen Infrarotsensor; der Hersteller sagt das dort nicht.
 
+Prusas Firmware-Quellcode sagt es. Die INDX-Kopfplatine bezieht die Temperatur der Düse
+von einem Infrarot-Thermopile-Sensor, laut der im Treiber genannten Bauteilbezeichnung
+einem CaliPile TPiS, rechnet den Messwert mit einem einzigen festen Emissionsgrad um und
+regelt die Induktionsheizung nach dem Ergebnis, korrigiert durch ein Temperaturmodell des
+Hotends, das auf der Hauptplatine läuft und dem Kopf seine Korrektur übermittelt
+([Sensortreiber](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/module/tpis/include/tpis/tpis.hpp),
+[Firmware des Kopfs](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/puppy/indx_head/src/app.cpp),
+[Hotend-Modell](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_hotend_temp_model/hotend_temp_model.cpp)).
+Derselbe Sensorcode steht im veröffentlichten Quellcode von 6.9.2
+([Vergleich](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0)).
+Damit ist das Messprinzip geklärt. Welche Fläche der Sensor anvisiert, zeigt der Code
+nicht; er bestätigt also für sich genommen nicht, dass das Rechteck das Ziel ist. Ein
+fester Emissionsgrad passt allerdings zu einem eigens dafür vorgesehenen Messfeld mit
+bekannter Oberfläche und würde erklären, warum ein verschmutztes oder teilweise verdecktes
+Messfeld den Messwert verfälscht; das ist eine Schlussfolgerung aus der Funktionsweise des
+Verfahrens, nicht etwas, das der Code aussagt.
+
 TODO(verify): ob das Fenster, das laut dem Eröffnungsbeitrag des Wartungs-Threads
 sauber zu halten ist, das Messfeld an der Düse ist oder ein anderes Teil des Kopfs, und
-nach welchem Messprinzip der Temperatursensor des Werkzeugkopfs tatsächlich arbeitet.
-Prusas Artikel deutet darauf hin, wozu das Messfeld dient, beschreibt aber keines von
-beiden.
+ob das Messfeld die Fläche ist, die der Infrarotsensor misst. Prusas Artikel deutet
+darauf hin, wozu das Messfeld dient, und die Firmware darauf, wie die Temperatur gemessen
+wird, doch keines von beiden sagt, welche Fläche der Sensor sieht.
 
 ## Im Einzelnen
 
@@ -129,13 +150,25 @@ schloss ein Besitzer, dessen PETG-Drucke an mehr als einer Düse von diesem Fehl
 abgebrochen wurden, anhand eines von ihm geposteten Fotos, dass seine Socken richtig
 saßen. Nach seiner Darstellung führte der Prusa-Support es auf das generische
 PETG-Profil zurück. Das Trocknen des Filaments brachte einen kleinen Druck durch, ein
-größerer scheiterte aber erneut, und die Ursache war am 24. Oktober 2026 noch offen.
+größerer scheiterte aber erneut. Am 4. November 2026 berichtete er, PETG ohne den Fehler
+zu drucken, nachdem er die Düse kühler eingestellt hatte, als das Profil es vorsieht.
+Selbst bei dieser Einstellung sah sein PETG aus, als sei es zu heiß gedruckt, und sauber
+wurde es erst, als er noch weiter herunterging; sein PLA sah bei der Temperatur, die das
+Profil selbst vorsieht, genauso aus. Mit dem Support suchte er weiter nach der Ursache.
+Eine Düse, die bei
+richtig sitzenden Socken heißer läuft als eingestellt, würde dazu passen, doch es ist der
+Eindruck eines einzelnen Besitzers von seinen Drucken, gemessen wurde nichts, und über die
+Socke sagt der Fall weiterhin nichts.
 
 ### Überhitzung und Anbackungen
 
 Ein teilweise verdeckter Temperatursensor misst zu niedrig, sodass die Heizung stärker
 nachregelt, um einen Sollwert zu erreichen, den die Maschine für noch nicht erreicht
-hält. Die Düse läuft dann oberhalb der vorgegebenen Temperatur.
+hält. Die Düse läuft dann oberhalb der vorgegebenen Temperatur. Die Firmware regelt die
+Heizung tatsächlich nach dem Infrarot-Messwert (siehe oben), ein zu niedriger Messwert
+hätte also diese Wirkung. Dass eine Socke über dem Messfeld den Messwert zu niedrig und
+nicht zu hoch ausfallen lässt, ist die Schlussfolgerung, auf der diese Kette beruht;
+gemessen hat das niemand.
 
 Dass Filament an INDX-Düsenspitzen anbackt, wird auch außerhalb der Kette dieser Seite
 berichtet und hängt nicht davon ab, ob sie zutrifft, ist aber nur dünn belegt: Ein
@@ -269,9 +302,15 @@ festgehalten, nicht als Befund. Ebenso zwei spätere Ergänzungen, beide vom Aut
 und von einer einzigen Maschine: die von einem Klumpen zerrissene Socke und die
 Versandkosten für Ersatzteile. Ebenso die Vermutung des Autors, dass das Bürsten der
 Spitze die Socke nach oben zieht. Der PETG-Fall mit Thermal Runaway im selben Thread
-stammt von einem einzelnen Besitzer und ist ungelöst. Er wird nur als Warnung davor
-angeführt, jeden solchen Fehler als verrutschte Socke zu deuten, nicht als Beleg zur
-Socke.
+stammt von einem einzelnen Besitzer und ist ungelöst, und seine spätere Angabe, eine
+kühlere Düse vermeide den Fehler, ist sein eigener Eindruck. Er wird nur als Warnung
+davor angeführt, jeden solchen Fehler als verrutschte Socke zu deuten, nicht als Beleg
+zur Socke.
+
+Das Messprinzip, ein mit festem Emissionsgrad umgerechneter Messwert eines
+Infrarot-Thermopile-Sensors, stützt sich nun auf Prusas Firmware-Quellcode, eine Quelle
+aus erster Hand. Dass das Rechteck die Fläche ist, die er misst, ist weiterhin aus Prusas
+Artikel erschlossen.
 
 Die Hinweise zum Betrieb ohne Socke und zum kommenden Fünferpack stammen vom Hersteller —
 sie kamen jedoch als private Antwort an den Autor dieser Seite, sind also aus erster Hand

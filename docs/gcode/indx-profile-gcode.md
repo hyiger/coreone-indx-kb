@@ -1,7 +1,7 @@
 ---
 title:        Annotated start, layer and toolchange G-code
 confidence:   measured
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -35,6 +35,27 @@ sources:
   - https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/libslic3r/PlaceholderParser.cpp
   - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.6.ini
   - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.7.ini
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/config/M200-M205.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/planner.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/feedrates/standard_feedrates_indx.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/G750.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/nozzle_cleaner/nozzle_cleaner.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/bedlevel/ubl/G29.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/control/T.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_indx.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5592
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.14.ini
+  - https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.7/src/libslic3r/PrintConfig.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/include/marlin/Configuration_COREONE.h
+  - https://github.com/prusa3d/PrusaSlicer/releases/tag/version_3.0.0-alpha13
+  - https://github.com/prusa3d/PrusaSlicer/blob/version_3.0.0-alpha14/resources/presets/prusa-research-fff/PrusaResearch/preset-printer-coreone-indx.yaml
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/solved-tpu-tangling-at-the-extruder-after-indx-tool-changes-the-nozzle-was-too-cold-during-cleaning/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/i-printed-tpu-on-my-indx/
 superseded_by:
 ---
 
@@ -62,7 +83,8 @@ superseded_by:
     unchanged. So does 2.5.11, which reached Prusa's profile repository on 2 October, a
     week after 6.9.1: all five INDX blocks are identical to 2.5.10's, and the `M115`
     line still declares 6.9.0. **Bundle 2.5.12, of 15 October, is the first to change
-    them**, and 2.5.13, of 22 October, changes them again; see the note below. If the
+    them**, and 2.5.13, of 22 October, changes them again, while 2.5.14, of 2 November,
+    leaves them as 2.5.13 had them; see the note below. If the
     profile in your slicer differs from what is shown here, yours is the current one.
 
     The firmware side has been checked against the public source, comparing
@@ -83,9 +105,37 @@ superseded_by:
     it adds the printer's PVA and BVOH filament presets, which the 6.9.1 notes announced
     and its build left out, and touches no G-code handler.
 
-    None of 7.0.0, 7.0.1 or 8.0.0 has been checked the same way. Prusa had published the
-    source of none of them on GitHub by 25 October, so every command annotation here is
-    verified only through 6.9.2. Two entries in the 7.0.0
+    Prusa published release tags and source for 7.0.0, 7.0.1 and 8.0.0 on 3 November, and
+    [comparing the 6.9.2 and 8.0.0 tags](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0)
+    extends the check through 8.0.0. (Until November this page could verify the command
+    annotations only through 6.9.2.) What it shows for the commands annotated here:
+
+    - `M574` and `M573` still have no handler, and none of the three trees mentions
+      either; see the note on `M574` below.
+    - `G27` has the same handler, and `W3` picks the same tool-park position. The one
+      INDX change to the parking code moves the filament load and unload positions by
+      the calibrated nozzle-cleaner offset, which `G27 W3` does not use.
+    - `G427` has the same handler, reading `R` and `P` as before, and picks its probing
+      temperature with the same code. 8.0.0 changes what happens when one tool's steps
+      fail. A failed cleaning or sheet probe, which used to restart the whole pass, now
+      repeats that tool only, as a failed sensor measurement already did. Three such
+      failures get a screen of their own, a tool not picked (36146), a sensor not found
+      (36144) and a sensor failure (36145); the rest, cleaning and sheet-probe failures
+      among them, share the generic 36130 screen
+      ([notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0),
+      [source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_calibration/tool_offset_calibration.cpp),
+      [stock 8.0.0 screens](../codes.md#stock-800)).
+    - `G12` runs the same INDX sequences for `S90`, `S30` and `S91`; the handler's changes
+      concern the nozzle cleaner lite, which the INDX build does not include.
+    - `G29` gains a step in 7.0.0. If probing finds the bed too uneven, the firmware now
+      runs its Z-axis alignment once on its own and probes again, and asks you only if
+      that fails ([7.0.0 notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0),
+      [`G29` source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/bedlevel/ubl/G29.cpp)).
+      So `G29 P1` below can now include a Z alignment.
+    - `M204` gains an `F` parameter; see below.
+
+    The other handlers annotated here are either unchanged or changed in ways that leave
+    the profile's lines doing what they did. Two entries in the 7.0.0
     [release notes](https://help.prusa3d.com/downloads/core-one-indx) sit close to this
     page, and both are marked as coming from earlier releases. The faster Z lift when
     parking, marked 6.9.1 and 6.10.2, is the `G27` change 6.9.1 already shipped.
@@ -98,19 +148,53 @@ superseded_by:
     that is a separate feature from the INDX's cleaning station and is not built for
     the INDX. Neither entry is new in 7.0.0. The one new entry that names the cleaner,
     filament load and unload positions now taking the calibrated nozzle cleaner offset,
-    concerns the firmware's own load and unload moves; whether it changes anything the
-    `G12` lines below do cannot be checked until the source is out.
+    concerns the firmware's own load and unload moves, and the source bears that out:
+    the change is confined to those two park positions
+    ([parking source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp)).
+    The `G12` sequences the profile calls already measured from the calibrated cleaner
+    origin, through `G750`, and are unchanged
+    ([cleaner source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/nozzle_cleaner/nozzle_cleaner.cpp)).
 
     Two entries in the 8.0.0 [notes](https://help.prusa3d.com/downloads/core-one-indx),
-    both new, touch this page as well. The first gives `M204` an `F` parameter, a
-    filament acceleration limit that the notes say is enabled by default. The profile's
-    own `M204` lines set only `S`, and nothing in bundle 2.5.13 issues `M204 F`, so
-    whatever limit 8.0.0 applies comes from the firmware, not from the profile. The
-    second slows flexible filament less than before during nozzle cleaning. That is the
-    firmware's own cleaning motion: none of the `G12` lines below passes a speed.
+    both new, touch this page as well. The first gives `M204` an `F` parameter. Going by
+    the fuller [GitHub notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0)
+    and the [handler](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/config/M200-M205.cpp),
+    it caps how fast the filament feed may accelerate during printing moves, those in
+    which the extruder moves together with X and Y, so that pressure advance is not
+    asked for abrupt changes in extruder speed. Where a move would exceed it, the
+    [planner](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/planner.cpp)
+    lowers the acceleration of that whole move, and the cornering speed at junctions
+    beside extrusion, not the extruder's alone; travel without extrusion is untouched. It
+    is a single value for the whole machine, not one per tool, with a default compiled
+    into the firmware. `F0` turns it off, a bare `M204` now reports it, and per the notes
+    it returns to the default at restart. The profile's own `M204` lines set only `S`,
+    which leaves `F` alone, and nothing in bundles 2.5.13 or 2.5.14 issues `M204 F`, so on
+    the stock profile the firmware's default holds for the whole print. One owner has
+    already asked for a switch for it in the printer's settings
+    ([#5592](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5592)): on a hand-made
+    large-nozzle profile, they say, it makes their prints substantially longer, and they
+    would rather not re-slice all their files to add an `M204 F` line.
 
-    TODO(verify): what exactly `M204 F` limits, and its default; the 8.0.0 notes state
-    neither, and its source is unpublished.
+    The second entry slows flexible filament less than before. The
+    [feedrate source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/feedrates/standard_feedrates_indx.cpp)
+    shows it is one factor applied to filament-dependent extruder moves the firmware
+    makes on its own, and not to G-code moves. The GitHub notes, which cover every
+    printer, list loading, unloading, purging, pause and resume parking, tool changes and
+    cleaning. In the INDX build the source applies it to several moves, among them
+    loading and unloading, the
+    extruder moves around a pause and resume, automatic retraction, the retraction around
+    emptying the waste bin, and the purge in the cleaner's own sequences. Only the XL's
+    toolchanger code uses it in a tool change; the INDX tool change runs its own extruder
+    moves, which open and close the tool lock, at fixed speeds
+    ([INDX tool change source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_indx.cpp)).
+    None of the profile's lines is affected: the three `G12` sequences it calls move only
+    X and Y, its `G27` passes its own retraction speed, its `G750` moves do not ask for the
+    adjustment, and its flush moves are its own G-code. (Until November this page, going
+    by the shorter downloads-page notes, described the change as touching nozzle cleaning
+    only.)
+
+    TODO(verify): the default `M204 F` value on the INDX; the 8.0.0 GitHub notes and the
+    source both state it, and it is withheld here until checked on hardware.
 
 !!! note "Bundles 2.5.12 and 2.5.13 changed three of these blocks after this page was written"
     Prusa's profile bundle 2.5.12, committed on 15 October 2026, the day firmware 7.0.0
@@ -155,11 +239,40 @@ superseded_by:
       the 2.5.7 rewrite dropped it; the after-layer-change section below explains why.
     - **Before layer change, tool change and end:** unchanged from 2.5.12.
 
+    Bundle 2.5.14 followed on 2 November. Comparing
+    [the file](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.14.ini)
+    with 2.5.13, all five blocks are unchanged, and the `M115` line still declares 7.0.1,
+    not 8.0.0. The one change to the INDX printer profiles beside them is a printer option
+    new in PrusaSlicer 2.9.7, `used_filament_compensation`, now set for both INDX models: a
+    multiplier on the filament use the slicer reports, as length, volume, weight and cost,
+    that leaves the extrusion moves alone
+    ([PrusaSlicer 2.9.7 source](https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.7/src/libslic3r/PrintConfig.cpp)).
+    Like the 2.5.12 tags, it concerns the slicer's filament-use tally, not any move the
+    printer makes. The INDX gets a value of its own, which this page does not reproduce.
+    The 8.0.0 firmware source accounts for it. There the INDX extruder's default steps per
+    millimeter are set on purpose below the figure at which it feeds exactly the length it
+    is told to, a "normalised flow", in the source's own words, that the firmware corrects
+    for in its own service moves
+    ([configuration source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/include/marlin/Configuration_COREONE.h)).
+    The INDX multiplier is the ratio of those two figures, rounded, just as the single-tool
+    Core One's is the ratio of its own pair. So it brings the slicer's tally into line with
+    what the extruder actually feeds. That is read from the bundle and the source, not
+    weighed off a spool.
+
+    The 3.0 alphas carry their own copy of the INDX profile. Since alpha 13, of
+    2 November, its
+    [printer file](https://github.com/prusa3d/PrusaSlicer/blob/version_3.0.0-alpha14/resources/presets/prusa-research-fff/PrusaResearch/preset-printer-coreone-indx.yaml)
+    has the 2.5.12 tool change rework and the 2.5.13 dock-fan fix too, and the same
+    multiplier, and
+    [alpha 13's notes](https://github.com/prusa3d/PrusaSlicer/releases/tag/version_3.0.0-alpha13)
+    list a fix for an INDX filament-use estimate that had left out the `G27 R` park
+    retraction.
+
     The blocks below are still the 2.5.11 text. The tool change excerpts no longer match
     2.5.12 or later, and the PET-family test in the after-layer-change excerpt no longer
-    matches 2.5.13. They have not been rewritten here: this page reproduces one profile
-    verbatim and annotates it, and a new reproduction would be a new revision of the
-    page, not an edit to it.
+    matches 2.5.13 or later. They have not been rewritten here: this page reproduces one
+    profile verbatim and annotates it, and a new reproduction would be a new revision of
+    the page, not an edit to it.
 
 ## What this is
 
@@ -231,7 +344,11 @@ substituted into `M109` later.
 The interesting part is *why* it exists: probing wants the nozzle hot enough not to be
 dimensionally odd, but cool enough not to ooze onto the sheet while the loadcell is
 trying to read contact. Oozing during probing is a known failure mode — see
-[oozing spoils bed probing](../issues/oozing-during-probing-and-calibration.md).
+[oozing spoils bed probing](../issues/oozing-during-probing-and-calibration.md). In
+November one owner printing a soft TPU reported lowering the FLEX probing temperature in
+their own copy of this line, because blobs were making bed probing slow or making it fail
+([forum thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/i-printed-tpu-on-my-indx/)).
+That is one owner's change, so provisional, and their value is not reproduced here.
 
 ### Preflight checks
 
@@ -366,13 +483,16 @@ the standard feedrate convention, which is further sign that `M574` is a custom 
 carrying its own.
 
 !!! note "M574 has no handler in published firmware — and probably not finished"
-    No Prusa firmware whose source is published, the INDX's up to 6.9.2 included, has a
+    No Prusa firmware whose source is published, the INDX's up to 8.0.0 included, has a
     handler for `M574`. The printer logs `Unknown command:`, answers `ok`, and carries
     on: eight ignored lines per print, one per used non-FLEX tool. Nothing breaks. That
     is derived from the firmware source — no capture from a real machine appears to
     exist publicly, and Prusa develops privately, so it establishes that the firmware
-    **you run** ignores it if that is 6.9.2 or earlier, not that no handler exists
-    anywhere. For 7.0.0, 7.0.1 and 8.0.0, whose source is unpublished, it is unchecked.
+    **you run** ignores it if that is 8.0.0 or earlier, not that no handler exists
+    anywhere. The source of 7.0.0, 7.0.1 and 8.0.0 came out on 3 November, and none of
+    the three trees mentions `M574` or `M573` anywhere, by a plain-text search of each
+    tag in which `M572` turns up in many files. (Until November this page could say this
+    only through 6.9.2.)
 
     There is no commit to find either. The line ships out-of-band in Prusa's vendor
     profile bundle, first appearing in
@@ -393,8 +513,13 @@ carrying its own.
 
     Firmware 8.0.0 has since added a filament acceleration limit, enabled by default,
     but its [release notes](https://help.prusa3d.com/downloads/core-one-indx) give it as
-    `M204 F`, not `M574`, and tie it neither to the announcement nor to `M574`. Bundle
-    2.5.13, published the same day, still carries the eight `M574` lines.
+    `M204 F`, not `M574`, and tie it neither to the announcement nor to `M574`. Its
+    source, published since, goes further: the limit is one value for the whole machine,
+    set only by `M204 F` and otherwise held at a compiled-in default, so it takes none of
+    the per-tool values the `M574` lines carry (see the warning at the top). It is the
+    same kind of thing as the announcement's extrusion-aware acceleration limits, but
+    neither its notes nor its source says it is that work. Bundles 2.5.13 and 2.5.14 still
+    carry the eight `M574` lines.
 
     One practical warning: `M574` means endstop configuration in RepRap and
     RepRapFirmware, so almost everything a search returns describes a Duet.
@@ -415,7 +540,9 @@ physical tools the print needs, calibrates each in XYZ, and writes the results t
 runtime variables and EEPROM. If the firmware has no record of which tools the print
 uses, `G427` falls back to calibrating every enabled tool
 ([firmware source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp),
-unchanged from 6.9.0). One open feature request says this is the case for prints a
+unchanged from 6.9.0, and the same in
+[8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_calibration/tool_offset_calibration.cpp)).
+One open feature request says this is the case for prints a
 host such as OctoPrint sends over USB or serial, so even a print that uses one tool
 calibrates them all
 ([#5508](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5508)).
@@ -566,7 +693,8 @@ print in the same state a swapped-in tool would.
 ejects the accumulated purge material, `S91` exits. Everything between `S90` and `S91`
 happens with the head parked at the station rather than over the bed.
 
-**The two-stage temperature approach** is the part worth copying. `eject_temp` is set
+**The two-stage temperature approach** is the part worth copying, with one catch for
+flexible filament, described under the tool change block. `eject_temp` is set
 well below the print temperature. The nozzle is brought *down* to that before ejecting,
 because material that has cooled somewhat detaches from the tip as a solid pellet rather
 than stringing. Only after the eject does it come up to printing temperature.
@@ -601,8 +729,8 @@ more pressure after the flush, and was added together with switching pressure ad
 off for it. The same reply said Prusa is considering removing it after more testing
 ([issue 49](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/49)).
 Bundle 2.5.12, of 15 October, has since dropped it from the tool change block but kept
-it in this start block, and 2.5.13 leaves it where 2.5.12 put it; the issue itself had
-no further reply and was still open on 25 October.
+it in this start block, and 2.5.13 and 2.5.14 leave it where 2.5.12 put it; the issue
+itself had no further reply and was still open on 8 November.
 
 !!! important "The last interesting line is `{tool_init[initial_tool] = 1}`"
     That marks the starting tool as already cleaned and primed. Nothing in this block
@@ -800,8 +928,32 @@ never been primed. It is the same shape as the prime sequence in the start block
 cold, fan on, current up, come to temperature, deretract, flush in a computed pattern,
 retract, current back.
 
-The wipe-tower path instead issues a series of `G750` moves, which run the wipe-tower
-sequence with the tower's own geometry, and skips the station entirely.
+One step of it matters for flexible filament. For a tool that has been primed before,
+the push that locks it, in the elided lines just before `G12 S30`, runs straight after
+the nozzle has cooled to `eject_temp` and before it is back at `target_temp`. In
+November one owner on firmware 8.0.0 traced TPU tangling at the extruder, whenever a
+print returned to its TPU tool, to that step: the push meets filament in the nozzle that
+has not melted, and the soft strand buckles. Raising the eject temperature for FLEX, so
+that the lock push meets softer filament, and pausing once the nozzle is back at print
+temperature, after the eject and before the filament is pushed back down, fixed it for
+them, together with several other FLEX-only changes to this block, among them a slower
+lock push, that they did not test one at a time
+([forum thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/solved-tpu-tangling-at-the-extruder-after-indx-tool-changes-the-nozzle-was-too-cold-during-cleaning/)).
+That the push comes at the cooled temperature is read from the profile; the diagnosis and
+the fix are one owner's, in one thread, so provisional, and their values are not
+reproduced here.
+
+The wipe-tower path skips the eject and the flush, since the wipe tower takes the purge,
+but not the station: it runs between the same `G12 S90` and `G12 S91` as the
+purge-station path. In place of the eject and the flush it issues six `G750` moves,
+which the
+[firmware source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/G750.cpp)
+defines as nozzle-cleaner moves, measured from the cleaner's calibrated origin and run in
+machine coordinates, outside mesh leveling. With only `Y` given, they drag the nozzle to
+and fro across the cleaner, much as the firmware's own cleaning sequences do. (Until
+November this page said these moves ran the wipe tower's own sequence and skipped the
+station; the profile itself shows otherwise for the station, and the `G750` handler,
+the same in this respect since 6.9.2, for the moves.)
 
 ```gcode
   G90 ; use absolute coordinates
@@ -827,13 +979,27 @@ sequence with the tower's own geometry, and skips the station entirely.
     Reading this block makes it concrete in a way the community bug report could not: the
     clearance-aware option exists in the firmware and this profile does not use it.
 
-    **This is not a suggested fix.** Whether `P0` would actually resolve it depends on
-    what the firmware means by "above print" — whether it tracks completed object heights
-    or only the current one — which has not been established. It is the first thing to
-    investigate, not a change to make blind.
+    The firmware source settles what "above print" means. `G27 P0` raises Z to at least
+    the given distance above a high-water mark the planner keeps: the highest Z at which
+    the print has extruded inside the print area declared by `M555`, since the print
+    began or Z was last homed. A finished object taller than the current layer therefore
+    counts
+    ([parking source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp),
+    [planner source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/planner.cpp),
+    both the same in 6.9.2). The firmware's own lift during a tool change rises above the
+    same mark, but `L0` on the profile's dock (`P0 S1 L0 D0`) and pick (`T`) lines turns
+    that lift off
+    ([`T` source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/control/T.cpp)).
+    (Until November this page said what "above print" means had not been established.)
 
-    TODO(verify): whether `G27 P0` accounts for completed objects on a sequential print,
-    and whether the two `G0 Z{layer_z + …}` lifts can be made clearance-aware.
+    **This is still not a suggested fix.** That reading is of the code, not of a
+    sequential print run with it, and the two `G0 Z{layer_z + …}` lifts would still be
+    computed from the current layer. It is the first thing to investigate, not a change
+    to make blind.
+
+    TODO(verify): whether parking with `G27 P0`, or docking and picking with a lifting
+    `L`, avoids the collision on a sequential print in practice, and whether the two
+    `G0 Z{layer_z + …}` lifts can be made clearance-aware.
 
 ## End G-code
 
@@ -884,7 +1050,8 @@ the bed holds its position rather than sagging.
 
 ## Command reference
 
-Behavior verified against the Prusa firmware source unless marked otherwise.
+Behavior verified against the Prusa firmware source, through 8.0.0, unless marked
+otherwise.
 
 | Command | What it does |
 |---|---|
@@ -896,8 +1063,8 @@ Behavior verified against the Prusa firmware source unless marked otherwise.
 | `M555 X Y W H` | Declare the print area |
 | `M591 S<0\|1>` | Filament stuck detection off/on |
 | `G28 XY` / `G28 Z` | Home the named axes |
-| `T<n> S L D` | Select a tool |
-| `P0 S1 [L D]` | Park the current tool in its dock |
+| `T<n> S L D` | Select a tool; `L0` skips the firmware's own Z lift |
+| `P0 S1 [L D]` | Park the current tool in its dock; `L` as for `T` |
 | `G27 W Z P R V A` | Park the head; see the table above for parameters |
 | `G427 R P` | Tool offset calibration; `R` jitter mm, `P` probes averaged |
 | `G29 G` | Heat-soak / absorb heat |
@@ -908,7 +1075,7 @@ Behavior verified against the Prusa firmware source unless marked otherwise.
 | `G12 S90` | Enter the cleaning station |
 | `G12 S30` | Eject accumulated purge material |
 | `G12 S91` | Exit the cleaning station |
-| `G750 Y F A` | Wipe-tower move |
+| `G750 Y F A` | Nozzle-cleaner move, measured from the calibrated cleaner origin; `A` does not wait for it to finish |
 | `M104 S` / `M104 T<n> S` | Set nozzle target, current tool or a named one, no wait |
 | `M109 S` | Set nozzle target and wait, including residency |
 | `M109 C` | Set nozzle target and wait, **skipping residency** |
@@ -918,7 +1085,7 @@ Behavior verified against the Prusa firmware source unless marked otherwise.
 | `M106 P6 S` | **Dock fan**, PWM 0–255 |
 | `M107` | Part-cooling fan off |
 | `M204 S` | Set acceleration |
-| `M204 F` | Filament acceleration limit, new in 8.0.0 and on by default per its release notes; not issued by the profile, and not checked against source |
+| `M204 F` | Filament acceleration limit for printing moves, new in 8.0.0 and on by default; one value for the machine, `F0` off; not issued by the profile |
 | `M201 X Y` | Set per-axis maximum acceleration |
 | `M221 S` | Flow percentage |
 | `M572 S` | Pressure advance; `S0` disables |
@@ -929,7 +1096,7 @@ Behavior verified against the Prusa firmware source unless marked otherwise.
 | `M77` | Stop the print timer |
 | `M262 P B` | IO expander pin direction — `B0` output, `B1` input |
 | `M264 P B` | IO expander pin level — `B0` low, non-zero high |
-| `M574 S V T F` | **No handler** in published firmware source, through 6.9.2; logged as unknown and skipped |
+| `M574 S V T F` | **No handler** in published firmware source, through 8.0.0; logged as unknown and skipped |
 
 ## Verification
 
@@ -947,10 +1114,16 @@ Where a command's meaning could not be established it is marked as such rather t
 guessed. `M574` is the only one in that state, and the distinction matters: its *absence*
 from the firmware is now established to the same standard as the other commands'
 presence — checked against the v6.9.0 release tag and every object in the public
-repository's history, with positive controls. What it was intended to do is still
+repository's history, with positive controls, and since November against the 7.0.0,
+7.0.1 and 8.0.0 tags as well. What it was intended to do is still
 unknown, and is flagged in place rather than reconstructed. Prusa's August 2026
 announcement of load-cell pressure advance calibration is first-party and cited, but
 nothing published connects it to this command; the page keeps the two apart deliberately.
+
+One annotation did not survive the November re-check against the source: the
+wipe-tower path's `G750` moves were described here as running the wipe tower's own
+sequence away from the cleaning station, and the handler shows they are moves at the
+cleaner. The tool change section has been corrected and says so.
 
 `M262` and `M264` deserve a note. They are frequently described as chamber-light
 commands, and the profile they came from labeled them that way. They are not: the
@@ -972,7 +1145,8 @@ and included chamber-light commands this one drops. If your firmware differs fro
 version in the front matter, expect differences. The profile also moves between bundles
 on its own schedule: 2.5.12 reworked the tool change block and declares 6.9.2, not the
 7.0.0 released the same day, and 2.5.13 widened the dock-fan test to take in PETG and
-declares 7.0.1, not the 8.0.0 released the same day, as the note at the top describes.
+declares 7.0.1, not the 8.0.0 released the same day, as the note at the top describes;
+2.5.14 left all five blocks as they were.
 
 ## Related
 

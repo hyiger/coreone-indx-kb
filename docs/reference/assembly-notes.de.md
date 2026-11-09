@@ -1,13 +1,13 @@
 ---
 title:        Montagehinweise — INDX-Umbausatz
 confidence:   reported
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One, Core One Plus
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     unknown
+firmware:     unknown on most reports; Gen 2 first-run default and side-sensor-only build source-checked on 6.9.1, 7.0.0, 7.0.1 and 8.0.0
 sources:
   - https://help.prusa3d.com/manual/bondtech-indx-conversion-kit-for-the-prusa-core-one-founders-edition_2397
   - https://help.prusa3d.com/manual/prusa-indx-conversion-kit-for-the-prusa-core-one_2432
@@ -36,8 +36,23 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/upgrade-core1-to-indx-gen2/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/indx-assembly-guide/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/mk4s-to-core-one-with-indx-conversion/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/any-recommended-parts-or-upgrades-to-print-before-installing-indx-and-gen2-upgrades/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/filament-sensor-improvement-adding-ptfe-tube-fittings-into-the-original-filament-sensor/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/when-should-firmware-be-updated/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/printer_variant/coreone.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/persistent_stores/store_instances/config_store/store_definition.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/ProjectOptions.cmake
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_gantry_squareness/screen_gantry_squareness.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v7.0.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_gantry_squareness/indx_gantry_squareness.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_gantry_squareness/screen_gantry_squareness.cpp
 superseded_by:
-source_sha:   fe5307f112548975495ec843c904b017bd8de90ce8766569322646fd3a86630a
+source_sha:   fa1d78f4515e61bfdecee733cb267e0e25034cf1a59e7959774a205298213f4a
 ---
 # Montagehinweise — INDX-Umbausatz
 
@@ -120,7 +135,11 @@ also nicht zur aktuellen Anleitung.
   Risiko: Ein Besitzer hat einen Community-Remix des Spannrollenhalters eingebaut, der
   Einschmelz-Gewindeeinsätze statt Vierkantmuttern aufnimmt; diese Druckteile sind
   auseinandergebrochen, und er musste Riemenspannung, Referenzfahrt und
-  Portalausrichtung noch einmal durchlaufen. *Einzelmeldung.*
+  Portalausrichtung noch einmal durchlaufen. *Einzelmeldung.* Ein weiterer Besitzer
+  sagt in einem anderen Thread, er nutze denselben Remix seit vielen Monaten, und ein
+  dritter, dort gefragt, ob der Satz Ersatz-Spannrollen enthalte, verneinte das und
+  verwies auf eine andere Community-Abwandlung der Spannrolle, die eine
+  Sechskantmutter aufnimmt. *Jeweils eine Einzelmeldung.*
 
 **Prüfen Sie Ihre Druckplatte jetzt, nicht hinterher.** Wenn Sie auf einer
 übergroßen Federstahlplatte eines Drittanbieters drucken, kann es sein, dass sie die
@@ -315,6 +334,14 @@ richtig ist, ist ungeklärt; stecken Sie jedes Kabel daher nach der Beschriftung
 Platine. *Vorläufig*: zwei Kommentare zu einem einzigen Artikel, ohne Antwort von
 Prusa.
 
+Ein Besitzer empfiehlt in zwei Threads, vor dem Beginn Motorhalterungen aus der
+Community zu drucken, die um die 1.5GT-Antriebsriemenscheiben von Gen 2 mehr Platz
+lassen, und sagt, bei mehreren Besitzern habe eine Riemenscheibe an ihrem Gehäuse
+gestreift. Kein Besitzer in den Threads, auf die sich diese Seite stützt, berichtet das
+Streifen aus erster Hand; nehmen Sie es also als Anlass zu prüfen, ob jede Riemenscheibe
+nach dem Einbau ohne Berührung dreht, nicht als bekannten Fehler. *Einzelmeldung*, aus
+zweiter Hand.
+
 Prüfen Sie nach dem ersten Flashen den Bildschirm der Hardwarekonfiguration: Ein
 Besitzer stellte mit der INDX-Firmware, die Mitte September 2026 aktuell war, also vor
 dem stabilen Release 6.9.1, fest, dass sie angenommen hatte, die Gen-2-Riemen seien
@@ -323,14 +350,19 @@ Ein zweiter Besitzer fand in einem anderen Thread dieselbe Einstellung an einer
 Maschine, deren Gen-2-Teile noch nicht verbaut waren, und sie ließ die
 Dock-Kalibrierung scheitern; siehe
 [Dock-Kalibrierung](../issues/dock-calibration-rejects-docks.md). Prusas
-Firmware-Quellcode, wie für 6.9.1 veröffentlicht, wendet beim ersten Start die
-Gen-2-Variante an, was beides erklären würde; dass das Flashen der INDX-Firmware als
-erster Start zählt, ist jedoch erschlossen, nicht bestätigt. Zu keiner der Versionen
-7.0.0, 7.0.1 (19. Oktober 2026, eine einzige Korrektur für ein Einfrieren beim Start)
-und 8.0.0 (22. Oktober 2026) ist der Quellcode veröffentlicht, und die
-[Release Notes](https://help.prusa3d.com/downloads/core-one-indx) aller drei nennen
-keine Änderung an dieser Voreinstellung; prüfen Sie den Bildschirm also auch unter
-jeder dieser Versionen.
+Firmware-Quellcode wendet die Gen-2-Variante an, bei der die Gen-2-Ausgleichselemente
+und die 1.5GT-Riemen beide eingeschaltet sind, und zwar beim ersten Start, als den er
+einen Konfigurationsspeicher ohne gespeicherte Daten ansieht, und erneut nach einem
+Zurücksetzen auf Werkseinstellungen, das die Hardwarekonfiguration löscht. So ist es in
+6.9.1, und im Quellcode von 7.0.0, 7.0.1 und 8.0.0, veröffentlicht mit deren Releases
+auf GitHub am 3. November 2026, ist es unverändert
+([Variante](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/printer_variant/coreone.hpp),
+[erster Start](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/persistent_stores/store_instances/config_store/store_definition.cpp)).
+Das würde beide Meldungen erklären; dass das Flashen der INDX-Firmware keine
+gespeicherten Daten hinterlässt und damit als erster Start zählt, ist jedoch
+erschlossen, nicht bestätigt. Prüfen Sie den Bildschirm nach dem ersten Flashen, gleich
+welche dieser Versionen es ist, und erneut nach jedem Zurücksetzen der
+Hardwarekonfiguration.
 
 ## Schritte, bei denen man langsamer machen sollte
 
@@ -373,11 +405,27 @@ wieder herauskamen, stellte fest, dass die Kalibrierung der X-Achse mit zu straf
 Riemen fehlschlug, und ein weiterer Besitzer im selben Thread fand den Ausgangspunkt,
 den man ihm für die Spanner genannt hatte, weit straffer als den, bei dem er am Ende
 landete. *Vorläufig*: zwei Besitzer, ein Thread. Wenn sich die Ausrichtung des Portals
-immer wieder verstellt: Prusas Handbuch zum INDX führt einen Assistenten für die
-Rechtwinkligkeit des Portals unter den Ergänzungen seiner Überarbeitung vom
-22. Oktober 2026, veröffentlicht auf der
-[Download-Seite](https://help.prusa3d.com/downloads/core-one-indx) neben der Firmware
-8.0.0; was darin steht, hat diese Seite nicht geprüft.
+immer wieder verstellt: Die Prüfung der Rechtwinkligkeit des Portals in der Firmware,
+auf dem INDX seit 6.9.1 vorhanden, leistet ab 8.0.0 mehr. Laut den Release Notes auf
+GitHub, die hier mehr sagen als die Download-Seite, führt sie Sie durch das erneute
+Ausrichten des Portals, und im
+[Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_gantry_squareness/screen_gantry_squareness.cpp)
+fügt eine Prüfung, die das Portal schief findet, nun einen Schritt ein und misst danach
+erneut: Sie lässt Sie den Kopf nach hinten schieben, an beiden Enden nachsehen, ob
+zwischen Portal und Riemenspanner ein Spalt ist, und in diesem Fall Prusas Anleitung
+zur Riemenkalibrierung folgen. Dass die Motoren nach jeder Messung freigegeben werden,
+damit sich das Portal von Hand bewegen lässt, und dass ein schiefes Ergebnis auf diese
+Anleitung verweist, gab es schon in 6.9.1. 8.0.0 senkt das Bett
+außerdem für diese Prüfung sowie für die Kalibrierung der Docks und der Düsenreinigung
+weiter ab, damit Sie mit den Händen hineinkommen. Nach dem Stand der
+[Download-Seite](https://help.prusa3d.com/downloads/core-one-indx) vom
+25. Oktober 2026 führte Prusas Handbuch zum INDX einen Assistenten für die
+Rechtwinkligkeit des Portals unter den Ergänzungen einer Überarbeitung vom
+22. Oktober 2026, dort neben der Firmware 8.0.0 veröffentlicht; am 8. November 2026
+zeigte die Seite stattdessen das Handbuch 1.02 vom 8. Oktober 2026, dessen Änderungen nur
+als kleinere Korrekturen angegeben sind, ohne den Assistenten zu erwähnen. Was in einer
+der beiden Fassungen steht, hat diese Seite nicht geprüft, und die Lesart des Quellcodes
+ist keine Meldung über die Prüfung im Einsatz.
 
 TODO(verify): die Ausgangseinstellung der Spanner, die einem Besitzer genannt wurde,
 und die Stelle, an der er am Ende landete. Beide stehen im Quell-Thread und werden hier
@@ -474,12 +522,15 @@ der Community nimmt den 5-mm-Magneten auf und hat im Dock des Zusammenstellers
 funktioniert. Messen Sie eines Ihrer eigenen Docks nach, bevor Sie bestellen. Zudem
 werden zwei Federgrößen benötigt, eine große in jedem Fingerhut und zwei kleine in
 jedem Halter, die beide Editionen der Anleitung als 0,5 × 8,5 × 30 × 15 und
-0,63 × 5 × 15 × 11 führen. Beachten Sie, dass die Sammlung der Druckteile **für
+0,63 × 5 × 15 × 11 führen. Ein Besitzer, der keine exakt passenden fand, hat Federn in
+nahe liegenden Größen verwendet und berichtet, dass sie funktionieren. *Einzelmeldung.*
+Beachten Sie, dass die Sammlung der Druckteile **für
 jede Edition einen eigenen Halter für die Düsendichtung** enthält, Founders Edition und
 Prusa, prüfen Sie also vor dem Drucken, welchen Sie brauchen. Für die Dichtung selbst
 gibt es einen bekannten Ersatz: Besitzer in zwei Threads verweisen auf die
 Ersatz-Düsendichtung des Prusa XL, deren Blatt etwas kürzer ist, in einem umgestalteten
-Halter, der das ausgleicht.
+Halter, der das ausgleicht, und ein Besitzer, der eine Erweiterung abgeschlossen hat,
+fand, dass die Parkplatten des XL mit diesem Halter funktionieren.
 
 Die Beschaffung ist inzwischen einfacher geworden. Der Prusa-Shop führt INDX-Bauteile
 jetzt einzeln — darunter einen [Werkzeughalter mit Magneten](https://www.prusa3d.com/product/tool-holder-with-magnets-2/), einen seitlichen
@@ -490,7 +541,11 @@ Sie anhand des Angebots klären. Nicht jeder würde ihn allerdings kaufen. Ein B
 bei dem sich trotz Vorschneidens von Hand zwei Schrauben in die mitgelieferten
 Dock-Teile geschmolzen haben, empfiehlt, eine Community-Variante zu drucken, die
 Nyloc-Muttern aufnimmt, und die Magnete selbst zu beschaffen. Ob der jetzt einzeln
-verkaufte Halter dieselbe Schwäche hat, wurde nicht berichtet.
+verkaufte Halter dieselbe Schwäche hat, wurde nicht berichtet. Ein Besitzer, der eine
+Erweiterung abgeschlossen hat, hat vier der fertigen Halter verwendet, ohne sich dazu zu
+äußern, wie sie sich bewähren; ein anderer will in einem anderen Thread stattdessen eine
+Nyloc-Variante drucken und die Magnete mit 3 × 8 mm aus den Haltern des Satzes
+übernehmen.
 
 **Von vier auf acht Werkzeuge.** Ein eigener Upgrade-Satz ist nicht angekündigt. Prusas
 Produktseite beschreibt die beiden Satzgrößen so, dass sie sich Smart Head und
@@ -519,26 +574,50 @@ Senkkopf-Magnete, die in das obere Teil des Blocks geschraubt werden:
   Seite hat keine Bezugsquelle gefunden und vermutet Sonderanfertigungen; ein weiterer
   Besitzer sucht noch. Der erste Besitzer merkt an, dass der Sensor stärker von der
   Magnetstärke abhängt als das Dock, weil er mit dem Hall-Effekt arbeitet. Noch ein
-  weiterer Besitzer, der nach eigener Einschätzung die Teile für eine Erweiterung in
-  Eigenregie beisammen hat, hat sich Anfang Oktober 2026 bei den ringförmigen Magneten
-  des Sensors (vermutlich den Senkkopf-Magneten; der Beitrag sagt es nicht) für einen
-  annähernd passenden Ersatz entschieden und weiß noch nicht, ob sich der Sensor damit
-  kalibrieren lässt. Dass ein Ersatz im Sensor funktioniert, hat bislang niemand
-  berichtet.
+  weiterer Besitzer, der Anfang Oktober 2026 Teile für eine Erweiterung in Eigenregie
+  zusammentrug, hat sich bei den ringförmigen Senkkopf-Magneten des Sensors für einen
+  annähernd passenden Ersatz entschieden und Ende jenes Monats gemeldet, dass sich die
+  neuen Sensoren damit kalibrieren ließen: zwei dünnere Senkkopf-Magnete der Güte N52 in
+  einer Zollgröße, 3/8 in Durchmesser und je 1/8 in dick, an jeder Position gestapelt.
+  Ein weiterer Besitzer, der die Erweiterung aufgebaut hat, fand die neuen rechten
+  Sensoren bei der Kalibrierung unzuverlässig oder ganz ohne Reaktion und führte das auf
+  die Polung zurück: Bei seinen Senkkopf-Magneten lag der Südpol auf der gesenkten
+  Seite, und Magnete mit umgekehrter Polung, also dem Nordpol auf dieser Seite, brachten
+  die Sensoren zum Funktionieren. Welche Magnete das waren, geht aus dem Beitrag nicht
+  hervor, nur dass es ein Aufbau in Eigenregie nach der im Thread geteilten Teileliste
+  war. Der Besitzer, der in den USA Teile suchte, im nächsten Punkt, prüfte daraufhin
+  die Senkkopf-Magnete aus einem der Angebote und fand sie je zur Hälfte in der einen
+  und der anderen Polung. Prüfen Sie bei jedem Magneten vor dem Einbau, welcher Pol zur
+  Senkung zeigt. *Vorläufig*: Ein Besitzer nennt einen Ersatz, der sich kalibrieren
+  ließ, ein zweiter Aufbau in Eigenregie im selben Thread nennt seine Magnete nicht, und
+  die Polung beruht auf der Lösung dieses zweiten Besitzers.
 - **Die Stabmagnete mit 7 × 8 mm.** Sie haben die Größe, die ein Besitzer für den
   Aktivierungsmagneten des Docks gemessen hat, und sie können schwer zu bekommen sein:
   Ein Besitzer, der im Oktober 2026 in den USA Teile suchte, fand die kleineren
   Stabmagnete des Docks online, aber keinen Stabmagneten mit 7 × 8 mm zu einem
   vernünftigen Preis, und hat sich für zwei
   gestapelte Magnete mit 7 × 4 mm an jeder Position für 7 × 8 mm entschieden, im Sensor
-  ebenso wie im Fingerhut des Docks. Der bestellte Satz war bis Mitte Oktober nicht eingetroffen,
-  der Stapel ist also ungetestet. *Einzelmeldung.*
+  ebenso wie im Fingerhut des Docks. Sein Satz ist Anfang November eingetroffen, und er
+  hat zum Stapel noch nichts berichtet; dieser ist also ungetestet. Ein anderer Besitzer,
+  der eine Erweiterung abgeschlossen hat, fand durchaus Stabmagnete mit 7 × 8 mm online
+  und kaufte die Stahlkugeln im Prusa-Shop, der eine
+  [Edelstahlkugel mit 7 mm](https://www.prusa3d.com/product/ball-7mm-stainless-steel/)
+  führt. *Jeweils eine Einzelmeldung.*
 - **Die schlichten Kunststoff-Abstandshalter im gedruckten Gehäuse** — nicht die
   Spannzangen, in die der PTFE-Schlauch gesteckt wird. Eine Bezugsquelle ist nicht
   bekannt. Die Anleitung führt neben den Spannzangen eine kleine Hülse je Spur mit der
   Bezeichnung 2 × 5, die diese sein könnte. Ein Besitzer ist einen anderen Weg gegangen,
   mit einem Community-Adapter, der handelsübliche PC4-M10-Steckverbinder aufnimmt und den
-  PTFE-Schlauch direkt hindurchführt. *Einzelmeldung.*
+  PTFE-Schlauch direkt hindurchführt. *Einzelmeldung.* Zwei weitere Besitzer kommen
+  inzwischen ohne die Hülsen aus. Einer, der eine Erweiterung abgeschlossen hat, druckte
+  einen Sensorkörper aus der Community, der Steckverbinder vom Typ ECAS aufnimmt und
+  keinen Platz für Hülsen hat. Der andere hat in einem anderen Thread die Hülsen 2 × 5
+  aus den Sensorgehäusen des Satzes selbst herausgenommen, was die Deutung stützt, dass
+  es diese Teile sind, die äußere Bohrung von Hand für einen PC4-M6-Steckverbinder aus
+  Edelstahl aufgeweitet, der nach seinem Hinweis nicht magnetisch ist, und die Bohrung
+  mit PTFE-Schlauch vom Steckverbinder bis kurz vor die Kugel ausgekleidet. Er berichtet,
+  die meisten Spuren liefen nun so glatt, dass er die Kugel kaum noch spürt, selbst beim
+  Einführen von TPU. *Jeweils eine Einzelmeldung.*
 
 !!! warning "Meldungen über einen Wechsel der Magnetgüte"
     Der Autor dieser Seite hat die ursprünglichen Dock-Magnete durch eine stärkere Güte
@@ -561,18 +640,20 @@ Senkkopf-Magnete, die in das obere Teil des Blocks geschraubt werden:
 ## Erwartungen, die vor dem ersten Start zu klären sind
 
 **Am Werkzeugkopf gibt es keinen Filamentsensor.** Der INDX hat ausschließlich
-seitliche Sensoren, was im Firmware-Quellcode, wie für 6.9.1 veröffentlicht, bestätigt
-ist; nichts in den
-[Release Notes zu 7.0.0, 7.0.1 oder 8.0.0](https://help.prusa3d.com/downloads/core-one-indx)
-deutet auf eine Änderung hin. In der Praxis: Das
+seitliche Sensoren, was der Firmware-Quellcode bestätigt: Die Build-Optionen des INDX
+geben ihm in 6.9.1 seitliche Sensoren und keinen Extruder-Filamentsensor, und das gilt
+weiterhin in 7.0.0, 7.0.1 und
+[8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/ProjectOptions.cmake).
+In der Praxis: Das
 automatische Laden funktioniert nur für das gerade aufgenommene Werkzeug, Sie führen
 jedes Filament von Hand bis zum Kopf und nur das letzte kurze Stück wird eingezogen,
 und es gibt **keine Verstopfungs- oder Filamentende-Erkennung am Kopf selbst**. Das
 überrascht Umsteiger vom Nextruder. Prusas Handbuch zum INDX hat in seiner Revision 1.03
 vom 22. Oktober 2026 auf der
-[Download-Seite](https://help.prusa3d.com/downloads/core-one-indx) das Vorgehen beim
-Laden von Filament überarbeitet; diese Seite hat das noch nicht mit der Beschreibung
-hier abgeglichen.
+[Download-Seite](https://help.prusa3d.com/downloads/core-one-indx) in ihrem Stand vom
+25. Oktober 2026 das Vorgehen beim Laden von Filament überarbeitet; am 8. November 2026
+führte diese Seite stattdessen die Revision 1.02 vom 8. Oktober 2026, nur mit kleineren
+Korrekturen. Diese Seite hat keine der beiden mit der Beschreibung hier abgeglichen.
 
 **Vier- und Acht-Werkzeug-Sätze teilen sich eine Anleitung.** Schritte, die acht
 PTFE-Schläuche oder acht Kabel zeigen, sind normal — ein Vier-Werkzeug-Satz nutzt die
@@ -593,7 +674,16 @@ Fehler.
 **Firmware von einem USB-Stick flashen** (bei der Founders Edition dem beiliegenden,
 bei Prusas Satz einem eigenen), nicht über das Netzwerk. Einige Firmware-Anweisungen
 wurden aus der Anleitung des einfachen Core One übernommen und passen hier nur
-schlecht.
+schlecht. Die Anleitung lässt Sie flashen, sobald der Aufbau fertig ist, und der INDX
+läuft mit einem eigenen Build, veröffentlicht als eigene Datei unter derselben
+Versionsnummer: Das Release 8.0.0 etwa enthält eine Datei für den einfachen Core One und
+eine andere für beide INDX-Maschinen. Ein Besitzer, der fragte, ob er einen einfachen
+Core One vor dem Umbau aktualisieren solle, bekam in der einzigen Antwort aus diesem
+Grund den Rat, bis zum INDX zu warten. Niemand in diesem Thread sagt, ob ein einfacher
+Core One mit älterer Firmware die INDX-Datei direkt übernehmen kann; der Fall des MK4S
+oben ist ein Umbau, bei dem nicht zuvor angehobene Firmware tatsächlich im Weg stand.
+Prusas Release Notes zu 7.0.0 und 7.0.1 empfehlen, direkt auf 8.0.0 zu gehen. *Einzelne
+Antwort*, was den Rat zum Warten betrifft.
 
 ## Wenn der erste Selbsttest fehlschlägt
 
@@ -607,7 +697,18 @@ und beide haben eine eigene Seite:
 - **Werkzeug-Offset außerhalb des zulässigen Bereichs**, mitunter zusammen mit einem
   instabilen Wägezellentest. Siehe
   [Werkzeug-Offset-Kalibrierung](../issues/offset-sensor-board-failure.md) und
-  [Wägezellen-Rauschen](../issues/loadcell-emi-noise.md).
+  [Wägezellen-Rauschen](../issues/loadcell-emi-noise.md). Ab 8.0.0 wiederholt Retry
+  nach einem Fehlschlag in den Schritten eines Werkzeugs nur dieses Werkzeug. Vorher
+  wurde nur eine fehlgeschlagene Sensormessung so wiederholt; eine fehlgeschlagene
+  Reinigung oder Berührung auf der Druckplatte startete den ganzen Durchlauf neu, und
+  die Prüfungen, die nach der Messung aller Werkzeuge folgen, tun das weiterhin. Die
+  Release Notes zu 8.0.0 geben jeder Art von Fehlschlag einen eigenen Bildschirm, doch
+  im Quellcode haben von den Fehlschlägen in den Schritten eines Werkzeugs nur ein
+  nicht aufgenommenes Werkzeug (36146), ein nicht gefundener Sensor (36144) und ein
+  Sensorfehler (36145) einen eigenen, und die übrigen teilen sich 36130; siehe
+  [was die Standard-Firmware 8.0.0 zeigt](../codes.md#stock-800). Die beiden
+  Sensor-Bildschirme nennen das Werkzeug nicht. Die Prüfungen nach der Messung aller
+  Werkzeuge behalten wie bisher eigene Bildschirme.
 
 TODO(verify): die Temperatur, die der Heizungstest meldet, und das Akzeptanzfenster,
 gegen das sie geprüft wird. Beide erscheinen im Quell-Thread und werden hier
@@ -771,7 +872,18 @@ Die Belege für jede Aussage, Punkt für Punkt:
   der Prusa-Anleitung ist die Quelle für Stahlkugel und Magnet mit 7 × 8 mm in jeder
   Spur, für die Hülsen und für die Bezeichnungen der Senkkopf-Magnete. Die gestapelten
   Magnete des Besitzers aus den USA erscheinen in beiden genannten Threads, vom selben
-  Besitzer, und zählen daher einmal.
+  Besitzer, und zählen daher einmal. Der Ersatz im Sensor, der sich kalibrieren ließ, die
+  Lösung über die Polung und das Angebot mit gemischter Polung, die annähernd passenden
+  Federn, die Parkplatten des XL, der ECAS-Sensorkörper, die fertigen Halter in einer
+  abgeschlossenen Erweiterung, die online gefundenen Stabmagnete mit 7 × 8 mm und das
+  Eintreffen des Satzes beim Besitzer aus den USA sind alles spätere Beiträge im Thread
+  über die Erweiterung eines Vier-Werkzeug-Satzes; der funktionierende Ersatz ist also
+  der angegebene, annähernd passende Ersatz eines Besitzers, dazu ein zweiter Aufbau in
+  Eigenregie im selben Thread, der seine Magnete nicht nennt. Die aus den Gehäusen des Satzes entfernten Hülsen
+  stammen aus
+  [einem Thread über Steckverbinder an den Sensoren](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/filament-sensor-improvement-adding-ptfe-tube-fittings-into-the-original-filament-sensor/),
+  und der Plan, die Magnete in Nyloc-Halter zu übernehmen, steht in
+  [einem Thread darüber, was man vor dem Aufbau drucken sollte](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/any-recommended-parts-or-upgrades-to-print-before-installing-indx-and-gen2-upgrades/).
 - **Sätze ohne Werkzeug** stützen sich auf einen einzigen Thread,
   [einen über das fehlende Werkzeug](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/no-tools-in-my-indx-upgrade-kit/),
   der aber die eigene Aussage des Herstellers enthält: Zwei Besitzer berichten es dort,
@@ -822,7 +934,37 @@ Die Belege für jede Aussage, Punkt für Punkt:
 - **Ersatz-Riemenspanner** stützen sich auf zwei Besitzer in getrennten Threads, einen
   im oben verlinkten Thread über den Tausch einer MMU3 gegen den INDX und einen im
   Thread zur Versandankündigung von Prusa. Derselbe Rat erscheint in letzterem auch vom
-  Autor dieser Seite und wird nicht mitgezählt.
+  Autor dieser Seite und wird nicht mitgezählt. Der Remix, der seit vielen Monaten hält,
+  und die Abwandlung mit Sechskantmutter stammen von je einem Besitzer, im oben
+  verlinkten Thread darüber, was man vor dem Aufbau drucken sollte; der Autor dieser
+  Seite hat dort ebenfalls geantwortet und wird nicht mitgezählt.
+- **Angaben zur Firmware.** Die Gen-2-Voreinstellung beim ersten Start oder nach dem
+  Zurücksetzen der Hardwarekonfiguration, der Build mit ausschließlich seitlichen
+  Sensoren, die Portalprüfung von 8.0.0 sowie Wiederholung und Bildschirme der
+  Werkzeug-Offset-Kalibrierung sind Lesarten von Prusas Quellcode an den Tags
+  6.9.1, 7.0.0, 7.0.1 und 8.0.0, die letzten drei mit ihren Releases auf GitHub am
+  3. November 2026 veröffentlicht: aus erster Hand, aber das, was der Code tut, kein
+  beobachtetes Ergebnis. Dass 6.9.1 die Motoren bereits freigab und auf die Anleitung
+  zur Riemenkalibrierung verwies, stammt aus der
+  [Messung](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_gantry_squareness/indx_gantry_squareness.cpp)
+  und den [Bildschirmen](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/indx_gantry_squareness/screen_gantry_squareness.cpp)
+  der Portalprüfung dieser Version, verglichen mit 8.0.0. Die Wiederholung der
+  Werkzeug-Offset-Messung stammt aus dem
+  [Quellcode der Kalibrierung](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_calibration/tool_offset_calibration.cpp)
+  von 8.0.0, verglichen mit [dem von 7.0.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v7.0.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp),
+  ihre Bildschirme aus den Dateien, die
+  [was die Standard-Firmware 8.0.0 zeigt](../codes.md#stock-800) angibt. Ein eigener
+  Bildschirm für jeden Fehlschlag und die Anleitung zum Portal in groben Zügen stammen
+  aus den [Release Notes zu 8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0),
+  der Rat, direkt auf 8.0.0 zu gehen, aus denen zu
+  [7.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0) und
+  [7.0.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1), und die
+  eigene INDX-Firmwaredatei aus den an diese Releases angehängten Dateien. Dass die
+  Portalprüfung seit 6.9.1 auf dem INDX vorhanden ist, stammt aus den Release Notes
+  dieser Version auf Prusas Download-Seite und aus ihrem Quellcode. Der Rat, mit dem
+  Aktualisieren eines einfachen Core One bis zum INDX zu warten, ist eine einzelne
+  Antwort in
+  [einem Thread mit der Frage, wann man aktualisieren sollte](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/when-should-firmware-be-updated/).
 - **Spiel beim Einsetzen der Riemenenden** stützt sich auf vier Besitzer in drei
   Threads: Der Besitzer, dessen Riemen mit genug Spiel hielten, einer, der nach eigener
   Aussage immer so arbeitet, und einer, der zustimmt, dass dies bei einem serienmäßigen
@@ -842,7 +984,9 @@ Die Belege für jede Aussage, Punkt für Punkt:
   einen Thread, also *vorläufig*, ebenso der Hinweis zu zu straff gespannten Riemen. Der
   Assistent für die Rechtwinkligkeit des Portals im Handbuch stammt, wie das unter dem
   ersten Start erwähnte überarbeitete Vorgehen beim Laden von Filament, aus der
-  Änderungsliste auf Prusas Download-Seite in ihrem Stand vom 25. Oktober 2026.
+  Änderungsliste auf Prusas Download-Seite in ihrem Stand vom 25. Oktober 2026; das
+  Handbuch 1.02 und sein Hinweis auf kleinere Korrekturen stammen von derselben Seite am
+  8. November 2026.
 - **Probleme mit Schraubenlöchern in gedruckten Dock-Teilen** sind zwei verschiedene
   Symptome, jedes eine Einzelmeldung: Ein Erbauer der Founders Edition fand im Thread
   über einen schwierigen Aufbau, dass die Schraubenlöcher in einigen der gedruckten
@@ -863,14 +1007,18 @@ Ebenfalls Einzelmeldungen und an Ort und Stelle gekennzeichnet: die Riemeneinste
 nach dem ersten Flashen, der montiert gelieferte Drucker ohne Werkzeug, die in
 Dock-Teile geschmolzenen Schrauben, der Behelf für die Abstandshalter im Sensorgehäuse,
 die Messung der Senkkopf-Magnete zusammen mit den beiden Angeboten, die in dieser
-Größe gefunden wurden, und dem annähernd passenden Magneten, dessen Test noch aussteht,
-sowie beide Montagefehler, jeder aus einem eigenen Thread, dazu die Führung des
+Größe gefunden wurden, sowie beide Montagefehler, jeder aus einem eigenen Thread, dazu die Führung des
 Heizbettkabels, die ein dritter sein könnte, und der Rat eines Besitzers, wie dieses
 Kabel zu verlegen ist, beide aus dem Thread mit dem Abstandshalter. Aus dem Thread über
 einen Aufbau mit INDX und Gen 2, alle vom selben Besitzer, der ihn eröffnet hat: der
 Holzstechbeitel für die Nieten, der gebrochene Remix des Spanners, die lose Stange und
 die losen Schrauben am Schlitten, die fehlenden Schrauben und Abstreiferteile samt der
-Bitte des Supports um Fotos sowie die Rückplatte für die Spulenhalter. Der Satz mit
+Bitte des Supports um Fotos sowie die Rückplatte für die Spulenhalter. Die
+Motorhalterungen für die Gen-2-Riemenscheiben sind der Rat eines einzelnen Besitzers,
+gegeben im Thread darüber, was man vor dem Aufbau drucken sollte, und in
+[Prusas Start-Thread zum Gen-2-INDX](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders/),
+und zählen daher einmal; das Streifen, dem sie vorbeugen sollen, erreicht diese Seite aus
+zweiter Hand. Der Satz mit
 einem Ersatzstück von fast jedem Verbindungselement und der Aufbau der Founders Edition
 mit übrigen Schrauben stammen jeweils von einem Besitzer im Thread über einen
 schwierigen Aufbau. Die Größe des

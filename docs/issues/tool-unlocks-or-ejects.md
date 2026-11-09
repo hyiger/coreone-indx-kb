@@ -1,13 +1,13 @@
 ---
 title:        Tool unlocks or ejects from the head
 confidence:   provisional
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     unknown
+firmware:     unstated on most reporting machines; 6.9.1-beta, 6.9.2, 7.0.1 and 8.0.0 where stated; lock, park and stuck-nozzle code source-checked at 6.9.2 and 8.0.0
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/postid/804782/
@@ -19,14 +19,28 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5532
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://help.prusa3d.com/article/hotend-thermal-runaway-36204-indx_1088706
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/solved-tpu-tangling-at-the-extruder-after-indx-tool-changes-the-nozzle-was-too-cold-during-cleaning/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_indx.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_tool_lock_hack/indx_tool_lock_hack.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_tool_lock_hack/indx_tool_lock_hack.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/M1984.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/gui/MItem_tools.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/feedrates/standard_feedrates_indx.cpp
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini
 superseded_by:
 ---
 
 # Tool unlocks or ejects from the head
 
-!!! warning "Four ejection reports in two threads, one teardown, and stuck-tool reports with different suspects"
-    Four owners describe the active tool coming loose from the toolhead, three of them in
-    one thread and one in a separate thread. One opened the head and found a physical
+!!! warning "Five ejection reports in two threads, one teardown, and stuck-tool reports with different suspects"
+    Five owners describe the active tool coming loose from the toolhead, four of them in
+    one thread, one of those only by saying they have the same problem as another, and
+    one in a separate thread. One opened the head and found a physical
     cause on their own machine. The owner in the separate thread opened theirs too and
     believes the lock is not closing fully, but names no damaged part. The teardown is
     strong evidence for that one unit and says nothing yet about how common the defect
@@ -62,6 +76,31 @@ with a magnet at the front notch where the dock's magnet acts, and away from the
 turning the mechanism can end up driving just the extruder motor while the tool stays
 locked. The gear, cam and pin detail remains the owners' account.
 
+Prusa's firmware source, public for 7.0.0, 7.0.1 and 8.0.0 since 3 November 2026, bears
+out more of the owners' picture and qualifies one part of it. To pick up a tool, the
+printer runs the extruder forward at the dock to lock it; to park one, it jogs the
+extruder back and forth to line up the teeth and then runs it backward to open the lock
+([toolchanger source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_indx.cpp)).
+A small module written for the INDX says in its comments that the head only finishes
+locking once the extruder has fed a little further, and that a retraction before then
+would let the tool fall off. So, ahead of the first retraction after each pickup, and
+again after power-on, since it keeps no record of the previous run, it slips in a short
+forward-and-back move if the extruder has not yet fed far enough
+([module source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_tool_lock_hack/indx_tool_lock_hack.hpp),
+[startup arming](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_tool_lock_hack/indx_tool_lock_hack.cpp)).
+Prusa's stock tool-change G-code adds its own short push, commented as the final lock, on
+a tool that has already been primed, when no wipe tower is used
+([profile bundle 2.5.13](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini)).
+So, by design, reversing away from a dock does not only ever retract: on a tool just
+picked up it could release it, and that guard is what stops it. The module is already in
+the published source of 6.6.3, and it and the lock and release sequence are the same in
+8.0.0 as in 6.9.2 apart from tidying
+([comparison](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0)).
+This is a reading of the code, not an observed outcome, and it acknowledges no defect.
+A tool that comes loose on a retraction after the extruder has already fed forward, as in
+the reproduction below, is not explained by the gap the guard covers; that is inference
+from the code.
+
 ### What went wrong on one machine
 
 The owner took one side of the toolhead off. A gear in the locking train had its final
@@ -78,7 +117,8 @@ tool comes out on the retraction that follows.
 
 On that machine it was not subtle. Across a few hundred tool changes the owner never
 completed a multi-tool print, and many single-tool prints failed during the opening
-load and cleaning sequence.
+load and cleaning sequence. They were on the 6.9.1-beta firmware, which already carried
+the guard described above.
 
 ### A second owner, less clear-cut
 
@@ -98,6 +138,13 @@ normally; on tools 3 and 4 the head made a grinding noise and then the tool came
 They give their firmware as 7.0.1. They have not opened the head and offer no cause,
 and they do not say at which step of the load the tool came off. Like the second
 owner, they add the symptom, not the gear.
+
+Five days later a fifth owner answered that post: they were in the same position, and
+worse off, because they could no longer unload the filament from the tool. By their
+account support's suggestions, among them heating the tool and unloading it and a cold
+pull, did not free it, and support had given the tool up as dead. Beyond agreeing with
+the post they answered they do not describe the release itself, so they add another
+report of the symptom, and of a tool lost after it, but no cause.
 
 ### A separate thread: a second toolhead opened
 
@@ -173,6 +220,38 @@ because it now comes from two unrelated threads and points to a cause outside th
 locking train that is cheap to rule out, particularly with flexible filament or with
 mixed materials in a warm chamber.
 
+A [later thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/solved-tpu-tangling-at-the-extruder-after-indx-tool-changes-the-nozzle-was-too-cold-during-cleaning/)
+offers a possible cause for the flexible-filament tangle, though it involves no stuck
+tool. On 7 November 2026 an owner on firmware 8.0.0, printing TPU with PLA, reported the
+TPU tangling at the extruder whenever the printer returned to that tool, with next to
+nothing coming out in the purge; its first layer had printed normally. Reading their
+sliced G-code, they put it down to the cleaning step of the stock tool-change G-code:
+there the nozzle is brought only to a reduced cleaning temperature before the short push
+that finishes locking an already-primed tool, so the push meets filament that has not
+melted, and soft TPU buckles. They changed the tool-change G-code for flexible filament
+only, raising the cleaning temperature, so the lock push meets warmer filament, and
+adding a pause once the nozzle is back at printing temperature, before the filament is
+pushed back in, and report clean tool changes since. They made several other
+flexible-only changes at the same time without testing them one by one, and say
+themselves that the temperature being the key is a guess.
+
+TODO(verify): the stock cleaning-step temperature rule, and the raised
+flexible-filament temperature and pause, from the TPU tangling thread; withheld here.
+
+The order of steps they describe matches the stock tool-change G-code in Prusa's profile
+bundle 2.5.13 with the wipe tower off, as theirs was, checked here; that a cold push is
+what tangles the TPU is their reading, from one printer. They report no stuck tool. But a
+strand buckling at the drive is the kind of tangle the flexible-filament owners above
+believe held their tools, and this is the first such tangle whose owner traces it to a
+specific step of the tool change, so it is worth knowing if you mix flexible and rigid
+filament; whether it explains those stuck tools is inference.
+Firmware 8.0.0's faster handling of flexible filament does not bear on it. By Prusa's
+notes and the
+[source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/feedrates/standard_feedrates_indx.cpp),
+that change speeds up the firmware's own extruder moves for filaments marked flexible,
+not the extruder moves written into the slicer's tool-change G-code, and this owner was
+already on 8.0.0.
+
 ### Recovery can loop
 
 When a tool jammed in the head, the first owner found the printer stuck retrying the
@@ -181,28 +260,53 @@ without knowing which one, and went straight back to trying to dock it — which
 them away from the "Release Stuck Tool" menu item. When they did try that item, the
 gears ground and nothing moved.
 
+The source, checked at 6.9.2 and 8.0.0, accounts for that pattern without showing a bug.
+What follows holds for both: 8.0.0 calls the idle check from a different point in the
+firmware's main loop, to fix a deadlock, but under the same conditions
+([comparison](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0)).
+During a print, a failed park is retried automatically
+twice and then offers Retry and Abort. Whenever the printer is not actively printing
+(idle, or with a print paused) and senses a nozzle it has no record of, it opens a
+prompt that lists the docks and tries to
+park the tool in the one chosen, and if that park fails it goes back to the list. The menu
+item, which the firmware labels "Release Stuck Nozzle" rather than the name the first
+owner gave it, runs that same routine
+([source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/M1984.cpp)),
+so reaching it would have led to the same docking attempt, not to a different way out.
+Either way the release is the extruder running backward at the dock, so on a head whose
+lock or drive is jammed each attempt meets the same obstruction. That is a reading of the
+code, not a test.
+
 A [firmware bug report](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5532)
 filed by the second owner in the flexible-filament thread, on the day of their stuck
 tool, describes another dead end. After an unload had failed, a second unload attempt
 asked for the filament type and then sat waiting for the nozzle to heat, which it never
 did; the tool could not be parked either. It was filed against 6.9.2 and was still open,
-with no reply, on 25 October 2026. Neither the release notes for firmware 7.0.0, nor
+with no reply, on 8 November 2026. Neither the release notes for firmware 7.0.0, nor
 those for 7.0.1, dated 19 October 2026, whose single fix is for a printer freezing at
 startup, nor those for [8.0.0](https://help.prusa3d.com/downloads/core-one-indx), dated
-22 October 2026, list a change to this, to the docking retry loop, or to the "Release
-Stuck Tool" item.
+22 October 2026, list a change to this, to the docking retry loop, or to the stuck-nozzle
+item. Nor do the fuller notes Prusa published on GitHub with the source on 3 November
+2026, for [7.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0),
+[7.0.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1) and
+[8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0). This page
+has not traced the stalled unload itself through the source.
 
 A separate owner describes a similar dead end with a different start, in a comment of
 22 October 2026 under
 [Prusa's article on the INDX hotend thermal runaway error](https://help.prusa3d.com/article/hotend-thermal-runaway-36204-indx_1088706).
 A large blob on their nozzle seemed to be stopping the printer from reading its
 temperature, and they could not park the tool, because, as they understand it, the
-nozzle has to heat before the extruder motor will run backward to release it. Their
-explanation is unconfirmed, but taken with the bug report above it is a second,
-unrelated case where a nozzle the printer could not heat, or could not read, came with a
-tool that would not leave the head. If yours will not heat, the vendor's manual release
-under "What to do" below may be the way out rather than another attempt from the menu;
-that is inference from these two reports.
+nozzle has to heat before the extruder motor will run backward to release it. The
+source does not bear that out: the park routine does not wait for heat, and the extruder
+moves that open the lock are exempted from the check that blocks cold extrusion, so as
+the code reads, the release itself does not need a hot nozzle. An error that halts the
+printer, or a step that heats first, such as an unload, would be other ways to end up
+where they did; that too is a reading of the code, not a test. Even so, taken with the
+bug report above, their comment is a second, unrelated case where a nozzle the printer
+could not heat, or could not read, came with a tool that would not leave the head. If
+yours will not heat, the vendor's manual release under "What to do" below may be the way
+out rather than another attempt from the menu; that is inference from these two reports.
 
 ## What to do
 
@@ -226,11 +330,18 @@ remains one owner's account of their own case, and it names no defect.
 The [release notes for firmware 7.0.0](https://help.prusa3d.com/downloads/core-one-indx),
 dated 15 October 2026, list nothing on the tool lock. Nor do those for 7.0.1, dated
 19 October 2026, whose single fix is for a startup freeze, or those for 8.0.0, dated
-22 October 2026. The 7.0.0 notes do move the filament load and unload positions to
-the calibrated nozzle cleaner offset. The notes do not connect that to this fault, and no
-owner has yet said whether it changes the ejections near the wiper that the second owner
-describes. The owner of the newly converted machine above was on 7.0.1 when two of their
-tools came off during a load, but does not say where the head was at the time.
+22 October 2026, and the fuller notes on GitHub for all three are silent on it too. As
+covered above, the lock and release code is the same in 8.0.0 as in 6.9.2 apart from
+tidying. The 7.0.0 notes do move the filament load and unload positions to the
+calibrated nozzle cleaner offset. In the
+[source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp)
+that change shifts those positions, which a comment there says coincide with the park and
+purge points over the waste bin, by the cleaner's calibrated offset. So every unload
+happens beside the wiper, and "near the wiper" in the second owner's account does not
+single out an unusual place. Neither the notes nor the code connect the change to this
+fault, and no owner has yet said whether it changes the second owner's ejections. The
+owner of the newly converted machine above was on 7.0.1 when two of their tools came off
+during a load, but does not say where the head was at the time.
 
 **If a tool is stuck in the head, use the vendor's manual release.** Prusa publishes a
 [procedure for a tool that stays attached](https://help.prusa3d.com/article/nozzle-tool-remains-attached-to-the-print-head-core-one-indx_1077657).
@@ -250,11 +361,14 @@ calibration, covered under
 [tool detection and park failures](tool-detection-ringdown-decay.md). If a tool will
 not leave the head, look at the filament where the extruder drive grips it before
 suspecting the lock; that rests on the two filament reports in separate threads above.
+If flexible filament keeps tangling at tool changes, the TPU thread above has one
+owner's fix for the tangle itself.
 
 ## Verification
 
-`provisional` — four owners report the tool coming loose, three in one thread and one in
-a separate thread; a physical cause was found on one machine only, and the owner in the
+`provisional` — five owners report the tool coming loose, four in one thread, one of them
+only by agreeing with another's post, and one in a separate thread; a physical cause was
+found on one machine only, and the owner in the
 separate thread, who also opened their head, names no damaged part. One owner reports
 only the opposite fault, a tool that will not release; owners in two further threads
 report a stuck tool and suspect the filament.
@@ -268,7 +382,16 @@ The second owner's report shares the symptom but not, so far, the cause, and its
 PLA-only pattern is a reason for caution before treating the two as one fault. The
 fourth owner's report, in the same thread, also shares only the symptom: no teardown, no
 cause. It does not bear on the tier, but it shows the symptom on a newly converted
-machine running 7.0.1.
+machine running 7.0.1. The fifth owner's, again in that thread, adds still less: agreement
+with the fourth, and a tool that support could not clear afterwards.
+
+Prusa's firmware source is first-party and bears out the mechanism the owners describe:
+the lock is driven by the extruder, forward to close and backward at the dock to open,
+and a tool just picked up is by design not fully locked until the extruder has fed a
+little further, which the firmware guards against. That is a design property, not a
+defect, so it neither raises nor lowers the tier. It is not the vendor statement asked
+for below, and it does not explain a tool lost on a retraction after forward feeding;
+that last point is inference from the code.
 
 The unloading thread comes closest to the bar below without meeting it. It is a second
 opened toolhead, in a different thread, from an owner unconnected to the first, with the
@@ -296,11 +419,15 @@ The two filament reports, from the ASA thread and the flexible-filament thread, 
 independent of each other and of the lock reports, and neither involved a teardown. They
 describe a tool that would not leave the head rather than one that fell out, and blame
 filament rather than any part of the head, so they neither raise the tier nor count as
-further reports of the third owner's fault. The firmware report on the stuck unload
-comes from one of the flexible-filament owners, so it is not a separate source. The
-comment under Prusa's thermal runaway article is from a different owner. It is a
-single account, and its reason for the tool staying put is that owner's understanding,
-not anything Prusa's article says.
+further reports of the third owner's fault. The TPU thread is a third independent owner,
+but reports a tangle without a stuck tool; it offers a possible cause for the tangle,
+from one printer and with several changes made at once, so on its own it is
+`provisional`, and it bears on the stuck tools only by inference. The firmware report on
+the stuck unload comes from one of the flexible-filament owners, so it is not a separate
+source. The comment under Prusa's thermal runaway article is from a different owner. It
+is a single account, and its reason for the tool staying put is that owner's
+understanding, not anything Prusa's article says; the firmware source, as read here,
+does not support it.
 
 The teardown post was still awaiting moderation on the forum when this page was first
 written; it has since been published, and the link shows it. The owner's video and a set

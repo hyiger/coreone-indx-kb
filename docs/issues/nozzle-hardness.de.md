@@ -1,16 +1,27 @@
 ---
 title:        Düsenhärte und abrasive Filamente
 confidence:   reported
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       CHT high-flow, and plain-bore variants
 nozzle:       0.4mm standard
-firmware:     unknown
+firmware:     6.9.2 and 8.0.0 by source reading, for the hardened-nozzle setting and the error codes; the hardness itself is a property of the part
 sources:
   - https://blog.prusa3d.com/prusa-core-one-gen-2-indx-shipping-has-started-complete-printers-open-for-orders_137623/
   - https://help.prusa3d.com/article/unknown-nozzle-36121-core-one-indx_1072730
+  - https://help.prusa3d.com/article/unknown-nozzle-36122-core-one-indx_1072738
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_indx.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/persistent_stores/store_instances/config_store/defaults.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/compatibility_checks/gcode_compatibility.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/filament_presets.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/M865.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/ProjectOptions.cmake
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/are-you-happy-with-your-indx-purchase/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/so-whats-the-story-on-shipping-now/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/nozzlegate-communications/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
@@ -21,7 +32,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-refund-voucher-doesnt-work-with-free-shipping/
 superseded_by:
-source_sha:   e0e6f24e142769b4757060c8e49e221e1299e98bce2216d8dd0f834095f69aec
+source_sha:   1739b7397b395150d6034b78eeded8c9d0057491d02a90af340202bd12dc4b14
 ---
 # Düsenhärte und abrasive Filamente
 
@@ -44,8 +55,29 @@ ausgeliefert wird sie aber noch nicht — siehe *Was kommt* weiter unten.
 | [`36121`](https://help.prusa3d.com/article/unknown-nozzle-36121-core-one-indx_1072730) | Unbekannte Düse |
 | [`36122`](https://help.prusa3d.com/article/unknown-nozzle-36122-core-one-indx_1072738) | Unbekannte Düse |
 
-Sie werden ausgelöst, wenn die montierte Düse nicht zu der Angabe in der Druckdatei passt —
-der Deklaration je Werkzeug, die auch die Kennzeichen für abrasiv und High-Flow trägt.
+Trotz ihres Namens haben beide Codes nichts mit der Düsenhärte zu tun. Es sind Abfragen
+des Werkzeugwechslers zur Werkzeugerkennung: Der Drucker hat ein Werkzeug am Kopf, das er
+nicht zuordnen kann, und bittet Sie, das Dock zu wählen, aus dem es stammt, damit er es dort
+abstellen kann. So beschreiben sie auch Prusas Hilfeartikel, 36121 bei einer Aufnahme und
+36122 nach einer Pause oder einer Einstellungsänderung während des Drucks. Im
+Firmware-Quellcode, in 6.9.2 wie in 8.0.0, ist 36121 die Abfrage des Werkzeugwechslers zu
+einem unbekannten Werkzeug, ausgelöst etwa, wenn der Kopf ein Werkzeug meldet, während der
+gespeicherte Stand des Druckers besagt, dass keines aufgenommen ist; 36122 hat in keinem
+Release von 6.9.0 bis 8.0.0 einen Eintrag in der Fehlerliste. Sie sind von derselben Art
+wie die Abfragen zu Dock und verlorenem Werkzeug, die auf der Seite zur
+[Werkzeugerkennung](tool-detection-ringdown-decay.md) aufgeführt sind, auch wenn diese
+Seite die beiden Codes selbst nicht behandelt. Eine
+Abweichung zwischen der Druckdatei und den für jedes Werkzeug gespeicherten
+Düseneinstellungen, die weiter unten beschriebene Prüfung auf eine gehärtete Düse
+eingeschlossen, wird beim Druckstart unter einem eigenen Titel gemeldet, ohne Nummer aus
+dieser Liste.
+
+!!! note "Korrigiert am 8. November 2026"
+    Frühere Fassungen dieser Seite gaben an, diese Codes würden ausgelöst, wenn die
+    montierte Düse nicht zur Deklaration je Werkzeug in der Druckdatei passt. Prusas
+    Hilfeartikel und der inzwischen veröffentlichte Firmware-Quellcode widersprechen dem
+    beide. Die Codes bleiben hier aufgeführt, damit Leser, die über sie hierher kommen, die
+    Korrektur finden.
 
 ## Details
 
@@ -132,9 +164,32 @@ unabhängige Bestätigung.
 ### Was jetzt zu tun ist
 
 **Schalten Sie die Einstellung „Düse gehärtet“ am Drucker aus**, im Menü für alle
-Werkzeuge. Das ist praktisch von Bedeutung: Ist sie aus, erzeugt das Slicen eines Profils
-für abrasives Material eine Warnung, statt stillschweigend fortzufahren. Es ist die eine
-Einstellungsänderung, die Sie vor Ihrem eigenen Muskelgedächtnis schützt.
+Werkzeuge. Das ist praktisch von Bedeutung: Ist sie aus, löst der Start einer Datei, die
+mit einem Profil für abrasives Material gesliced wurde, am Drucker eine Warnung aus, statt
+dass er stillschweigend fortfährt. Es ist die eine Einstellungsänderung, die Sie vor Ihrem
+eigenen Muskelgedächtnis schützt.
+
+Da der Firmware-Quellcode für 7.0.0, 7.0.1 und 8.0.0 nun veröffentlicht ist, lässt sich das
+am Code prüfen, statt es zu glauben, und für den INDX liest es sich in 8.0.0 genauso wie in
+6.9.2. Die
+Firmware wird mit allen INDX-Werkzeugen als gehärtet markiert ausgeliefert, weshalb die
+Einstellung von Hand ausgeschaltet werden muss; sie ist ein Schalter in den Einstellungen
+jedes Werkzeugs und im Eintrag für alle Werkzeuge in derselben Liste. Prusas
+INDX-Druckerprofile geben für jedes Werkzeug, das ein Druck verwendet, an, ob dessen
+Filamentprofil als abrasiv markiert ist. Deklariert eine Datei das für ein Werkzeug, dessen
+Einstellung aus ist, meldet der Drucker es vor dem Druckstart, so streng, wie der Eintrag
+„Düse“ unter seinen Hardware-Prüfungen eingestellt ist; dieser steht standardmäßig auf
+einer Warnung. Ein als abrasiv markiertes Filament wird beim Laden ebenso gemeldet. Auf dem
+INDX trägt keine der eigenen Voreinstellungen der Firmware diese Markierung: Die beiden, die
+sie tragen, PPS und PPA, sind ab 7.0.0 nur in die Firmware des Core One und des Core One L
+ohne INDX eingebaut, die das Hochtemperatur-Hotend unterstützt (in 6.9.2 in überhaupt keine
+Release-Firmware), und
+die INDX-Modelle sind in all diesen Releases eigene Builds ohne sie. Auf dem
+INDX greift die Prüfung beim Laden daher nur bei einem Filament, das der Besitzer selbst
+als abrasiv markiert hat, was die Einstellungen eines benutzerdefinierten oder angepassten
+Filaments erlauben, ebenso wie der G-Code-Befehl `M865` für dieselben Filamente; Prusas
+Profile 2.5.13 senden keinen solchen Befehl. Das ist eine Lesart des Codes und der
+Profile, kein beobachteter Druckstart.
 
 **Behandeln Sie kohlefaser- und glasfasergefülltes Filament als Einsatz auf eigenes
 Risiko** und bevorzugen Sie für gefüllte Materialien eine Düse mit glatter Bohrung
@@ -288,8 +343,11 @@ beantworten die erste Frage nur zum Teil.
     gesagt — die betreffende Person hatte andere Größen nie ausprobiert, weil es keine
     Profile dafür gibt, was Guthaben-für-mehr-Düsen zu einer schwächeren Option macht, als
     es aussieht — beide INDX-Druckermodelle deklarieren in Prusas veröffentlichtem
-    Profilpaket eine einzige Düsenvariante, sodass keine andere Größe auswählbar ist. Siehe
-    [fehlende Slicer-Profile](missing-slicer-profiles.md).
+    Profilpaket eine einzige Düsenvariante, sodass keine andere Größe auswählbar ist.
+    Besitzer sagten das Ende Oktober und Anfang November noch immer, einer von ihnen mit
+    fünf weiteren Größen zur Hand, im Thread zu Ersatzdüsen und in einem
+    [Thread mit der Frage, ob Besitzer mit dem INDX zufrieden sind](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/are-you-happy-with-your-indx-purchase/).
+    Siehe [fehlende Slicer-Profile](missing-slicer-profiles.md).
 
     Die Lieferung zog sich bis Anfang Oktober, und das ungleichmäßig; seither geht es
     schneller. Zwei Besitzer, die Mitte Juli Ersatzdüsen im Shop des Herstellers
@@ -314,7 +372,11 @@ beantworten die erste Frage nur zum Teil.
     Oktober, seine Lieferung habe rund drei Wochen gebraucht, und er warte vor dem Einsatz
     noch auf Profile; und im Thread zu Ersatzdüsen berichtete ein anderer von einer
     Bestellung, die innerhalb weniger Tage versandt wurde und wenige Tage später in den USA
-    ankam, wobei Einfuhrzölle die Kosten erhöhten. Der erste der wartenden Besitzer hält
+    ankam, wobei Einfuhrzölle die Kosten erhöhten. Anfang November hatte ein weiterer
+    Besitzer, in einem
+    [Thread zu Prusas Versand](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/so-whats-the-story-on-shipping-now/),
+    die Versandbestätigung des Herstellers für separat bestellte 0.25mm- und 0.6mm-Düsen,
+    wiederum ohne Bestelldatum. Der erste der wartenden Besitzer hält
     weiterhin Düsen mit glatter Bohrung für den Grund der Verzögerungen und hatte
     gewarnt, dass der Shop Düsen als vorrätig anzeigen kann, die nicht versandbereit
     sind; ein Muster nach Typ ist nicht belegt. Die Erklärungen des Herstellers gibt
@@ -408,6 +470,23 @@ eingeschlossen, zitiert aus Prusas Update vom August an diese Kunden; dass die
 Kit-Bestellungen erst nach diesem Update wieder öffneten, in getrennten Versionen für den
 CORE One+ und den CORE One+ (Gen 2), ist Prusas eigene Ankündigung.
 
+Ebenfalls aus erster Hand: die Bedeutung der Codes 36121 und 36122, aus Prusas
+Hilfeartikeln dazu und der Fehlerliste im Firmware-Quellcode, und das Verhalten der
+Einstellung für gehärtete Düsen, aus einer Lesart des Quellcodes von 6.9.2 und 8.0.0 und
+von Prusas
+[Profilpaket 2.5.13](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini).
+Die Firmware-Belege sind die
+[Fehlerliste](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml),
+der [Werkzeugwechsler](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_indx.cpp),
+die [Standardwerte der Einstellungen](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/persistent_stores/store_instances/config_store/defaults.hpp),
+die [Prüfungen beim Druckstart](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/compatibility_checks/gcode_compatibility.cpp),
+die [Filament-Voreinstellungen](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/filament_presets.cpp)
+mit den [Build-Optionen](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/ProjectOptions.cmake),
+die PPS und PPA aus den INDX-Builds heraushalten, gleichermaßen in 6.9.2, 7.0.1 und 8.0.0,
+sowie der [Befehl `M865`](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/M865.cpp),
+der die Abrasiv-Markierung nur bei einem benutzerdefinierten oder angepassten Filament ändert.
+Eine Lesart zeigt, was der Code prüft, nicht, was ein Drucker nachweislich getan hat.
+
 !!! note "Warum hier Härtewerte stehen, andere Zahlen aber nicht"
     Diese Website hält Kalibrierwerte, Temperaturen und Druckeinstellungen zurück, bis ein
     Mensch sie an der Hardware verifiziert hat. Ein Härtewert ist eine andere Art von Zahl:
@@ -440,7 +519,9 @@ schnelle Lieferung, und die Gründe des Herstellers für die Verzögerungen gibt
 einzelner Besitzer wieder. Der seither schnellere Versand und die veränderte äußere
 Oberfläche der Düsen beruhen auf Besitzern in diesem einen späteren Thread. Eine
 schnelle Lieferung im Thread zu Ersatzdüsen und eine dreiwöchige im späteren Thread,
-beide ohne Bestelldatum, lassen sich weder vor noch nach Anfang Oktober einordnen. Die
+beide ohne Bestelldatum, lassen sich weder vor noch nach Anfang Oktober einordnen; die
+Versandbestätigung für zwei Größen von Anfang November, in einem Thread zu Prusas Versand,
+stammt von einem einzelnen Besitzer und ist ebenfalls undatiert. Die
 Bezeichnung „gehärtet“ an gelieferten Ersatzdüsen stammt aus einem einzigen Thread. Dass
 sich mit Prusas Guthaben keine INDX-Düsen kaufen ließen, weil Prusas Shop sie nicht
 führte, beruht auf drei Besitzern in drei getrennten Threads, nicht auf einer Aussage

@@ -1,13 +1,13 @@
 ---
 title:        Dock calibration rejects some or all docks
 confidence:   reported
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One, Core One+, Core One+ (Gen 2)
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0, 6.9.1-beta, 6.9.1; 6.9.2 by source comparison; checked against the 7.0.0, 7.0.1 and 8.0.0 release notes
+firmware:     6.9.0, 6.9.1-beta, 6.9.1; 6.9.2, 7.0.0, 7.0.1 and 8.0.0 by source comparison
 sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5444
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5445
@@ -36,6 +36,20 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/tree/v6.9.1-beta/src/feature
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-firmware-7-0-0-stuck-on-reset/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/8-0-0-firmware-for-prusa-core-one-gen-2-indx-core-one-indx/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/856993e7a5223eefe05f16252669b18d92cdac26
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/e0bb99ac6505d18e606b4561c2315d2c12632633
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/596d5330f3a5afde6b6eaefa6f60e9cb12882074
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_dock_calibration/indx_dock_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_gantry_squareness/indx_gantry_squareness.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_gantry_squareness/screen_gantry_squareness.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/indx_dock_position_defaults.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_utils.h
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_utils_indx.cpp
 superseded_by:
 ---
 
@@ -50,7 +64,9 @@ superseded_by:
     one unresolved machine, and a squareness wizard held back by the docks themselves
     from one other. The slack-belt fix for a uniform shift rests on one owner, and the
     belt and homing advice for a failing first dock comes from several owners, all in a
-    single forum thread. Those parts are `provisional` and are marked where they appear.
+    single forum thread. An account of the opposite belt mismatch, Gen 2 belts with the
+    setting left off, comes from one owner. Those parts are `provisional` and are marked
+    where they appear.
 
 ## Summary
 
@@ -92,7 +108,8 @@ calibration then rejects a dock, this is the page.
 
 The firmware holds an expected position for every dock: its own X for each dock, and on
 the Core One a single Y shared by all of them. The Core One L has its own figures, and the
-source marks its Y as still needing validation on more printers.
+source marks its Y as still needing validation on more printers; that Y changed in 7.0.0
+and still carries the same note at 8.0.0.
 
 During dock calibration, a measurement outside a fixed window around its expected
 position fails that dock. The failure screen shows the measured and expected values and
@@ -105,7 +122,8 @@ window.
 TODO(verify): the expected dock positions and the width of the acceptance window. The
 expected positions are compile-time constants in indx_dock_position_defaults.hpp; the
 window, a per-axis offset plus a slack for display rounding, is in toolchanger_utils.h.
-Both were read at the 6.9.1 tag and are withheld until checked against a machine.
+Both were read at the 6.9.1 tag, are unchanged for the Core One at 8.0.0, and are
+withheld until checked against a machine.
 
 Two consequences follow. A machine whose docks are all shifted by the same amount cannot
 pass, however accurately it measures them. And because one Y serves every dock, a row
@@ -120,13 +138,32 @@ The reporter of the first case says the machine could neither run other calibrat
 nor print while the docks stood rejected. That is one account; the firmware disabling
 the tool of an uncalibrated dock is consistent with it.
 
-Firmware 8.0.0 gives this calibration one line in its
-[release notes](https://help.prusa3d.com/downloads/core-one-indx), dated 22 October
-2026: the head now approaches the dock more gently. That is all Prusa says. The line
-does not say whether speed, force or path changed, and it mentions neither the expected
-positions nor the window, so this page has no reason to think the checks above changed
-but cannot confirm it until Prusa publishes the 8.0.0 source. No owner has yet said
-whether the change alters which docks pass.
+Firmware 8.0.0, dated 22 October 2026, says of the dock measurement in its
+[release notes](https://help.prusa3d.com/downloads/core-one-indx) only that the head now
+approaches the dock more gently. Prusa published the 8.0.0 source on 3 November 2026,
+and it shows what changed
+([commit](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/856993e7a5223eefe05f16252669b18d92cdac26)).
+Once you have placed the head at the dock and confirmed, the calibration backs off a
+little, then drives the head further into the dock until it stops, and that stopping
+point is what the dock's position is worked out from. In 8.0.0 the X and Y motors run at
+a reduced current for that one push and go back to their normal current afterward. The
+speed, distance and direction of the push are as before. A comment beside the change
+gives the reason: at full current, the push bends the front plate, presumably the one
+the docks are mounted on. So what changed is the force, at the very move the reading
+comes from. The expected positions, the window and every other step of the measurement are
+unchanged for the Core One.
+
+TODO(verify): the reduced XY motor current 8.0.0 uses for the push into the dock, a
+constant in indx_dock_calibration.cpp at the 8.0.0 tag. Withheld as a motor current.
+
+If the plate gave under the old push, the head would have stopped further in than the
+dock really sits, and a gentler push could shift readings slightly. That is this page's
+inference: the source gives no size for the effect, and no owner has yet said whether
+docks that failed on earlier firmware pass on 8.0.0, or the reverse. The same release
+also lowers the bed further before this calibration, so there is more room for your
+hands during the manual step
+([commit](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/596d5330f3a5afde6b6eaefa6f60e9cb12882074));
+that leaves the measurement itself alone.
 
 ### Docks rejected by the same amount in Y: the belt setting
 
@@ -164,6 +201,26 @@ inference, and neither report covers that case.
 
 TODO(verify): how large that uniform shift is at the docks. A figure is worked through in
 #5444; it is withheld as an offset magnitude until measured here.
+
+`provisional` — one owner. The opposite mismatch has since been described, in the
+[gantry squaring thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/gantry-squaring-failing/).
+Their warning is that an INDX machine given the Gen 2 upgrade needs the belt setting
+switched to 1.5GT by hand afterward. That fits the source as long as a non-Gen 2
+variant had been chosen and was left in place: the setting follows the printer variant,
+not the belts fitted (after a factory reset, and possibly after flashing, the default is
+the Gen2 variant, with the setting on). Leave it off, they say, and the squareness
+wizard fails on 6.9.2 and later, while older firmware instead reports the Y axis off by
+an amount they quote. Prusa's source shows the wizard unchanged between 6.9.1, where it
+first appears, and 6.9.2
+([compare](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)),
+so the version boundary they describe is not explained by the wizard itself. They do not
+say which calibration showed that figure, whether the wizard failed on its skew reading
+or could not measure at all, or what the sign of their figure is measured against, so
+the account neither confirms nor contradicts the direction inferred above.
+
+TODO(verify): the Y error one owner reports, on firmware older than 6.9.2, for 1.5GT
+belts with the setting off, from the gantry squaring thread. Withheld as an offset
+magnitude.
 
 A second owner, in an unrelated forum thread, hit the same wall: docking failed with a
 Y reading that would not move whatever they tried, and the figure they quote is
@@ -238,7 +295,7 @@ when this page was updated.
 
 TODO(verify): the gantry squareness tolerance the Prusa developer quoted on #5491. The
 6.9.1 wizard passes against the same figure, a constant in indx_gantry_squareness.hpp
-that its result screen also shows. Withheld as an assembly setting.
+that its result screen also shows, unchanged at 8.0.0. Withheld as an assembly setting.
 
 How the wizard measures bears on that exchange. Prusa's 6.9.1 source shows it homing
 first, then driving the empty head into the two outermost docks until it stalls, and
@@ -253,6 +310,23 @@ follow the docks would pass, which matches the owner's account, if the gantry
 calibration they mention is this wizard, something the developer has asked them to
 clarify. That is this page's reading of the source, not Prusa's explanation, and nobody
 has checked it on the machine.
+
+Firmware 8.0.0 changes what the wizard does with a skew over the limit, though not how
+it measures it
+([commit](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/e0bb99ac6505d18e606b4561c2315d2c12632633)).
+Its GitHub release notes say it now guides you through realigning the gantry. In the
+source, instead of ending on a pointer to the guide, it asks you, with the motors still
+off from the measurement, to push the head to the back, look for a gap between the
+gantry and the belt tensioner at either end, and use the guide, whose code stays on
+screen, if there is one. It then measures again, as often as it takes, with docks 1
+and 8 kept empty throughout. The measuring method, the two docks it uses and its limit
+are as at 6.9.1.
+The check it adds, the gantry seated against both tensioners, is a mechanical one that
+involves no dock. So on 8.0.0, a skew reading that survives that check finding no gap at
+either end would itself be a clue: the wizard would be measuring something other than
+the gantry, such as a dock row out of line or something holding the head back, as in the
+next section. That is this page's reading of the source; nobody has reported running the
+8.0.0 wizard on this machine.
 
 The owner has asked Prusa to validate docks against a line fitted through the measured
 docks, rather than one fixed Y, so a uniformly rotated row could pass while a single
@@ -274,9 +348,12 @@ With docks 1 and 2 taken off, the wizard passed.
 
 That fits how the wizard measures, described above: it takes wherever the head stalls as
 that dock's position, so anything that holds the head back on one side reads as skew.
-This is the page's reading of the 6.9.1 source alongside one owner's account; why the
-buttons stopped the head on that machine was not established, and whether anything
-similar played a part on the rotated-row machine is not known.
+This is the page's reading of the source, unchanged in this respect through 8.0.0,
+alongside one owner's account; why the buttons stopped the head on that machine was not
+established, and whether anything similar played a part on the rotated-row machine is
+not known. A later post in the same thread, from another owner, points at the belt
+setting instead (see the belt section above); nobody said whether that applied to this
+machine.
 
 Another owner suggested checking that the plate the docks are mounted on sits flush at
 both ends, and swapping docks 1 and 8 to see whether the fault moves with the dock. The
@@ -287,10 +364,11 @@ with an early endstop trigger, a separate homing fault tracked in
 [#5520](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5520). The owner cleared
 that by going back to 6.9.1-beta. That release predates the squareness wizard, so the
 downgrade settled the homing fault but says nothing about the wizard's reading. On
-25 October 2026 #5520 was still open. Two owners there reported the same homing fault on
+8 November 2026 #5520 was still open. Two owners there reported the same homing fault on
 7.0.0, two more affected owners posted logs from 7.0.1, one of them saying the fault
-remains, and a later commenter reports it still present on 8.0.0, on two printers. The
-7.0.1 and 8.0.0 release notes say nothing about homing. Another owner there reports dock
+remains, and several later commenters report it still present on 8.0.0, none of them in
+connection with dock calibration. The 7.0.1 and 8.0.0 release notes, the detailed
+GitHub ones included, say nothing about homing. Another owner there reports dock
 calibration stalling on their printer, which has the homing fault too: on 6.9.2 they had
 hardly been able to get beyond the fourth dock, and after going back to 6.9.0, where the
 homing fault was milder but still present, they got through the dock step. They do not
@@ -342,8 +420,10 @@ setting.
 
 ## What to do
 
-**Just flashed the INDX firmware?** On a machine without the Gen 2 belts, check the
-**1.5GT Belts** setting before running any calibration.
+**Just flashed the INDX firmware, or just fitted the Gen 2 belts?** Check the
+**1.5GT Belts** setting against the belts actually fitted before running any
+calibration. Flashing can switch it on for a machine without them; fitting them leaves
+it as it was (one owner's warning for the second case, `provisional`).
 
 **Read the numbers before changing anything.** The failure screen shows the measured and
 expected position of the dock it rejected. Note which docks fail and how far off each
@@ -358,18 +438,18 @@ printer variant only if every part of that edition matches what is fitted. Rerun
 calibrations from the start, since the change resets several of them. If the setting
 was already right, belt tension is next.
 
-**Error growing along the row: check squareness.** On 6.9.1 or 6.9.2, run the gantry
-squareness wizard, with the nozzles taken out of docks 1 and 8 as it asks. None of the
-7.0.0, 7.0.1 or 8.0.0 release notes mention the wizard, and none of those releases'
-source is public yet, so this page has not confirmed that it behaves the same on them.
-The INDX handbook revision of 22 October 2026, on the same
+**Error growing along the row: check squareness.** On 6.9.1 or later, run the gantry
+squareness wizard, with the nozzles taken out of docks 1 and 8 as it asks. Prusa's
+source shows it measuring the same way from 6.9.1 through 8.0.0; 8.0.0 adds the guided
+realignment described above. The INDX handbook revision of 22 October 2026, on the same
 [downloads page](https://help.prusa3d.com/downloads/core-one-indx), lists the wizard
 among its additions, so Prusa now documents it. One owner reports it crashing to an
 internal error on 7.0.x (`provisional`, see Verification). If the wizard reports
 significant skew, square the gantry by the guide first and treat the dock failure as
 most likely a symptom of that. Because the wizard measures against those same docks, it
 is not an independent check on them; if squaring the gantry by the guide will not
-satisfy it, tell support that, along with the dock values. If the skew it reports is
+satisfy it, or on 8.0.0 it keeps reporting skew after its own check finds no gap at
+either end, tell support that, along with the dock values. If the skew it reports is
 implausibly large, or jumps between runs, watch where the head stops at each end before
 touching the gantry: on one machine the dock buttons were stopping it short
 (`provisional`, see above).
@@ -397,18 +477,28 @@ same source, as do how the gantry squareness wizard measures and the limit it pa
 against. Firmware 6.9.2, released on 7 October 2026, adds the PVA and BVOH filament
 presets to 6.9.1 and nothing else that reaches an INDX
 ([compare](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)),
-so everything read here at the 6.9.1 tag holds for it unchanged. Firmware 7.0.0,
-published on 15 October 2026, says nothing about dock calibration, the belt setting or
-the squareness wizard in its
-[release notes](https://help.prusa3d.com/downloads/core-one-indx). Prusa has not yet
-published its source, so this page cannot confirm that what was read at 6.9.1 still
-holds on 7.0.0. Firmware 7.0.1, published on 19 October 2026, lists a single fix, for
-a hang at startup, and touches none of this. Firmware 8.0.0, dated 22 October 2026,
-mentions dock calibration in its notes only to say that the head now approaches the dock
-more gently, and says nothing about the expected positions, the window, the belt setting
-or the squareness wizard. Neither release's source is public, so the same caveat
-applies to both. The INDX handbook revision posted on the same page and day as 8.0.0
-lists the squareness wizard among its additions. The squareness wizard is absent from the
+so everything read here at the 6.9.1 tag holds for it unchanged. Firmware 7.0.0
+(15 October 2026), 7.0.1 (19 October) and 8.0.0 (22 October) first came with only the
+short notes on the [downloads page](https://help.prusa3d.com/downloads/core-one-indx).
+On 3 November 2026 Prusa published their source along with detailed release notes
+([7.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0),
+[7.0.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1),
+[8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0)).
+Compared with 6.9.2
+([compare](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0)),
+the dock validation, the Core One's expected positions and window, the tie between
+variant and belt setting, the calibrations a belt change resets, and the squareness
+wizard's measurement and limit are the same in all three, so what was read at 6.9.1
+holds for them. 7.0.0 and 7.0.1 change nothing on this page beyond internal
+reorganization, apart from the Core One L's expected Y; 7.0.1's one listed fix is for a
+hang at startup. 8.0.0 makes the three changes described above: the gentler push into
+the dock, the wizard's guided realignment, and a lower bed for the calibrations where
+you reach inside. The
+[forum announcement](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/8-0-0-firmware-for-prusa-core-one-gen-2-indx-core-one-indx/)
+of 8.0.0 lists the first and the last, but
+only the GitHub notes mention the guided realignment. The INDX handbook revision posted
+on the downloads page on the same day as 8.0.0 lists the squareness wizard among its
+additions. The squareness wizard is absent from the
 [6.9.1-beta source](https://github.com/prusa3d/Prusa-Firmware-Buddy/tree/v6.9.1-beta/src/feature),
 which is why a downgrade to that release cannot speak to it. The warning text for
 the belt setting is the printer's own. An earlier
@@ -427,19 +517,25 @@ could hardly get beyond the fourth dock alongside the homing fault is one owner 
 [another forum thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-firmware-7-0-0-stuck-on-reset/):
 after updating to 7.0.0 or 7.0.1, which they name together, they saw the squareness
 test stop on an internal error screen once the head reached tool 8's position, and they
-say they are going back to 6.9.2. Whether it happens on other machines or on 8.0.0 is
-not known. The belt-tension and homing advice comes from several owners, but all in one
-thread, including the two who tightened in steps until the docks passed, and the
-slack-belt fix for a uniform shift is a single owner's account.
+say they are going back to 6.9.2. The wizard's own source files are identical in 6.9.2,
+7.0.0 and 7.0.1, though code around them changed, so the source does not show where
+such a crash would come from. 8.0.0 reworks how the wizard handles its results; whether
+the crash happens there, or on other machines, is not known. The belt-tension and
+homing advice comes from several owners, but all in one thread, including the two who
+tightened in steps until the docks passed, and the slack-belt fix for a uniform shift is
+a single owner's account, as is the opposite belt mismatch in the gantry squaring
+thread.
 
 Still unverified: whether flashing the INDX firmware counts as the first run that
 applies the Gen2 default, which would explain both owners who found their printer set
 for Gen 2; whether docks 1 and 8 were empty in the owner's wizard runs; whether the
 skew the wizard reports on the rotated-row machine lies in the gantry or in the dock row
 itself; why the dock buttons stopped the head short on the machine whose wizard passed
-only with docks 1 and 2 removed; what the gentler dock approach in 8.0.0 changes, and
-whether it alters which docks pass; and whether any Core One left the factory with a
-dock row far enough out of line that no squaring brings it inside the window.
+only with docks 1 and 2 removed; whether the gentler push in 8.0.0 moves dock readings
+enough to change which docks pass; whether the 8.0.0 wizard's gap check tells a skewed
+gantry from a dock row out of line in practice; and whether any Core One left the
+factory with a dock row far enough out of line that no squaring brings it inside the
+window.
 
 ## Related
 

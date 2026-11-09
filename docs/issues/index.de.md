@@ -1,7 +1,7 @@
 ---
 title:        Probleme
 confidence:   unknown
-updated:      2026-10-18
+updated:      2026-11-08
 author:       hyiger
 printer:      unknown
 toolhead:     unknown
@@ -10,7 +10,7 @@ nozzle:       unknown
 firmware:     unknown
 sources:      []
 superseded_by:
-source_sha:   c5b59ef1d51f2d2da0c368e633adc84fd67f02a783c35b7e5b7c93cdc2c92d36
+source_sha:   d9b789a6e648cc5e76468069e01c0cc13375133847510be3ac43dda8cea77886
 ---
 # Probleme
 
@@ -60,8 +60,9 @@ falscher Wert kostet den Leser ein Bauteil, einen Druck oder eine Gewährleistun
   aufgesetzt, während die Düse noch deutlich frei steht.
 - [Fehlercodes der Werkzeug-Offset-Kalibrierung](../codes.md) — welcher Schritt der
   Kalibrierung bei welchem Code fehlgeschlagen ist, und wie man das im seriellen Log
-  abliest, wenn der Drucker immer nur 36130 zeigt. Beginnen Sie hier bei jedem Fehler
-  der Werkzeug-Offset-Kalibrierung.
+  abliest: Bis zur Firmware 7.0.1 zeigt jeder Fehler 36130, und 8.0.0 ergänzt für einige
+  davon 36144, 36145 und 36146. Beginnen Sie hier bei jedem Fehler der
+  Werkzeug-Offset-Kalibrierung.
 - [Werkzeug-Offset-Kalibrierung schlägt fehl](offset-sensor-board-failure.md) — der
   berührungslose Offsetsensor liefert keine Messwerte, sodass die Kalibrierung keine
   Grundlage hat. Meist die Sensorplatine.
@@ -124,6 +125,7 @@ abgebildet werden:
 | `36127` | Tool park failed | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
 | `36128` | Retry tool park | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
 | `36130` | Tool offset failed | [Fehlercodes](../codes.md#stock-firmware), um den fehlgeschlagenen Schritt zu finden, dann [Werkzeug-Offset-Kalibrierung](offset-sensor-board-failure.md), oder [Bettausrichtung](tool-offset-bed-z-alignment.md) bei sauberer Düse und ohne geladenes Filament |
+| `36144` `36145` `36146` | Sensor Not Found / Sensor Failure / Tool Not Picked (Standard-Firmware 8.0.0) | [Fehlercodes](../codes.md#stock-800) |
 | `36190` bis `36197` | Der fehlgeschlagene Schritt der Werkzeug-Offset-Kalibrierung | [Fehlercodes](../codes.md) |
 | `36135` | Toolchanger error | [Werkzeugerkennung](tool-detection-ringdown-decay.md) |
 | `36136` | Calibrate dock from menu | [Dock-Kalibrierung](dock-calibration-rejects-docks.md) |

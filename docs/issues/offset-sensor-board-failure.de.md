@@ -1,13 +1,13 @@
 ---
 title:        Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 confidence:   reported
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1 and 6.9.2; first owner reports on 7.0.0; the 7.0.0 startup hang fixed in 7.0.1; no reports yet on 8.0.0; the board fault is not version-specific
+firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1, 6.9.2, 7.0.0, 7.0.1 and 8.0.0 (source-checked); first owner reports on 7.0.0; the 7.0.0 startup hang fixed in 7.0.1 and 8.0.0; no reports yet on 8.0.0; the board fault is not version-specific
 sources:
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
@@ -31,8 +31,19 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5544
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v7.0.0...v7.0.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v7.0.0...v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/puppy/tool_offset_sensor/src/main.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/852dedffe929cf95ea5031c9e8a8e234f1536d9d
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/ebe27870c752655f48de9af57bc28e6f337c0e3d
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5585
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml
 superseded_by:
-source_sha:   98e89a5ed3c57d06448ee505da927062cc03f0f3c355b59e6a6785da1be66bc2
+source_sha:   e644d4389673bd5f9fe1bbf077dddea82028bc3fc561d004c080b53610a3a389
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 
@@ -133,22 +144,59 @@ einzigen berichteten Fall behoben.
     angekündigt waren, in jener Version selbst aber fehlten.
     [7.0.0](https://help.prusa3d.com/downloads/core-one-indx), am 15. Oktober 2026 auf
     Prusas Download-Seite veröffentlicht, sagt in ihren Versionshinweisen nichts zur
-    Werkzeug-Offset-Kalibrierung oder zum Offset-Sensor. Prusa hat ihren Quellcode noch
-    nicht veröffentlicht; anders als bei 6.9.1 und 6.9.2 lässt sich also nicht prüfen,
-    ob sie denselben Code enthält. Die Hinweise führen eine verbesserte Reinigung durch
+    Werkzeug-Offset-Kalibrierung oder zum Offset-Sensor. Prusa veröffentlichte ihren
+    Quellcode am 3. November 2026 auf GitHub, zusammen mit dem von 7.0.1 und 8.0.0, und
+    [er behält die Änderungen von 6.9.1 bei](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v7.0.0):
+    Die Takt- und Spuleneinstellungen des Sensorchips und die Art, wie die Kalibrierung
+    ihre Temperaturen wählt, sind dieselben wie in 6.9.2. Was 7.0.0 auf der Sensorseite
+    ändert, ist, wie die eigene Firmware der Sensorplatine den Chip ausliest, siehe den
+    Hinweis weiter unten. Die Hinweise führen eine verbesserte Reinigung durch
     den Düsenabstreifer auf, gekennzeichnet als erstmals mit 6.10.1 ausgeliefert; der
     einzige Bericht seither, der das, was die Reinigung an den Düsen des INDX
     zurücklässt, mit fehlschlagenden Kalibrierungen in Verbindung bringt, fasst 7.0.0
     und 6.9.2 zusammen, beide deutlich schlechter als 6.9.0, ohne die beiden zu
-    vergleichen oder die geänderte Reinigung zu erwähnen, siehe unten. Keine der beiden
-    seither erschienenen Versionen sagt mehr zur Werkzeug-Offset-Kalibrierung. 7.0.1,
-    veröffentlicht am 19. Oktober 2026, führt eine einzige Behebung auf, für das weiter
-    unten auf dieser Seite beschriebene Hängenbleiben beim Start. Die Versionshinweise
-    zu 8.0.0, veröffentlicht am 22. Oktober 2026, erwähnen weder die
-    Werkzeug-Offset-Kalibrierung noch den Offset-Sensor; ihr einziger Punkt zur
-    Düsenreinigung bremst flexible Filamente beim Reinigen weniger stark ab. Keiner der
-    beiden Quellcodes ist veröffentlicht, und zur Kalibrierung unter 8.0.0 hat noch kein
-    Besitzer berichtet.
+    vergleichen oder die geänderte Reinigung zu erwähnen, siehe unten. Laut Quellcode
+    erreicht dieser Punkt den INDX nicht: Nozzle Wiper heißt in der Firmware der leichtere
+    Abstreifer von Druckern ohne INDX, sein Code wird für den INDX nicht gebaut, und die
+    eigenen Reinigungsabläufe des INDX sind dieselben wie in 6.9.2, siehe
+    [In den Druck geschleppte Blobs](stringing-and-wiper-calibration.md).
+    [7.0.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1),
+    veröffentlicht auf Prusas Download-Seite am 19. Oktober 2026, führt eine einzige
+    Behebung auf, für das weiter
+    unten auf dieser Seite beschriebene Hängenbleiben beim Start, und
+    [ihr Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v7.0.0...v7.0.1)
+    unterscheidet sich von 7.0.0 allein durch diese Behebung.
+    [8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0),
+    veröffentlicht auf Prusas Download-Seite am 22. Oktober 2026, ist die erste Version
+    seit der Beta, deren
+    Hinweise diese Kalibrierung am INDX erwähnen. Ihre ausführlichen Hinweise auf GitHub,
+    die mehr sagen als die Download-Seite, nennen zwei Änderungen: Scheitert ein
+    Werkzeug, wiederholt die Kalibrierung dieses Werkzeug, statt von vorn zu beginnen,
+    und jede Art von Fehlschlag hat einen eigenen Bildschirm, der das Werkzeug nennt und
+    einen Fehlercode angibt. Der Quellcode bestätigt das Erste, aber nicht als Änderung
+    für den Fehler auf dieser Seite: Von 6.9.0 bis 7.0.1 hat Retry nach einer
+    gescheiterten Messung über dem Sensor dieses Werkzeug bereits für sich allein erneut
+    gemessen. Was 8.0.0 auf ein Werkzeug beschränkt, ist Retry nach den übrigen
+    Fehlschlägen in den Schritten eines Werkzeugs, etwa einer Reinigung, die nicht zu Ende
+    lief, oder einer verworfenen Berührung der Druckplatte beim Druckstart; dort begann
+    Retry den Durchlauf bisher ab dem ersten Werkzeug neu. Retry nach den Prüfungen, die
+    am Ende die Werkzeuge miteinander vergleichen, tut das weiterhin. Das Zweite trifft
+    nur zum Teil zu: Mehrere Arten von Fehlschlag teilen sich einen Bildschirm, und die
+    Bildschirme Sensor Not Found und Sensor Failure nennen kein Werkzeug. Welcher
+    Fehlschlag welchen Code erhält, steht unter [Fehlercodes](../codes.md#stock-800). Im
+    [Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v7.0.0...v8.0.0)
+    sind die Chipeinstellungen, die Firmware der Sensorplatine und die Temperaturwahl
+    dieselben wie in 7.0.0. Eine weitere Änderung dort steht nicht in den Hinweisen: Die
+    Abtastfahrten über den Sensor werden jetzt genauso ausgeführt wie gewöhnliche
+    Bewegungen, folgen also dem Bettnetz und beginnen zu einem bekannten Zeitpunkt, was
+    laut
+    [ihrem Commit](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/ebe27870c752655f48de9af57bc28e6f337c0e3d)
+    einen kleinen zeitlichen Versatz aus Messungen entfernt, die an der Bewegung
+    ausgerichtet sind. Das ist eine Lesart des Codes, kein beobachtetes Ergebnis, und zur
+    Kalibrierung unter 8.0.0 hat noch kein Besitzer berichtet. Zur Düsenreinigung nennen
+    die Hinweise zwei Punkte: Der Extruder bewegt flexible Filamente beim Reinigen
+    schneller als bisher, und die Kalibrierung des Düsenreinigers am INDX ist genauer. Was
+    der zweite Punkt ändert, hat diese Seite nicht geprüft.
 
     Die Beta war nicht bei allen fehlerfrei, und die Hinweise zur stabilen Version
     erwähnen nichts vom Folgenden. Ein Besitzer stellt fest, dass die Kalibrierung
@@ -251,6 +299,8 @@ einzigen berichteten Fall behoben.
     ein Ergebnis, das der Melder noch wiederholte, und eine Darstellung, die nach eigener
     Angabe mit einem KI-Assistenten verfasst wurde. Siehe
     [Firmware-Issue 5473](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473).
+    Das Ergebnis dieser Wiederholung hat der Melder nicht nachgereicht; die einzige
+    Antwort im Issue ist ein automatischer Hinweis, der es als veraltet markiert.
 
     **Der Hersteller hat dieselbe Taktänderung vorgenommen.** Der Quellcode von
     6.9.1-beta, und damit die stabile 6.9.1, halbiert den Referenztakt des Sensors. Der
@@ -271,12 +321,29 @@ einzigen berichteten Fall behoben.
     Ihre Platine unter 6.9.0 oder älter auf diese Weise ausfällt, kostet ein Update
     nichts und lohnt sich, bevor Sie sie austauschen.
 
+    **7.0.0 und 8.0.0 behalten diese Einstellungen bei und ändern die Fehlerbehandlung
+    darum herum.** Die Sensorplatine hat eine eigene Firmware, die in die
+    Drucker-Firmware eingebaut ist und von ihr aus auf die Platine geflasht wird. In
+    7.0.0 und 8.0.0 richtet
+    [diese Firmware](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/puppy/tool_offset_sensor/src/main.cpp)
+    den Chip genau so ein wie 6.9.1; die Taktänderung bleibt also bestehen. Was
+    [7.0.0 neu schreibt](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v7.0.0),
+    ist ihre Leseschleife. Sie prüft jetzt die Fehlerflags des Chips, bevor sie einen
+    Messwert übernimmt, wertet einen Lesevorgang als gescheitert, wenn nicht jeder
+    genutzte Kanal einen Wert geliefert hat, und schaltet den Chip ab, wenn seine
+    Einrichtung fehlschlägt. Wie bisher setzt sich die Platine nach mehreren
+    fehlgeschlagenen Lesevorgängen in Folge selbst zurück. 8.0.0 enthält dieselbe
+    Platinen-Firmware. Das ist die Behandlung rund um den Fehler beim ersten Messwert,
+    nicht seine Ursache, und der Code allein zeigt nicht, was sie an einer Platine
+    ändert, die auf diese Weise ausfällt. Berichtet hat das auch noch kein Besitzer.
+
 ## Fehlercodes, die hierher führen
 
 | Code | Anzeige am Drucker |
 |---|---|
 | [`36130`](https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016) | Tool offset failed |
 | [`36136`](https://help.prusa3d.com/article/calibrate-dock-from-menu-17136-xl-36136-core-one-indx_1037195) | Calibrate dock from menu |
+| [`36145`](../codes.md#stock-800) | Sensor Failure (Standard-Firmware 8.0.0) |
 | [`36194`](../codes.md#36194) | The tool offset sensor sent no usable data |
 
 `36130` behandelt diese Seite. Es ist auch der Code, zu dem die Firmware ihren eigenen
@@ -285,8 +352,16 @@ meldet, nach eigener Aussage nicht weitergeholfen hat.
 
 `36194` gibt es nur in Firmware, die aus hyiger/Prusa-Firmware-Buddy gebaut ist; sie
 meldet diesen Fehler mit einem eigenen Code, wenn keine Abtastfahrt brauchbare Daten
-vom Sensor erhalten hat. Mit der Standard-Firmware ist derselbe Fehler `36130`; unter
-[Fehlercodes](../codes.md#stock-firmware) steht, wie man ihn im seriellen Log erkennt.
+vom Sensor erhalten hat. Mit der Standard-Firmware bis 7.0.1 ist derselbe Fehler
+`36130`; unter [Fehlercodes](../codes.md#stock-firmware) steht, wie man ihn im seriellen
+Log erkennt. Die Standard-Firmware 8.0.0 zeigt `36145`, wenn die Abtastfahrten
+aufgegeben wurden, nachdem mindestens eine an einem vom Sensor gemeldeten Fehler oder
+an Messwerten gescheitert war, die die Hauptplatine nicht erreichten, oder wenn die
+Kopfplatine während der Abtastfahrten neu gestartet ist, und weiterhin `36130`, wenn der
+Sensor gar nichts gesendet hat, siehe
+[was die Standard-Firmware 8.0.0 anzeigt](../codes.md#stock-800).
+Das ist eine Lesart des Quellcodes; noch kein Besitzer hat einen der beiden Bildschirme
+gemeldet.
 
 ## Details
 
@@ -354,7 +429,17 @@ Was diesen Fehler verwirrend macht:
   Besitzer im Thread schaltete die Leuchten aus und brachte zugleich Ferritperlen an,
   und auch seine Fehlschläge hörten auf. Noch ein Besitzer stellte in Firmware-Issue
   5526 fest, dass Ferritperlen nicht halfen und das Ausschalten der Leuchte bisher
-  anscheinend jedes Mal hilft; seine Firmware nennt er nicht. Nach Angaben eines
+  anscheinend jedes Mal hilft; seine Firmware nennt er nicht. Zwei weitere Besitzer im
+  Thread haben seither die Leuchte ausgeschaltet, einer nennt dabei die
+  Bettbeleuchtung, und keiner erwähnt eine weitere Änderung zur selben Zeit. Bei
+  einem liefen Werkzeug-Offset-Kalibrierung und Bettnivellierung danach zum ersten Mal,
+  ohne sich in die Länge zu ziehen oder zu scheitern. Beim anderen, dessen Bettnivellierung immer
+  wieder neu ansetzte und scheiterte, verlief die Nivellierung bei einem Druck sauber.
+  Keiner der beiden
+  nennt seine Firmware. Zusammen mit dem Besitzer in Issue 5526 macht das das
+  Ausschalten der Leuchte, ohne dass daneben eine weitere Änderung berichtet wird, zu
+  `reported`, aus zwei Quellen, als etwas,
+  das geholfen hat; warum es hilft, ist nicht geklärt. Nach Angaben eines
   Besitzers leuchtet sie während eines Drucks, bei einer
   Kalibrierung aus dem Menü aber nicht. Das ist der andere Sensor, siehe
   [Wägezellen-Störungen](loadcell-emi-noise.md).
@@ -373,8 +458,18 @@ Was diesen Fehler verwirrend macht:
   [7.0.1](https://help.prusa3d.com/downloads/core-one-indx), veröffentlicht am
   19. Oktober 2026, führen eine einzige Änderung auf: eine Behebung für Core One
   INDX-Drucker, die beim Start auf dem Bildschirm hängen bleiben, der den
-  Werkzeug-Offset-Sensor als bereit meldet. Der Besitzer, der den Thread eröffnet hat,
-  berichtet, er habe das Hängenbleiben erneut herbeigeführt und 7.0.1 behebe es. Kein
+  Werkzeug-Offset-Sensor als bereit meldet. Die ausführlichen
+  [Hinweise zu 8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0)
+  nennen dieselbe Behebung, und der Quellcode zeigt, dass sie gar nicht im Code des
+  Sensors liegt. Die einzige Codeänderung in 7.0.1, die auch 8.0.0 enthält,
+  [behebt eine Verklemmung](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/852dedffe929cf95ea5031c9e8a8e234f1536d9d)
+  in der Prüfung, die vergleicht, ob der Kopf ein Werkzeug erkennt, mit dem Werkzeug, das
+  der Drucker zuletzt als aufgenommen gespeichert hat. Bei einer Abweichung öffnet diese
+  Prüfung einen Dialog und wartet auf eine Antwort, und laut ihrem Commit konnte sie das
+  tun, bevor der Bildschirm bereit war, ihn anzuzeigen. Die Bereit-Meldung des Sensors
+  ist der letzte Schritt des Startbildschirms, dort bliebe der Drucker also stehen;
+  dieser letzte Teil ist die Lesart dieser Seite. Der Besitzer, der den Thread eröffnet
+  hat, berichtet, er habe das Hängenbleiben erneut herbeigeführt und 7.0.1 behebe es. Kein
   Besitzer hat gesagt, ob oder wie er 7.0.1 auf einen Drucker gebracht hat, der bereits
   hing. Die Flash-Vorgänge auf hängenden Druckern, die Besitzer beschreiben, waren
   Downgrades: Zwei Besitzer brachten ihre Drucker wieder zum Starten, indem sie 6.9.2
@@ -388,7 +483,14 @@ Was diesen Fehler verwirrend macht:
   xBuddy-Board. Im Thread lauten die Schritte: bei ausgeschaltetem Drucker abziehen,
   einmal einschalten, ausschalten, wieder anschließen und erneut einschalten. Der
   Bericht im Issue sagt nicht, ob der Drucker beim Abziehen ausgeschaltet war; schalten
-  Sie ihn aus, bevor Sie einen der beiden Stecker abziehen.
+  Sie ihn aus, bevor Sie einen der beiden Stecker abziehen. Ein Start, der abbricht,
+  weil die INDX-Kopfplatine zu kalt ist, ist etwas anderes: Ein Besitzer bittet in
+  [Firmware-Issue 5585](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5585)
+  darum, den Start trotzdem abschließen zu lassen, damit die Bettheizung die Platine
+  aufwärmen kann. Die Firmware hat einen
+  [Rotbildschirm-Fehler, 36274](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml),
+  für eine Kopfplatine unterhalb ihres zulässigen Bereichs; der Bericht sagt nicht, ob
+  der Besitzer diesen Fehler gesehen hat und welche Firmware er verwendet.
 
 ### Vorgehen, der Reihe nach
 
@@ -480,21 +582,34 @@ veröffentlichte Behebung des Herstellers, keine nachgewiesene Heilung: Ein Besi
 Bericht sah mit der Beta weiterhin gelegentliche Fehlschläge, und der erste Besitzer,
 der zur stabilen Version berichtet, in einem eigenen Issue, sieht die Kalibrierung bei
 Drucken mit mehreren Werkzeugen weiterhin oft scheitern und führt das auf Spülmaterial
-an den Düsen zurück. Die Versionshinweise zu 7.0.0, 7.0.1 und 8.0.0 sagen nichts dazu,
-und keiner ihrer Quellcodes ist bisher veröffentlicht. Die ersten beiden Berichte zu
+an den Düsen zurück. Die Versionshinweise zu 7.0.0 und 7.0.1 sagen nichts dazu. Ihr
+Quellcode und der von 8.0.0, veröffentlicht am 3. November 2026, behalten die
+Sensoreinstellungen und Kalibriertemperaturen von 6.9.1 bei, was die Tags zeigen. Die
+Wiederholung je Werkzeug in 8.0.0 steht in deren ausführlichen Hinweisen und im
+Quellcode, doch nach einer gescheiterten Messung über dem Sensor wiederholte schon der
+Quellcode von 6.9.0 bis 7.0.1 dieses Werkzeug allein; 8.0.0 tut dasselbe nun auch nach
+den übrigen Fehlschlägen in den Schritten eines Werkzeugs. Der in den Hinweisen
+genannte eigene Bildschirm mit Werkzeugangabe für jede Art von Fehlschlag trifft dort
+nur zum Teil zu. Berichtet hat über beides noch niemand. Die
+ersten beiden Berichte zu
 7.0.0, einer im Forum und einer im Issue-Tracker, beschreiben jeweils einen Fehlschlag
 beim Druckstart, und keiner wird auf die Sensorplatine zurückgeführt. Ein dritter, in
 einem anderen Issue, macht die niedrigere Kalibriertemperatur für an der Düse
 verbliebenes PETG verantwortlich; das ist ein einzelner Bericht. Zu 8.0.0 gibt es noch
 keine. Das Hängenbleiben beim Start unter 7.0.0 stützt sich auf den Forenthread und das
 Issue, die dort verlinkt sind, wo es erscheint; dass 7.0.1 es behebt, beruht auf Prusas
-Versionshinweisen und dem Test eines Besitzers.
+Versionshinweisen und dem Test eines Besitzers, und was die Behebung ändert, stammt aus
+ihrem Commit, den auch 8.0.0 enthält. Dass das Ausschalten der Leuchte, ohne dass
+daneben eine weitere Änderung berichtet wird, geholfen hat, stützt sich auf zwei Besitzer im Thread zur
+Werkzeug-Offset-Kalibrierung und einen in Issue 5526.
 
 Der Hinweis auf die Referenzfrequenz des LDC1612 ist ein separater Einzelbericht eines
 anderen Besitzers und ist dort, wo er erscheint, als `provisional` markiert. Der eigene
 Commit des Herstellers bestätigt, dass der Takt über der Grenze des Chips lag, und
 ändert ihn zusammen mit mehreren anderen Sensoreinstellungen, sagt aber nichts darüber,
-ob das die Fehlschläge dieses Besitzers verursacht hat.
+ob das die Fehlschläge dieses Besitzers verursacht hat. Dass 7.0.0 und 8.0.0 diese
+Einstellungen beibehalten und die Leseschleife der Sensorplatine überarbeiten, stammt
+aus dem Vergleich ihrer Tags mit dem von 6.9.2.
 
 ## Verwandte Seiten
 
