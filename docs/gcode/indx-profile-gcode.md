@@ -1,7 +1,7 @@
 ---
 title:        Annotated start, layer and toolchange G-code
 confidence:   measured
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -31,6 +31,10 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.10.1/ProjectOptions.cmake
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.10.1/src/gui/MItem_hardware.hpp
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini
+  - https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/libslic3r/PlaceholderParser.cpp
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.6.ini
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.7.ini
 superseded_by:
 ---
 
@@ -50,15 +54,16 @@ superseded_by:
     itself changes between firmware releases, so check the version above against yours —
     the 6.6.3 profile differed from this one in several places.
 
-!!! warning "Written for 6.9.0; firmware has since reached 7.0.0"
-    Firmware 6.9.1 went stable on 25 September 2026, 6.9.2 followed on 7 October, and
-    7.0.0 on 15 October. The blocks on this page are still the 6.9.0 profile, and they
-    have deliberately not been edited to match later releases. Prusa's profile bundle
-    2.5.10, of 17 September, ships these blocks unchanged. So does 2.5.11, which reached
-    Prusa's profile repository on 2 October, a week after 6.9.1: all five INDX blocks are
-    identical to 2.5.10's, and the `M115` line still declares 6.9.0. **Bundle 2.5.12, of
-    15 October, is the first to change them**; see the note below. If the profile in your
-    slicer differs from what is shown here, yours is the current one.
+!!! warning "Written for 6.9.0; firmware has since reached 8.0.0"
+    Firmware 6.9.1 went stable on 25 September 2026, 6.9.2 followed on 7 October, 7.0.0
+    on 15 October, 7.0.1 on 19 October and 8.0.0 on 22 October. The blocks on this page
+    are still the 6.9.0 profile, and they have deliberately not been edited to match
+    later releases. Prusa's profile bundle 2.5.10, of 17 September, ships these blocks
+    unchanged. So does 2.5.11, which reached Prusa's profile repository on 2 October, a
+    week after 6.9.1: all five INDX blocks are identical to 2.5.10's, and the `M115`
+    line still declares 6.9.0. **Bundle 2.5.12, of 15 October, is the first to change
+    them**, and 2.5.13, of 22 October, changes them again; see the note below. If the
+    profile in your slicer differs from what is shown here, yours is the current one.
 
     The firmware side has been checked against the public source, comparing
     [the 6.9.0 and 6.9.1 release tags](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1).
@@ -78,9 +83,9 @@ superseded_by:
     it adds the printer's PVA and BVOH filament presets, which the 6.9.1 notes announced
     and its build left out, and touches no G-code handler.
 
-    7.0.0 has not been checked the same way. Prusa had not published its source on
-    GitHub by 18 October, so every command annotation here is verified only through
-    6.9.2. Two entries in its
+    None of 7.0.0, 7.0.1 or 8.0.0 has been checked the same way. Prusa had published the
+    source of none of them on GitHub by 25 October, so every command annotation here is
+    verified only through 6.9.2. Two entries in the 7.0.0
     [release notes](https://help.prusa3d.com/downloads/core-one-indx) sit close to this
     page, and both are marked as coming from earlier releases. The faster Z lift when
     parking, marked 6.9.1 and 6.10.2, is the `G27` change 6.9.1 already shipped.
@@ -96,7 +101,18 @@ superseded_by:
     concerns the firmware's own load and unload moves; whether it changes anything the
     `G12` lines below do cannot be checked until the source is out.
 
-!!! note "Bundle 2.5.12 changed two of these blocks after this page was written"
+    Two entries in the 8.0.0 [notes](https://help.prusa3d.com/downloads/core-one-indx),
+    both new, touch this page as well. The first gives `M204` an `F` parameter, a
+    filament acceleration limit that the notes say is enabled by default. The profile's
+    own `M204` lines set only `S`, and nothing in bundle 2.5.13 issues `M204 F`, so
+    whatever limit 8.0.0 applies comes from the firmware, not from the profile. The
+    second slows flexible filament less than before during nozzle cleaning. That is the
+    firmware's own cleaning motion: none of the `G12` lines below passes a speed.
+
+    TODO(verify): what exactly `M204 F` limits, and its default; the 8.0.0 notes state
+    neither, and its source is unpublished.
+
+!!! note "Bundles 2.5.12 and 2.5.13 changed three of these blocks after this page was written"
     Prusa's profile bundle 2.5.12, committed on 15 October 2026, the day firmware 7.0.0
     came out, lists a reworked INDX tool change script and a new firmware version
     notice in its
@@ -126,8 +142,22 @@ superseded_by:
           block's own retract still adds it.
     - **Before layer change, after layer change and end:** unchanged.
 
-    The blocks below are still the 2.5.11 text, and the tool change excerpts no longer
-    match 2.5.12. They have not been rewritten here: this page reproduces one profile
+    Bundle 2.5.13 followed on 22 October, the day firmware 8.0.0 came out. Its changelog
+    lists an updated INDX layer G-code script and another firmware version notice, and
+    comparing [the file](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini)
+    with 2.5.12 bears that out:
+
+    - **Start:** again only the `M115` line. It now declares 7.0.1, the point release of
+      19 October, as `M115 U7.0.1+16905`, and not 8.0.0.
+    - **After layer change:** each of the eight PET-family tests in the dock-fan section
+      gains a trailing `.*`, so the pattern reads `(PET|CPE|PCTG).*`. That lets PETG
+      match again: bundles 2.5.0 to 2.5.6 tested `(PETG|PET)`, which matched it, and
+      the 2.5.7 rewrite dropped it; the after-layer-change section below explains why.
+    - **Before layer change, tool change and end:** unchanged from 2.5.12.
+
+    The blocks below are still the 2.5.11 text. The tool change excerpts no longer match
+    2.5.12 or later, and the PET-family test in the after-layer-change excerpt no longer
+    matches 2.5.13. They have not been rewritten here: this page reproduces one profile
     verbatim and annotates it, and a new reproduction would be a new revision of the
     page, not an edit to it.
 
@@ -335,13 +365,14 @@ of filament. A Marlin `F` is always mm per minute. Whatever consumes this is not
 the standard feedrate convention, which is further sign that `M574` is a custom command
 carrying its own.
 
-!!! note "M574 is not implemented — and probably not finished"
-    No Prusa firmware has a handler for `M574`. The printer logs `Unknown command:`,
-    answers `ok`, and carries on: eight ignored lines per print, one per used non-FLEX
-    tool. Nothing breaks. That is derived from the firmware source — no capture from a
-    real machine appears to exist publicly, and Prusa develops privately, so it
-    establishes that the firmware **you run** ignores it, not that no handler exists
-    anywhere.
+!!! note "M574 has no handler in published firmware — and probably not finished"
+    No Prusa firmware whose source is published, the INDX's up to 6.9.2 included, has a
+    handler for `M574`. The printer logs `Unknown command:`, answers `ok`, and carries
+    on: eight ignored lines per print, one per used non-FLEX tool. Nothing breaks. That
+    is derived from the firmware source — no capture from a real machine appears to
+    exist publicly, and Prusa develops privately, so it establishes that the firmware
+    **you run** ignores it if that is 6.9.2 or earlier, not that no handler exists
+    anywhere. For 7.0.0, 7.0.1 and 8.0.0, whose source is unpublished, it is unchecked.
 
     There is no commit to find either. The line ships out-of-band in Prusa's vendor
     profile bundle, first appearing in
@@ -359,6 +390,11 @@ carrying its own.
     input that work would need, and the profiles predate the announcement by seven weeks.
     **No source connects the two**, and the payload fits the acceleration-limit half at
     least as well as the calibration half.
+
+    Firmware 8.0.0 has since added a filament acceleration limit, enabled by default,
+    but its [release notes](https://help.prusa3d.com/downloads/core-one-indx) give it as
+    `M204 F`, not `M574`, and tie it neither to the announcement nor to `M574`. Bundle
+    2.5.13, published the same day, still carries the eight `M574` lines.
 
     One practical warning: `M574` means endstop configuration in RepRap and
     RepRapFirmware, so almost everything a search returns describes a Duet.
@@ -565,8 +601,8 @@ more pressure after the flush, and was added together with switching pressure ad
 off for it. The same reply said Prusa is considering removing it after more testing
 ([issue 49](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/49)).
 Bundle 2.5.12, of 15 October, has since dropped it from the tool change block but kept
-it in this start block; the issue itself had no further reply and was still open on
-18 October.
+it in this start block, and 2.5.13 leaves it where 2.5.12 put it; the issue itself had
+no further reply and was still open on 25 October.
 
 !!! important "The last interesting line is `{tool_init[initial_tool] = 1}`"
     That marks the starting tool as already cleaned and primed. Nothing in this block
@@ -614,6 +650,9 @@ have to be told apart.
 
 ## After layer change
 
+*The excerpt in this section is the 2.5.11 text, which 2.5.12 left alone. Bundle 2.5.13
+changes its PET-family test; see below.*
+
 ```gcode
 ;AFTER_LAYER_CHANGE
 ;[layer_z]
@@ -654,6 +693,23 @@ Tracing it through:
 
 That ordering is intentional, and the profile's own comment records it: *PLA wins by
 order*. Where a plate mixes both, the low-temperature setting is the one that survives.
+
+**From bundle 2.5.7 through 2.5.12 the PET branch never matched PETG.** PrusaSlicer's
+`=~` succeeds only when the pattern matches the whole string, not part of it
+([PrusaSlicer 2.9.6 source](https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/libslic3r/PlaceholderParser.cpp)),
+so `(PET|CPE|PCTG)` as shown above matches a filament type of exactly PET, CPE or PCTG.
+Every live PET-family INDX filament preset in 2.5.12, Generic PETG and Prusament PETG,
+PETG V0 and PETG Carbon Fiber, has the type PETG. On a multi-tool print whose only
+PET-family material was PETG, the profile therefore never switched the dock fan on
+unless a low-temperature material was also on the plate, whatever its comment says.
+This was a regression: the script in bundles 2.5.0 to
+[2.5.6](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.6.ini)
+tested `(PETG|PET)`, which does match PETG, and the
+[2.5.7](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.7.ini)
+rewrite of 20 August replaced it. Bundle 2.5.13 appends `.*` to the pattern, and from
+then on PETG matches again. This is read from the profile and the slicer source, not
+observed on a machine. The probe-temperature line in the start block was never affected:
+its PET test already has a wildcard on both sides.
 
 !!! note "`S100` is not 100 percent"
     `M106` takes a PWM value from 0 to 255, so `S255` is full and `S100` is about 39%.
@@ -862,6 +918,7 @@ Behavior verified against the Prusa firmware source unless marked otherwise.
 | `M106 P6 S` | **Dock fan**, PWM 0–255 |
 | `M107` | Part-cooling fan off |
 | `M204 S` | Set acceleration |
+| `M204 F` | Filament acceleration limit, new in 8.0.0 and on by default per its release notes; not issued by the profile, and not checked against source |
 | `M201 X Y` | Set per-axis maximum acceleration |
 | `M221 S` | Flow percentage |
 | `M572 S` | Pressure advance; `S0` disables |
@@ -872,7 +929,7 @@ Behavior verified against the Prusa firmware source unless marked otherwise.
 | `M77` | Stop the print timer |
 | `M262 P B` | IO expander pin direction — `B0` output, `B1` input |
 | `M264 P B` | IO expander pin level — `B0` low, non-zero high |
-| `M574 S V T F` | **Not implemented** — no handler; logged as unknown and skipped |
+| `M574 S V T F` | **No handler** in published firmware source, through 6.9.2; logged as unknown and skipped |
 
 ## Verification
 
@@ -914,7 +971,8 @@ and PA, omitted the `low_temp_types` global that the after-layer-change block de
 and included chamber-light commands this one drops. If your firmware differs from the
 version in the front matter, expect differences. The profile also moves between bundles
 on its own schedule: 2.5.12 reworked the tool change block and declares 6.9.2, not the
-7.0.0 released the same day, as the note at the top describes.
+7.0.0 released the same day, and 2.5.13 widened the dock-fan test to take in PETG and
+declares 7.0.1, not the 8.0.0 released the same day, as the note at the top describes.
 
 ## Related
 

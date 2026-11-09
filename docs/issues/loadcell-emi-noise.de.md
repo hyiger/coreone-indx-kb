@@ -1,7 +1,7 @@
 ---
 title:        Probing schlägt fehl oder die Düse berührt das Bett nie — Rauschen im Wägezellensignal
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -36,7 +36,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/gantry-squaring-failing/
   - https://help.prusa3d.com/downloads/core-one-indx
 superseded_by:
-source_sha:   59c45ee96eeab8dfb68f6c5b74a54cc6c04e269bcb3aa13f2ea9b0dcc8e41c2e
+source_sha:   29518d3c9ea39dfdb278b030108eb4a51767ab19715517eea22f2accd9df515c
 ---
 # Probing schlägt fehl oder die Düse berührt das Bett nie — Rauschen im Wägezellensignal
 
@@ -49,9 +49,11 @@ Hersteller hat Störeinkopplung vom Heizelement als Arbeitshypothese bestätigt.
 Lösung aus der Community, die inzwischen auch der Herstellersupport empfiehlt, ist ein
 aufklappbarer Ferritkern am Hauptkabel des Werkzeugkopfs, nahe der Stelle, an der es in
 die Controllerplatine eintritt. Mehrere Besitzer berichten, dass der Fehler damit
-vollständig behoben war. Besitzer haben seither weitere Quellen benannt, darunter die
-Verkabelung der Bettheizung und die LED-Statusleiste; sie werden unten behandelt und
-sind schwächer belegt. Ein Selbsttest der Wägezelle, der direkt nach einem
+vollständig behoben war. Besitzer haben seither weitere Quellen benannt. Das Ausschalten
+der LED-Statusleiste hat bei mehreren von ihnen die Fehlschläge beendet, kostet nichts
+und lässt sich leicht rückgängig machen; es lohnt sich daher als erster Versuch. Die
+Verkabelung der Bettheizung und die Stromleitungen des Werkzeugkopfs sind schwächer
+belegt. All das wird unten behandelt. Ein Selbsttest der Wägezelle, der direkt nach einem
 Werkzeugwechsel Rauschen meldet (möglicherweise auch nach einem, den der Test selbst
 vornimmt), kann eine andere Sache sein: Rauschen vom Extrudermotor, das ein Issue darauf
 zurückführte, dass der Motor nach einem Werkzeugwechsel eingeschaltet bleibt, und das
@@ -181,37 +183,62 @@ zeichnete der Besitzer die Wägezelle auf, während der Extrudermotor erst aus-,
 und dann wieder ausgeschaltet war: Bei eingeschaltetem Motor war das Rauschen etwa
 dreimal so hoch.
 
-Ob derselbe Motor auch das Abtasten beim Start eines Drucks stört, ist offen. Der
-Abtastcode schaltet den Motor zuvor aus, und doch haben Besitzer in beiden Issues erlebt,
-dass das Abtasten beim Druckstart direkt nach einer Werkzeugaufnahme fehlschlug. Der
-erste Berichtende sah die Werkzeug-Offset-Kalibrierung fehlschlagen, wenn ihr ein
-Werkzeugwechsel vorausging, und brachte Drucke in Gang, indem er vor dem Druck das
-Startwerkzeug auswählte und eine Referenzfahrt ausführte. Der Besitzer, der den Kopf
-gehört hatte, bekam später vom Prusa-Support ein Ersatzkabel für den Kopf, was nichts
-änderte; er startet Drucke inzwischen so: das erste Werkzeug über das Menü Steuerung
-(Control) von Hand aufnehmen, den Wägezellentest starten, ihn nach dem Fehlschlag
-abbrechen und erst dann den Druck starten, sodass unmittelbar vor der Referenzfahrt keine
-Aufnahme mehr erfolgt. Beim Besitzer unter 7.0.0 brechen Drucke beim Abtasten des
+Ob derselbe Motor auch das Abtasten beim Start eines Drucks stört, ist offen, und die
+neuesten Berichte deuten teilweise in eine andere Richtung. Der Abtastcode schaltet den
+Motor zuvor aus, und doch haben Besitzer in beiden Issues erlebt, dass das Abtasten beim
+Druckstart direkt nach einer Werkzeugaufnahme fehlschlug. Der erste Berichtende sah die
+Werkzeug-Offset-Kalibrierung fehlschlagen, wenn ihr ein Werkzeugwechsel vorausging, und
+brachte Drucke in Gang, indem er vor dem Druck das Startwerkzeug auswählte und eine
+Referenzfahrt ausführte. Beim Besitzer unter 7.0.0 brechen Drucke beim Abtasten des
 Offset-Sensors mit der Wägezelle mit 36130 ab; der Motor war nach Abschluss der
 Düsenreinigung aus, seinen Zustand während des fehlschlagenden Abtastens konnte der
-Besitzer aber nicht aufzeichnen. Keiner von ihnen hat gezeigt, dass dort der Motor die
-Ursache ist, und der erste Berichtende sagt das auch selbst. Der Besitzer unter 7.0.0
-hat das Makro für die Düsenreinigung durch eine eigene Fassung auf dem USB-Stick
-ersetzt, die den Motor vor diesem Abtasten ausschaltet, und dem Start-G-Code Zeilen
-hinzugefügt, die den Treiber danach wiederherstellen; er berichtet von weit weniger
-fehlgeschlagenen Starts, wenn auch nicht von keinen mehr. Das Makro schreibt die
-Konfiguration des Motortreibers direkt, niemand sonst hat es geprüft, und es wird hier
-nicht wiedergegeben.
+Besitzer aber nicht aufzeichnen. Er hat das Makro für die Düsenreinigung durch eine
+eigene Fassung auf dem USB-Stick ersetzt, die den Motor vor diesem Abtasten ausschaltet,
+und dem Start-G-Code Zeilen hinzugefügt, die den Treiber danach wiederherstellen; er
+berichtet von weit weniger fehlgeschlagenen Starts, wenn auch nicht von keinen mehr. Das
+Makro schreibt die Konfiguration des Motortreibers direkt, niemand sonst hat es geprüft,
+und es wird hier nicht wiedergegeben. Ein dritter Besitzer in diesem Issue hat an seiner
+Maschine mit acht Werkzeugen seit dem ersten Release Probleme mit der
+Werkzeug-Offset-Kalibrierung; keine Firmware hat sie zuverlässig behoben, und sie traten
+weiterhin bei fast jedem Druck auf. Er schaltete den Extrudermotor aus, ohne sonst etwas zu
+ändern, und das Abtasten bestand nach mehreren Fehlschlägen beim ersten Versuch. Das ist
+ein einzelner Versuch.
+
+Der Besitzer, der den Kopf gehört hatte, kommt zu einem anderen Ergebnis. Ein
+Ersatzkabel für den Kopf vom Prusa-Support änderte nichts. Sein Ablauf — das erste
+Werkzeug über das Menü Steuerung (Control) aufnehmen, den Wägezellentest starten, ihn
+nach dem Fehlschlag abbrechen und erst dann den Druck starten — funktionierte nur,
+solange der Druck vor der Referenzfahrt kein anderes Werkzeug brauchte; sobald der
+Drucker bei einem Druck zuerst ein zweites Werkzeug aufnahm, was bei ihm geschah, wenn
+die Kammerlüftung geöffnet werden musste, schlug es wieder fehl. Den Extrudermotor im
+Start-G-Code vor der Referenzfahrt in Z auszuschalten (`M84 E`), schien zunächst zu
+helfen, doch die Referenzfahrt beim Druckstart schlug weiter fehl, auch mit zusätzlich
+ausgeschalteter Düsenheizung und mit der Verkabelung auf der Rückseite in Folienband
+gewickelt und von der Stromverkabelung des Betts ferngehalten. Der Prusa-Support riet
+ihm daraufhin, den Kopf zu tauschen, weil die Wägezelle defekt zu sein schien. Vorher
+schaltete er die LED-Statusleiste aus: Mit ausgeschalteter Leiste bestand die
+Referenzfahrt bei vier Drucken hintereinander, ab dem zweiten davon mit wieder
+entfernten Änderungen an Motor und Heizung, und das Mesh-Abtasten brauchte weit weniger
+wiederholte Antastungen. Der Selbsttest meldet weiterhin Rauschen, solange der Motor
+eingeschaltet ist; an dieser Maschine wirken die beiden also getrennt: Der Motor stört
+den Selbsttest, während die Leiste das zu sein scheint, was das Abtasten beim Druckstart
+gestört hat. Vier Drucke an einer Maschine sind ein kleiner Test, `provisional`. Der
+Besitzer unter 7.0.0 schaltet die Leiste inzwischen ebenfalls im Start-G-Code mit `M150`
+vor der Referenzfahrt aus und nach dem Abtasten wieder ein, zusätzlich zur Änderung am
+Motor, und findet die Starts bisher sehr zuverlässig; das ändert zwei Dinge auf einmal
+und trennt sie daher nicht. Keiner dieser Besitzer hat gezeigt, dass der Motor
+Fehlschläge beim Druckstart verursacht, und der erste Berichtende sagt das auch selbst.
 
 Der Effekt auf den Selbsttest stützt sich nun auf zwei getrennte Issues und ist damit
 `reported`. Die Lesart des Codes dahinter stammt vom ersten Berichtenden und von dieser
 Seite, nicht von Prusa, und die Verbindung zu Fehlschlägen beim Druckstart ist
 `provisional`. Prusa hatte bis zum oben genannten Datum in keinem der beiden Issues
 geantwortet. 6.9.2 ändert über Filament-Voreinstellungen hinaus nichts, was einen INDX
-betrifft, und die
-[Release Notes zu 7.0.0](https://help.prusa3d.com/downloads/core-one-indx) nennen keine
-Änderung am Wägezellen-Selbsttest oder am Extrudermotor nach einem Werkzeugwechsel; das
-zweite Issue zeigt den Effekt unter 7.0.0.
+betrifft, und keine der Notes zu 7.0.0, 7.0.1 und 8.0.0
+([Release Notes](https://help.prusa3d.com/downloads/core-one-indx)), veröffentlicht am
+2026-10-15, am 2026-10-19 und am 2026-10-22, nennt eine Änderung am
+Wägezellen-Selbsttest oder am Extrudermotor nach einem Werkzeugwechsel. Das zweite Issue
+zeigt den Effekt unter 7.0.0; zu 8.0.0 hat bisher niemand darüber berichtet.
 In der Praxis: Meldet der
 Selbsttest nach einem Werkzeugwechsel Rauschen, oder wenn der Test zuerst ein Werkzeug
 aufnehmen musste, führen Sie eine Referenzfahrt aller Achsen aus, nicht nur in X und Y,
@@ -224,7 +251,18 @@ Der zweite Besitzer der beiden früheren Berichte und ein dritter, in
 brachten beide die Rauschmeldungen des Selbsttests mit Problemen bei der ersten Schicht
 in Verbindung und fragten, ob das eine das andere verursacht. Der zweite Besitzer hat
 eine Stelle auf dem Bett, an der die erste Schicht durchgehend nicht haftet, und
-verdächtigt die Wägezelle, ohne Diagnose. Der dritte, dessen Selbsttest häufig Rauschen
+verdächtigt die Wägezelle, ohne Diagnose. Im Thread dieses Besitzers schlug an zwei
+anderen Maschinen das Abtasten an einer Stelle fehl, hinten rechts auf dem Bett. Ein
+Besitzer sah dort Kabel unter dem Bett zusammengeschoben und stellte später fest, dass
+das Kabel des Heizbetts dort, wo es hinter der Stange verläuft, falsch verlegt war; er
+nannte allerdings auch weitere Fehler und war danach noch dabei, das Leveling in den
+Griff zu bekommen. An der anderen Maschine war ein alter Abstandshalter des Betts
+wieder eingebaut worden, und der richtige Abstandshalter behob es (siehe die
+[Montagehinweise](../reference/assembly-notes.md)). Ein späterer Besitzer hat denselben
+Fehlschlag bei Drucken, die das ganze Bett belegen, bisher ohne Diagnose. Jeder davon
+ist ein einzelner Bericht, `provisional`. Ein Fehlschlag, der an eine Stelle gebunden
+bleibt, ist eher mechanisch als elektrisch bedingt; prüfen Sie daher zuerst die
+Mechanik. Das ist eine Schlussfolgerung. Der dritte, dessen Selbsttest häufig Rauschen
 meldet, versuchte es zu prüfen: Er ließ dasselbe Mesh-Bed-Leveling zweimal
 hintereinander laufen, änderte dazwischen nichts außer der Reinigung der Druckplatte
 und las die abgetasteten Werte aus. Er fand die beiden Durchläufe an jedem Punkt nah
@@ -248,23 +286,27 @@ beiden Besitzer hat geprüft, ob dies auf den eigenen Drucker zutraf.
 
 ### Was Sie versuchen können
 
-1. **Setzen Sie einen aufklappbaren Ferritkern auf das Hauptkabel des Werkzeugkopfs**,
+1. **Schalten Sie die LED-Statusleiste als kostenlosen ersten Test aus.** Bei mehreren
+   Besitzern hörten die Fehlschläge damit auf; die Einzelheiten und die Menüoption
+   stehen unter der nächsten Überschrift. Es kostet nichts und lässt sich im selben Menü
+   rückgängig machen; versuchen Sie es also, bevor Sie etwas kaufen oder anbringen.
+2. **Setzen Sie einen aufklappbaren Ferritkern auf das Hauptkabel des Werkzeugkopfs**,
    nahe dem Ende an der Controllerplatine. Das ist die Abhilfe mit der meisten
    unabhängigen Bestätigung, und sie wird inzwischen auch vom Herstellersupport
    vorgeschlagen. Ein einfacher aufklappbarer Kern außen um das Kabel hat bei mehreren
    Maschinen genügt.
-2. **Wenn ein einfacher Kern nicht ausreicht**, haben hartnäckige Fälle darauf
+3. **Wenn ein einfacher Kern nicht ausreicht**, haben hartnäckige Fälle darauf
    angesprochen, das Kabel statt eines einzelnen Durchgangs mit mehreren Windungen durch
    einen höherwertigen Ringkern zu führen. TODO(verify): die konkrete
    Ferrit-Materialgüte und die Anzahl der Windungen. Berichtet im Summary-Thread zu
    häufigen Problemen; hier nicht unabhängig bestätigt.
-3. **Kalibrieren Sie anschließend neu oder setzen Sie auf Werkseinstellungen zurück.**
+4. **Kalibrieren Sie anschließend neu oder setzen Sie auf Werkseinstellungen zurück.**
    An mehreren Maschinen schien der Ferrit nichts zu bewirken, bis die gespeicherten
    Kalibrierdaten verworfen wurden — durch ein Zurücksetzen auf Werkseinstellungen oder
    eine vollständige Neukalibrierung —, weil der Drucker noch mit Werten arbeitete, die
    er bei verrauschtem Signal aufgenommen hatte. Wenn Sie einen Kern anbringen und sich
    nichts ändert, tun Sie dies, bevor Sie schließen, dass der Kern nicht geholfen hat.
-4. **Achten Sie auf die Position.** Mindestens eine berichtete Position — am Stecker der
+5. **Achten Sie auf die Position.** Mindestens eine berichtete Position — am Stecker der
    Erweiterungsplatine des Controllers statt am Hauptkabel — hat das Problem
    verschlimmert. Wenn Ihre erste Position die Lage verschlechtert, versetzen Sie den
    Kern, statt den Ansatz aufzugeben.
@@ -274,9 +316,13 @@ beiden Besitzer hat geprüft, ob dies auf den eigenen Drucker zutraf.
 Ein Ferrit am Hauptkabel des Werkzeugkopfs behandelt einen Weg, auf dem die Störung
 eindringt. Besitzer im
 [Thread zur Werkzeug-Offset-Kalibrierung](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/)
-und in [#5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526) haben seither
-weitere gefunden. Jede stützt sich auf wenige Besitzer, von denen die meisten mehrere
-Dinge gleichzeitig geändert haben; alle sind daher `provisional`.
+sowie in [#5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526) und
+[#5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518) haben seither weitere
+gefunden. Die Verkabelung der Bettheizung und die Stromleitungen des Werkzeugkopfs
+stützen sich jeweils auf wenige Besitzer, von denen die meisten mehrere Dinge
+gleichzeitig geändert haben; sie sind daher `provisional`. Für das Ausschalten der
+Statusleiste gibt es inzwischen verschiedene Besitzer in beiden Issues und einen
+weiteren im Forumsthread, dort zusammen mit anderen Änderungen, `reported`.
 
 - **Die Verkabelung der Bettheizung.** Ein Besitzer, dessen INDX schon beim allerersten
   Druck an der Werkzeug-Offset-Kalibrierung scheiterte, nahm die beiden Heizleitungen im
@@ -309,18 +355,34 @@ Dinge gleichzeitig geändert haben; alle sind daher `provisional`.
   stützt. Der Besitzer, der die Stromleitungen des Werkzeugkopfs verdrillt hatte, hatte
   unter der unveränderten 6.9.2 danach noch gelegentlich einen Fehlschlag; das
   Ausschalten des Streifens (die Option RGB Status Bar, in den Einstellungen oder während
-  eines Drucks unter Tune > Lights) beendete das, und später setzte er Ferritperlen auf
+  eines Drucks unter Tune > Lights) beendete das, wie er sowohl im Forumsthread als auch
+  in #5526 berichtete, und später setzte er Ferritperlen auf
   die Kabel sowohl der Bett-LED als auch der Kammerbeleuchtung und hat seitdem keine
-  Probleme mehr. Ein weiterer Besitzer schaltete die LEDs aus und setzte gleichzeitig
-  Ferrite auf jedes Kabel, das er erreichen konnte, und auch seine Fehlschläge hörten auf.
-  Den Streifen auszuschalten kostet nichts und lässt sich leicht rückgängig machen; das
-  macht es zu einem günstigen Test, bevor Sie die Verkabelung öffnen.
+  Probleme mehr. Inzwischen hat er ergänzt, dass er außerdem die Abtasttemperatur in
+  seinem Start-G-Code gesenkt hat, gegen Oozing (siehe
+  [Oozing beim Abtasten](oozing-during-probing-and-calibration.md)); sein Ergebnis
+  vermischt also mehrere Änderungen. Ein weiterer Besitzer schaltete die LEDs aus und setzte
+  gleichzeitig Ferrite auf jedes Kabel, das er erreichen konnte, und auch seine
+  Fehlschläge hörten auf. Ein anderer Besitzer in #5526, bei dem Ferritperlen
+  (Anbringungsort nicht angegeben) nicht halfen, stellt fest, dass das Ausschalten des
+  Streifens offenbar jedes Mal wirkt; und beim oben beschriebenen Besitzer in #5518
+  hörten die Fehlschläge der Referenzfahrt beim Druckstart damit auf. Ob Ferrite am
+  Kabel des Streifens selbst helfen, stützt sich auf einen einzigen Besitzer, dessen
+  Ergebnis mehrere Änderungen vermischt, während das Ausschalten des Streifens bei
+  niemandem versagt hat, der darüber berichtet hat. Es kostet nichts und lässt sich
+  leicht rückgängig machen; das macht es zu einem günstigen Test, bevor Sie die
+  Verkabelung öffnen.
 
 Das Muster, im Druck fehlzuschlagen und aus dem Menü zu bestehen, passt sowohl zu den
 Heizungen als auch zum Streifen, weil Besitzer beide beim Lauf aus dem Menü als
 ausgeschaltet beschreiben; der Besitzer, der die Stromleitungen verdrillt hatte, deutete
-es zunächst als Störung durch die Heizung. Außerhalb der eigenen Tests des Besitzers mit
-dem Streifen hat niemand die beiden an einer Maschine auseinandergehalten.
+es zunächst als Störung durch die Heizung. Der Besitzer in #5518 hat als Erster,
+abgesehen von den eigenen Tests des Besitzers mit dem Streifen, an einer Maschine den
+Streifen und die Düsenheizung auseinandergehalten: Die Referenzfahrt beim Druckstart
+schlug mit ausgeschalteter Düsenheizung weiter fehl und bestand mit ausgeschaltetem
+Streifen und normal arbeitender Heizung. Der Bericht erwähnt nur das Ausschalten der
+Düsenheizung; den Streifen trennt er also nicht von der Bettheizung. Das ist eine
+Maschine über drei oder vier Drucke, `provisional`.
 
 !!! tip "Störungen von einer tatsächlich defekten Wägezelle unterscheiden"
     Ein Ferritkern behandelt elektrische Störungen. Er behebt keine defekte Wägezelle,
@@ -332,6 +394,17 @@ dem Streifen hat niemand die beiden an einer Maschine auseinandergehalten.
     Siehe [diagonale Streifenbildung](diagonal-banding.md), wo dieser Tausch beschrieben
     ist. Wenn Ihre Platine neueren Datums ist und der Fehler mit dem Kopf mitwandert,
     wenden Sie sich an den Hersteller, statt Ferrite zu kaufen.
+
+    Auch der umgekehrte Fall kommt vor. In
+    [#5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518) riet der
+    Prusa-Support einem Besitzer, den Kopf zu tauschen, weil die Wägezelle defekt zu sein
+    schien; vor dem Tausch beendete das Ausschalten der Statusleiste seine Fehlschläge
+    der Referenzfahrt beim Druckstart über die vier Drucke seitdem (`provisional`, oben
+    beschrieben). Sein Selbsttest meldet weiterhin Rauschen, solange der Extrudermotor
+    eingeschaltet ist, was zu dem oben beschriebenen, davon getrennten Effekt des Motors
+    passt; das allein ist kein Zeichen einer defekten Wägezelle (eine Schlussfolgerung).
+    Bevor Sie einem Tausch des Kopfes zustimmen, schalten Sie die Leiste aus und brechen
+    Sie den Selbsttest ab und starten Sie ihn neu; beides kostet nichts.
 
     Ein Bericht aus einem anderen Thread endete mit einer Hardwarelösung statt mit einer
     Störung als Ursache. Ein Besitzer unter 6.6.0 und 6.6.1, dessen Wägezellentest immer wieder vor instabilen
@@ -377,17 +450,23 @@ dem Streifen hat niemand die beiden an einer Maschine auseinandergehalten.
     länger. Bei manchen wird es trotzdem abgeschlossen, und Drucke laufen normal; bei
     anderen schlägt die Homing-Kalibrierung fehl, was die Einrichtung stoppt. Die
     Homing-Kalibrierung nach dem Update erneut auszuführen, Prusas erster Vorschlag, half
-    nicht; die Rückkehr zur 6.9.1-Beta oder zu 6.9.0 beendete es bei jedem Besitzer,
-    der berichtet, es versucht zu haben, und mehrere führten danach die
+    nicht; die Rückkehr zur 6.9.1-Beta oder zu 6.9.0 beendete es bei den meisten
+    Besitzern, die berichten, es versucht zu haben. Einer sah es unter 6.9.0 weiterhin,
+    wenn auch seltener, ein anderer hatte auf der Beta während Drucken zeitweise noch
+    langsame Referenzfahrten. Mehrere führten nach der Rückkehr die
     Homing-Kalibrierung erneut aus. Prusa gibt an, dies an den Druckern, an denen die
     Änderung getestet wurde, nicht gesehen zu haben, hat erklärt, den Berichten
     nachzugehen, und hat Besitzer, die es betrifft, gebeten, vorerst bei der früheren
     Firmware zu bleiben; der Kommentar nennt 6.9.1, während die Besitzer zur 6.9.1-Beta
-    oder zu 6.9.0 zurückgekehrt waren. Mit beiden verzichtet man auch auf den
+    oder zu 6.9.0 zurückgekehrt waren. Inzwischen hat Prusa betroffene Besitzer um
+    Fotos der Etiketten ihrer X- und Y-Motoren und um ein Homing-Log gebeten, um es auf
+    bestimmte Motorchargen einzugrenzen. Mit beiden verzichtet man auch auf den
     Assistenten zur Rechtwinkligkeit des Portals, der laut dem Vergleich oben erst nach
-    der Beta hinzukam. Zwei Besitzer sagen, dass sich 7.0.0 genauso verhält, und die
-    [Release Notes zu 7.0.0](https://help.prusa3d.com/downloads/core-one-indx) nennen
-    keine Änderung an den Homing-Strömen. Im
+    der Beta hinzukam. Mehrere Besitzer berichten dasselbe
+    unter 7.0.0 und 7.0.1 und einer unter 8.0.0, und keine der Notes zu
+    7.0.0, 7.0.1 und 8.0.0
+    ([Release Notes](https://help.prusa3d.com/downloads/core-one-indx)) nennt eine
+    Änderung an den Homing-Strömen. Im
     [Quellcode von 6.9.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/module/prusa/homing_corexy.cpp)
     kennzeichnet diese Meldung eine Messfahrt beim X/Y-Homing, die zu früh angehalten hat
     und wiederholt wird; die Messung gibt erst auf, wenn die Wiederholungen ausgeschöpft
@@ -433,7 +512,13 @@ entscheiden, ob seine Maschine defekt ist.
     wird, und ebenso wenig zum Selbsttest, zum Extrudermotor nach einem Werkzeugwechsel
     oder zur Statusleiste. Prusa hatte den Quellcode bis zum oben genannten Datum nicht
     auf GitHub veröffentlicht; was die Version ändert, ist also nur aus diesen Notes und
-    von Besitzern bekannt: Der Effekt des Extrudermotors wurde unter ihr gemessen. Wenn
+    von Besitzern bekannt: Der Effekt des Extrudermotors wurde unter ihr gemessen.
+    [7.0.1](https://help.prusa3d.com/downloads/core-one-indx), veröffentlicht am
+    2026-10-19, nennt eine einzige Korrektur, für ein Einfrieren beim Start, und nennt
+    damit ebenfalls nichts davon.
+    Für [8.0.0](https://help.prusa3d.com/downloads/core-one-indx), veröffentlicht am
+    2026-10-22 und ebenfalls ohne Quellcode auf GitHub, gilt dasselbe: Die Notes nennen
+    nichts davon, ebenso wenig die Homing-Ströme. Wenn
     Sie dies deutlich nach dem oben genannten Datum lesen, prüfen Sie, ob eine neuere
     Firmware das Problem behoben hat, bevor Sie Hardware ergänzen.
 
@@ -462,18 +547,24 @@ nachstellen. Der Effekt des Extrudermotors auf den Selbsttest findet sich inzwis
 zwei getrennten Issues, eines davon unter 7.0.0, und ein weiterer Besitzer im ersten
 bestätigt den Teil mit Abbrechen und zweitem Versuch; der Firmware-Quellcode ist damit
 vereinbar, aber Prusa hat ihn nicht bestätigt, keiner der beiden früheren Besitzer hat
-ihn geprüft, und seine Verbindung zu Fehlschlägen beim Druckstart ist unbewiesen. Die
-Referenzfahrt vor dem zweiten Versuch, die
-Prüfung mit wiederholtem Mesh, die Reklamation beim Hersteller und der Fall der Werkzeugerkennung
+ihn geprüft, und seine Verbindung zu Fehlschlägen beim Druckstart ist unbewiesen: Bei
+einem Besitzer hörten die Fehlschläge beim Druckstart mit ausgeschalteter Statusleiste
+auf, nicht mit ausgeschaltetem Motor. Die Referenzfahrt vor dem zweiten Versuch, die
+Prüfung mit wiederholtem Mesh, die Fälle mit Abtasten hinten rechts, die Reklamation
+beim Hersteller, der angeratene Tausch des Kopfes und der Fall der Werkzeugerkennung
 unter „Verwandte Seiten“ sind jeweils ein einzelner Bericht. Keiner dieser Besitzer hat
 einen Ferrit angebracht; sie stärken oder schwächen die Argumente dafür also nicht. Die
 Verkabelung der Bettheizung und die Stromleitungen des Werkzeugkopfs stammen aus einem
-Forumsthread, die Statusleiste aus einem Issue und demselben Thread, wobei die Tests des
-ersten Besitzers teils auf veränderter Firmware liefen; die Besitzer haben meist mehrere
-Dinge gleichzeitig geändert. Die Homing-Meldung zum frühen Auslösen berichten mehrere
-Besitzer in einem Issue und zwei Forumsthreads. Die Homing-Korrektur stützt sich auf die
-Release Notes, das Firmware-Repository des Herstellers und die Erklärung eines
-Entwicklers, nicht auf Berichte von Besitzern.
+Forumsthread, wobei die Besitzer meist mehrere Dinge gleichzeitig geändert haben. Die
+Statusleiste stammt aus zwei Issues und demselben Thread; die Tests des ersten Besitzers
+liefen teils auf veränderter Firmware, doch beendete das Ausschalten der Leiste die
+Fehlschläge bei verschiedenen Besitzern in beiden Issues, im Forumsthread zusammen mit
+anderen Änderungen, was diesen Teil zu `reported` macht. Ob Ferrite am Kabel der Leiste
+selbst helfen, stützt sich auf einen einzigen Besitzer, dessen Ergebnis mehrere
+Änderungen vermischt. Die Homing-Meldung zum frühen Auslösen berichten mehrere Besitzer
+in einem Issue und zwei Forumsthreads. Die Homing-Korrektur stützt sich auf die Release
+Notes, das Firmware-Repository des Herstellers und die Erklärung eines Entwicklers,
+nicht auf Berichte von Besitzern.
 
 ## Verwandte Seiten
 
@@ -496,5 +587,6 @@ Entwicklers, nicht auf Berichte von Besitzern.
   [einem Bericht](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/loadcell-test-tool-crash-on-calibration/)
   unter 6.9.1 nahm der Testschritt ein Werkzeug auf und fuhr es gegen die anderen Docks,
   und der Besitzer stellte fest, dass der Drucker ein eingesetztes Werkzeug nie erkannte
-  (`provisional`). Eine Prüfung der Verkabelung des Kopfes ergab nichts, und der Fall lag
-  zum oben genannten Datum noch beim Prusa-Support.
+  (`provisional`). Eine Prüfung der Verkabelung des Kopfes ergab nichts; Prusa tauschte
+  daraufhin den Werkzeugkopf aus, und mit dem neuen funktioniert laut dem Besitzer alles
+  wie erwartet. Der Fehler lag im Kopf, und nichts im Bericht deutet auf eine Störung.

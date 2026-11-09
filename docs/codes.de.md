@@ -1,13 +1,13 @@
 ---
 title:        Fehlercodes der Werkzeug-Offset-Kalibrierung
 confidence:   provisional
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     stock firmware reports all of these as 36130; the 3619x codes need firmware built from hyiger/Prusa-Firmware-Buddy
+firmware:     stock firmware reports all of these as 36130 through 6.9.2 (source-checked); 7.0.0 still shows 36130 for at least the 36193 failure (one report); 7.0.1 and 8.0.0 unknown; the 3619x codes need firmware built from hyiger/Prusa-Firmware-Buddy
 sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/feature/contactless_offset/contactless_offset.cpp
@@ -25,8 +25,12 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518
+  - https://github.com/prusa3d/Prusa-Error-Codes/blob/9e609385d1c18cc080bcfaaf2bd1d6a7cd7cf5ad/yaml/buddy-error-codes.yaml
+  - https://github.com/prusa3d/Prusa-Error-Codes/commit/a88544c7628067f03c768a26624000c463e971b6
+  - https://github.com/prusa3d/Prusa-Error-Codes/commit/8a502d03acc0c5bf3ba524d68c6e10bd4c8d1acf
+  - https://github.com/prusa3d/Prusa-Error-Codes/commit/bc278daf0a10e6657048416623a9e2e7f7845643
 superseded_by:
-source_sha:   8b76f1b8f7769127b64b51d15e04fa66c616a3368f91688f306e1327274ebd46
+source_sha:   8503ae47944db987253e89f0e124f988944515b74cd1749be2c4a232105de351
 ---
 # Fehlercodes der Werkzeug-Offset-Kalibrierung
 
@@ -42,7 +46,15 @@ nicht finden, und 36190 bis 36197 benennen den Rest. Der QR-Code auf jedem diese
 Bildschirme öffnet den zugehörigen Abschnitt auf dieser Seite.
 
 Bei den Fehlern auf dieser Seite zeigt die Standard-Firmware immer nur 36130, aber das
-[serielle Log](#stock-firmware) sagt trotzdem, welcher dieser Fehler es war.
+[serielle Log](#stock-firmware) sagt trotzdem, welcher dieser Fehler es war. Geprüft ist
+das am Quellcode bis 6.9.2, der letzten Version, deren Quellcode veröffentlicht ist.
+Zwischen dem 21. September und dem 5. Oktober 2026, noch vor dem Erscheinen von 6.9.2,
+hat Prusa für einige dieser Fehler eigene Codes in seine öffentliche Fehlercode-Liste
+aufgenommen, und 6.9.2 zeigt weiterhin nur 36130. Dass ein Code in dieser Liste steht,
+heißt also nicht, dass eine Version ihn anzeigt. Ein Bericht zu 7.0.0 zeigt für den
+Fehler unter 36193 weiterhin 36130. Ob 7.0.0 einen der neuen Codes von Prusa anzeigt
+oder eine spätere Version es tut, ist nicht bekannt; siehe den Abschnitt zur Überprüfung
+am Ende dieser Seite.
 
 Am Core One L beginnen die Codes mit 37 statt mit 36: 37130 und 37190 bis 37197.
 Jeder Abschnitt unten gilt für beide.
@@ -249,6 +261,8 @@ Wiederholungen der Abtastung nicht akzeptiert.
    fehlgeschlagenen Berührung selbst, und festgestellt, dass das Abschalten seines
    Treibers vor dem Abtasten die Fehler selten machte, eine Umgehung, keine Behebung
    ([Firmware-Issue 5548](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5548)).
+   Bei einem zweiten Besitzer in diesem Issue gelang das Abtasten mit derselben Änderung
+   nach mehreren Fehlschlägen beim ersten Versuch; das ist ein einziger Versuch.
    Ein separater Bericht unter 6.9.1 führt Störungen im Selbsttest der Wägezelle nach
    einem Werkzeugwechsel darauf zurück, dass derselbe Motor eingeschaltet bleibt
    ([Firmware-Issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518)).
@@ -258,6 +272,20 @@ Wiederholungen der Abtastung nicht akzeptiert.
    weiterer, der zusätzlich Ferritperlen angebracht hat, dass ihre Fehler aufhörten
    ([Firmware-Issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526),
    [Thread zur Werkzeug-Offset-Kalibrierung](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/)).
+   Der erste von ihnen hat inzwischen in
+   [Firmware-Issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518)
+   zusammengefasst, was seinen Drucker vollständig in Ordnung gebracht hat: verdrillte
+   Versorgungsleitungen im Kabelbaum des Kopfes, Ferritkerne an den Kabeln der Bett- und
+   der Kammerbeleuchtung und eine niedrigere Abtasttemperatur im Start-G-Code. Das
+   Ausschalten der Leuchte steht nicht auf dieser Liste, obwohl er das Kabel der
+   Bettbeleuchtung für die wahrscheinlichste Quelle hält; sein Ergebnis zeigt also
+   nicht, dass das Ausschalten nötig ist.
+   Ein dritter stellte in Firmware-Issue 5526 fest, dass Ferritperlen nicht halfen und
+   das Ausschalten der Leuchte bisher anscheinend jedes Mal hilft. Der Ersteller von
+   Firmware-Issue 5548 hat inzwischen gesagt, dass sein Druckstart nun neben dem Motor
+   auch die Leuchte ausschaltet und dass das bisher sehr zuverlässig ist
+   ([Firmware-Issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518));
+   dieses Ergebnis trennt die beiden Störquellen nicht.
 
 ## 36194 · 37194 · Keine Daten vom Offsetsensor {#36194}
 
@@ -369,15 +397,25 @@ stammt von einem einzelnen Besitzer. Zwei weitere Besitzer haben inzwischen im s
 Issue gesagt, dass sie dasselbe sehen, ohne zu sagen, welchen Teil, und der Hersteller
 hat nicht geantwortet. Die Anzahl der Versuche stammt aus den
 Versionshinweisen zu 6.9.1-beta, und für welche Berührung sie gilt, ist aus dem
-Quellcode beim Tag 6.9.1 gelesen. Von den beiden Störquellen unter 36193 ist der
-Extrudermotor für diese Kalibrierung der Bericht eines einzelnen Besitzers, und
-Firmware-Issue 5518 meldet, dass derselbe Motor den Selbsttest der Wägezelle stört;
-dessen Melder vermutet einen Zusammenhang mit Fehlern beim Druckstart, hat ihn aber
-nicht nachgewiesen. Die Statusleuchte stützt sich auf zwei Besitzer mit
-Standard-Firmware, in Firmware-Issue 5526 und in einem Forenthread, die berichten,
-dass das Ausschalten der Leuchte, allein oder zusammen mit Ferritperlen, ihre Fehler
-beendet hat. Der Ersteller jenes Issues hat sie auf einer selbst veränderten Firmware
-getestet, auf die sich diese Seite nicht stützt.
+Quellcode beim Tag 6.9.1 gelesen. Von den beiden Störquellen unter 36193 stützt sich
+der Extrudermotor für diese Kalibrierung auf die Messungen eines Besitzers und den
+einzelnen Versuch eines zweiten, beide in Firmware-Issue 5548. Der erste von ihnen
+schaltet inzwischen auch die Statusleuchte aus, sodass sein neuestes Ergebnis, das er
+bisher sehr zuverlässig nennt, den Motor nicht isoliert. Unabhängig davon meldet
+Firmware-Issue 5518, dass derselbe Motor den Selbsttest der Wägezelle stört; dessen
+Ersteller vermutet einen Zusammenhang mit Fehlern beim Druckstart, hat ihn aber nicht
+nachgewiesen. Die Statusleuchte stützt sich auf zwei Besitzer mit Standard-Firmware, in
+Firmware-Issue 5526 und in einem Forenthread, die berichten, dass das Ausschalten der
+Leuchte, allein oder zusammen mit Ferritperlen, ihre Fehler beendet hat, und auf einen
+dritten im Issue, der seine Firmware nicht nennt und bei dem Ferritperlen allein nicht
+halfen. Der erste dieser beiden führt seine vollständige Behebung inzwischen in
+Firmware-Issue 5518 auf das Neuverlegen der Kabel, Ferritkerne an den Kabeln der
+Beleuchtung und eine niedrigere Abtasttemperatur zurück, ohne das Ausschalten der
+Leuchte aufzuführen, obwohl er das Kabel der Bettbeleuchtung für die wahrscheinlichste
+Quelle hält; sein Ergebnis zeigt also nicht, dass das Ausschalten nötig ist.
+Der Ersteller von Firmware-Issue 5526 hat die
+Leuchte auf einer selbst veränderten Firmware getestet, auf die sich diese Seite nicht
+stützt.
 
 Was bei jedem Code zu tun ist, ist die Lesart dieser Prüfungen durch den Autor. Wo ein
 Abschnitt Sie auf eine andere Seite schickt, gilt deren eigene Stufe. Der Rest wurde
@@ -403,8 +441,37 @@ Werkzeug-Offset-Kalibrierung. Ihr Quellcode ist noch nicht veröffentlicht, dahe
 dieser Seite abgleichen. Ein Besitzer meldet unter 7.0.0 den Bildschirm 36130 zusammen
 mit der Log-Zeile, die diese Seite 36193 zuordnet
 ([Firmware-Issue 5548](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5548)),
-für diesen Fehler sind also zumindest beide unverändert. Was die
-Standard-Firmware am Ende anzeigt, muss nicht den Codes auf dieser Seite entsprechen.
+für diesen Fehler sind also zumindest beide unverändert. Weder 7.0.1, veröffentlicht am
+19. Oktober 2026 mit einer einzigen Behebung für ein Hängenbleiben beim Start, noch
+8.0.0, veröffentlicht am 22. Oktober 2026, führt sie auf. Die Versionshinweise zu 8.0.0
+ändern zwar die Fehlerbildschirme allgemein, indem sie den Hash des Druckers und die
+Signaturmarkierungen entfernen und den QR-Code vereinfachen, sagen aber nichts zu
+Fehlern der Werkzeug-Offset-Kalibrierung. Was die Standard-Firmware am Ende anzeigt,
+muss nicht den Codes auf dieser Seite entsprechen.
+
+Prusas eigene Codes für einige dieser Fehler stehen bereits in seiner öffentlichen
+[Fehlercode-Liste](https://github.com/prusa3d/Prusa-Error-Codes/blob/9e609385d1c18cc080bcfaaf2bd1d6a7cd7cf5ad/yaml/buddy-error-codes.yaml).
+Zwei wurden am 21. September 2026 hinzugefügt
+([Commit](https://github.com/prusa3d/Prusa-Error-Codes/commit/a88544c7628067f03c768a26624000c463e971b6))
+und am 2. Oktober als freigegeben markiert
+([Commit](https://github.com/prusa3d/Prusa-Error-Codes/commit/8a502d03acc0c5bf3ba524d68c6e10bd4c8d1acf)):
+36144 Sensor Not Found, wenn der Offsetsensor nicht in der Höhe gefunden wird, in der
+der Drucker ihn erwartet, und 36145 Sensor Failure, wenn der Sensor während der Messung
+verstummt. Ein dritter, 36146 Tool Not Picked, folgte am 5. Oktober
+([Commit](https://github.com/prusa3d/Prusa-Error-Codes/commit/bc278daf0a10e6657048416623a9e2e7f7845643))
+und ist noch nicht als freigegeben markiert. Sein Commit beschreibt ihn als Meldung
+einer fehlgeschlagenen Werkzeugaufnahme, bei der die Motoren eingeschaltet bleiben; er
+ist also möglicherweise eine allgemeine Prüfung der Werkzeugaufnahme und nicht
+spezifisch für diese Kalibrierung. Alle drei wurden hinzugefügt, bevor 6.9.2 am 7.
+Oktober erschien, und 6.9.2 zeigt sie nicht an. Am Core One L lauten sie 37144, 37145
+und 37146. Die Änderung vom September formuliert außerdem 36134 Unsafe Sensor Position
+um: Statt zum Reinigen von Düse und Sensor aufzufordern, sagt der Text nun, der Sensor
+sei möglicherweise aus seiner Lage gestoßen worden. Allein nach ihren Beschreibungen
+liegt 36144 am nächsten bei 36193 auf dieser Seite, 36145 bei 36194 und 36146 bei 36190,
+aber welche Prüfungen sie auslösen, lässt sich erst lesen, wenn der Quellcode
+veröffentlicht ist. Die Versionshinweise zu 7.0.0, 7.0.1 und 8.0.0 erwähnen sie nicht,
+und kein Besitzer hat gemeldet, einen davon gesehen zu haben; welche Version sie
+anzeigt, falls überhaupt schon eine, ist also nicht bekannt.
 
 ## Verwandt
 

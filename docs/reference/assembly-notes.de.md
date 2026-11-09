@@ -1,7 +1,7 @@
 ---
 title:        Montagehinweise — INDX-Umbausatz
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One, Core One Plus
 toolhead:     INDX
@@ -32,8 +32,12 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-fe-upgrading-to-gen2/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/calibration-issues-from-beginning/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/
+  - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/the-worst-experience-of-any-3d-printer-assembly/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/upgrade-core1-to-indx-gen2/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/indx-assembly-guide/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/mk4s-to-core-one-with-indx-conversion/
 superseded_by:
-source_sha:   05a9b822568ebf9c8f7d075754932bbfde317786b1d3398a2c519768cb09946d
+source_sha:   fe5307f112548975495ec843c904b017bd8de90ce8766569322646fd3a86630a
 ---
 # Montagehinweise — INDX-Umbausatz
 
@@ -67,7 +71,10 @@ nachdem Sie bereits angefangen haben, Schrauben einzudrehen.
 - **Ein Werkzeug zum Entfernen von Spreiznieten.** Die Demontage bedeutet, viele
   Nylon-Spreiznieten herauszuziehen, und dieses Teil wird mit weitem Abstand am
   häufigsten als Vorab-Druck gelobt. Es verhindert, dass Sie Panels zerkratzen oder
-  Nieten durch den Raum schießen. Klein und schnell gedruckt.
+  Nieten durch den Raum schießen. Klein und schnell gedruckt. Nicht jeder bleibt dabei:
+  Ein Besitzer, der die Nietenwerkzeuge gedruckt hatte, kam mit einem flachen
+  Holzstechbeitel, mit der Fase nach unten angesetzt, leichter unter die Nietenköpfe.
+  *Einzelmeldung.*
 - **Eine Riemen-Montagelehre.** Aus der Community, gefertigt nach der Geometrie der
   offiziellen Montageplatte. Sie hält beide Riemen zusammen, sodass sie bei gleicher
   Spannung auf gleiche Länge kommen, erlaubt es, sie bündig mit der Montageplatte zu
@@ -109,7 +116,11 @@ also nicht zur aktuellen Anleitung.
   Spannrolle und musste, ohne zweiten Drucker, warten, bis der Support eines schickte.
   Prusas Edition der Anleitung lässt Sie die Spannschrauben bei der Arbeit an den
   Riemen herausnehmen und schmieren, um späteren Ärger zu vermeiden; die Anleitung zur
-  Founders Edition lockert sie nur.
+  Founders Edition lockert sie nur. Auch ein selbst gedruckter Ersatz ist nicht ohne
+  Risiko: Ein Besitzer hat einen Community-Remix des Spannrollenhalters eingebaut, der
+  Einschmelz-Gewindeeinsätze statt Vierkantmuttern aufnimmt; diese Druckteile sind
+  auseinandergebrochen, und er musste Riemenspannung, Referenzfahrt und
+  Portalausrichtung noch einmal durchlaufen. *Einzelmeldung.*
 
 **Prüfen Sie Ihre Druckplatte jetzt, nicht hinterher.** Wenn Sie auf einer
 übergroßen Federstahlplatte eines Drittanbieters drucken, kann es sein, dass sie die
@@ -216,6 +227,20 @@ haben. Manche mussten selbst beschaffen oder zuschneiden. Das ist der Grund für
 Schraubensortiment weiter oben — mitten im Schritt auszugehen ist der Unterschied
 zwischen einem Abend und einem Wochenende.
 
+Die Sätze fallen unterschiedlich aus. Ein Besitzer, dessen Upgrade-Satz Ende
+September 2026 eintraf, fand von fast jedem Verbindungselement genau ein Ersatzstück,
+aber keine Ersatznieten, sodass schon eine heruntergefallene Schraube das einzige
+Ersatzstück aufbrauchen würde; ein Erbauer der Founders Edition im selben Thread hatte
+am Ende Schrauben übrig, von denen nach eigener Aussage aber ein Teil noch vom Aufbau
+seines Core One als Bausatz stammte. Einem Besitzer, der INDX und Gen 2 aus
+einem Upgrade-Satz der Charge 7 aufgebaut hat, fehlten zwei Schrauben — in einem
+Beutel lag eine Blechschraube anstelle der richtigen —, und Teile des
+Düsenabstreifers fehlten. Der Support schickte ein Foto des Beutels, in dem diese Teile
+hätten liegen sollen, und bat dann um Fotos aller übrigen Beutel und Teile, bevor er
+Ersatz schickte; der Besitzer fotografierte auch die leeren Beutel — heben Sie sie also
+auf, bis der Aufbau fertig ist, damit Sie es ebenso machen können. *Vorläufig*: Jeder
+dieser Punkte stammt von einem einzelnen Besitzer.
+
 **Es gibt keine zusammengefasste Liste der Verbindungselemente.** Verbindungselemente
 sind in der Anleitung Schritt für Schritt aufgeführt und sonst nirgends; wer gern in
 beschriftete Fächer vorsortiert, muss sich diese Liste selbst herausschreiben. Prusas
@@ -300,10 +325,12 @@ Dock-Kalibrierung scheitern; siehe
 [Dock-Kalibrierung](../issues/dock-calibration-rejects-docks.md). Prusas
 Firmware-Quellcode, wie für 6.9.1 veröffentlicht, wendet beim ersten Start die
 Gen-2-Variante an, was beides erklären würde; dass das Flashen der INDX-Firmware als
-erster Start zählt, ist jedoch erschlossen, nicht bestätigt. Der Quellcode zu 7.0.0
-ist nicht veröffentlicht, und die zugehörigen
-[Release Notes](https://help.prusa3d.com/downloads/core-one-indx) nennen keine Änderung
-an dieser Voreinstellung; prüfen Sie den Bildschirm also auch unter 7.0.0.
+erster Start zählt, ist jedoch erschlossen, nicht bestätigt. Zu keiner der Versionen
+7.0.0, 7.0.1 (19. Oktober 2026, eine einzige Korrektur für ein Einfrieren beim Start)
+und 8.0.0 (22. Oktober 2026) ist der Quellcode veröffentlicht, und die
+[Release Notes](https://help.prusa3d.com/downloads/core-one-indx) aller drei nennen
+keine Änderung an dieser Voreinstellung; prüfen Sie den Bildschirm also auch unter
+jeder dieser Versionen.
 
 ## Schritte, bei denen man langsamer machen sollte
 
@@ -320,7 +347,41 @@ oder drei Umdrehungen** — Prusa hat das in den Kommentaren zur Anleitung best�
 Drehen Sie sie nicht vollständig heraus: Der mittlere Block kann herausfallen, und ihn
 wieder zusammenzusetzen ist wirklich unangenehm. Das ist ein guter Moment, die Schiene
 nachzuschmieren, solange Sie herankommen. Ziehen Sie die untere Portalschraube wieder
-an, bevor Sie fortfahren.
+an, bevor Sie fortfahren. Sehen Sie sich den Rest der Mechanik an, solange alles
+zerlegt ist: Ein Besitzer, der einen werkseitig montierten Core One umgebaut hat, fand
+eine Y-Achsen-Stange aus ihrem Halter gerutscht, die andere locker und lose
+Schrauben am X-Schlitten, was ihm alles zuvor nicht aufgefallen war. *Einzelmeldung.*
+
+**Riemenenden an der Montageplatte des Kopfes.** Der INDX-Kopf sitzt auf einer eigenen,
+gedruckten Montageplatte anstelle der aus Aluminium, und diese Platte klemmt die
+Riemenenden. Zwei Besitzer in einem Thread hatten Riemenenden, die sich während der
+Kalibrierung der Riemenspannung aus ihr herauszogen, einer davon immer wieder, selbst
+nachdem das Portal ausgerichtet war. Die Antworten dort waren eindeutig, dass ein
+richtig eingesetzter Riemen nicht herauskommt: Die beiden Enden liegen Zahn an Zahn,
+sodass sie ineinandergreifen, und wenn Sie sie bis ganz an den Rand der Platte führen,
+sehen Sie beim Festschrauben der Platte, dass keines verrutscht ist. Die oben
+aufgeführte Riemen-Montagelehre ist eine Möglichkeit, sie bündig mit diesem Rand
+abzuschneiden. Mehrere Besitzer in drei Threads drehen die Spanner zuerst ganz zurück,
+damit genug Spiel entsteht, um jedes Ende tief in die Platte zu ziehen, sodass viele
+Zähne greifen; damit hielten die Riemen bei einem der beiden oben genannten Besitzer.
+Keiner der beiden hat gesagt, was bei ihm die Ursache war. *Vorläufig*, was das
+Herausrutschen betrifft: zwei Besitzer, ein Thread; die Methode mit dem Spiel ist
+mehrfach berichtet (siehe Verifizierung).
+
+Zu straff gespannte Riemen bringen eigenen Ärger. Der Besitzer, dessen Riemen immer
+wieder herauskamen, stellte fest, dass die Kalibrierung der X-Achse mit zu straffen
+Riemen fehlschlug, und ein weiterer Besitzer im selben Thread fand den Ausgangspunkt,
+den man ihm für die Spanner genannt hatte, weit straffer als den, bei dem er am Ende
+landete. *Vorläufig*: zwei Besitzer, ein Thread. Wenn sich die Ausrichtung des Portals
+immer wieder verstellt: Prusas Handbuch zum INDX führt einen Assistenten für die
+Rechtwinkligkeit des Portals unter den Ergänzungen seiner Überarbeitung vom
+22. Oktober 2026, veröffentlicht auf der
+[Download-Seite](https://help.prusa3d.com/downloads/core-one-indx) neben der Firmware
+8.0.0; was darin steht, hat diese Seite nicht geprüft.
+
+TODO(verify): die Ausgangseinstellung der Spanner, die einem Besitzer genannt wurde,
+und die Stelle, an der er am Ende landete. Beide stehen im Quell-Thread und werden hier
+zurückgehalten.
 
 **Z anheben für die Spulenhalterschrauben.** Die in der Anleitung angegebene Z-Höhe
 legt Berichten zufolge nur zwei der vier Schrauben frei. Erbauer berichten, dass sie
@@ -330,6 +391,17 @@ TODO(verify): die Z-Höhe, die die Anleitung angibt, und die Höhe, die tatsäch
 funktioniert. Beide stehen im Quell-Thread. Hier etwas falsch zu machen kostet Sie
 nichts außer Zugänglichkeit, daher ist die qualitative Form — höher fahren, als die
 Anleitung sagt — der brauchbare Teil.
+
+**Die Muttern der Spulenhalter hinten.** Diese Muttern setzt man blind. Sie können
+nicht gleichzeitig den Mutternhalter festhalten und an der Seite entlangschauen, um die
+Bohrungen auszurichten, und bei den unteren Haltern landen die Muttern hinter den
+Antriebsteilen des Betts. Ein Besitzer, der INDX und Gen 2 zusammen aufgebaut hat,
+empfiehlt ein zweites Paar Hände und fand, dass eine aus der Community stammende
+Rückplatte für die Spulenhalter, vorab gedruckt, das Anbringen deutlich erleichterte.
+Gedruckte Einsetzhilfen für Muttern und ein Stück doppelseitiges Klebeband auf der
+Fingerspitze, aus einem anderen Thread, finden Sie unter dem Nachrüsten von Gen 2 an
+einem fertigen Aufbau der Founders Edition weiter unten. *Einzelmeldung*:
+Schwierigkeit, Helfer und Rückplatte stammen alle von einem Besitzer.
 
 **Verkabelung des Offset-Sensors.** Führen Sie **zuerst** das Kabel des Offset-Sensors
 durch die Bohrung, danach das dickere RGB-LED-Kabel. Die andere Reihenfolge passt
@@ -346,6 +418,24 @@ hier leicht aus, und die Bohrungen sind eng. Schneiden Sie mit einer M3-Ersatzsc
 vor. Allein die Vorderseite des Werkzeughalters hat über zwei Dutzend Bohrungen zu
 schneiden, richten Sie sich also darauf ein und arbeiten Sie langsam — Abrutschen
 hinterlässt Spuren auf der Frontplatte.
+
+Es kommt nicht nur darauf an, ob Sie die Gewinde vorschneiden, sondern ebenso darauf,
+wie. Ein Besitzer, der INDX und Gen 2 zusammen aufgebaut hat, schnitt die Bohrungen der
+Werkzeughalter mit einem richtigen M3-Gewindebohrer in einem Windeisen und drehte die
+Schrauben mit Schraubendrehern statt mit einem L-förmigen Innensechskantschlüssel ein;
+er rät außerdem, die Bohrungen auszublasen. Die Ersatz-Werkzeughalter, die er gedruckt
+hatte, blieben ungenutzt. Aus seiner Sicht ist der L-Schlüssel das Problem, ob er nun
+einen Gewindebohrer dreht oder eine Schraube, die sich ihr Gewinde selbst schneidet;
+nehmen Sie also in beiden Fällen ein Windeisen oder einen Schraubendreher. Eine
+Schraube, die mit einem L-Schlüssel gedreht wird, nutzt die Bohrung nach seiner Aussage
+oft ab und weitet sie auf, und so erklärt er die vielen Ersatzhalter, die andere
+Besitzer gedruckt haben. Diese Erklärung ist seine Deutung, keine geprüfte Ursache.
+Derselbe Besitzer rät zu gutem Werkzeug, da er die Spitze eines billigen
+T10-Schraubendrehers mehr als einmal nachschleifen musste. Ein Erbauer der Founders
+Edition fand in einem anderen Thread, dass die Schraubenlöcher in einigen der
+gedruckten Dock-Teile des Satzes besser hätten ausgeführt sein können, und bei einem
+Besitzer sind Schrauben in Dock-Teile geschmolzen, wie unter Bezugsquellen weiter unten
+vermerkt: zwei verschiedene Symptome, jedes eine Einzelmeldung.
 
 ## Magnete der Werkzeug-Docks
 
@@ -473,12 +563,16 @@ Senkkopf-Magnete, die in das obere Teil des Blocks geschraubt werden:
 **Am Werkzeugkopf gibt es keinen Filamentsensor.** Der INDX hat ausschließlich
 seitliche Sensoren, was im Firmware-Quellcode, wie für 6.9.1 veröffentlicht, bestätigt
 ist; nichts in den
-[Release Notes zu 7.0.0](https://help.prusa3d.com/downloads/core-one-indx) deutet auf
-eine Änderung hin. In der Praxis: Das
+[Release Notes zu 7.0.0, 7.0.1 oder 8.0.0](https://help.prusa3d.com/downloads/core-one-indx)
+deutet auf eine Änderung hin. In der Praxis: Das
 automatische Laden funktioniert nur für das gerade aufgenommene Werkzeug, Sie führen
 jedes Filament von Hand bis zum Kopf und nur das letzte kurze Stück wird eingezogen,
 und es gibt **keine Verstopfungs- oder Filamentende-Erkennung am Kopf selbst**. Das
-überrascht Umsteiger vom Nextruder.
+überrascht Umsteiger vom Nextruder. Prusas Handbuch zum INDX hat in seiner Revision 1.03
+vom 22. Oktober 2026 auf der
+[Download-Seite](https://help.prusa3d.com/downloads/core-one-indx) das Vorgehen beim
+Laden von Filament überarbeitet; diese Seite hat das noch nicht mit der Beschreibung
+hier abgeglichen.
 
 **Vier- und Acht-Werkzeug-Sätze teilen sich eine Anleitung.** Schritte, die acht
 PTFE-Schläuche oder acht Kabel zeigen, sind normal — ein Vier-Werkzeug-Satz nutzt die
@@ -550,6 +644,29 @@ der Fehler unterlaufen war, ihn als Ursache bestätigt:
   ([Thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/)).
 
 *Vorläufig.* Beides sind Einzelmeldungen, jede aus einem eigenen Thread.
+
+Ein dritter Fehlschlag hinten rechts am Bett könnte ebenfalls auf die Montage
+zurückgehen, seine Ursache ist aber nicht bestätigt. Im
+[selben Thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/bed-leveling-issues-3/)
+wie der Abstandshalter sah ein Besitzer, bei dem die Abtastung an dieser Ecke jedes Mal
+fehlschlug, sobald ein Druck mehr vom Bett nutzte, wie sich das Kabel des Heizbetts
+darunter staute, sodass das Bett hinten tiefer lag als vorn. Später schrieb er, er habe
+sein Problem in der Führung dieses Kabels gefunden: weiterhin hinter einer Stange, aber
+nun über dem Heizbett statt darunter, soweit sich seine Formulierung deuten lässt.
+Danach war er noch dabei, die Nivellierung in den Griff zu bekommen. Ein späterer
+Besitzer im selben Thread hat denselben Fehlschlag bei Drucken, die das ganze Bett
+bedecken, bislang ohne Diagnose, und auch der Besitzer mit dem Abstandshalter oben
+hatte in diesem Thread zuerst dasselbe Symptom gemeldet; es hat also mehr als eine
+Ursache. Ein weiterer Besitzer, der seinen Aufbau gerade abgeschlossen hatte, sagt, die
+Anleitung mache nicht deutlich, dass das Bettkabel hinter der hinteren Z-Gewindespindel
+hängen soll; er lässt es in einem lockeren, gleichmäßigen Bogen durchhängen, die Adern
+nebeneinander und keine gekreuzt, biegt es am Eintritt in den Bauraum eng ab und bindet
+es dort fest an, damit das Bett frei fahren kann. Schlägt die Abtastung nur
+hinten rechts fehl, kostet es wenig zu prüfen, wie das Kabel des Heizbetts verlegt ist
+und dass nichts es einklemmt; das ist ein aus diesen Meldungen abgeleiteter Vorschlag,
+keine bestätigte Lösung. *Vorläufig*: die Schilderung eines Besitzers zur Kabelführung,
+der Rat eines Besitzers zu ihrer Verlegung und eine nicht diagnostizierte Wiederholung,
+alle aus einem Thread, die Ursache unbestätigt.
 
 ## Gen 2 an einem fertigen Aufbau der Founders Edition nachrüsten
 
@@ -706,6 +823,36 @@ Die Belege für jede Aussage, Punkt für Punkt:
   im oben verlinkten Thread über den Tausch einer MMU3 gegen den INDX und einen im
   Thread zur Versandankündigung von Prusa. Derselbe Rat erscheint in letzterem auch vom
   Autor dieser Seite und wird nicht mitgezählt.
+- **Spiel beim Einsetzen der Riemenenden** stützt sich auf vier Besitzer in drei
+  Threads: Der Besitzer, dessen Riemen mit genug Spiel hielten, einer, der nach eigener
+  Aussage immer so arbeitet, und einer, der zustimmt, dass dies bei einem serienmäßigen
+  Core One üblich ist, stehen in
+  [einem Thread über einen schwierigen Aufbau](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/the-worst-experience-of-any-3d-printer-assembly/);
+  derjenige, der immer so arbeitet, gibt denselben Rat im
+  [Thread über das Nachrüsten von Gen 2 an einem Aufbau der Founders Edition](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-fe-upgrading-to-gen2/)
+  und zählt daher einmal; ein weiterer Besitzer, der dies beim Aufbau eines Core One
+  als hilfreich erlebt hatte, gibt ihn in
+  [einem Thread über die veröffentlichte Anleitung](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/indx-assembly-guide/).
+  Dass die Montageplatte des Kopfes gedruckt ist und die Riemenenden klemmt, stammt von
+  einem Besitzer, der in diesem letzten Thread die Anleitung gelesen hat, und von einem
+  Besitzer, der die Platte vorab gedruckt hat, in
+  [einem Thread über den Umbau eines MK4S](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/mk4s-to-core-one-with-indx-conversion/).
+  Der Autor dieser Seite hat im ersten Thread ebenfalls geantwortet und wird nicht
+  mitgezählt. Dass die Riemen überhaupt herauskamen, berichten zwei Besitzer in diesem
+  einen Thread, also *vorläufig*, ebenso der Hinweis zu zu straff gespannten Riemen. Der
+  Assistent für die Rechtwinkligkeit des Portals im Handbuch stammt, wie das unter dem
+  ersten Start erwähnte überarbeitete Vorgehen beim Laden von Filament, aus der
+  Änderungsliste auf Prusas Download-Seite in ihrem Stand vom 25. Oktober 2026.
+- **Probleme mit Schraubenlöchern in gedruckten Dock-Teilen** sind zwei verschiedene
+  Symptome, jedes eine Einzelmeldung: Ein Erbauer der Founders Edition fand im Thread
+  über einen schwierigen Aufbau, dass die Schraubenlöcher in einigen der gedruckten
+  Dock-Teile des Satzes besser hätten ausgeführt sein können, und bei einem Besitzer
+  sind Schrauben in Dock-Teile geschmolzen, im Thread über die Erweiterung eines
+  Vier-Werkzeug-Satzes auf acht. Der Besitzer, der die Werkzeughalter vorgeschnitten
+  hat, in
+  [einem Thread über einen Aufbau mit INDX und Gen 2](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/upgrade-core1-to-indx-gen2/),
+  hatte selbst keine Probleme; seine Erklärung dafür, dass andere neu drucken, ist
+  allein seine Deutung.
 
 Schwächer: Die Bootloader-Sperre des MK4S ist die Erfahrung eines einzelnen Besitzers
 und an Ort und Stelle als solche gekennzeichnet. Sie stammt aus dem allgemeinen
@@ -717,7 +864,16 @@ nach dem ersten Flashen, der montiert gelieferte Drucker ohne Werkzeug, die in
 Dock-Teile geschmolzenen Schrauben, der Behelf für die Abstandshalter im Sensorgehäuse,
 die Messung der Senkkopf-Magnete zusammen mit den beiden Angeboten, die in dieser
 Größe gefunden wurden, und dem annähernd passenden Magneten, dessen Test noch aussteht,
-sowie beide Montagefehler, jeder aus einem eigenen Thread. Die Größe des
+sowie beide Montagefehler, jeder aus einem eigenen Thread, dazu die Führung des
+Heizbettkabels, die ein dritter sein könnte, und der Rat eines Besitzers, wie dieses
+Kabel zu verlegen ist, beide aus dem Thread mit dem Abstandshalter. Aus dem Thread über
+einen Aufbau mit INDX und Gen 2, alle vom selben Besitzer, der ihn eröffnet hat: der
+Holzstechbeitel für die Nieten, der gebrochene Remix des Spanners, die lose Stange und
+die losen Schrauben am Schlitten, die fehlenden Schrauben und Abstreiferteile samt der
+Bitte des Supports um Fotos sowie die Rückplatte für die Spulenhalter. Der Satz mit
+einem Ersatzstück von fast jedem Verbindungselement und der Aufbau der Founders Edition
+mit übrigen Schrauben stammen jeweils von einem Besitzer im Thread über einen
+schwierigen Aufbau. Die Größe des
 Aktivierungsmagneten beruht auf der Messung eines Besitzers gegenüber einem Wert, den
 niemand gemessen hat. An welche Stelle der INDX-Abfolge die Gen-2-Teile gehören, legt
 inzwischen Prusa selbst im kombinierten Artikel fest; die frühere Praxis des Autors

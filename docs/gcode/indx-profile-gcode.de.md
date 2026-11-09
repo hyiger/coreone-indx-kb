@@ -1,7 +1,7 @@
 ---
 title:        Kommentierter G-Code für Start, Schichtwechsel und Werkzeugwechsel
 confidence:   measured
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -31,8 +31,12 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.10.1/ProjectOptions.cmake
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.10.1/src/gui/MItem_hardware.hpp
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini
+  - https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/libslic3r/PlaceholderParser.cpp
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.6.ini
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.7.ini
 superseded_by:
-source_sha:   0e8e14bf77172f20e1c690d71fe7c85bfaf206bee570101aa6e24d34e3910da8
+source_sha:   91a0dc421e5898c9a1b3f61ed5c4097eb1edcaf41ada77f5a907bd50aa5ccc8e
 ---
 # Kommentierter G-Code für Start, Schichtwechsel und Werkzeugwechsel
 
@@ -51,15 +55,16 @@ source_sha:   0e8e14bf77172f20e1c690d71fe7c85bfaf206bee570101aa6e24d34e3910da8
     genannte Version gegen Ihre — das Profil von 6.6.3 wich an mehreren Stellen von
     diesem ab.
 
-!!! warning "Für 6.9.0 geschrieben; die Firmware ist inzwischen bei 7.0.0"
-    Firmware 6.9.1 erschien am 25. September 2026 als stabile Version, 6.9.2 folgte
-    am 7. Oktober und 7.0.0 am 15. Oktober. Die Blöcke auf dieser Seite sind weiterhin
-    das Profil von 6.9.0 und wurden bewusst nicht an spätere Versionen angepasst. Prusas
-    Profilpaket 2.5.10 vom 17. September liefert diese Blöcke unverändert aus. Ebenso
-    2.5.11, das am 2. Oktober, eine Woche nach 6.9.1, in Prusas Profil-Repository
-    erschien: Alle fünf INDX-Blöcke sind mit denen aus 2.5.10 identisch, und die
-    `M115`-Zeile nennt weiterhin 6.9.0. **Paket 2.5.12 vom 15. Oktober ist das erste, das
-    sie ändert**; siehe den Hinweis unten. Weicht das Profil in Ihrem Slicer von dem hier
+!!! warning "Für 6.9.0 geschrieben; die Firmware ist inzwischen bei 8.0.0"
+    Firmware 6.9.1 erschien am 25. September 2026 als stabile Version, 6.9.2 folgte am
+    7. Oktober, 7.0.0 am 15. Oktober, 7.0.1 am 19. Oktober und 8.0.0 am 22. Oktober. Die
+    Blöcke auf dieser Seite sind weiterhin das Profil von 6.9.0 und wurden bewusst nicht
+    an spätere Versionen angepasst. Prusas Profilpaket 2.5.10 vom 17. September liefert
+    diese Blöcke unverändert aus. Ebenso 2.5.11, das am 2. Oktober, eine Woche nach
+    6.9.1, in Prusas Profil-Repository erschien: Alle fünf INDX-Blöcke sind mit denen
+    aus 2.5.10 identisch, und die `M115`-Zeile nennt weiterhin 6.9.0. **Paket 2.5.12 vom
+    15. Oktober ist das erste, das sie ändert**, und 2.5.13 vom 22. Oktober ändert sie
+    erneut; siehe den Hinweis unten. Weicht das Profil in Ihrem Slicer von dem hier
     gezeigten ab, ist Ihres das aktuelle.
 
     Die Firmware-Seite wurde gegen den öffentlichen Quellcode geprüft, durch einen
@@ -82,14 +87,16 @@ source_sha:   0e8e14bf77172f20e1c690d71fe7c85bfaf206bee570101aa6e24d34e3910da8
     von 6.9.1 angekündigt hatten, die im Build dieser Version aber fehlten, und
     berührt keinen G-Code-Handler.
 
-    7.0.0 ist nicht auf dieselbe Weise geprüft. Prusa hatte den Quellcode bis zum
-    18. Oktober nicht auf GitHub veröffentlicht, daher ist jede Befehlserläuterung hier
-    nur bis einschließlich 6.9.2 verifiziert. Zwei Einträge in den
-    [Versionshinweisen](https://help.prusa3d.com/downloads/core-one-indx) liegen nahe an
-    dieser Seite, und beide sind als Übernahmen aus früheren Versionen gekennzeichnet.
-    Das schnellere Anheben von Z beim Parken, gekennzeichnet mit 6.9.1 und 6.10.2, ist
-    die `G27`-Änderung, die schon 6.9.1 brachte. Die verbesserte Reinigung mit dem Nozzle
-    Wiper, gekennzeichnet mit 6.10.1, stammt aus der Firmware-Linie des XL, in der
+    Keine der Versionen 7.0.0, 7.0.1 und 8.0.0 ist auf dieselbe Weise geprüft. Prusa
+    hatte den Quellcode keiner von ihnen bis zum 25. Oktober auf GitHub veröffentlicht,
+    daher ist jede Befehlserläuterung hier nur bis einschließlich 6.9.2 verifiziert. Zwei
+    Einträge in den
+    [Versionshinweisen](https://help.prusa3d.com/downloads/core-one-indx) zu 7.0.0
+    liegen nahe an dieser Seite, und beide sind als Übernahmen aus früheren Versionen
+    gekennzeichnet. Das schnellere Anheben von Z beim Parken, gekennzeichnet mit 6.9.1
+    und 6.10.2, ist die `G27`-Änderung, die schon 6.9.1 brachte. Die verbesserte
+    Reinigung mit dem Nozzle Wiper, gekennzeichnet mit 6.10.1, stammt aus der
+    Firmware-Linie des XL, in der
     [6.10.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1)
     den Nozzle Wiper als Hardware des XL+ einführte. Laut einem Kommentar im
     [Quellcode des Hardware-Menüs](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.10.1/src/gui/MItem_hardware.hpp)
@@ -102,7 +109,20 @@ source_sha:   0e8e14bf77172f20e1c690d71fe7c85bfaf206bee570101aa6e24d34e3910da8
     an dem ändert, was die `G12`-Zeilen unten tun, lässt sich erst prüfen, wenn der
     Quellcode vorliegt.
 
-!!! note "Paket 2.5.12 hat zwei dieser Blöcke geändert, nachdem diese Seite entstand"
+    Auch zwei Einträge in den
+    [Hinweisen](https://help.prusa3d.com/downloads/core-one-indx) zu 8.0.0, beide neu,
+    berühren diese Seite. Der erste gibt `M204` einen Parameter `F`, eine
+    Beschleunigungsgrenze für das Filament, die laut den Hinweisen standardmäßig aktiv
+    ist. Die `M204`-Zeilen des Profils setzen nur `S`, und nichts in Paket 2.5.13 gibt
+    `M204 F` aus; welche Grenze 8.0.0 auch anwendet, sie stammt also aus der Firmware,
+    nicht aus dem Profil. Der zweite bremst flexibles Filament beim Reinigen der Düse
+    weniger stark ab als zuvor. Das ist die eigene Reinigungsbewegung der Firmware:
+    Keine der `G12`-Zeilen unten übergibt eine Geschwindigkeit.
+
+    TODO(verify): was `M204 F` genau begrenzt und welchen Standardwert es hat; die
+    Hinweise zu 8.0.0 nennen beides nicht, und der Quellcode ist unveröffentlicht.
+
+!!! note "Die Pakete 2.5.12 und 2.5.13 haben drei dieser Blöcke geändert, nachdem diese Seite entstand"
     Prusas Profilpaket 2.5.12, eingecheckt am 15. Oktober 2026, dem Tag, an dem Firmware
     7.0.0 erschien, nennt in seinem
     [Änderungsprotokoll](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/index.idx)
@@ -135,10 +155,27 @@ source_sha:   0e8e14bf77172f20e1c690d71fe7c85bfaf206bee570101aa6e24d34e3910da8
           weiter unten. Der Rückzug im Start-Block selbst fügt es weiterhin hinzu.
     - **Vor dem Schichtwechsel, nach dem Schichtwechsel und Ende:** unverändert.
 
-    Die Blöcke unten sind weiterhin der Text aus 2.5.11, und die Auszüge zum
-    Werkzeugwechsel stimmen mit 2.5.12 nicht mehr überein. Sie wurden hier nicht neu
-    geschrieben: Diese Seite gibt ein Profil wortgetreu wieder und kommentiert es, und eine
-    neue Wiedergabe wäre eine neue Fassung der Seite, keine Änderung daran.
+    Paket 2.5.13 folgte am 22. Oktober, dem Tag, an dem Firmware 8.0.0 erschien. Sein
+    Änderungsprotokoll nennt ein aktualisiertes INDX-Skript für den Schichtwechsel und
+    einen weiteren Firmware-Versionshinweis, und ein Vergleich
+    [der Datei](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini)
+    mit 2.5.12 bestätigt das:
+
+    - **Start:** wieder nur die `M115`-Zeile. Sie nennt jetzt 7.0.1, die Zwischenversion
+      vom 19. Oktober, als `M115 U7.0.1+16905`, und nicht 8.0.0.
+    - **Nach dem Schichtwechsel:** Jede der acht Prüfungen auf die PET-Familie im Abschnitt
+      zum Dock-Lüfter erhält ein angehängtes `.*`, sodass das Muster
+      `(PET|CPE|PCTG).*` lautet. Dadurch passt PETG wieder: Die Pakete 2.5.0 bis 2.5.6
+      prüften auf `(PETG|PET)`, was PETG erfasste, und die Neufassung in 2.5.7 ließ es
+      fallen; warum, erklärt der Abschnitt zum Schichtwechsel weiter unten.
+    - **Vor dem Schichtwechsel, Werkzeugwechsel und Ende:** gegenüber 2.5.12 unverändert.
+
+    Die Blöcke unten sind weiterhin der Text aus 2.5.11. Die Auszüge zum Werkzeugwechsel
+    stimmen mit 2.5.12 und später nicht mehr überein, und die Prüfung auf die PET-Familie
+    im Auszug nach dem Schichtwechsel stimmt mit 2.5.13 nicht mehr überein. Sie wurden
+    hier nicht neu geschrieben: Diese Seite gibt ein Profil wortgetreu wieder und
+    kommentiert es, und eine neue Wiedergabe wäre eine neue Fassung der Seite, keine
+    Änderung daran.
 
 ## Worum es sich handelt
 
@@ -354,14 +391,16 @@ also in mm Filament pro Sekunde ausgegeben. Ein `F` in Marlin ist immer mm pro M
 auch immer diesen Wert verarbeitet, verwendet nicht die übliche Vorschubkonvention — ein
 weiteres Indiz dafür, dass `M574` ein herstellereigener Befehl mit eigener Konvention ist.
 
-!!! note "M574 ist nicht implementiert — und vermutlich nicht fertig"
-    Keine Prusa-Firmware hat einen Handler für `M574`. Der Drucker protokolliert
+!!! note "M574 hat in veröffentlichter Firmware keinen Handler — und ist vermutlich nicht fertig"
+    Keine Prusa-Firmware mit veröffentlichtem Quellcode, die des INDX bis einschließlich
+    6.9.2 eingeschlossen, hat einen Handler für `M574`. Der Drucker protokolliert
     `Unknown command:`, antwortet mit `ok` und fährt fort: acht ignorierte Zeilen je
     Druck, eine je verwendetem Nicht-FLEX-Werkzeug. Nichts geht kaputt. Das ist aus dem
     Firmware-Quellcode abgeleitet — öffentlich scheint es keine Aufzeichnung von einer
     echten Maschine zu geben, und Prusa entwickelt nicht öffentlich. Belegt ist also,
-    dass die Firmware, **die Sie einsetzen**, den Befehl ignoriert, nicht, dass nirgends
-    ein Handler existiert.
+    dass die Firmware, **die Sie einsetzen**, den Befehl ignoriert, sofern es 6.9.2 oder
+    älter ist, nicht, dass nirgends ein Handler existiert. Für 7.0.0, 7.0.1 und 8.0.0,
+    deren Quellcode unveröffentlicht ist, ist das ungeprüft.
 
     Auch einen Commit gibt es nicht zu finden. Die Zeile wird außerhalb des Repositorys
     im Profilbündel des Herstellers ausgeliefert, erstmals in
@@ -381,6 +420,13 @@ weiteres Indiz dafür, dass `M574` ein herstellereigener Befehl mit eigener Konv
     benötigte, und die Profile gehen der Ankündigung um sieben Wochen voraus. **Keine
     Quelle verbindet beides**, und die Nutzlast passt zur Hälfte mit den
     Beschleunigungsgrenzen mindestens ebenso gut wie zur Kalibrierungshälfte.
+
+    Firmware 8.0.0 hat inzwischen eine Beschleunigungsgrenze für das Filament eingeführt,
+    standardmäßig aktiv, doch ihre
+    [Versionshinweise](https://help.prusa3d.com/downloads/core-one-indx) führen sie als
+    `M204 F`, nicht als `M574`, und verbinden sie weder mit der Ankündigung noch mit
+    `M574`. Paket 2.5.13, am selben Tag veröffentlicht, enthält weiterhin die acht
+    `M574`-Zeilen.
 
     Eine praktische Warnung: `M574` bedeutet in RepRap und RepRapFirmware
     Endschalter-Konfiguration, daher beschreibt fast alles, was eine Suche liefert, ein
@@ -598,8 +644,9 @@ und sei zusammen mit dem Abschalten von Pressure Advance für das Spülen eingef
 worden. In derselben Antwort hieß es, Prusa erwäge, ihn nach weiteren Tests zu entfernen
 ([Issue 49](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/49)).
 Paket 2.5.12 vom 15. Oktober hat ihn inzwischen aus dem Werkzeugwechsel-Block gestrichen,
-in diesem Start-Block aber beibehalten; das Issue selbst hatte keine weitere Antwort
-erhalten und war am 18. Oktober noch offen.
+in diesem Start-Block aber beibehalten, und 2.5.13 belässt ihn dort, wo 2.5.12 ihn
+gelassen hat; das Issue selbst hatte keine weitere Antwort erhalten und war am
+25. Oktober noch offen.
 
 !!! important "Die letzte interessante Zeile ist `{tool_init[initial_tool] = 1}`"
     Damit wird das Startwerkzeug als bereits gereinigt und vorgefüllt markiert. Nichts in
@@ -650,6 +697,9 @@ Bewegungsartefakte auseinandergehalten werden müssen.
 
 ## Nach dem Schichtwechsel
 
+*Der Auszug in diesem Abschnitt ist der Text aus 2.5.11, den 2.5.12 unverändert ließ.
+Paket 2.5.13 ändert die Prüfung auf die PET-Familie; siehe unten.*
+
 ```gcode
 ;AFTER_LAYER_CHANGE
 ;[layer_z]
@@ -694,6 +744,25 @@ Im Einzelnen:
 Diese Reihenfolge ist beabsichtigt, und der Kommentar im Profil hält sie fest: *PLA wins by
 order*. Wo eine Platte beides mischt, ist die Niedrigtemperatur-Einstellung diejenige, die
 übrig bleibt.
+
+**Von Paket 2.5.7 bis 2.5.12 passte der PET-Zweig nie auf PETG.** Der Operator `=~` von
+PrusaSlicer greift nur, wenn das Muster auf die gesamte Zeichenkette passt, nicht auf
+einen Teil davon
+([Quellcode von PrusaSlicer 2.9.6](https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/libslic3r/PlaceholderParser.cpp)),
+`(PET|CPE|PCTG)` wie oben gezeigt passt also nur auf einen Filamenttyp, der genau PET,
+CPE oder PCTG lautet. Jedes aktive INDX-Filament-Preset der PET-Familie in 2.5.12,
+Generic PETG sowie Prusament PETG, PETG V0 und PETG Carbon Fiber, hat den Typ PETG. Bei
+einem Druck mit mehreren Werkzeugen, dessen einziges Material der PET-Familie PETG war,
+schaltete das Profil den Dock-Lüfter also nie ein, sofern nicht zugleich ein
+Niedrigtemperatur-Material auf der Platte war, was immer sein Kommentar sagt. Das war
+eine Regression: Das Skript in den Paketen 2.5.0 bis
+[2.5.6](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.6.ini)
+prüfte auf `(PETG|PET)`, was PETG durchaus erfasst, und die Neufassung in
+[2.5.7](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.7.ini)
+vom 20. August ersetzte diese Prüfung. Paket 2.5.13 hängt `.*` an das Muster an, und von
+da an passt PETG wieder. Das ist aus dem Profil und dem Quellcode des Slicers gelesen,
+nicht an einer Maschine beobachtet. Die Zeile für die Antasttemperatur im Start-Block war
+nie betroffen: Ihre PET-Prüfung hat bereits auf beiden Seiten einen Platzhalter.
 
 !!! note "`S100` sind nicht 100 Prozent"
     `M106` nimmt einen PWM-Wert von 0 bis 255 entgegen, `S255` ist also volle Leistung und
@@ -911,6 +980,7 @@ Verhalten gegen den Quellcode der Prusa-Firmware verifiziert, sofern nicht ander
 | `M106 P6 S` | **Dock-Lüfter**, PWM 0–255 |
 | `M107` | Bauteillüfter aus |
 | `M204 S` | Beschleunigung setzen |
+| `M204 F` | Beschleunigungsgrenze für das Filament, neu in 8.0.0 und laut dessen Versionshinweisen standardmäßig aktiv; vom Profil nicht ausgegeben und nicht gegen den Quellcode geprüft |
 | `M201 X Y` | Maximale Beschleunigung je Achse setzen |
 | `M221 S` | Flussprozentsatz |
 | `M572 S` | Pressure Advance; `S0` deaktiviert |
@@ -921,7 +991,7 @@ Verhalten gegen den Quellcode der Prusa-Firmware verifiziert, sofern nicht ander
 | `M77` | Den Drucktimer stoppen |
 | `M262 P B` | Pin-Richtung am IO-Expander — `B0` Ausgang, `B1` Eingang |
 | `M264 P B` | Pin-Pegel am IO-Expander — `B0` low, ungleich null high |
-| `M574 S V T F` | **Nicht implementiert** — kein Handler; als unbekannt protokolliert und übersprungen |
+| `M574 S V T F` | **Kein Handler** im veröffentlichten Firmware-Quellcode, bis 6.9.2; als unbekannt protokolliert und übersprungen |
 
 ## Verifikation
 
@@ -969,8 +1039,9 @@ Variablennamen, verwendete einen anderen Offset für PC und PA, ließ die global
 Befehle für die Kammerbeleuchtung, die diese Fassung weglässt. Weicht Ihre Firmware von der
 Version im Front Matter ab, rechnen Sie mit Unterschieden. Das Profil ändert sich zudem
 zwischen Paketen nach eigenem Zeitplan: 2.5.12 hat den Werkzeugwechsel-Block überarbeitet
-und nennt 6.9.2, nicht das am selben Tag erschienene 7.0.0, wie der Hinweis oben
-beschreibt.
+und nennt 6.9.2, nicht das am selben Tag erschienene 7.0.0, und 2.5.13 hat die Prüfung für
+den Dock-Lüfter auf PETG erweitert und nennt 7.0.1, nicht das am selben Tag erschienene
+8.0.0, wie der Hinweis oben beschreibt.
 
 ## Verwandte Seiten
 

@@ -1,7 +1,7 @@
 ---
 title:        Diagonal banding across print walls
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -120,6 +120,13 @@ None of these accounted for a pattern that survived across materials and tracked
 perimeter direction. If your banding *does* respond to drying the filament, you have a
 different and much cheaper problem.
 
+A caveat, though: an overall improvement from drying is not the same as the banding
+responding to it. One owner who says thoroughly dried filament improves their prints a
+great deal still found the diagonal lines on a recent print. Damp filament and this
+fault may coexist, so an improvement from drying does not by itself clear the extruder
+(`provisional`: a single report, self-diagnosed on a machine where the owner also reports
+one tool clicking and skipping, and that owner has not reported running the protocol).
+
 ### Check the cheap thing first
 
 Before pursuing a replacement, **inspect and clean the extruder gears**. A fragment of
@@ -148,7 +155,9 @@ it on any wall printed at 45° whose outline does not change from layer to layer
 Several owners in the thread say that on ordinary parts, where perimeter length varies,
 it shows up instead as generally uneven, fuzzy-looking walls — easy to blame on damp
 filament or an untuned profile, which is why some of them took weeks or months to
-notice it (`provisional`: one thread).
+notice it (`provisional`: one thread). The owner above who found drying helped saw the
+diagonal lines on a round, container-shaped print, and on smaller prints describes
+something closer to this ordinary-parts presentation: a scratchy, side-to-side texture.
 
 ### What it appears to be
 
@@ -244,9 +253,25 @@ so, and in mid-October was waiting on a second replacement. A further owner said
 support had added them to a list of owners awaiting a solution. Each is one owner's
 account, all in the same thread, and none names a part.
 
-Firmware 7.0.0, published on 15 October, does not change that picture: none of the
-items in its [release notes](https://help.prusa3d.com/downloads/core-one-indx) concerns
-the extruder drive, wall quality, or this artifact.
+Late October brought neither a part nor much news. The owner who had been told
+replacements would wait until the vendor was sure of a fix was still waiting on
+24 October: the vendor had said it was working on a solution, but a request for an
+update had gone unanswered for two weeks, although in that time the vendor replied twice
+to the same owner about a nozzle that arrived clogged. That owner would rather wait than
+gamble on a head that might carry the same fault. Another owner, affected for more than six
+weeks, said a month had passed since official channels last said anything about a
+resolution. The owner awaiting a second replacement in mid-October had not posted
+since, so whether it arrived or helped is unknown. The owner with the open Prusa case
+said only that support was taking the matter seriously. Each is one owner's account,
+all in the same thread, and none names a part.
+
+Neither firmware 7.0.0, published on 15 October, nor 8.0.0, published on 22 October,
+changes that picture: none of the items in their
+[release notes](https://help.prusa3d.com/downloads/core-one-indx) names a fix for the
+extruder drive or for this artifact, and those for 7.0.1, published between them on
+19 October, list only a startup-freeze fix. The nearest is a new filament acceleration limit
+in 8.0.0, enabled by default; the notes list it as a new feature, not a print-quality
+fix, and by 25 October no owner in the thread had reported it changing the banding.
 
 #### The shim workaround
 
@@ -319,7 +344,7 @@ claims on this page.
 [the diagonal banding thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/)
 when this page was first written, and by several more since, ranging from severe to
 barely perceptible on glossy filament, so the phenomenon is not one person's
-imagination. The thread is marked answered and runs to 142 posts. The two-print
+imagination. The thread is marked answered and runs to 151 posts. The two-print
 protocol is its accepted answer, written by the owner who worked the problem with
 vendor and Prusa support involvement, and the reasoning for why it isolates extrusion
 from motion is sound on its own terms.
@@ -358,12 +383,17 @@ diagonal, and which yields the cheap gear-cleaning check.
 
 What would strengthen this page: more owners running the two-print protocol and
 reporting the result, the shim working on a second toolhead, a vendor statement
-naming the specific part, and a replacement known to carry a fix. At this update nobody
-has reported a shim result on another toolhead, though one owner said they would try it
-on their original head, nor a further run of the protocol. The vendor replies relayed in
-the thread acknowledge the fault without naming a part, Prusa's replies through
-mid-October likewise name none, and no replacement batch is known to carry a fix: the
-two injection-molded replacements reported so far did not.
+naming the specific part, and a replacement known to carry a fix. At this update,
+25 October, none of these has appeared. Nobody has reported a shim result on another
+toolhead; one owner said on 10 October that they would try it on their original head
+and has not reported back. Nobody has reported a further run of the protocol either.
+The vendor replies relayed in the thread acknowledge the fault and say a solution is
+being worked on, without naming a part; Prusa's replies relayed through mid-October
+likewise name none, and nothing relayed since names one. No batch is known to carry a
+fix: the two injection-molded replacements reported so far did not, a further
+replacement awaited in mid-October has no reported outcome, and an owner with a kit they
+identified as batch 5 believes they have the fault, though they have not reported
+running the protocol.
 
 ## Related
 

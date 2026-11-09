@@ -1,7 +1,7 @@
 ---
 title:        Nur eine Düsengröße hat ein Slicer-Profil
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -35,8 +35,10 @@ sources:
   - https://github.com/Zsoldier/PrusaSlicer-OpenPrintTagImport
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/flex-filament-stuck-and-cannot-dock-tool/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-review/
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/i-printed-tpu-on-my-indx/
 superseded_by:
-source_sha:   ae54bad6b2276781af44916a2cd9e8048bbf32dabb434f8a911842b91015f6a7
+source_sha:   70250c44c5d25f1f59183bf3940846c80a2cb37aed6dadcd6516400c1cba50bd
 ---
 # Nur eine Düsengröße hat ein Slicer-Profil
 
@@ -53,16 +55,17 @@ Besitzer, die die Alphas ausprobiert haben, fanden auch keine andere Größe (si
 Die ersten INDX-Profile von OrcaSlicer, in dessen Alpha 2.5.0 vom 16. Oktober, decken
 ebenfalls nur die High-Flow-Düse mit 0.4mm ab. Zwei Anfragen, die Größen zu ergänzen, sind
 upstream offen, die erste seit Juli 2026; keine hat eine Reaktion von Prusa erhalten, nur
-weitere Kommentatoren, die dasselbe verlangen. Prusas neuestes Profil-Bundle, 2.5.12 vom
-15. Oktober 2026, deklariert weiterhin nur diese eine Variante, auch wenn es und davor
-2.5.11 weitere Vorarbeiten für andere Größen anlegen, von denen keine erreichbar ist.
+weitere Kommentatoren, die dasselbe verlangen. Prusas neuestes Profil-Bundle, 2.5.13 vom
+22. Oktober 2026, deklariert weiterhin nur diese eine Variante, auch wenn davor 2.5.11
+und 2.5.12 weitere Vorarbeiten für andere Größen angelegt haben, von denen keine
+erreichbar ist.
 
 Bei den Materialien hat sich seit der ersten Fassung dieser Seite etwas bewegt: Flexible
 Filamente und BVOH haben im September INDX-Slicer-Presets erhalten, PVA im Oktober mit
 Bundle 2.5.12 ein generisches. HIPS hat weiterhin keines. Druckerseitige PVA- und
 BVOH-Presets, für Firmware 6.9.1 angekündigt, aber darin nicht enthalten, kamen am
-7. Oktober mit 6.9.2 und bleiben in 7.0.0 erhalten; das sind die eigenen Presets des
-Druckers, keine Slicer-Profile.
+7. Oktober mit 6.9.2 und bleiben in 7.0.0 erhalten (die Hinweise zu 7.0.1 und 8.0.0
+erwähnen sie nicht); das sind die eigenen Presets des Druckers, keine Slicer-Profile.
 
 Unterschiedliche Düsengrößen über die Werkzeuge hinweg waren ein beworbenes
 Hauptmerkmal dieses Werkzeugwechslers; man sollte das also wissen, bevor man Düsen
@@ -74,8 +77,8 @@ kauft, und erst recht, bevor man Shop-Guthaben als Entschädigung für Düsen an
 
 Das ist überprüfbar und keine Frage von Berichten. Prusa veröffentlicht sein
 Profil-Bundle, und in der aktuellen Ausgabe
-([2.5.12](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.12.ini),
-geprüft am 18. Oktober 2026) deklarieren beide INDX-Druckermodelle — das mit
+([2.5.13](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini),
+geprüft am 25. Oktober 2026) deklarieren beide INDX-Druckermodelle — das mit
 vier und das mit acht Werkzeugen — eine einzige Variante:
 
 ```ini
@@ -111,7 +114,7 @@ beschreiben für 3.0 zudem einen anderen Mechanismus: Düsengröße und High-Flo
 werden je Werkzeug im Druckerprofil gewählt, statt als Druckervarianten deklariert zu
 werden. Was den INDX dort begrenzt, ist also, für welche Düsenwerte sein 3.0-Profil
 Presets mitbringt, nicht eine `variants =`-Zeile. In Alpha 12, veröffentlicht am
-21. September und am 18. Oktober weiterhin die neueste 3.0-Alpha, hat die Datei mit den
+21. September und am 25. Oktober weiterhin die neueste 3.0-Alpha, hat die Datei mit den
 [Druck-Presets je Werkzeug](https://github.com/prusa3d/PrusaSlicer/blob/version_3.0.0-alpha12/resources/presets/prusa-research-fff/PrusaResearch/preset-tool-coreone-indx.yaml)
 des INDX aktive benannte Druck-Presets nur für eine High-Flow-Düse mit 0.4mm; die für
 High-Flow 0.5, 0.6 und 0.8 sowie für eine Standard-Düse mit 0.25 stehen darin, aber
@@ -204,6 +207,24 @@ Außerdem legt es eigene Vorlagen an, deren Bedingungen Core-One-L-INDX-Modelle
 nennen, die das Bundle nicht als Drucker deklariert. Nichts davon ist an einem Core One
 INDX erreichbar.
 
+Bundle 2.5.13, veröffentlicht am 22. Oktober, dem Tag, an dem Firmware 8.0.0 erschien,
+lässt die Düsenseite wieder unberührt: dieselbe einzige Variante `HF0.4`, und aktiv sind
+dieselben zwanzig Filament-, zehn Druck- und zwei Drucker-Presets. Sein
+[Änderungsprotokoll](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/index.idx)
+nennt ein aktualisiertes INDX-Skript für den Schichtwechsel, das die Prüfung des Profils
+für den Dock-Lüfter so korrigiert, dass sie PETG einschließt (siehe die
+[Seite zum kommentierten G-Code](../gcode/indx-profile-gcode.md)), und einen weiteren
+Firmware-Versionshinweis. Darunter ändert es einen Wert in der gemeinsamen Vorlage für
+Düsen mit 0.8mm, die nur abgeschaltete Presets nutzen, und fügt zwei weitere
+auskommentierte Einträge hinzu, Prusament PA11 bei HF0.4 für den Core One INDX und für
+einen Core One L INDX. Der erste folgt demselben Muster wie der selbst geschriebene
+Eintrag des Besitzers im weiter unten beschriebenen Nylon-Thread, mit einem
+Core-One-Nylon-Preset als Eltern-Preset und der INDX-Nylon-Vorlage des Bundles darüber.
+Bei Prusa ist das Eltern-Preset das eigene Core-One-Preset für Prusament PA11, beim
+Besitzer war es ein anderes Nylon, ergänzt um eine zweite INDX-Vorlage für PA6; Prusas
+Eintrag überschreibt außerdem mehrere Einstellungen mit eigenen Werten. Abgeschaltet fügt
+er nichts Auswählbares hinzu; Nylon hat weiterhin kein aktives INDX-Preset.
+
 ### Materialien
 
 Dieselbe Upstream-Anfrage bittet auch um Materialien, und hier hat sich das Bundle
@@ -230,7 +251,7 @@ und der Datei selbst:
   Firmware 6.9.0 eingeführt hat.
 - **BVOH** hat zwei, beide für Spulen von Drittanbietern (Verbatim und Fiberlogy). Auch
   ihr Start-G-Code ruft `M906 P2` auf.
-- **HIPS** fehlt auch in 2.5.12 weiterhin. Wie schon in 2.5.7 gibt es INDX-Einträge
+- **HIPS** fehlt auch in 2.5.13 weiterhin. Wie schon in 2.5.7 gibt es INDX-Einträge
   dafür, aber nur unter den auskommentierten. PVA war bis 2.5.12 in derselben Lage.
 
 **Seit Bundle 2.5.12** (am 15. Oktober 2026 eingecheckt), laut demselben
@@ -243,7 +264,7 @@ und der Datei selbst:
 
 Die für Anwender sichtbare Standard-Materialliste beider INDX-Modelle wurde hier als die
 übliche PLA- und PETG-Familie beschrieben, was sie schon im August untertrieb. Stand
-2.5.12 umfasst sie PLA, PETG, ASA, die PC Blends und Woodfill sowie seit 2.5.9 TPU 95A,
+2.5.13 umfasst sie PLA, PETG, ASA, die PC Blends und Woodfill sowie seit 2.5.9 TPU 95A,
 alle für die eine verfügbare Variante; keines der löslichen Materialien steht darauf.
 
 **Druckerseitige PVA- und BVOH-Presets sind etwas anderes, und sie kamen mit Firmware
@@ -259,7 +280,7 @@ und fügen PrusaSlicer kein Druckprofil hinzu. Mit 6.9.2 war BVOH damit an beide
 abgedeckt, PVA nur am Drucker; seit Bundle 2.5.12 ist auch PVA an beiden Enden
 abgedeckt. Firmware 7.0.0 vom 15. Oktober behält die Presets, die ihre
 [Versionshinweise](https://help.prusa3d.com/downloads/core-one-indx) als aus 6.9.2
-übernommen kennzeichnen.
+übernommen kennzeichnen. Die Hinweise zu 7.0.1 und 8.0.0 erwähnen sie nicht.
 
 Das ist mehr als eine Frage der Bequemlichkeit: HIPS und die löslichen Materialien sind
 das, wozu man greift, um auf einem Werkzeugwechsler Kontaktflächen von Stützstrukturen
@@ -360,11 +381,11 @@ Einstellung an Ihrer Maschine ändert.
   einzigen Kommentar; dann schrieben zwei weitere Kommentatoren dazu, einer mit der
   Frage, ob weitere Größen und Düsen ohne CHT kommen, einer mit dem Hinweis, dass seine
   Standard-Düsen vom Hersteller weiterhin nichts haben, womit sie laufen könnten; Prusa
-  hatte bis zum 18. Oktober nicht reagiert. Die zweite,
+  hatte bis zum 25. Oktober nicht reagiert. Die zweite,
   [Issue 48](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/48), wurde
   am 29. September von jemand anderem eingereicht und bittet allein um die Düsengrößen,
   namentlich 0.25, 0.5, 0.6, 0.8 und 1.0; ihr einziger Kommentar ist der erste dieser
-  Kommentatoren, der seine Frage wiederholt, und auch sie hatte bis zum 18. Oktober keine
+  Kommentatoren, der seine Frage wiederholt, und auch sie hatte bis zum 25. Oktober keine
   Reaktion von Prusa erhalten. Ein Issue mit einem einzigen Melder und ohne Resonanz
   bleibt leicht unbeachtet; mehrere Besitzer, die benennen, welche Größen und Materialien
   sie tatsächlich brauchen, lassen sich schwerer übergehen. Die Material-Presets vom
@@ -406,11 +427,12 @@ angeboten wird, ergibt sich aus dem Lesen von Prusas eigenem veröffentlichtem
 Profil-Bundle, in dem beide INDX-Druckermodelle diese eine Variante deklarieren. Das
 sind veröffentlichte Daten aus erster Hand, in derselben Klasse wie eine Anmerkung zu
 einer Firmware-Veröffentlichung — und nicht die Schilderung einer fremden Maschine. Am
-18. Oktober 2026 wurde es anhand von 2.5.12 erneut gelesen, ebenso wie die
+25. Oktober 2026 wurde es anhand von 2.5.13 erneut gelesen, ebenso wie die
 Material-Presets, die auskommentierten Einträge und die oben beschriebenen
 Kompatibilitätsbedingungen. Die Druck-Preset-Datei von Alpha 12 der Version 3.0 und die
-Drucker-Presets der Alpha 2.5.0 von OrcaSlicer wurden am selben Tag in ihrem
-veröffentlichten Quellcode gelesen; keiner der beiden Slicer wurde ausgeführt.
+Drucker-Presets der Alpha 2.5.0 von OrcaSlicer wurden am 18. Oktober in ihrem
+veröffentlichten Quellcode gelesen, und bis zum 25. Oktober hatte keiner der beiden
+Slicer eine neuere Version; keiner der beiden wurde ausgeführt.
 
 **Die Auswirkung ist berichtet**, von sechs Besitzern in
 [einem Forumsthread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/missing-profiles-in-slicer-for-non-0-4-nozzles-and-other-materials/),
@@ -436,10 +458,11 @@ zusammen. Der Thread zeigt dieselbe Lücke aus einer zweiten Richtung, fügt abe
 neue Besitzer hinzu: den, der fragte, und den, der noch baut. Ein
 [dritter Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/where-are-all-the-print-profiles/),
 eröffnet am 18. Oktober, fügt einen weiteren Besitzer hinzu, der andere Größen gekauft
-und nichts zur Auswahl gefunden hat; die bislang einzige Antwort kam vom Autor dieser
-Seite. Bei den Upstream-Anfragen meldeten im Oktober zwei weitere Kommentatoren ihren
-eigenen Bedarf an, einer davon bei beiden Issues; nichts in den Quellen verbindet einen
-der beiden mit den Forumsthreads.
+und nichts zur Auswahl gefunden hat. Die einzige Antwort außer der des Eröffners kam vom
+Autor dieser Seite; der Eröffner ergänzte in einem Folgebeitrag, keines von Prusas
+Profilen für andere Drucker sei auf den INDX übertragen worden. Bei den Upstream-Anfragen
+meldeten im Oktober zwei weitere Kommentatoren ihren eigenen Bedarf an, einer davon bei
+beiden Issues; nichts in den Quellen verbindet einen der beiden mit den Forumsthreads.
 
 **Das Symptom ist berichtet, der Fall anderer Marken vorläufig.** Zwei Besitzer in zwei
 Threads stellten fest, dass sich über den Assistenten installierte Filamente am INDX
@@ -491,13 +514,27 @@ ihm so genannten generischen Profilen, und wiederholte einen Tag später, dass T
 funktioniert habe; welches Flex-Preset er wählte, sagte er nicht. In einem
 [Thread zu einem Werkzeug, das sich nicht ablegen ließ](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/flex-filament-stuck-and-cannot-dock-tool/),
 saß bei zwei Besitzern ein Werkzeug am Kopf fest, weil sich flexibles Filament um die
-Extruderzahnräder verklemmt hatte, bei einem davon mit dem Preset Generic FLEX. Keiner
-der Threads klärt, ob die Presets taugen; sie zeigen, dass Flex am INDX funktionieren,
-aber auch klemmen kann. Die Erfolge stammen von zwei Besitzern in zwei Threads, von denen
-nur einer das Preset nennt, und sind daher als vorläufig zu behandeln; die Verklemmungen
-stammen von drei Besitzern in zwei Threads, den ersten Versuch des ersten Besitzers
-mitgezählt. Niemand in den Quellen berichtet bislang, BVOH oder PVA mit den Presets
-gedruckt zu haben.
+Extruderzahnräder verklemmt hatte, bei einem davon mit dem Preset Generic FLEX. Am
+24. Oktober schrieb in einem
+[Thread über TPU-Drucke am INDX](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/i-printed-tpu-on-my-indx/)
+ein weiterer Besitzer beiläufig, Prusament TPU 95A bereite ihm keine Probleme, und
+fragte dabei, wie sich ein weicheres TPU drucken lasse; der Thread handelt vom INDX,
+doch er nannte weder die Maschine noch das Preset. Der Thread hatte im August begonnen,
+bevor es die INDX-Presets für Flex gab: Ein anderer Besitzer druckte ein TPU eines
+Drittanbieters auf einer Standard-Düse mit 0.4mm, die der Drucker noch nicht erkannte, mit
+einem Filamentprofil, das er von seinem Core One mit einem Werkzeug kopiert hatte.
+Keiner der Threads klärt, ob die Presets taugen; sie zeigen, dass Flex am INDX
+funktionieren, aber auch klemmen kann. Die Erfolge, seit es die Presets gibt, stammen
+von zwei Besitzern in zwei Threads; das genügt, um als mehrfach berichtet zu gelten,
+dass sich Flex am INDX drucken lässt, und ein dritter Besitzer deutet einen weiteren
+an. Nur einer davon nennt das Preset, daher bleibt alles, was die Presets selbst
+betrifft, vorläufig. Die Verklemmungen stammen von drei Besitzern in zwei Threads, den
+ersten Versuch des ersten Besitzers mitgezählt. Firmware 8.0.0, erschienen am
+22. Oktober, bremst flexibles Filament beim Reinigen der Düse laut ihren
+[Hinweisen](https://help.prusa3d.com/downloads/core-one-indx) weniger stark ab als
+frühere Versionen; jeder der obigen Berichte außer dem vom 24. Oktober ist älter, und
+dieser sagt nicht, mit welcher Firmware er entstand. Niemand in den Quellen berichtet
+bislang, BVOH oder PVA mit den Presets gedruckt zu haben.
 
 Das veraltet schnell. Es ist eine Konfigurationslücke, die eine Profilveröffentlichung
 mit einem einzigen Update schließt; prüfen Sie daher das aktuelle Bundle, bevor Sie

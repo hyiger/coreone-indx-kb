@@ -1,13 +1,13 @@
 ---
 title:        Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1 and 6.9.2; first owner reports on 7.0.0; the board fault is not version-specific
+firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1 and 6.9.2; first owner reports on 7.0.0; the 7.0.0 startup hang fixed in 7.0.1; no reports yet on 8.0.0; the board fault is not version-specific
 sources:
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
@@ -29,8 +29,10 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-firmware-7-0-0-stuck-on-reset/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5544
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518
 superseded_by:
-source_sha:   0edb2a9fd92b7ee922d2e11c315b73c0d767a6510b8a2678d11271c06fb9e753
+source_sha:   98e89a5ed3c57d06448ee505da927062cc03f0f3c355b59e6a6785da1be66bc2
 ---
 # Werkzeug-Offset-Kalibrierung schlägt fehl — kontaktloser Offset-Sensor
 
@@ -134,8 +136,19 @@ einzigen berichteten Fall behoben.
     Werkzeug-Offset-Kalibrierung oder zum Offset-Sensor. Prusa hat ihren Quellcode noch
     nicht veröffentlicht; anders als bei 6.9.1 und 6.9.2 lässt sich also nicht prüfen,
     ob sie denselben Code enthält. Die Hinweise führen eine verbesserte Reinigung durch
-    den Düsenabstreifer auf, gekennzeichnet als erstmals mit 6.10.1 ausgeliefert; ob
-    danach weniger Material an den Düsen des INDX bleibt, hat noch niemand berichtet.
+    den Düsenabstreifer auf, gekennzeichnet als erstmals mit 6.10.1 ausgeliefert; der
+    einzige Bericht seither, der das, was die Reinigung an den Düsen des INDX
+    zurücklässt, mit fehlschlagenden Kalibrierungen in Verbindung bringt, fasst 7.0.0
+    und 6.9.2 zusammen, beide deutlich schlechter als 6.9.0, ohne die beiden zu
+    vergleichen oder die geänderte Reinigung zu erwähnen, siehe unten. Keine der beiden
+    seither erschienenen Versionen sagt mehr zur Werkzeug-Offset-Kalibrierung. 7.0.1,
+    veröffentlicht am 19. Oktober 2026, führt eine einzige Behebung auf, für das weiter
+    unten auf dieser Seite beschriebene Hängenbleiben beim Start. Die Versionshinweise
+    zu 8.0.0, veröffentlicht am 22. Oktober 2026, erwähnen weder die
+    Werkzeug-Offset-Kalibrierung noch den Offset-Sensor; ihr einziger Punkt zur
+    Düsenreinigung bremst flexible Filamente beim Reinigen weniger stark ab. Keiner der
+    beiden Quellcodes ist veröffentlicht, und zur Kalibrierung unter 8.0.0 hat noch kein
+    Besitzer berichtet.
 
     Die Beta war nicht bei allen fehlerfrei, und die Hinweise zur stabilen Version
     erwähnen nichts vom Folgenden. Ein Besitzer stellt fest, dass die Kalibrierung
@@ -165,6 +178,24 @@ einzigen berichteten Fall behoben.
     Werkzeugen und einer, für den ASA, das stärker haftet, kaum noch druckbar ist,
     beide ohne weitere Angaben. Das Issue ist offen, ohne Antwort des Herstellers.
 
+    **Ein Besitzer sagt, die niedrigere Temperatur mache es mit PETG schlimmer.**
+    `provisional`, ein einzelner Bericht. An einer Gen-2-Maschine meldet er in
+    [Firmware-Issue 5567](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567),
+    dass nach Abschluss der Reinigung, kurz vor dem Abtasten, noch PETG an der Düse
+    haftet und das einen zu hohen Z-Offset und fehlschlagendes Abtasten ergibt. Unter
+    6.9.0 kam das gelegentlich vor; unter 6.9.2 und 7.0.0 findet er es deutlich
+    häufiger, und die Rückkehr zu 6.9.0 hilft spürbar, ohne es zu beseitigen. Er führt
+    das auf die niedrigere Kalibriertemperatur zurück, die mit 6.9.1 kam: Bei dieser
+    Temperatur ist an der Spitze verbliebenes PETG hart geworden und verfälscht die
+    Messung deshalb stärker. Er ergänzt, dass der Standard-Start-G-Code diese
+    Kalibrierung vor der eigenen Düsenreinigung des Drucks ausführt, und schlägt vor,
+    zuerst zu reinigen. Die Kalibrierung reinigt jedes Werkzeug vor dem Messen weiterhin
+    selbst; gewünscht ist also eine zusätzliche Reinigung davor. Falls er recht hat,
+    wirkt bei einem klebrigen Material die niedrigere Temperatur, also die gegen das
+    Nachsickern gerichtete Hälfte der Behebung des Herstellers, ihrem eigenen Zweck
+    entgegen. Geprüft hat das niemand, und der Hersteller hat nicht geantwortet. Auch
+    hier ist es Material an der Spitze, nicht die Platine.
+
     **Die ersten Berichte zu 7.0.0 weisen nicht auf die Platine.** Jeder ist ein
     Einzelbericht. Ein Besitzer im
     [Thread zur Werkzeug-Offset-Kalibrierung](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/),
@@ -179,8 +210,16 @@ einzigen berichteten Fall behoben.
     vermutet Störungen an der Wägezelle, die nach seinen Messungen zunehmen, wenn der
     Extrudermotor bestromt ist. Später berichtet er, dass das Abschalten des
     Extrudertreibers vor dem Abtasten die Fehler an seinem Drucker selten gemacht hat,
-    eine Umgehung, keine Behebung. Siehe [Fehlercodes](../codes.md#36193) und
-    [Wägezellen-Störungen](loadcell-emi-noise.md).
+    eine Umgehung, keine Behebung. Sein späteres Setup schaltet zusätzlich die
+    Statusleuchte am Bett aus, was er in
+    [Firmware-Issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518)
+    als bisher sehr zuverlässig beschreibt; dieses Ergebnis trennt Motor und Leuchte
+    nicht. Ein zweiter Besitzer in Firmware-Issue 5548, mit einer Maschine mit acht
+    Werkzeugen, an der bisher keine Firmware die Kalibrierung zuverlässig gemacht hat,
+    schaltete nur den Extrudertreiber ab, und das Abtasten gelang nach mehreren
+    Fehlschlägen beim ersten Versuch; das ist ein einziger Versuch, und seine Firmware
+    nennt er nicht. Siehe
+    [Fehlercodes](../codes.md#36193) und [Wägezellen-Störungen](loadcell-emi-noise.md).
 
     Für Besitzer mit den neueren Riemen löst die Behebung außerdem das oben beschriebene
     Dilemma: 6.9.1 ist INDX-Firmware, die die 1.5-GT-Unterstützung behält, sodass der
@@ -295,8 +334,8 @@ Was diesen Fehler verwirrend macht:
   scheitert, ist oben als Zeichen der 6.9.0-Regression genannt; hier trat sie vor
   dieser Version auf und war Hardware.
 - **Gelingt sie aus dem Menü und scheitert beim Druckstart, passt das auch zu
-  Wägezellen-Störungen.** `provisional`, Besitzer in einem Forenthread, die meist
-  mehreres zugleich geändert haben. Besitzer im
+  Wägezellen-Störungen.** `provisional`, Besitzer in einem Forenthread und in einem
+  Issue, die meist mehreres zugleich geändert haben. Besitzer im
   [Thread zur Werkzeug-Offset-Kalibrierung](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/)
   beseitigten Fehlschläge beim Druckstart, indem sie Versorgungs- und Heizleitungen neu
   verlegten und verdrillten und Ferritkerne anbrachten. Einer von ihnen hatte auf
@@ -304,31 +343,52 @@ Was diesen Fehler verwirrend macht:
   [Firmware-Issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526),
   dessen Ersteller die Statusleuchte am Bett verantwortlich macht, gestützt auf Tests
   mit einer selbst veränderten Firmware, schaltete die Leuchte im Menü aus und hatte
-  danach keine Fehlschläge mehr. Ein weiterer Besitzer im Thread schaltete die
-  Leuchten aus und brachte zugleich Ferritperlen an, und auch seine Fehlschläge hörten
-  auf. Nach Angaben eines Besitzers leuchtet sie während eines Drucks, bei einer
+  danach keine Fehlschläge mehr. Anschließend brachte er zusätzlich Ferritperlen an den
+  Kabeln der Bett- und der Kammerbeleuchtung an, und seine neueste Zusammenfassung in
+  [Firmware-Issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518)
+  führt seine vollständige Behebung auf die Neuverdrahtung, diese Perlen und eine
+  niedrigere Abtasttemperatur im Start-G-Code zurück. Das Ausschalten der Leuchte steht
+  nicht auf dieser Liste, obwohl er das Kabel der Bettbeleuchtung für die
+  wahrscheinlichste Quelle hält; sein Ergebnis zeigt also nicht, dass das Ausschalten
+  nötig ist. Ein weiterer
+  Besitzer im Thread schaltete die Leuchten aus und brachte zugleich Ferritperlen an,
+  und auch seine Fehlschläge hörten auf. Noch ein Besitzer stellte in Firmware-Issue
+  5526 fest, dass Ferritperlen nicht halfen und das Ausschalten der Leuchte bisher
+  anscheinend jedes Mal hilft; seine Firmware nennt er nicht. Nach Angaben eines
+  Besitzers leuchtet sie während eines Drucks, bei einer
   Kalibrierung aus dem Menü aber nicht. Das ist der andere Sensor, siehe
   [Wägezellen-Störungen](loadcell-emi-noise.md).
 - **Ein Start, der unter 7.0.0 beim Offset-Sensor hängen bleibt, ist ein eigenes
-  Problem.** `reported`, zwei Quellen. Mehrere Besitzer berichten unter 7.0.0, dass
-  der Drucker beim Hochfahren in der Phase des Offset-Sensors stehen bleibt, nachdem
-  sie ihn zurückgesetzt hatten, während ein Druck startete oder ein Werkzeug am Kopf
-  war
+  Problem, behoben in 7.0.1.** `reported`, zwei Quellen. Mehrere Besitzer berichten
+  unter 7.0.0, dass der Drucker beim Hochfahren in der Phase des Offset-Sensors stehen
+  bleibt, nachdem sie ihn zurückgesetzt hatten, während ein Druck startete oder ein
+  Werkzeug am Kopf war
   ([Thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-firmware-7-0-0-stuck-on-reset/)),
   und der Besitzer, der
   [Firmware-Issue 5544](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5544)
   eröffnet hat, beschreibt dasselbe Hängenbleiben bei jedem Start, nachdem er den
   Drucker während einer Kollision beim Z-Homing zurückgesetzt hatte. Jedem Bericht,
   der sagt, wie es begann, geht ein Zurücksetzen voraus, und keine der beiden Quellen
-  weist auf die Sensorplatine. Zwei Besitzer brachten den Drucker wieder zum Starten,
-  indem sie 6.9.2 erneut flashten. Zwei andere stellten fest, dass weder ein Downgrade
-  noch ein Zurücksetzen auf Werkseinstellungen half, und einer von ihnen kam weiter,
-  indem er bei ausgeschaltetem Drucker den INDX-Hauptstecker abzog, den Drucker einmal
-  einschaltete, dann ausschaltete, den Stecker wieder anschloss und erneut
-  einschaltete. Der Besitzer im Issue kam auf ähnliche Weise weiter, indem er das Kabel
-  des Werkzeugkopfs am xBuddy-Board abzog und den Drucker aus- und wieder einschaltete.
-  Sein Bericht sagt nicht, ob der Drucker dabei ausgeschaltet war; schalten Sie ihn
-  aus, bevor Sie einen der beiden Stecker abziehen.
+  weist auf die Sensorplatine. Prusas Versionshinweise zu
+  [7.0.1](https://help.prusa3d.com/downloads/core-one-indx), veröffentlicht am
+  19. Oktober 2026, führen eine einzige Änderung auf: eine Behebung für Core One
+  INDX-Drucker, die beim Start auf dem Bildschirm hängen bleiben, der den
+  Werkzeug-Offset-Sensor als bereit meldet. Der Besitzer, der den Thread eröffnet hat,
+  berichtet, er habe das Hängenbleiben erneut herbeigeführt und 7.0.1 behebe es. Kein
+  Besitzer hat gesagt, ob oder wie er 7.0.1 auf einen Drucker gebracht hat, der bereits
+  hing. Die Flash-Vorgänge auf hängenden Druckern, die Besitzer beschreiben, waren
+  Downgrades: Zwei Besitzer brachten ihre Drucker wieder zum Starten, indem sie 6.9.2
+  flashten, einer davon mit einem erzwungenen Flashen, und ein dritter, dessen erster
+  Versuch eines Downgrades am selben Startbildschirm stehen geblieben war, bekam 6.9.1
+  installiert, indem er Reset drückte und dann den Drehknopf gedrückt hielt, bis die
+  Installation begann. Zwei andere stellten fest, dass die Rückkehr nicht half, und ein
+  Zurücksetzen auf Werkseinstellungen half niemandem, der es versuchte. Drei Besitzer,
+  zwei im Thread und der eine im Issue, kamen ohne neue Firmware weiter, indem sie
+  einmal mit abgezogenem INDX-Kabel starteten, am INDX-Hauptstecker oder am
+  xBuddy-Board. Im Thread lauten die Schritte: bei ausgeschaltetem Drucker abziehen,
+  einmal einschalten, ausschalten, wieder anschließen und erneut einschalten. Der
+  Bericht im Issue sagt nicht, ob der Drucker beim Abziehen ausgeschaltet war; schalten
+  Sie ihn aus, bevor Sie einen der beiden Stecker abziehen.
 
 ### Vorgehen, der Reihe nach
 
@@ -420,10 +480,15 @@ veröffentlichte Behebung des Herstellers, keine nachgewiesene Heilung: Ein Besi
 Bericht sah mit der Beta weiterhin gelegentliche Fehlschläge, und der erste Besitzer,
 der zur stabilen Version berichtet, in einem eigenen Issue, sieht die Kalibrierung bei
 Drucken mit mehreren Werkzeugen weiterhin oft scheitern und führt das auf Spülmaterial
-an den Düsen zurück. Die Versionshinweise zu 7.0.0 sagen nichts dazu, und ihr Quellcode
-ist noch nicht veröffentlicht. Die ersten beiden Berichte zu 7.0.0, einer im Forum und
-einer im Issue-Tracker, beschreiben jeweils einen Fehlschlag beim Druckstart, und keiner
-wird auf die Sensorplatine zurückgeführt.
+an den Düsen zurück. Die Versionshinweise zu 7.0.0, 7.0.1 und 8.0.0 sagen nichts dazu,
+und keiner ihrer Quellcodes ist bisher veröffentlicht. Die ersten beiden Berichte zu
+7.0.0, einer im Forum und einer im Issue-Tracker, beschreiben jeweils einen Fehlschlag
+beim Druckstart, und keiner wird auf die Sensorplatine zurückgeführt. Ein dritter, in
+einem anderen Issue, macht die niedrigere Kalibriertemperatur für an der Düse
+verbliebenes PETG verantwortlich; das ist ein einzelner Bericht. Zu 8.0.0 gibt es noch
+keine. Das Hängenbleiben beim Start unter 7.0.0 stützt sich auf den Forenthread und das
+Issue, die dort verlinkt sind, wo es erscheint; dass 7.0.1 es behebt, beruht auf Prusas
+Versionshinweisen und dem Test eines Besitzers.
 
 Der Hinweis auf die Referenzfrequenz des LDC1612 ist ein separater Einzelbericht eines
 anderen Besitzers und ist dort, wo er erscheint, als `provisional` markiert. Der eigene

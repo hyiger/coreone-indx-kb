@@ -1,7 +1,7 @@
 ---
 title:        Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 confidence:   reported
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -26,8 +26,11 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/marlin_stubs/G427.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/marlin_stubs/M865.cpp
 superseded_by:
-source_sha:   686d32105b591ef0ce61a59471fc66a737c0dd54488b95eeb15e42cd200e684e
+source_sha:   7e29319c7e777751e2eb308a3b8b425bc64d8e6b15b223b60519e8b08eee6b23
 ---
 # Oozing verdirbt Bettabtastung und Werkzeugkalibrierung
 
@@ -100,6 +103,26 @@ Vermutung und nicht als bestätigte Ursache geäußert — der INDX gilt Bericht
 jedoch als feuchtigkeitsempfindlicher als der Nextruder, den er ersetzt, weshalb es
 sich lohnt, dies auszuschließen, bevor man Komplizierterem nachjagt.
 
+### Rückstände, die die Reinigung vor der Kalibrierung hinterlässt
+
+`provisional` — ein Einzelbericht. Bevor die Werkzeug-Offset-Kalibrierung ein Werkzeug
+vermisst, spült, kühlt und wischt sie dessen Düse; was das Wischen nicht erfasst, sitzt
+also an der Düse, wenn sie vermessen wird. Ein INDX-Besitzer, der im Oktober einen
+Bericht zu 6.9.2 und 7.0.0 einreichte, fand unter 6.9.0 hin und wieder PETG an der Düse,
+bevor sie angetastet wurde, unter den beiden späteren Versionen dagegen oft, und führte
+einen zu hoch ausfallenden Z-Offset darauf zurück
+([#5567](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567)). Die Rückkehr zu
+6.9.0 half deutlich, behob es aber nicht. Die Verschlechterung führt er auf die
+niedrigere Kalibriertemperatur zurück, die mit 6.9.1 kam und bei der übrig gebliebenes
+PETG vollständig hart ist. Weder die Notes zu 7.0.0 noch die zu 8.0.0 nennen eine
+Änderung an dieser Temperatur oder an der Reihenfolge der Reinigung. Ihre einzigen
+Einträge zur Reinigung selbst, eine verbesserte Reinigung durch den Düsenwischer in 7.0.0
+und eine geringere Verlangsamung flexibler Filamente in 8.0.0, sagen nichts über PETG,
+das an der Düse zurückbleibt. Andere Besitzer melden dieselben Rückstände und führen
+sie auf die Reihenfolge der Reinigung oder auf ihre Temperatur zurück; diese Belege sind
+unter *Rückstände nach der Reinigung vor der Kalibrierung* auf der Seite
+[In den Druck geschleppte Blobs](stringing-and-wiper-calibration.md) gesammelt.
+
 ### Die Abtasttemperatur ist möglicherweise nicht die erwartete
 
 Es gibt ein berichtetes Verhalten von Firmware und Slicer, bei dem die Temperatur für
@@ -129,9 +152,23 @@ auf die Suche geht: Ein Konfigurationsupdate des Slicers hat die Ableitung für 
 meisten Materialien korrigiert, mindestens ein Konstruktionsmaterial tastet jedoch
 weiterhin heiß ab; und die Temperatur für die Werkzeug-Offset-Kalibrierung ist in der
 Firmware fest hinterlegt und lässt sich nicht per G-Code ändern, weshalb dieser
-Workaround gegen diesen Fehlerfall nicht hilft. Die zweite Einzelheit stammt weiterhin
-aus einer einzigen Quelle. Es gibt zudem eine verwandte Slicer-Falle, bei der die
-**Bett**temperatur auf dieselbe Weise T1 folgt.
+Workaround gegen diesen Fehlerfall nicht hilft. Der Firmware-Quellcode bestätigt die
+zweite Einzelheit nur zum Teil. Im Stand des Git-Tags v6.9.1 legt die Kalibrierung ihre
+Abtasttemperaturen selbst fest, auf oder unter einer fest eingebauten Obergrenze, und
+der Kalibrierbefehl `G427` liest kein Temperaturargument, sodass bis 6.9.2 kein G-Code
+die Abtasttemperatur über diese Obergrenze anheben kann. Darunter folgt die Temperatur
+der Z-Abtastung dem Vorheizwert des Filaments, das in diesem Werkzeug geladen ist, und
+`M865` kann diesen Wert sowie die Temperatur, bei der das Werkzeug spült, bei einem
+benutzerdefinierten oder Ad-hoc-Filament ändern, nicht jedoch bei einem eingebauten
+Preset. Die Temperatur der XY-Abtastung ist fest. Die Kalibriertemperatur ist also
+gedeckelt, nicht fest: G-Code kann die Temperatur der Z-Abtastung senken, sie aber
+weder anheben noch die der XY-Abtastung verschieben (siehe *Überprüfung*). Ein
+Fehlerbericht vom Oktober, nach dem die niedrigere Kalibriertemperatur übrig gebliebenes
+PETG verschlimmert, schlägt unter seinen Abhilfen einen Temperaturparameter für den
+Kalibrierbefehl vor oder eine Temperatur, die sich wie die beim Abtasten des Betts nach
+dem Filament richtet
+([#5567](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567)). Es gibt zudem
+eine verwandte Slicer-Falle, bei der die **Bett**temperatur auf dieselbe Weise T1 folgt.
 
 **Das Konstruktionsmaterial ist PC.** Ein [zweiter Besitzer](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/printing-pc-on-indx-oozing-at-bed-probing-leveling/) geriet damit an
 PC Blend und beschrieb es von der anderen Seite: Die Abtastung lief heiß genug, um auf
@@ -181,11 +218,11 @@ hatten
 ([Vergleich](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2)).
 Firmware 7.0.0 vom 15. Oktober 2026 (laut
 [Prusas Download-Seite](https://help.prusa3d.com/downloads/core-one-indx)) nennt zur
-Abtasttemperatur ebenfalls nichts, was dazu passt, dass der
-Wert aus dem Slicer-Profil kommt. Am 18. Oktober stieß ein weiterer Kommentator des
+Abtasttemperatur ebenfalls nichts, und ebenso wenig 8.0.0 vom 22. Oktober, was dazu
+passt, dass der Wert aus dem Slicer-Profil kommt. Am 18. Oktober stieß ein weiterer Kommentator des
 Fehlerberichts gleich beim ersten Versuch mit PC Blend auf den Fehler, ohne Maschine
-oder Firmware-Version zu nennen. Wie PC Blend unter den stabilen Versionen 6.9.1, 6.9.2
-oder 7.0.0 abtastet, hat bislang kein Besitzer berichtet.
+oder Firmware-Version zu nennen. Wie PC Blend unter den stabilen Versionen 6.9.1, 6.9.2,
+7.0.0, 7.0.1 oder 8.0.0 abtastet, hat bislang kein Besitzer berichtet.
 
 **Anpassen.** Ein Besitzer vergrößerte den PC-Abstand im Start-G-Code des Druckers, und
 die Fehlschläge hörten auf. Der Haken, auf den er selbst hinwies: Ein
@@ -259,13 +296,13 @@ zur Beta bittet darum, dass die Wiederholung der Kalibrierung das Spülen auslä
 nur wieder aufheizt und abstreift, da erneutes Spülen das Problem wieder einspeist; er
 ist offen und unbeantwortet, ebenso die Funktionsanfrage. Dies ist eine Lesart des Codes
 im Stand des Git-Tags v6.9.1, nicht etwas, das ein Besitzer bestätigt hat, indem er
-beide Fehlschläge an einer Maschine beobachtet hätte. Die Notes zu 7.0.0 erwähnen keine
-der beiden Wiederholungen. Ihr einziger Eintrag zum Wischen selbst, eine verbesserte
-Reinigung durch den Düsenwischer, ist als übernommen aus
+beide Fehlschläge an einer Maschine beobachtet hätte. Weder die Notes zu 7.0.0 noch die
+zu 8.0.0 erwähnen eine der beiden Wiederholungen. Der einzige Eintrag in 7.0.0 zum
+Wischen selbst, eine verbesserte Reinigung durch den Düsenwischer, ist als übernommen aus
 [6.10.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1)
 (Firmware für XL und XL+) gekennzeichnet und sagt nicht, was sich geändert hat, und Prusa
-hatte den Quellcode von 7.0.0 bei Abfassung dieses Textes nicht veröffentlicht. Ob eine
-Wiederholung unter 7.0.0 noch spült, ist daher offen.
+hatte den Quellcode keiner der beiden Versionen bei Abfassung dieses Textes
+veröffentlicht. Ob eine Wiederholung unter 7.0.0 oder 8.0.0 noch spült, ist daher offen.
 
 ### Wenn nichts davon hilft
 
@@ -306,7 +343,26 @@ stammen sämtlich aus der
 [Zusammenfassung häufiger Probleme](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/),
 einer Verdichtung einer inzwischen offline genommenen Community-Wissensdatenbank.
 Nichts davon ist im Forumsbestand gesondert bestätigt, und es werden hier keine Zahlen
-daraus wiedergegeben.
+daraus wiedergegeben. Die letzte Angabe ist inzwischen teilweise geprüft, und die
+Prüfung schränkt sie ein. Ein Fehlerbericht auf GitHub stellt fest, dass sich die
+Kalibriertemperatur mit 6.9.1 geändert hat, und bittet darum, sie einstellbar zu machen
+([#5567](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567)). Der
+Firmware-Quellcode stützt eine gedeckelte Kalibriertemperatur, nicht eine, die sich per
+G-Code nicht ändern lässt. Die
+[Werkzeug-Offset-Kalibrierung](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp)
+im Stand des Git-Tags v6.9.1 hält die Temperatur der Z-Abtastung auf oder unter einer
+eigenen Obergrenze und die der XY-Abtastung fest, und der
+[`G427`-Handler](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/marlin_stubs/G427.cpp)
+liest nur seine Argumente für zufälligen Versatz und Wiederholungen, `R` und `P`, sodass
+nichts eine der beiden anhebt. Unterhalb der Obergrenze folgt die Z-Abtastung aber dem
+Vorheizwert des geladenen Filaments, und der
+[`M865`-Handler](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/marlin_stubs/M865.cpp)
+setzt diesen Wert und die Spültemperatur bei jedem benutzerdefinierten oder
+Ad-hoc-Filament. Der Quellcode-Vergleich auf der Seite
+[kommentiertes Profil](../gcode/indx-profile-gcode.md) stellt ebenfalls fest, dass
+diese Temperatur in der Firmware gedeckelt ist. Keine der drei Dateien unterscheidet
+sich zwischen den Git-Tags v6.9.1 und v6.9.2, und der Quellcode späterer Versionen ist
+nicht öffentlich.
 
 Das Verhalten bei Wiederholungen ist aus dem Firmware-Quellcode im Stand des Git-Tags v6.9.1 gelesen —
 aus dem
@@ -323,9 +379,12 @@ zu widersprechen, zeigt aber, was der Code tut, nicht was ein Besitzer beobachte
 Keine der beiden Quelldateien (der Befehl für das Bett-Leveling und die
 Werkzeug-Offset-Kalibrierung) unterscheidet sich zwischen den Git-Tags v6.9.1 und
 [v6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2), die
-Lesart gilt also auch für 6.9.2. Prusa hatte bei Abfassung dieses Textes kein
-7.0.0-Tag auf GitHub veröffentlicht, die Lesart ist also nicht gegen 7.0.0 geprüft,
-dessen Notes an keiner der beiden Wiederholungen eine Änderung nennen.
+Lesart gilt also auch für 6.9.2. Prusa hatte bei Abfassung dieses Textes weder ein
+7.0.0- noch ein 8.0.0-Tag auf GitHub veröffentlicht, die Lesart ist also gegen keine der
+beiden Versionen geprüft, und keine der beiden Notes nennt an einer der Wiederholungen
+eine Änderung. Die dazwischen, am 19. Oktober 2026 veröffentlichte Firmware 7.0.1 führt
+eine einzige Korrektur auf, für ein Hängenbleiben beim Start, und berührt nichts auf
+dieser Seite.
 
 Wo die Quellen sich widersprechen: Das Trocknen wurde mit Nachdruck als wahrscheinliche
 Ursache für PETG genannt, doch der Fall, der tatsächlich gelöst wurde, wurde durch

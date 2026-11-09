@@ -1,7 +1,7 @@
 ---
 title:        Werkzeug entriegelt sich oder fällt aus dem Kopf
 confidence:   provisional
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -18,14 +18,15 @@ sources:
   - https://help.prusa3d.com/article/nozzle-tool-remains-attached-to-the-print-head-core-one-indx_1077657
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5532
   - https://help.prusa3d.com/downloads/core-one-indx
+  - https://help.prusa3d.com/article/hotend-thermal-runaway-36204-indx_1088706
 superseded_by:
-source_sha:   f05fbfb140080a12d36ea528a022839ec4ea356d2c7456eb687e42e272f537aa
+source_sha:   8ef6b57c41ea85a42aaf3e45282b52d71b6ff59561df68a5271c29f5d95abc5e
 ---
 # Werkzeug entriegelt sich oder fällt aus dem Kopf
 
-!!! warning "Drei Berichte über ausgeworfene Werkzeuge in zwei Threads, eine Demontage und Berichte über festsitzende Werkzeuge mit unterschiedlich vermuteter Ursache"
-    Drei Besitzer beschreiben, dass sich das aktive Werkzeug aus dem Werkzeugkopf löst,
-    zwei davon in einem Thread und der dritte in einem anderen. Einer öffnete den Kopf und
+!!! warning "Vier Berichte über ausgeworfene Werkzeuge in zwei Threads, eine Demontage und Berichte über festsitzende Werkzeuge mit unterschiedlich vermuteter Ursache"
+    Vier Besitzer beschreiben, dass sich das aktive Werkzeug aus dem Werkzeugkopf löst,
+    drei davon in einem Thread und einer in einem anderen. Einer öffnete den Kopf und
     fand an seiner eigenen Maschine eine physische Ursache. Der Besitzer im anderen Thread
     öffnete seinen ebenfalls und meint, die Verriegelung schließe nicht vollständig, nennt
     aber kein beschädigtes Teil. Die Demontage ist ein starker Beleg für dieses eine
@@ -93,6 +94,17 @@ versuchte eine heißere Düse. Seinen Werkzeugkopf hat er nicht geöffnet; ob es
 Zahnraddefekt ist, ist also unbekannt. Ein vom Material abhängiges Muster ist nicht das,
 was ein fehlender Zahn allein erwarten ließe, und diese Seite nimmt nicht an, dass beide
 dieselbe Ursache haben.
+
+### Eine frisch umgerüstete Maschine mit Firmware 7.0.1
+
+Am 20. Oktober 2026 antwortete ein vierter Besitzer im selben Thread auf den ersten
+Beitrag des ersten Besitzers dort und schrieb, er habe dasselbe Problem. Er hatte seinen
+Drucker gerade fertig umgerüstet und die Kalibrierungen durchlaufen lassen. Die
+Werkzeuge 1 und 2 luden Filament normal; bei den Werkzeugen 3 und 4 gab der Kopf ein
+mahlendes Geräusch von sich, und dann löste sich das Werkzeug. Als Firmware nennt er
+7.0.1. Den Kopf hat er nicht geöffnet, eine Ursache nennt er nicht, und er sagt auch
+nicht, bei welchem Schritt des Ladens sich das Werkzeug löste. Wie der zweite Besitzer
+steuert er das Symptom bei, nicht das Zahnrad.
 
 ### Ein anderer Thread: ein zweiter geöffneter Werkzeugkopf
 
@@ -191,9 +203,25 @@ den der zweite Besitzer aus dem Thread zum flexiblen Filament am Tag seines
 festsitzenden Werkzeugs einreichte, beschreibt eine weitere Sackgasse. Nachdem ein
 Entladen fehlgeschlagen war, fragte ein zweiter Entladeversuch nach dem Filamenttyp und
 wartete dann darauf, dass die Düse aufheizt, was sie nie tat; auch parken ließ sich das
-Werkzeug nicht. Der Bericht bezieht sich auf 6.9.2 und war am 18. Oktober 2026 noch
-offen. Die Versionshinweise zu Firmware 7.0.0 nennen weder hierzu noch zur
-Andock-Schleife noch zum Menüpunkt „Release Stuck Tool“ eine Änderung.
+Werkzeug nicht. Der Bericht bezieht sich auf 6.9.2 und war am 25. Oktober 2026 noch
+offen und unbeantwortet. Weder die Versionshinweise zu Firmware 7.0.0 noch die zu
+7.0.1 vom 19. Oktober 2026, deren einzige Korrektur ein Einfrieren des Druckers beim
+Start betrifft, noch die zu [8.0.0](https://help.prusa3d.com/downloads/core-one-indx)
+vom 22. Oktober 2026 nennen hierzu, zur Andock-Schleife oder zum Menüpunkt „Release
+Stuck Tool“ eine Änderung.
+
+Ein anderer Besitzer beschreibt eine ähnliche Sackgasse mit anderem Ausgangspunkt, in
+einem Kommentar vom 22. Oktober 2026 unter
+[Prusas Artikel zum Fehler „Hotend Thermal Runaway“ beim INDX](https://help.prusa3d.com/article/hotend-thermal-runaway-36204-indx_1088706).
+Ein großer Klumpen an seiner Düse schien den Drucker daran zu hindern, ihre Temperatur zu
+messen, und er konnte das Werkzeug nicht parken, weil nach seinem Verständnis die Düse
+erst aufheizen muss, bevor der Extrudermotor rückwärts läuft, um es freizugeben. Seine
+Erklärung ist unbestätigt, doch zusammen mit dem Fehlerbericht oben ist es ein zweiter,
+davon unabhängiger Fall, in dem eine Düse, die der Drucker nicht aufheizen oder nicht
+messen konnte, mit einem Werkzeug einherging, das den Kopf nicht verließ. Heizt Ihre
+Düse nicht auf, ist das manuelle Lösen des Herstellers unter „Was zu tun ist“ unten
+womöglich der Ausweg, nicht ein weiterer Versuch über das Menü; das ist eine
+Schlussfolgerung aus diesen beiden Berichten.
 
 ## Was zu tun ist
 
@@ -217,11 +245,15 @@ ausdrücklich, dass der neue Kopf den Fehler behoben hat. Es bleibt der Bericht 
 einzelnen Besitzers über seinen eigenen Fall, und ein Defekt wird darin nicht benannt.
 
 Die [Versionshinweise zu Firmware 7.0.0](https://help.prusa3d.com/downloads/core-one-indx)
-vom 15. Oktober 2026 nennen nichts zur Werkzeugverriegelung. Sie verlegen allerdings die
+vom 15. Oktober 2026 nennen nichts zur Werkzeugverriegelung, ebenso wenig die zu 7.0.1
+vom 19. Oktober 2026, deren einzige Korrektur ein Einfrieren beim Start betrifft, oder
+die zu 8.0.0 vom 22. Oktober 2026. Die Hinweise zu 7.0.0 verlegen allerdings die
 Positionen für das Laden und Entladen von Filament auf den kalibrierten Versatz des
 Düsenreinigers. Die Hinweise bringen das nicht mit diesem Fehler in Verbindung, und noch
 hat kein Besitzer berichtet, ob es das Auswerfen nahe dem Abstreifer verändert, das der
-zweite Besitzer beschreibt.
+zweite Besitzer beschreibt. Der Besitzer der frisch umgerüsteten Maschine oben hatte
+7.0.1 installiert, als sich zwei seiner Werkzeuge beim Laden lösten, sagt aber nicht, wo
+der Kopf dabei stand.
 
 **Wenn ein Werkzeug im Kopf festsitzt, nutzen Sie das manuelle Lösen des Herstellers.**
 Prusa veröffentlicht ein
@@ -249,7 +281,7 @@ Filament-Berichte aus anderen Threads oben.
 
 ## Überprüfung
 
-`provisional` — drei Besitzer berichten, dass sich das Werkzeug löst, zwei in einem
+`provisional` — vier Besitzer berichten, dass sich das Werkzeug löst, drei in einem
 Thread und einer in einem anderen; eine physische Ursache wurde nur an einer Maschine
 gefunden, und der Besitzer im anderen Thread, der seinen Kopf ebenfalls geöffnet hat,
 nennt kein beschädigtes Teil. Ein Besitzer berichtet nur den umgekehrten Fehler, ein
@@ -264,7 +296,9 @@ ein schlechtes Zahnrad oder eine ganze Charge.
 
 Der Bericht des zweiten Besitzers teilt das Symptom, bisher aber nicht die Ursache, und
 sein reines PLA-Muster ist ein Grund zur Vorsicht, bevor man beides als einen Fehler
-behandelt.
+behandelt. Auch der Bericht des vierten Besitzers im selben Thread teilt nur das
+Symptom: keine Demontage, keine Ursache. Auf die Stufe wirkt er sich nicht aus, zeigt
+das Symptom aber an einer frisch umgerüsteten Maschine mit 7.0.1.
 
 Der Entlade-Thread kommt der unten genannten Schwelle am nächsten, ohne sie zu erreichen.
 Es ist ein zweiter geöffneter Werkzeugkopf, in einem anderen Thread, von einem Besitzer,
@@ -297,7 +331,10 @@ einer Demontage. Sie beschreiben ein Werkzeug, das den Kopf nicht verließ, stat
 das herausfiel, und machen Filament statt eines Teils des Kopfs verantwortlich; sie heben
 die Stufe also nicht und zählen auch nicht als weitere Berichte über den Fehler des
 dritten Besitzers. Der Firmware-Bericht zum hängenden Entladen stammt von einem der
-Besitzer mit flexiblem Filament und ist daher keine eigene Quelle.
+Besitzer mit flexiblem Filament und ist daher keine eigene Quelle. Der Kommentar unter
+Prusas Artikel zum Thermal Runaway stammt von einem anderen Besitzer. Er ist ein
+einzelner Bericht, und seine Begründung dafür, dass das Werkzeug festsaß, ist das
+Verständnis dieses Besitzers, nicht etwas, das Prusas Artikel sagt.
 
 Der Beitrag mit der Demontage wartete noch auf Freigabe im Forum, als diese Seite zuerst
 geschrieben wurde; inzwischen ist er veröffentlicht, und der Link zeigt ihn. Das Video

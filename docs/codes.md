@@ -1,13 +1,13 @@
 ---
 title:        Tool offset calibration error codes
 confidence:   provisional
-updated:      2026-10-18
+updated:      2026-10-25
 author:       hyiger
 printer:      Core One, Core One L
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     stock firmware reports all of these as 36130; the 3619x codes need firmware built from hyiger/Prusa-Firmware-Buddy
+firmware:     stock firmware reports all of these as 36130 through 6.9.2 (source-checked); 7.0.0 still shows 36130 for at least the 36193 failure (one report); 7.0.1 and 8.0.0 unknown; the 3619x codes need firmware built from hyiger/Prusa-Firmware-Buddy
 sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/lib/Marlin/Marlin/src/feature/contactless_offset/contactless_offset.cpp
@@ -25,6 +25,10 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518
+  - https://github.com/prusa3d/Prusa-Error-Codes/blob/9e609385d1c18cc080bcfaaf2bd1d6a7cd7cf5ad/yaml/buddy-error-codes.yaml
+  - https://github.com/prusa3d/Prusa-Error-Codes/commit/a88544c7628067f03c768a26624000c463e971b6
+  - https://github.com/prusa3d/Prusa-Error-Codes/commit/8a502d03acc0c5bf3ba524d68c6e10bd4c8d1acf
+  - https://github.com/prusa3d/Prusa-Error-Codes/commit/bc278daf0a10e6657048416623a9e2e7f7845643
 superseded_by:
 ---
 
@@ -41,7 +45,14 @@ sweep not finding the nozzle, and 36190 to 36197 name the rest. The QR code on e
 those screens opens its section on this page.
 
 For the failures on this page, stock firmware only ever shows 36130, but the
-[serial log](#stock-firmware) still says which of these it was.
+[serial log](#stock-firmware) still says which of these it was. That is checked against
+the source up to 6.9.2, the last release whose source is published. Between
+21 September and 5 October 2026, before 6.9.2 came out, Prusa added codes of its own
+for some of these failures to its public error code list, and 6.9.2 still shows only
+36130. A code being on that list does not mean a release shows it. One report on 7.0.0
+still shows 36130 for the failure under 36193. Whether 7.0.0 shows any of Prusa's new
+codes, or a later release does, is not known; see the verification section at the end
+of this page.
 
 On the Core One L the codes start with 37 instead of 36: 37130, and 37190 to 37197.
 Each section below covers both.
@@ -224,6 +235,8 @@ surface before the sweeps, was not accepted, even after the probe's own retries.
    touch itself, and found that switching its driver off before the probe made the
    failures rare, a workaround rather than a fix
    ([firmware issue 5548](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5548)).
+   A second owner on that issue had the probing pass first time with the same change,
+   after several failures; that is one attempt.
    A separate report on 6.9.1 traces noise in the loadcell self-test after a toolchange
    to the same motor being left on
    ([firmware issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518)).
@@ -233,6 +246,19 @@ surface before the sweeps, was not accepted, even after the probe's own retries.
    failures stopped
    ([firmware issue 5526](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5526),
    [tool offset thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-offset-calibration-failing/)).
+   The first of them has since summed up on
+   [firmware issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518)
+   what fixed their printer completely: twisting the supply wires in the head's harness,
+   ferrite cores on the cables of the bed and chamber lights, and a lower probing
+   temperature in the start G-code. Switching the light off is not on that list, though
+   they think the bed light's cable was the likeliest source, so their result does not
+   show that switching it off is needed.
+   A third, on firmware issue 5526, found that ferrite beads did not help and that
+   switching the light off has so far seemed to help every time. The opener of
+   firmware issue 5548 has since said that their start now switches the light off as
+   well as the motor, and that this has been very reliable so far
+   ([firmware issue 5518](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518));
+   that result does not separate the two sources.
 
 ## 36194 · 37194 · No offset sensor data {#36194}
 
@@ -334,12 +360,21 @@ at the same tag. The report of a clean tool on the head is a single owner's. Two
 owners have since said on the same issue that they see the same, without saying which
 part, and the vendor has not replied. The attempt counts are from the 6.9.1-beta
 release notes, and which touch they apply to is read from the source at the 6.9.1 tag.
-Of the two noise sources under 36193, the extruder motor is one owner's report for this
-calibration, and firmware issue 5518 reports the same motor upsetting the loadcell
-self-test; its reporter suspects, but has not shown, a link to failures at print
-start. The status light rests on two owners on stock firmware, on firmware issue 5526
-and in a forum thread, who report that switching it off, alone or together with
-ferrite beads, ended their failures. That issue's opener tested it on firmware they had
+Of the two noise sources under 36193, the extruder motor rests on one owner's
+measurements for this calibration and a second owner's single attempt, both on firmware
+issue 5548. The first of them now switches the status light off too, so their latest
+result, which they call very reliable so far, does not isolate the motor. Separately,
+firmware issue 5518 reports the same motor upsetting the loadcell self-test; its opener
+suspects, but has not shown, a link to failures at print start. The status light rests
+on two owners on stock firmware, on firmware issue 5526 and in a forum thread, who
+report that switching it off, alone or together with ferrite beads, ended their
+failures, and on a third on the issue, who does not give their firmware and found
+ferrite beads alone did not help. The first of those two has since credited their
+complete fix, on firmware issue 5518, to rewiring, ferrite cores on the light cables
+and a lower probing temperature, without listing switching the light off, though they
+think the bed light's cable was the likeliest source, so their result does not show
+that switching it off is needed.
+The opener of firmware issue 5526 tested the light on firmware they had
 modified, which this page does not rely on.
 
 What to do about each code is the author's reading of those checks. Where a section
@@ -364,8 +399,33 @@ tool offset calibration errors. Its source is not yet published, so its log line
 against this page. One owner on 7.0.0 reports the 36130 screen together with the log
 line this page maps to 36193
 ([firmware issue 5548](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5548)),
-so for that failure at least, both are unchanged. Whatever stock firmware ends up
+so for that failure at least, both are unchanged. Neither 7.0.1, published on
+19 October 2026 with a single fix for a startup hang, nor 8.0.0, published on
+22 October 2026, lists it. The 8.0.0 notes do change error screens in general, taking
+off the printer's hash and the signature markers and making the QR code simpler, but
+say nothing about tool offset calibration errors. Whatever stock firmware ends up
 showing need not match the codes on this page.
+
+Prusa's own codes for some of these failures are already in its public
+[error code list](https://github.com/prusa3d/Prusa-Error-Codes/blob/9e609385d1c18cc080bcfaaf2bd1d6a7cd7cf5ad/yaml/buddy-error-codes.yaml).
+Two were added on 21 September 2026
+([commit](https://github.com/prusa3d/Prusa-Error-Codes/commit/a88544c7628067f03c768a26624000c463e971b6))
+and marked approved on 2 October
+([commit](https://github.com/prusa3d/Prusa-Error-Codes/commit/8a502d03acc0c5bf3ba524d68c6e10bd4c8d1acf)):
+36144 Sensor Not Found, for the offset sensor not being found at the height the printer
+expects, and 36145 Sensor Failure, for the sensor going silent during the measurement.
+A third, 36146 Tool Not Picked, followed on 5 October
+([commit](https://github.com/prusa3d/Prusa-Error-Codes/commit/bc278daf0a10e6657048416623a9e2e7f7845643))
+and is not yet marked approved. Its commit describes it as a tool pickup failed report
+that leaves the motors on, so it may be a general pickup check rather than one specific
+to this calibration. All three were added before 6.9.2 was released on 7 October, and
+6.9.2 does not show them. On the Core One L they are 37144, 37145 and 37146. The
+September change also rewords 36134 Unsafe Sensor Position: instead of asking for a
+clean nozzle and sensor, it now says the sensor may have been knocked out of place.
+Going by their descriptions alone, 36144 is closest to 36193 on this page, 36145 to
+36194 and 36146 to 36190, but which checks raise them cannot be read until the source is
+published. The notes for 7.0.0, 7.0.1 and 8.0.0 do not mention them, and no owner has
+reported seeing one, so which release shows them, if any does yet, is not known.
 
 ## Related
 
