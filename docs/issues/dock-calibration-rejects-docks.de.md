@@ -1,7 +1,7 @@
 ---
 title:        Dock-Kalibrierung lehnt einige oder alle Docks ab
 confidence:   reported
-updated:      2026-11-08
+updated:      2026-11-10
 author:       hyiger
 printer:      Core One, Core One+, Core One+ (Gen 2)
 toolhead:     INDX
@@ -51,7 +51,7 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_utils.h
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_utils_indx.cpp
 superseded_by:
-source_sha:   f3c8f5530cc13368bc79d9ea3fe1e77f7faca3d9f02f3c465bdf0de69f1f997b
+source_sha:   6d25c7b0c27db21b4d0f876b5ea64fa95feece9a6262e1332e0d2e4e9875f224
 ---
 # Dock-Kalibrierung lehnt einige oder alle Docks ab
 
@@ -415,7 +415,11 @@ Besitzer stellten Logs von 7.0.1 ein, einer davon mit der Angabe, dass der Fehle
 bleibt, und mehrere spätere Kommentatoren berichten, dass er auch unter 8.0.0 noch
 auftritt, keiner davon im Zusammenhang mit der Dock-Kalibrierung. Die Versionshinweise
 zu 7.0.1 und 8.0.0, die ausführlichen auf GitHub eingeschlossen, sagen nichts zum
-Homing. Ein
+Homing. Am 10. November stellte ein Prusa-Entwickler dort einen Build von 8.0.2-alpha
+ein, dessen Homing-Kalibrierung den Motorstrom selbst wählt, und das Log eines
+Besitzers damit sah behoben aus; die Einzelheiten stehen auf der
+[Seite zur Wägezelle](loadcell-emi-noise.md). Ob er an der Dock-Kalibrierung etwas
+ändert, hat bisher niemand gesagt. Ein
 weiterer Besitzer berichtet dort, dass an seinem Drucker, der ebenfalls den Homing-Fehler
 zeigt, auch die Dock-Kalibrierung stockte: Unter 6.9.2 war er kaum über das vierte Dock
 hinausgekommen, und nach der Rückkehr zu 6.9.0, wo der Homing-Fehler schwächer ausfiel,

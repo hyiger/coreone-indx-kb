@@ -1,7 +1,7 @@
 ---
 title:        Werkzeug entriegelt sich oder fällt aus dem Kopf
 confidence:   provisional
-updated:      2026-11-08
+updated:      2026-11-10
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -14,6 +14,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/filament-stuck-with-asa-pla-support/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-toolhead-looses-tool-when-unloading-filament-and-blobs-after-every-colorchange/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-dropping/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/flex-filament-stuck-and-cannot-dock-tool/
   - https://help.prusa3d.com/article/nozzle-tool-remains-attached-to-the-print-head-core-one-indx_1077657
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5532
@@ -33,17 +34,17 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/feedrates/standard_feedrates_indx.cpp
   - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini
 superseded_by:
-source_sha:   7e7d7b4e7a97fdcd647ff7de5b526c74eb2a88bdb7b84d0ce23dc54421fa37a8
+source_sha:   0bf92b69b88a14c203aad7c7646d034508ca251a9aec6e1b1f1341b2e890e649
 ---
 # Werkzeug entriegelt sich oder fällt aus dem Kopf
 
-!!! warning "Fünf Berichte über ausgeworfene Werkzeuge in zwei Threads, eine Demontage und Berichte über festsitzende Werkzeuge mit unterschiedlich vermuteter Ursache"
-    Fünf Besitzer beschreiben, dass sich das aktive Werkzeug aus dem Werkzeugkopf löst,
+!!! warning "Sechs Berichte über ausgeworfene Werkzeuge in drei Threads, eine Demontage und Berichte über festsitzende Werkzeuge mit unterschiedlich vermuteter Ursache"
+    Sechs Besitzer beschreiben, dass sich das aktive Werkzeug aus dem Werkzeugkopf löst,
     vier davon in einem Thread, einer von diesen nur mit der Aussage, er habe dasselbe
-    Problem wie ein anderer, und einer in einem anderen Thread. Einer öffnete den Kopf und
-    fand an seiner eigenen Maschine eine physische Ursache. Der Besitzer im anderen Thread
-    öffnete seinen ebenfalls und meint, die Verriegelung schließe nicht vollständig, nennt
-    aber kein beschädigtes Teil. Die Demontage ist ein starker Beleg für dieses eine
+    Problem wie ein anderer, und je einer in zwei anderen Threads. Einer öffnete den Kopf
+    und fand an seiner eigenen Maschine eine physische Ursache. Die Besitzer in den anderen
+    Threads öffneten ihre ebenfalls und beschreiben eine Verriegelung, die nicht hält,
+    nennen aber kein beschädigtes Teil. Die Demontage ist ein starker Beleg für dieses eine
     Exemplar und sagt noch nichts darüber, wie verbreitet der Defekt ist. Andere Besitzer
     berichten den umgekehrten Fehler, ein Werkzeug, das sich nicht freigeben lässt: einer,
     im ersten Thread, verdächtigt die Verriegelung, Besitzer in zwei weiteren Threads
@@ -61,7 +62,8 @@ Ersatzzahnrad oder einen Ersatz-Werkzeugkopf vom Hersteller. Ein weiterer Besitz
 sieht in einem anderen Thread dieselbe Freigabe an seinem eigenen Werkzeugkopf und
 bringt sie zudem mit Klecksen nach jedem Werkzeugwechsel in Verbindung; nach seiner
 Aussage bestätigte der Support ein Problem am Werkzeugkopf und bot einen Ersatzkopf
-an.
+an. Ein dritter Besitzer verliert in einem dritten Thread bei jedem Entladen das
+Werkzeug und hat noch keine Ursache gefunden.
 
 ## Im Einzelnen
 
@@ -181,6 +183,23 @@ Einen fehlenden oder verformten Zahn oder ein anderes beschädigtes Teil meldet 
 Ein Prusa-Mitarbeiter im Forum riet ihm, mit den Videos zum Support zu gehen. Eine Woche
 nach dem ersten Beitrag schrieb der Besitzer, der Support habe den Kopf als fehlerhaft
 anerkannt und einen neuen angeboten; am 18. Oktober 2026 wartete er noch darauf.
+
+### Ein dritter Thread: das Werkzeug geht bei jedem Entladen verloren
+
+Am 9. November 2026 eröffnete ein weiterer Besitzer einen
+[eigenen Thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-dropping/).
+Die Core One hatte das Gen-2-Upgrade und einen INDX mit acht Werkzeugen bekommen,
+und nun gibt der Kopf das Werkzeug bei jedem Entladen von Filament frei, auch während
+der Kalibrierung der Filamentsensoren. Der Support ließ eine Seite des Kopfes öffnen
+und die Verriegelung filmen, die sich nach dieser Schilderung zu früh löst; der Fall
+wurde eskaliert, ohne Ergebnis. Ein beschädigtes Teil wird nicht genannt, und in einem
+späteren Beitrag kündigt der Besitzer an, den Kopf erneut zu öffnen und nach einem
+abgebrochenen Zahn zu suchen. Als Firmware wird nur die jeweils neueste Version genannt.
+Zuvor waren an der Hauptplatine die Leitungen des Heizbetts von denen des
+Werkzeugkopfs weggelegt worden, was laut dem Besitzer viele der anfänglichen
+Fehlmeldungen beseitigte; das ist eine Maßnahme gegen Störungen wie unter
+[Störungen der Wägezelle](loadcell-emi-noise.md) beschrieben, und sie hat das
+Herausfallen des Werkzeugs nicht beendet.
 
 ### Ein dritter Besitzer, der umgekehrte Fehler
 
@@ -409,11 +428,11 @@ für das Knäuel selbst.
 
 ## Überprüfung
 
-`provisional` — fünf Besitzer berichten, dass sich das Werkzeug löst, vier in einem
-Thread, einer davon nur durch Zustimmung zum Beitrag eines anderen, und einer in einem
-anderen; eine physische Ursache wurde nur an einer Maschine
-gefunden, und der Besitzer im anderen Thread, der seinen Kopf ebenfalls geöffnet hat,
-nennt kein beschädigtes Teil. Ein Besitzer berichtet nur den umgekehrten Fehler, ein
+`provisional` — sechs Besitzer berichten, dass sich das Werkzeug löst, vier in einem
+Thread, einer davon nur durch Zustimmung zum Beitrag eines anderen, und je einer in zwei
+anderen; eine physische Ursache wurde nur an einer Maschine gefunden, und die Besitzer
+in den anderen Threads, die ihre Köpfe ebenfalls geöffnet haben, nennen kein
+beschädigtes Teil. Ein Besitzer berichtet nur den umgekehrten Fehler, ein
 Werkzeug, das sich nicht freigeben lässt; Besitzer in zwei weiteren Threads melden ein
 festsitzendes Werkzeug und verdächtigen das Filament.
 
@@ -452,6 +471,12 @@ Ersatzangebot des Supports erreichen diese Seite nur über den eigenen Beitrag d
 Besitzers und benennen keinen Defekt; wie der Ersatzkopf des dritten Besitzers sind sie
 daher nicht die unten verlangte Aussage des Herstellers. Der Zusammenhang mit Klecksen
 nach Werkzeugwechseln ist allein die Deutung dieses Besitzers.
+
+Der im November eröffnete Thread ist ein dritter unabhängiger Thread für das Symptom und
+ein dritter Kopf, an dem der Besitzer die Verriegelung sich lösen sah, aber wieder ohne
+genanntes beschädigtes Teil; auch er erfüllt die Schwelle daher nicht. Das würde er,
+wenn dieser Besitzer beim erneuten Öffnen des Kopfes einen abgebrochenen oder
+verformten Zahn findet.
 
 Für sich genommen stammt das Symptom — ein Werkzeug, das durch Rückwärtsextrusion
 abseits eines Docks freigegeben wird — inzwischen von unabhängigen Besitzern in zwei

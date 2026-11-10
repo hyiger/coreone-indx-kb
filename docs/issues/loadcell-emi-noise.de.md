@@ -1,13 +1,13 @@
 ---
 title:        Probing schlägt fehl oder die Düse berührt das Bett nie — Rauschen im Wägezellensignal
 confidence:   reported
-updated:      2026-11-08
+updated:      2026-11-10
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.6.0 to 8.0.0 in owners' reports; source read from 6.9.0 to 8.0.0
+firmware:     6.6.0 to 8.0.0 in owners' reports; source read from 6.9.0 to 8.0.0; 8.0.2-alpha homing change as the vendor describes it
 sources:
   - https://help.prusa3d.com/article/loadcell-measure-failed-31526-core-one-35526-core-one-l-36526-core-one-indx-26526-mk4s-13526-mk4-27526-mk3-9s-21526-mk3-9-36526-core-one-indx_405741
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-not-touching-bed-during-probing/
@@ -46,7 +46,7 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/bedlevel/ubl/G29.cpp
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/include/marlin/Configuration_COREONE_adv.h
 superseded_by:
-source_sha:   1f5f8952fe2f503d6243002eb5713539b0c559c02e247383d91bb76157cac159
+source_sha:   c4e8d1369cb49c1074d8be0f122146cc51cfc48d7ae556b133c41fd7fa1c0523
 ---
 # Probing schlägt fehl oder die Düse berührt das Bett nie — Rauschen im Wägezellensignal
 
@@ -549,7 +549,27 @@ Maschine über drei oder vier Drucke, `provisional`.
     sind. Sie stammt vom X/Y-Homing, nicht von der Wägezelle, und ist kein Zeichen einer
     Störung. Mehrere Besitzer, im Issue und in zwei getrennten Forumsthreads, machen die
     Meldung und die Wirkung der Rückkehr zu `reported`; dass der niedrigere Strom sie
-    verursacht, ist eine Schlussfolgerung.
+    verursacht, war eine Schlussfolgerung, bis der Entwickler es unten selbst erklärte.
+
+    Am 10. November 2026 schrieb ein Prusa-Entwickler in
+    [#5520](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5520), dass 8.0.0
+    an diesem Fehler nichts geändert habe. Die Stromänderung aus 6.9.1 sei für eine
+    Charge neuer Drucker gemacht worden, deren Homing sie behoben habe, und die älteren
+    Drucker, an denen man sie erprobte, hätten das Problem nicht gezeigt. Auf den
+    betroffenen Maschinen, so der Entwickler, lässt der niedrigere Strom die
+    Blockiererkennung zu früh ansprechen. Am selben Tag hängte der Entwickler einen Build
+    von 8.0.2-alpha an, mit je einer Datei für den INDX und für den Core One ohne ihn. Prusa
+    signiert ihn, daher lässt er sich wie eine normale Version vom USB-Stick installieren.
+    In diesem Build wählt die Homing-Kalibrierung den Strom selbst: Sie kalibriert
+    zuerst mit dem niedrigeren Strom, wechselt nur dann zu einem höheren, wenn dieser
+    Versuch scheitert, und speichert den gewählten Wert mit der Kalibrierung, sodass
+    das gewöhnliche Homing nicht erneut sucht. Der gespeicherte Wert ändert sich erst,
+    wenn die Homing-Kalibrierung im Kalibrierungsmenü erneut ausgeführt wird, nicht
+    schon beim bloßen Homing. Ein Besitzer stellte am selben Tag ein Homing-Log aus der
+    Alpha ein, und der Entwickler wertete es als Zeichen, dass die Korrektur greift. Es
+    ist keine Veröffentlichung; zu diesem Datum ist 8.0.0 weiterhin die neueste
+    Firmware für den INDX. Die Korrektur stützt sich auf das Wort des Herstellers und
+    das Log eines Besitzers, `provisional`.
 
 Wenn nichts davon hilft, insbesondere wenn der Fehler nur bei eingeschalteter Heizung
 auftritt und Sie eine frühe Platinenrevision haben, führt der Weg über einen
@@ -666,7 +686,10 @@ in einem Issue und zwei Forumsthreads. Die Homing-Korrektur stützt sich auf die
 Notes, das Firmware-Repository des Herstellers und die Erklärung eines Entwicklers,
 nicht auf Berichte von Besitzern. Was 7.0.0, 7.0.1 und 8.0.0 hier und beim Homing
 ändern, stammt aus ihrem Quellcode und ihren Notes auf GitHub, veröffentlicht am
-2026-11-03; das ist eine Lesart des Codes, kein beobachtetes Ergebnis.
+2026-11-03; das ist eine Lesart des Codes, kein beobachtetes Ergebnis. Die
+Homing-Änderung in 8.0.2-alpha ist nur im Kommentar des Entwicklers zu #5520
+beschrieben, gestützt auf das Log eines Besitzers; ihr Quellcode war bei dieser Prüfung
+nicht veröffentlicht.
 
 ## Verwandte Seiten
 

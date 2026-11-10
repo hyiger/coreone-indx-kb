@@ -1,7 +1,7 @@
 ---
 title:        Hardware
 confidence:   unknown
-updated:      2026-11-08
+updated:      2026-11-10
 author:       hyiger
 printer:      Core One, Core One Plus, Core One L
 toolhead:     INDX
@@ -65,7 +65,11 @@ or as a conversion kit for an existing L, with shipping stated to begin 5 Novemb
 27 October owners there relayed emails placing their orders in batches due to start on
 30 November or, for a later batch, around 14 December; as of 5 November, two owners of
 the conversion kit for the L, one of whom ordered on the first day, had been given no
-batch at all.
+batch at all. By 10 November two more owners of that kit who had ordered on the first
+day still had none. Owners in that thread and in the
+[main INDX shipping thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/)
+also relayed new wording on Prusa's shipping information page: summer orders that have
+no batch number yet will be given one, and processed, in early 2027.
 
 This matters for reading the rest of this site. Pages here record the machine a finding
 came from in their `printer:` front matter, and a finding from a Core One does not
@@ -122,7 +126,9 @@ of its kit. Prusa now sells the right-hand sensor separately. The
 Sourced from the vendor's [dated announcement](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-l-with-indx-now-available-assembled-and-upgrade/) of 27 August 2026, which is what
 fixes the availability and the shipping date; the batches owners were given, and the
 kit orders still without one, are from later posts in the same thread, as the owners
-relay them. The product listings for the
+relay them. The early-2027 wording is as owners relayed it on 9 and 10 November 2026, in
+that thread and in the main shipping thread; this page has not read the shipping
+information page itself, which Prusa edits in place. The product listings for the
 [assembled printer](https://www.prusa3d.com/en/product/prusa-core-one-l-indx-8-tool/) and
 the [conversion kit](https://www.prusa3d.com/product/indx-8-tool-conversion-kit-for-core-one-l/)
 are given as convenience links only — storefront copy changes, so they are not the

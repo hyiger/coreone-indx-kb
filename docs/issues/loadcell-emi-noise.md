@@ -1,13 +1,13 @@
 ---
 title:        Probing fails or nozzle never touches the bed — loadcell noise
 confidence:   reported
-updated:      2026-11-08
+updated:      2026-11-10
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.6.0 to 8.0.0 in owners' reports; source read from 6.9.0 to 8.0.0
+firmware:     6.6.0 to 8.0.0 in owners' reports; source read from 6.9.0 to 8.0.0; 8.0.2-alpha homing change as the vendor describes it
 sources:
   - https://help.prusa3d.com/article/loadcell-measure-failed-31526-core-one-35526-core-one-l-36526-core-one-indx-26526-mk4s-13526-mk4-27526-mk3-9s-21526-mk3-9-36526-core-one-indx_405741
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-not-touching-bed-during-probing/
@@ -481,7 +481,25 @@ one machine over three or four prints, `provisional`.
     the measurement gives up only if the repeats run out. It comes from the X/Y homing,
     not the loadcell, and is no sign of interference. Several owners, in the issue and
     in two separate forum threads, make the message and the effect of going back
-    `reported`; that the lower current causes it is an inference.
+    `reported`; that the lower current causes it was an inference until the
+    developer's account below.
+
+    On 10 November 2026 a Prusa developer wrote in
+    [#5520](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5520) that 8.0.0
+    did nothing about this fault. They explained that the 6.9.1 current change had
+    been made for a batch of new printers whose homing it cured, and that the older
+    printers it was tried on did not show the problem. On the affected machines, they
+    said, the lower current lets the stall detection fire too early. The same day they
+    attached an 8.0.2-alpha build, with one file for the INDX and one for the Core One
+    without it. Prusa signs it, so it installs from a USB drive like a normal release.
+    In that build the homing calibration chooses the current itself: it calibrates at
+    the lower current first, moves to a higher one only if that attempt fails, and
+    stores whichever it settled on with the calibration, so ordinary homing does not
+    search again. The stored value changes only when the homing calibration is run
+    again from the calibrations menu, not when the printer simply homes. One owner
+    posted a homing log from the alpha that day, and the developer read it as the fix
+    working. It is not a release; as of that date the newest INDX firmware is still
+    8.0.0. The fix rests on the vendor's word and one owner's log, `provisional`.
 
 If none of that helps, particularly if the failure happens only with the heater on
 and you are on an early board revision, the path is hardware replacement through the
@@ -585,7 +603,9 @@ several changes. The early-trigger homing message is reported by several owners 
 one issue and two forum threads. The homing fix rests on the vendor's release notes, its
 firmware repository and a developer's explanation, not on owner reports. What 7.0.0,
 7.0.1 and 8.0.0 change, here and in homing, comes from their source and GitHub notes,
-published on 2026-11-03; that is a reading of the code, not an observed result.
+published on 2026-11-03; that is a reading of the code, not an observed result. The
+8.0.2-alpha homing change is described only in the developer's comment on #5520, with
+one owner's log behind it; its source was not published when this was checked.
 
 ## Related
 
