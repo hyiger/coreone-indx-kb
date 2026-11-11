@@ -1,18 +1,20 @@
 ---
 title:        Unload and eject failures — undersized filament guide bore
 confidence:   provisional
-updated:      2026-10-18
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     unknown
+firmware:     unknown on the reporting machines; 8.0.0 release notes cited
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-stuck-with-filament/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/filament-jams-on-first-load/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/1st-time-filament-loading-doesn%cb%8bt-work/
+  - https://help.prusa3d.com/article/cold-pull-core-one-indx_1218914
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
 superseded_by:
 ---
 
@@ -113,8 +115,28 @@ threads describe jams on or soon after a tool's first load: on
 and on tools that
 [would neither load nor unload](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/1st-time-filament-loading-doesn%cb%8bt-work/),
 with the drive clicking. Most were eventually cleared, by retrying with extra heat or by
-pushing the filament in by hand, and one owner was sent replacements by support. Loading
-fails there too, so they do not fit this mechanism either and are not counted.
+pushing the filament in by hand, and one owner was sent replacements by support. A later
+owner in the second of those threads, who hit the same on a new build, offers an
+explanation that does not involve the bore. The end of a strand already unloaded once
+from another extruder can be slightly thicker than the rest, and these nozzles are
+sensitive to tip shape, so they advise trimming that end off and cutting the tip at an
+angle before loading, and point to Prusa's
+[cold pull procedure for the INDX](https://help.prusa3d.com/article/cold-pull-core-one-indx_1218914)
+for a clog. That is one owner's practical advice, not a measured cause.
+
+TODO(verify): the length to trim and the tip cut angle, from the later post in the
+thread on tools that would neither load nor unload; withheld here.
+
+Loading fails in those threads too, so they do not fit this mechanism either and are not
+counted. Nor are they the false "Filament loading timed out" error that firmware 8.0.0
+fixes, which stopped a load at once when the extruder's filament sensor was off or not
+calibrated ([8.0.0 notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0));
+these owners describe filament that would not move, with the drive clicking or slipping.
+In the common-problems thread itself, an owner who said only that they were in the same
+position as one whose tools came off during loading added that they could now not unload
+the filament at all, and by their account support's suggestions, a cold pull among them,
+did not get it out. That account gives no cause and says nothing of printing through the
+tool, so it is not counted either.
 
 A second account has since been relayed from the vendor's Discord, independent of the
 forum thread. It agrees on the mechanism — a finishing pass that brings the sintered

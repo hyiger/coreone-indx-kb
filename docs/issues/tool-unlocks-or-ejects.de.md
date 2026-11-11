@@ -1,35 +1,50 @@
 ---
 title:        Werkzeug entriegelt sich oder fällt aus dem Kopf
 confidence:   provisional
-updated:      2026-10-25
+updated:      2026-11-10
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     unknown
+firmware:     unstated on most reporting machines; 6.9.1-beta, 6.9.2, 7.0.1 and 8.0.0 where stated; lock, park and stuck-nozzle code source-checked at 6.9.2 and 8.0.0
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/postid/804782/
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/filament-stuck-with-asa-pla-support/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-toolhead-looses-tool-when-unloading-filament-and-blobs-after-every-colorchange/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-dropping/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/flex-filament-stuck-and-cannot-dock-tool/
   - https://help.prusa3d.com/article/nozzle-tool-remains-attached-to-the-print-head-core-one-indx_1077657
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5532
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://help.prusa3d.com/article/hotend-thermal-runaway-36204-indx_1088706
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/solved-tpu-tangling-at-the-extruder-after-indx-tool-changes-the-nozzle-was-too-cold-during-cleaning/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_indx.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_tool_lock_hack/indx_tool_lock_hack.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_tool_lock_hack/indx_tool_lock_hack.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/M1984.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/gui/MItem_tools.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/feedrates/standard_feedrates_indx.cpp
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini
 superseded_by:
-source_sha:   8ef6b57c41ea85a42aaf3e45282b52d71b6ff59561df68a5271c29f5d95abc5e
+source_sha:   0bf92b69b88a14c203aad7c7646d034508ca251a9aec6e1b1f1341b2e890e649
 ---
 # Werkzeug entriegelt sich oder fällt aus dem Kopf
 
-!!! warning "Vier Berichte über ausgeworfene Werkzeuge in zwei Threads, eine Demontage und Berichte über festsitzende Werkzeuge mit unterschiedlich vermuteter Ursache"
-    Vier Besitzer beschreiben, dass sich das aktive Werkzeug aus dem Werkzeugkopf löst,
-    drei davon in einem Thread und einer in einem anderen. Einer öffnete den Kopf und
-    fand an seiner eigenen Maschine eine physische Ursache. Der Besitzer im anderen Thread
-    öffnete seinen ebenfalls und meint, die Verriegelung schließe nicht vollständig, nennt
-    aber kein beschädigtes Teil. Die Demontage ist ein starker Beleg für dieses eine
+!!! warning "Sechs Berichte über ausgeworfene Werkzeuge in drei Threads, eine Demontage und Berichte über festsitzende Werkzeuge mit unterschiedlich vermuteter Ursache"
+    Sechs Besitzer beschreiben, dass sich das aktive Werkzeug aus dem Werkzeugkopf löst,
+    vier davon in einem Thread, einer von diesen nur mit der Aussage, er habe dasselbe
+    Problem wie ein anderer, und je einer in zwei anderen Threads. Einer öffnete den Kopf
+    und fand an seiner eigenen Maschine eine physische Ursache. Die Besitzer in den anderen
+    Threads öffneten ihre ebenfalls und beschreiben eine Verriegelung, die nicht hält,
+    nennen aber kein beschädigtes Teil. Die Demontage ist ein starker Beleg für dieses eine
     Exemplar und sagt noch nichts darüber, wie verbreitet der Defekt ist. Andere Besitzer
     berichten den umgekehrten Fehler, ein Werkzeug, das sich nicht freigeben lässt: einer,
     im ersten Thread, verdächtigt die Verriegelung, Besitzer in zwei weiteren Threads
@@ -47,7 +62,8 @@ Ersatzzahnrad oder einen Ersatz-Werkzeugkopf vom Hersteller. Ein weiterer Besitz
 sieht in einem anderen Thread dieselbe Freigabe an seinem eigenen Werkzeugkopf und
 bringt sie zudem mit Klecksen nach jedem Werkzeugwechsel in Verbindung; nach seiner
 Aussage bestätigte der Support ein Problem am Werkzeugkopf und bot einen Ersatzkopf
-an.
+an. Ein dritter Besitzer verliert in einem dritten Thread bei jedem Entladen das
+Werkzeug und hat noch keine Ursache gefunden.
 
 ## Im Einzelnen
 
@@ -66,6 +82,35 @@ Magnet des Docks angreift; abseits davon kann das Drehen des Mechanismus am Ende
 Extrudermotor antreiben, während das Werkzeug verriegelt bleibt. Die Einzelheiten zu
 Zahnrädern, Nocke und Stift bleiben die Darstellung der Besitzer.
 
+Prusas Firmware-Quellcode, für 7.0.0, 7.0.1 und 8.0.0 seit dem 3. November 2026
+öffentlich, bestätigt mehr vom Bild der Besitzer und schränkt einen Teil davon ein. Um ein
+Werkzeug aufzunehmen, lässt der Drucker den Extruder am Dock vorwärts laufen und
+verriegelt es so; um eines abzulegen, bewegt er den Extruder kurz vor und zurück, um die
+Zähne auszurichten, und lässt ihn dann rückwärts laufen, um die Verriegelung zu öffnen
+([Quellcode des Werkzeugwechslers](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_indx.cpp)).
+Ein kleines, eigens für den INDX geschriebenes Modul hält in seinen Kommentaren fest, dass
+der Kopf die Verriegelung erst abschließt, wenn der Extruder noch ein wenig weiter
+gefördert hat, und dass ein Rückzug davor das Werkzeug herausfallen ließe. Deshalb fügt es
+vor dem ersten Rückzug nach jeder Aufnahme und ebenso nach jedem Einschalten, da es sich
+den Zustand des vorigen Laufs nicht merkt, eine kurze Vorwärts-und-zurück-Bewegung ein,
+falls der Extruder noch nicht weit genug gefördert hat
+([Quellcode des Moduls](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_tool_lock_hack/indx_tool_lock_hack.hpp),
+[Aktivierung beim Einschalten](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_tool_lock_hack/indx_tool_lock_hack.cpp)).
+Prusas mitgelieferter Werkzeugwechsel-G-Code ergänzt bei einem bereits vorgefüllten
+Werkzeug, wenn kein Reinigungsturm verwendet wird, einen eigenen kurzen Schub, der als
+abschließende Verriegelung kommentiert ist
+([Profilpaket 2.5.13](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.13.ini)).
+Ein Rückwärtslauf abseits eines Docks zieht also konstruktionsbedingt nicht immer nur
+zurück: Bei einem gerade aufgenommenen Werkzeug könnte er es freigeben, und genau das
+verhindert diese Absicherung. Das Modul steht schon im veröffentlichten Quellcode von
+6.6.3, und es ist ebenso wie der Ablauf von Verriegeln und Freigeben in 8.0.0 bis auf
+Aufräumarbeiten derselbe wie in 6.9.2
+([Vergleich](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0)).
+Das ist eine Lesart des Codes, kein beobachtetes Ergebnis, und sie räumt keinen Defekt ein.
+Ein Werkzeug, das sich bei einem Rückzug löst, nachdem der Extruder bereits vorwärts
+gefördert hat, wie bei der Reproduktion unten, wird durch die Lücke, die die Absicherung
+abdeckt, nicht erklärt; das ist eine Schlussfolgerung aus dem Code.
+
 ### Was an einer Maschine schiefging
 
 Der Besitzer nahm eine Seite des Werkzeugkopfs ab. Einem Zahnrad im
@@ -83,7 +128,8 @@ fällt beim anschließenden Rückzug heraus.
 
 An dieser Maschine war das nicht subtil. Über einige hundert Werkzeugwechsel hinweg
 brachte der Besitzer keinen einzigen Mehrwerkzeugdruck zu Ende, und viele
-Einzelwerkzeugdrucke scheiterten beim anfänglichen Laden und Reinigen.
+Einzelwerkzeugdrucke scheiterten beim anfänglichen Laden und Reinigen. Er nutzte die
+Firmware 6.9.1-beta, die die oben beschriebene Absicherung bereits enthielt.
 
 ### Ein zweiter Besitzer, weniger eindeutig
 
@@ -105,6 +151,14 @@ mahlendes Geräusch von sich, und dann löste sich das Werkzeug. Als Firmware ne
 7.0.1. Den Kopf hat er nicht geöffnet, eine Ursache nennt er nicht, und er sagt auch
 nicht, bei welchem Schritt des Ladens sich das Werkzeug löste. Wie der zweite Besitzer
 steuert er das Symptom bei, nicht das Zahnrad.
+
+Fünf Tage später antwortete ein fünfter Besitzer auf diesen Beitrag: Ihm gehe es genauso,
+und schlimmer noch, er könne das Filament nicht mehr aus dem Werkzeug entladen. Nach
+seiner Darstellung befreiten die Vorschläge des Supports, darunter das Werkzeug aufzuheizen
+und zu entladen sowie ein Cold Pull, es nicht, und der Support habe das Werkzeug als tot
+aufgegeben. Über die Zustimmung zu dem beantworteten Beitrag hinaus beschreibt er die
+Freigabe selbst nicht; er steuert also einen weiteren Bericht des Symptoms bei, und eines
+danach verlorenen Werkzeugs, aber keine Ursache.
 
 ### Ein anderer Thread: ein zweiter geöffneter Werkzeugkopf
 
@@ -129,6 +183,23 @@ Einen fehlenden oder verformten Zahn oder ein anderes beschädigtes Teil meldet 
 Ein Prusa-Mitarbeiter im Forum riet ihm, mit den Videos zum Support zu gehen. Eine Woche
 nach dem ersten Beitrag schrieb der Besitzer, der Support habe den Kopf als fehlerhaft
 anerkannt und einen neuen angeboten; am 18. Oktober 2026 wartete er noch darauf.
+
+### Ein dritter Thread: das Werkzeug geht bei jedem Entladen verloren
+
+Am 9. November 2026 eröffnete ein weiterer Besitzer einen
+[eigenen Thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-dropping/).
+Die Core One hatte das Gen-2-Upgrade und einen INDX mit acht Werkzeugen bekommen,
+und nun gibt der Kopf das Werkzeug bei jedem Entladen von Filament frei, auch während
+der Kalibrierung der Filamentsensoren. Der Support ließ eine Seite des Kopfes öffnen
+und die Verriegelung filmen, die sich nach dieser Schilderung zu früh löst; der Fall
+wurde eskaliert, ohne Ergebnis. Ein beschädigtes Teil wird nicht genannt, und in einem
+späteren Beitrag kündigt der Besitzer an, den Kopf erneut zu öffnen und nach einem
+abgebrochenen Zahn zu suchen. Als Firmware wird nur die jeweils neueste Version genannt.
+Zuvor waren an der Hauptplatine die Leitungen des Heizbetts von denen des
+Werkzeugkopfs weggelegt worden, was laut dem Besitzer viele der anfänglichen
+Fehlmeldungen beseitigte; das ist eine Maßnahme gegen Störungen wie unter
+[Störungen der Wägezelle](loadcell-emi-noise.md) beschrieben, und sie hat das
+Herausfallen des Werkzeugs nicht beendet.
 
 ### Ein dritter Besitzer, der umgekehrte Fehler
 
@@ -190,6 +261,44 @@ außerhalb des Verriegelungsgetriebes hinweist, die sich leicht ausschließen l�
 besonders bei flexiblem Filament oder bei Drucken mit mehreren Materialien in einer
 warmen Kammer.
 
+Ein [späterer Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/solved-tpu-tangling-at-the-extruder-after-indx-tool-changes-the-nozzle-was-too-cold-during-cleaning/)
+bietet eine mögliche Ursache für das Verknäueln flexiblen Filaments, auch wenn dabei kein
+Werkzeug festsaß. Am 7. November 2026 berichtete ein Besitzer mit Firmware 8.0.0, der TPU
+zusammen mit PLA druckte, dass sich das TPU am Extruder verknäuelte, sobald der Drucker zu
+diesem Werkzeug zurückkehrte, und beim Spülen kaum etwas herauskam; die erste Schicht war
+normal gedruckt worden. Beim Lesen seines geslicten G-Codes führte er das auf den
+Reinigungsschritt des mitgelieferten Werkzeugwechsel-G-Codes zurück: Dort wird die Düse
+nur auf eine verringerte Reinigungstemperatur gebracht, bevor der kurze Schub folgt, der
+die Verriegelung eines bereits vorgefüllten Werkzeugs abschließt; der Schub trifft also
+auf Filament, das noch nicht geschmolzen ist, und weiches TPU knickt aus. Er änderte den
+Werkzeugwechsel-G-Code nur für flexibles Filament, hob die Reinigungstemperatur an,
+sodass der Verriegelungsschub auf wärmeres Filament trifft, und fügte eine Pause ein,
+sobald die Düse wieder Drucktemperatur hat, bevor das Filament wieder vorgeschoben wird,
+und seitdem verlaufen die Werkzeugwechsel nach seinem Bericht sauber. Gleichzeitig
+nahm er mehrere weitere Änderungen nur für flexibles Filament vor, ohne sie einzeln zu
+testen, und bezeichnet es selbst als Vermutung, dass die Temperatur der entscheidende
+Punkt sei.
+
+TODO(verify): die Regel für die Temperatur im mitgelieferten Reinigungsschritt sowie die
+angehobene Temperatur und die Pause für flexibles Filament, aus dem Thread zum
+verknäuelten TPU; hier zurückgehalten.
+
+Die Reihenfolge der Schritte, die er beschreibt, stimmt mit dem mitgelieferten
+Werkzeugwechsel-G-Code in Prusas Profilpaket 2.5.13 bei ausgeschaltetem Reinigungsturm
+überein, wie bei ihm, hier geprüft; dass ein kalter Schub das TPU verknäuelt, ist seine
+Deutung, von einem Drucker. Ein festsitzendes Werkzeug meldet er nicht. Ein am Antrieb
+ausknickender Strang ist aber genau die Art Knäuel, von dem die Besitzer mit flexiblem
+Filament oben glauben, dass er ihre Werkzeuge festhielt, und dies ist das erste solche
+Knäuel, das sein Besitzer auf einen bestimmten Schritt des Werkzeugwechsels zurückführt;
+wissenswert ist es also, wenn Sie flexibles und steifes Filament mischen. Ob es diese
+festsitzenden Werkzeuge erklärt, ist eine Schlussfolgerung. Die schnellere Handhabung
+flexibler Filamente in Firmware 8.0.0 spielt dafür keine Rolle. Nach Prusas Hinweisen und
+dem
+[Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/feedrates/standard_feedrates_indx.cpp)
+beschleunigt diese Änderung die eigenen Extruderbewegungen der Firmware bei als flexibel
+gekennzeichneten Filamenten, nicht die Extruderbewegungen, die im Werkzeugwechsel-G-Code
+des Slicers stehen, und dieser Besitzer hatte 8.0.0 bereits installiert.
+
 ### Die Wiederherstellung kann in einer Schleife hängen
 
 Als ein Werkzeug im Kopf festsaß, fand der erste Besitzer den Drucker in einer Schleife
@@ -198,28 +307,57 @@ ein vorhandenes Werkzeug, ohne zu wissen welches, und versuchte sofort wieder, e
 anzudocken — womit der Menüpunkt „Release Stuck Tool“ unerreichbar blieb. Als er diesen
 Menüpunkt einmal ausprobierte, knirschten die Zahnräder, und nichts bewegte sich.
 
+Der Quellcode, geprüft für 6.9.2 und 8.0.0, erklärt dieses Muster, ohne einen Fehler zu
+zeigen. Das Folgende gilt für beide: 8.0.0 ruft die Leerlaufprüfung an einer anderen
+Stelle der Hauptschleife der Firmware auf, um eine Verklemmung zu beheben, aber unter
+denselben Bedingungen
+([Vergleich](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0)).
+Während eines Drucks wird ein fehlgeschlagenes
+Parken zweimal automatisch wiederholt; danach bietet der Drucker Retry und Abort an.
+Wenn der Drucker nicht aktiv druckt (im Leerlauf oder bei pausiertem Druck), öffnet er,
+sobald er eine Düse erkennt, über die er keinen Eintrag hat, eine Abfrage, die die Docks
+auflistet, und versucht, das Werkzeug im
+gewählten Dock abzulegen; scheitert das, kehrt er zur Liste zurück. Der Menüpunkt, den die
+Firmware „Release Stuck Nozzle“ nennt und nicht so, wie der erste Besitzer ihn
+bezeichnete, führt genau diese Routine aus
+([Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/M1984.cpp)),
+er hätte also zum selben Andockversuch geführt, nicht zu einem anderen Ausweg. In beiden
+Fällen besteht die Freigabe darin, dass der Extruder am Dock rückwärts läuft; bei einem
+Kopf, dessen Verriegelung oder Antrieb blockiert ist, trifft also jeder Versuch auf
+dasselbe Hindernis. Das ist eine Lesart des Codes, kein Test.
+
 Ein [Firmware-Fehlerbericht](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5532),
 den der zweite Besitzer aus dem Thread zum flexiblen Filament am Tag seines
 festsitzenden Werkzeugs einreichte, beschreibt eine weitere Sackgasse. Nachdem ein
 Entladen fehlgeschlagen war, fragte ein zweiter Entladeversuch nach dem Filamenttyp und
 wartete dann darauf, dass die Düse aufheizt, was sie nie tat; auch parken ließ sich das
-Werkzeug nicht. Der Bericht bezieht sich auf 6.9.2 und war am 25. Oktober 2026 noch
+Werkzeug nicht. Der Bericht bezieht sich auf 6.9.2 und war am 8. November 2026 noch
 offen und unbeantwortet. Weder die Versionshinweise zu Firmware 7.0.0 noch die zu
 7.0.1 vom 19. Oktober 2026, deren einzige Korrektur ein Einfrieren des Druckers beim
 Start betrifft, noch die zu [8.0.0](https://help.prusa3d.com/downloads/core-one-indx)
-vom 22. Oktober 2026 nennen hierzu, zur Andock-Schleife oder zum Menüpunkt „Release
-Stuck Tool“ eine Änderung.
+vom 22. Oktober 2026 nennen hierzu, zur Andock-Schleife oder zum Menüpunkt für eine
+festsitzende Düse eine Änderung. Ebenso wenig die ausführlicheren Hinweise, die Prusa am
+3. November 2026 zusammen mit dem Quellcode auf GitHub veröffentlicht hat, zu
+[7.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0),
+[7.0.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1) und
+[8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0). Das
+hängende Entladen selbst hat diese Seite im Quellcode nicht nachverfolgt.
 
 Ein anderer Besitzer beschreibt eine ähnliche Sackgasse mit anderem Ausgangspunkt, in
 einem Kommentar vom 22. Oktober 2026 unter
 [Prusas Artikel zum Fehler „Hotend Thermal Runaway“ beim INDX](https://help.prusa3d.com/article/hotend-thermal-runaway-36204-indx_1088706).
 Ein großer Klumpen an seiner Düse schien den Drucker daran zu hindern, ihre Temperatur zu
 messen, und er konnte das Werkzeug nicht parken, weil nach seinem Verständnis die Düse
-erst aufheizen muss, bevor der Extrudermotor rückwärts läuft, um es freizugeben. Seine
-Erklärung ist unbestätigt, doch zusammen mit dem Fehlerbericht oben ist es ein zweiter,
-davon unabhängiger Fall, in dem eine Düse, die der Drucker nicht aufheizen oder nicht
-messen konnte, mit einem Werkzeug einherging, das den Kopf nicht verließ. Heizt Ihre
-Düse nicht auf, ist das manuelle Lösen des Herstellers unter „Was zu tun ist“ unten
+erst aufheizen muss, bevor der Extrudermotor rückwärts läuft, um es freizugeben. Der
+Quellcode bestätigt das nicht: Die Park-Routine wartet nicht auf Wärme, und die
+Extruderbewegungen, die die Verriegelung öffnen, sind von der Prüfung ausgenommen, die
+kaltes Extrudieren verhindert; so wie der Code zu lesen ist, braucht die Freigabe selbst
+also keine heiße Düse. Ein Fehler, der den Drucker anhält, oder ein Schritt, der zuerst
+aufheizt, etwa ein Entladen, wären andere Wege in dieselbe Lage; auch das ist eine Lesart
+des Codes, kein Test. Zusammen mit dem Fehlerbericht oben ist sein Kommentar dennoch ein
+zweiter, davon unabhängiger Fall, in dem eine Düse, die der Drucker nicht aufheizen oder
+nicht messen konnte, mit einem Werkzeug einherging, das den Kopf nicht verließ. Heizt
+Ihre Düse nicht auf, ist das manuelle Lösen des Herstellers unter „Was zu tun ist“ unten
 womöglich der Ausweg, nicht ein weiterer Versuch über das Menü; das ist eine
 Schlussfolgerung aus diesen beiden Berichten.
 
@@ -247,13 +385,20 @@ einzelnen Besitzers über seinen eigenen Fall, und ein Defekt wird darin nicht b
 Die [Versionshinweise zu Firmware 7.0.0](https://help.prusa3d.com/downloads/core-one-indx)
 vom 15. Oktober 2026 nennen nichts zur Werkzeugverriegelung, ebenso wenig die zu 7.0.1
 vom 19. Oktober 2026, deren einzige Korrektur ein Einfrieren beim Start betrifft, oder
-die zu 8.0.0 vom 22. Oktober 2026. Die Hinweise zu 7.0.0 verlegen allerdings die
-Positionen für das Laden und Entladen von Filament auf den kalibrierten Versatz des
-Düsenreinigers. Die Hinweise bringen das nicht mit diesem Fehler in Verbindung, und noch
-hat kein Besitzer berichtet, ob es das Auswerfen nahe dem Abstreifer verändert, das der
-zweite Besitzer beschreibt. Der Besitzer der frisch umgerüsteten Maschine oben hatte
-7.0.1 installiert, als sich zwei seiner Werkzeuge beim Laden lösten, sagt aber nicht, wo
-der Kopf dabei stand.
+die zu 8.0.0 vom 22. Oktober 2026, und auch die ausführlicheren Hinweise auf GitHub zu
+allen dreien schweigen dazu. Wie oben beschrieben, ist der Code für Verriegeln und
+Freigeben in 8.0.0 bis auf Aufräumarbeiten derselbe wie in 6.9.2. Die Hinweise zu 7.0.0
+verlegen allerdings die Positionen für das Laden und Entladen von Filament auf den
+kalibrierten Versatz des Düsenreinigers. Im
+[Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp)
+verschiebt diese Änderung jene Positionen, die laut einem Kommentar dort mit den Park- und
+Spülpunkten über dem Abfallbehälter zusammenfallen, um den kalibrierten Versatz des
+Reinigers. Jedes Entladen geschieht also neben dem Abstreifer, und „nahe dem Abstreifer“
+im Bericht des zweiten Besitzers bezeichnet keinen ungewöhnlichen Ort. Weder die Hinweise
+noch der Code bringen die Änderung mit diesem Fehler in Verbindung, und noch hat kein
+Besitzer berichtet, ob sie das Auswerfen beim zweiten Besitzer verändert. Der Besitzer der
+frisch umgerüsteten Maschine oben hatte 7.0.1 installiert, als sich zwei seiner Werkzeuge
+beim Laden lösten, sagt aber nicht, wo der Kopf dabei stand.
 
 **Wenn ein Werkzeug im Kopf festsitzt, nutzen Sie das manuelle Lösen des Herstellers.**
 Prusa veröffentlicht ein
@@ -277,14 +422,17 @@ Dock-Kalibrierung, siehe
 [Werkzeugerkennung und Parkfehler](tool-detection-ringdown-decay.md). Verlässt ein
 Werkzeug den Kopf nicht, sehen Sie sich das Filament dort an, wo der Extruderantrieb es
 greift, bevor Sie die Verriegelung verdächtigen; das stützt sich auf die beiden
-Filament-Berichte aus anderen Threads oben.
+Filament-Berichte aus anderen Threads oben. Verknäuelt sich flexibles Filament bei
+Werkzeugwechseln immer wieder, enthält der TPU-Thread oben die Abhilfe eines Besitzers
+für das Knäuel selbst.
 
 ## Überprüfung
 
-`provisional` — vier Besitzer berichten, dass sich das Werkzeug löst, drei in einem
-Thread und einer in einem anderen; eine physische Ursache wurde nur an einer Maschine
-gefunden, und der Besitzer im anderen Thread, der seinen Kopf ebenfalls geöffnet hat,
-nennt kein beschädigtes Teil. Ein Besitzer berichtet nur den umgekehrten Fehler, ein
+`provisional` — sechs Besitzer berichten, dass sich das Werkzeug löst, vier in einem
+Thread, einer davon nur durch Zustimmung zum Beitrag eines anderen, und je einer in zwei
+anderen; eine physische Ursache wurde nur an einer Maschine gefunden, und die Besitzer
+in den anderen Threads, die ihre Köpfe ebenfalls geöffnet haben, nennen kein
+beschädigtes Teil. Ein Besitzer berichtet nur den umgekehrten Fehler, ein
 Werkzeug, das sich nicht freigeben lässt; Besitzer in zwei weiteren Threads melden ein
 festsitzendes Werkzeug und verdächtigen das Filament.
 
@@ -298,7 +446,19 @@ Der Bericht des zweiten Besitzers teilt das Symptom, bisher aber nicht die Ursac
 sein reines PLA-Muster ist ein Grund zur Vorsicht, bevor man beides als einen Fehler
 behandelt. Auch der Bericht des vierten Besitzers im selben Thread teilt nur das
 Symptom: keine Demontage, keine Ursache. Auf die Stufe wirkt er sich nicht aus, zeigt
-das Symptom aber an einer frisch umgerüsteten Maschine mit 7.0.1.
+das Symptom aber an einer frisch umgerüsteten Maschine mit 7.0.1. Der des fünften
+Besitzers, wieder in jenem Thread, trägt noch weniger bei: Zustimmung zum vierten und ein
+Werkzeug, das der Support danach nicht freibekam.
+
+Prusas Firmware-Quellcode ist eine Quelle aus erster Hand und bestätigt den Mechanismus,
+den die Besitzer beschreiben: Die Verriegelung wird vom Extruder angetrieben, vorwärts zum
+Schließen und am Dock rückwärts zum Öffnen, und ein gerade aufgenommenes Werkzeug ist
+konstruktionsbedingt erst ganz verriegelt, wenn der Extruder noch ein wenig weiter
+gefördert hat, wogegen die Firmware absichert. Das ist eine Eigenschaft der Konstruktion,
+kein Defekt; die Stufe hebt oder senkt es also nicht. Es ist nicht die unten verlangte
+Aussage des Herstellers, und es erklärt kein Werkzeug, das bei einem Rückzug nach
+vorherigem Vorwärtsfördern verloren geht; dieser letzte Punkt ist eine Schlussfolgerung
+aus dem Code.
 
 Der Entlade-Thread kommt der unten genannten Schwelle am nächsten, ohne sie zu erreichen.
 Es ist ein zweiter geöffneter Werkzeugkopf, in einem anderen Thread, von einem Besitzer,
@@ -311,6 +471,12 @@ Ersatzangebot des Supports erreichen diese Seite nur über den eigenen Beitrag d
 Besitzers und benennen keinen Defekt; wie der Ersatzkopf des dritten Besitzers sind sie
 daher nicht die unten verlangte Aussage des Herstellers. Der Zusammenhang mit Klecksen
 nach Werkzeugwechseln ist allein die Deutung dieses Besitzers.
+
+Der im November eröffnete Thread ist ein dritter unabhängiger Thread für das Symptom und
+ein dritter Kopf, an dem der Besitzer die Verriegelung sich lösen sah, aber wieder ohne
+genanntes beschädigtes Teil; auch er erfüllt die Schwelle daher nicht. Das würde er,
+wenn dieser Besitzer beim erneuten Öffnen des Kopfes einen abgebrochenen oder
+verformten Zahn findet.
 
 Für sich genommen stammt das Symptom — ein Werkzeug, das durch Rückwärtsextrusion
 abseits eines Docks freigegeben wird — inzwischen von unabhängigen Besitzern in zwei
@@ -330,11 +496,16 @@ sind voneinander und von den Berichten zur Verriegelung unabhängig, und keiner 
 einer Demontage. Sie beschreiben ein Werkzeug, das den Kopf nicht verließ, statt eines,
 das herausfiel, und machen Filament statt eines Teils des Kopfs verantwortlich; sie heben
 die Stufe also nicht und zählen auch nicht als weitere Berichte über den Fehler des
-dritten Besitzers. Der Firmware-Bericht zum hängenden Entladen stammt von einem der
+dritten Besitzers. Der TPU-Thread ist ein dritter unabhängiger Besitzer, berichtet aber
+ein Knäuel ohne festsitzendes Werkzeug; er bietet eine mögliche Ursache für das Knäuel,
+von einem Drucker und mit mehreren gleichzeitig vorgenommenen Änderungen, ist für sich
+genommen also `provisional` und betrifft die festsitzenden Werkzeuge nur über eine
+Schlussfolgerung. Der Firmware-Bericht zum hängenden Entladen stammt von einem der
 Besitzer mit flexiblem Filament und ist daher keine eigene Quelle. Der Kommentar unter
 Prusas Artikel zum Thermal Runaway stammt von einem anderen Besitzer. Er ist ein
 einzelner Bericht, und seine Begründung dafür, dass das Werkzeug festsaß, ist das
-Verständnis dieses Besitzers, nicht etwas, das Prusas Artikel sagt.
+Verständnis dieses Besitzers, nicht etwas, das Prusas Artikel sagt; der
+Firmware-Quellcode, so wie er hier gelesen wird, stützt sie nicht.
 
 Der Beitrag mit der Demontage wartete noch auf Freigabe im Forum, als diese Seite zuerst
 geschrieben wurde; inzwischen ist er veröffentlicht, und der Link zeigt ihn. Das Video

@@ -1,7 +1,7 @@
 ---
 title:        Issues
 confidence:   unknown
-updated:      2026-10-18
+updated:      2026-11-08
 author:       hyiger
 printer:      unknown
 toolhead:     unknown
@@ -56,8 +56,9 @@ reader a part, a print, or a warranty window.
   electrical interference in the loadcell signal makes the printer believe it has
   touched down while the nozzle is still well clear.
 - [Tool offset calibration error codes](../codes.md) — which step of the
-  calibration failed, for each code, and how to read it from the serial log when the
-  printer only ever shows 36130. Start here for any tool offset calibration failure.
+  calibration failed, for each code, and how to read it from the serial log: through
+  firmware 7.0.1 every failure shows 36130, and 8.0.0 adds 36144, 36145 and 36146 for some
+  of them. Start here for any tool offset calibration failure.
 - [Tool offset calibration fails](offset-sensor-board-failure.md) — the contactless
   offset sensor returns no samples, so calibration has nothing to work with. Usually
   the sensor board.
@@ -115,6 +116,7 @@ The `361xx` block is the toolchanger family. These are the codes that map onto a
 | `36127` | Tool park failed | [Tool detection](tool-detection-ringdown-decay.md) |
 | `36128` | Retry tool park | [Tool detection](tool-detection-ringdown-decay.md) |
 | `36130` | Tool offset failed | [Error codes](../codes.md#stock-firmware) to find which step failed, then [tool offset calibration](offset-sensor-board-failure.md), or [bed alignment](tool-offset-bed-z-alignment.md) with a clean nozzle and nothing loaded |
+| `36144` `36145` `36146` | Sensor Not Found / Sensor Failure / Tool Not Picked (stock firmware 8.0.0) | [Error codes](../codes.md#stock-800) |
 | `36190` to `36197` | The step of tool offset calibration that failed | [Error codes](../codes.md) |
 | `36135` | Toolchanger error | [Tool detection](tool-detection-ringdown-decay.md) |
 | `36136` | Calibrate dock from menu | [Dock calibration](dock-calibration-rejects-docks.md) |

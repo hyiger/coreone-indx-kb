@@ -1,13 +1,13 @@
 ---
 title:        In den Druck geschleppte Blobs — Düsenwischer und Spülvorgang
 confidence:   reported
-updated:      2026-10-25
+updated:      2026-11-10
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       0.4mm reported
-firmware:     6.9.0, re-checked against 6.9.1, 6.9.2 and the 7.0.0, 7.0.1 and 8.0.0 release notes; earlier behavior noted throughout
+firmware:     6.9.0, re-checked against 6.9.1, 6.9.2, 7.0.0, 7.0.1 and 8.0.0 (notes and source); earlier behavior noted throughout
 sources:
   - https://help.prusa3d.com/downloads/core-one-indx
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/
@@ -37,8 +37,27 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5568
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5563
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/maybe-im-becoming-a-convert/
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/nozzle_cleaner/nozzle_cleaner.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/gcode/gcode_loader.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_nozzle_cleaner_calibration/screen_nozzle_cleaner_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/gui/MItem_hardware.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/ProjectOptions.cmake
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/wastebin_watcher/wastebin_watcher.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.2/src/feature/wastebin_watcher/wastebin_watcher.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/fcccaa10c62d0e399210bc7aabb14c868e3c5a33
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/596d5330f3a5afde6b6eaefa6f60e9cb12882074
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5410
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5576
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-indx-blobs-at-color-change-layers-nozzle-wiper-dropping-filament-onto-print/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/solved-tpu-tangling-at-the-extruder-after-indx-tool-changes-the-nozzle-was-too-cold-during-cleaning/
 superseded_by:
-source_sha:   6e3b041c79a250708d59676a9c04dd6e2d0fa0f85b5911d893d54434d720eacd
+source_sha:   70bfa500f926f90e3e5d8859f061c24da5c8e46a0532e499179d2a1dfe107da8
 ---
 # In den Druck geschleppte Blobs — Düsenwischer und Spülvorgang
 
@@ -70,8 +89,9 @@ source_sha:   6e3b041c79a250708d59676a9c04dd6e2d0fa0f85b5911d893d54434d720eacd
     Kalibrierung früher von Hand erledigt wurde, schlecht und ohne jede Möglichkeit zu
     sehen, was man tut. Wenn Sie etwas Älteres als 6.9.0 einsetzen, aktualisieren Sie und
     testen Sie erneut, bevor Sie Zeit in manuelle Ausrichtung investieren. Die Höhe ist
-    die Ausnahme: Sie bleibt auch in 6.9.0, 6.9.1 und 6.9.2 ein manueller Schritt, und
-    weder die Notes zu 7.0.0 noch die zu 8.0.0 sagen, dass sich daran etwas geändert hätte.
+    die Ausnahme: Sie bleibt in jeder Version bis einschließlich 8.0.0 ein manueller
+    Schritt, und deren Assistent verlangt den Schraubenschritt noch mit denselben Worten
+    wie der von 6.9.0.
 
     Die Release Notes der stabilen Version 6.9.1 nennen keine Änderung am Wischer oder am
     Spülvorgang. Die Beta hat für den Reiniger eine Sache geändert: Das Bett fährt während
@@ -89,33 +109,52 @@ source_sha:   6e3b041c79a250708d59676a9c04dd6e2d0fa0f85b5911d893d54434d720eacd
     Firmware 7.0.0 vom 15. Oktober 2026 (laut
     [Prusas Download-Seite](https://help.prusa3d.com/downloads/core-one-indx)) enthält
     zwei Zeilen zum Reiniger. Die eine verspricht eine
-    verbesserte Reinigung durch den Düsenwischer, ohne zu sagen, was sich geändert hat;
+    verbesserte Reinigung durch den Nozzle Wiper, ohne zu sagen, was sich geändert hat;
     die Notes kennzeichnen sie als bereits in
     [6.10.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.10.1)
-    ausgeliefert, einer Firmware für den XL und XL+, nicht für den INDX. Die andere verlegt
-    das Laden und Entladen von Filament an Positionen, die den kalibrierten
-    Reiniger-Offset berücksichtigen. Prusa hatte den Quellcode von 7.0.0 bei Abfassung
-    dieses Textes nicht veröffentlicht. Inzwischen hat ein INDX-Anwender über das Wischen
-    unter 7.0.0 berichtet, und mit PETG findet er es schlechter als unter 6.9.0, nicht
-    besser (siehe *Rückstände nach der Reinigung vor der Kalibrierung* weiter unten). Das
-    ist ein Einzelbericht, und ob eine der beiden Zeilen sonst etwas auf dieser Seite
-    erledigt, ist offen.
+    ausgeliefert, einer Firmware für den XL und XL+, nicht für den INDX. Der Quellcode, den
+    Prusa am 3. November veröffentlicht hat, zeigt, dass sie einen INDX überhaupt nicht
+    erreicht: Nozzle Wiper ist der Name, den die Firmware dem Wischer-Zubehör von Druckern
+    ohne INDX gibt, dessen Code für den INDX nicht gebaut wird, und genau dort steckt die
+    Arbeit an 7.0.0. Die eigenen Reinigungssequenzen des INDX sind in den Git-Tags v6.9.2
+    und v8.0.0 dieselben. Die andere Zeile verlegt das Laden und Entladen von Filament an
+    Positionen, die den kalibrierten Reiniger-Offset berücksichtigen; im Quellcode liegen
+    beide Positionen über dem Abfallbehälter, wo die Park- und Spülpunkte diesen Offset
+    bereits nutzten. Inzwischen hat ein INDX-Anwender über das Wischen unter 7.0.0
+    berichtet, und mit PETG findet er es schlechter als unter 6.9.0, nicht besser (siehe
+    *Rückstände nach der Reinigung vor der Kalibrierung* weiter unten). Das ist ein
+    Einzelbericht, und der Quellcode enthält keine Änderung am Wischen des INDX in 7.0.0,
+    die das erklären würde; dazwischen liegt die kühlere Kalibrierung aus 6.9.1, die er
+    verantwortlich macht.
 
     Firmware 8.0.0 vom 22. Oktober 2026 (laut derselben Seite) enthält zwei Zeilen, die den
-    Reiniger berühren. Flexible Filamente werden beim Reinigen der Düse jetzt weniger stark
-    verlangsamt. Und das Bett fährt bei Kalibrierungen, für die man mit der Hand in den
-    Drucker greifen muss, weiter nach unten, was sich wie eine Fortsetzung der oben
-    beschriebenen Änderung aus der 6.9.1-Beta liest; welche Kalibrierungen das sind, sagen
-    die Notes nicht. Nichts darin betrifft die Wischerhöhe, die Reinigungstemperatur, die
-    Reihenfolge von Spülen, Abkühlen und Wischen oder die Spülmenge. Auch den Quellcode von
-    8.0.0 hat Prusa nicht veröffentlicht, und noch kein INDX-Anwender hat berichtet, wie
-    sich das Wischen damit verhält.
+    Reiniger berühren, und die ausführlicheren Notes, die Prusa am 3. November auf GitHub
+    gestellt hat, fügen eine dritte hinzu. Flexible Filamente werden beim Reinigen der Düse
+    jetzt weniger stark verlangsamt; die Notes auf GitHub weiten das auf jede
+    Extruderbewegung aus, die die Firmware mit einem als flexibel gekennzeichneten Filament
+    ausführt, vom Laden und Spülen bis zu Werkzeugwechseln und Reinigung. Das Bett fährt bei
+    Kalibrierungen, für die man mit der Hand in den Drucker greifen muss, weiter nach unten,
+    was sich wie eine Fortsetzung der oben beschriebenen Änderung aus der 6.9.1-Beta liest,
+    und die Notes auf GitHub nennen sie: Dock Calibration, Nozzle Cleaner Calibration und
+    die Prüfung Gantry Squareness. Die dritte Zeile verspricht eine genauere Kalibrierung
+    des Düsenreinigers; im Quellcode referenziert der Assistent jetzt präzise, bevor die
+    Wägezelle den Reiniger antastet, auf dieselbe Weise, wie der Drucker referenziert, wenn
+    er die gespeicherten Offsets später anwendet
+    ([Commit](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/fcccaa10c62d0e399210bc7aabb14c868e3c5a33)).
+    Keine davon betrifft die Wischerhöhe, die Reinigungstemperatur, die Reihenfolge von
+    Spülen, Abkühlen und Wischen oder die Spülmenge, und der Quellcode bestätigt das (siehe
+    *Verifizierung*). Die ersten INDX-Anwender, die das Wischen unter 8.0.0 beschreiben,
+    sahen Spülmaterial auf dem Druck; einer von ihnen, nach eigener Vermutung auf 8.0.0,
+    meint, dass ein anderes Ausrichten der Düse bei der Kalibrierung das meiste davon
+    behoben habe. Ihre Berichte
+    stehen unter *Tiefer als man denkt* weiter unten.
 
     Mehrere Anwender haben nach der Reinigung, die zu Beginn eines Drucks läuft, noch
-    Material an der Düse gefunden, meist PETG, und einer findet es unter 6.9.2 und 7.0.0
-    häufiger als unter 6.9.0. Sie führen das teils auf die Reihenfolge dieser Reinigung,
-    teils auf ihre Temperatur zurück. Das ist unter *Rückstände nach der Reinigung vor der
-    Kalibrierung* weiter unten dargestellt.
+    Material an der Düse gefunden, meist PETG und PCTG, und einer findet es unter 6.9.2 und
+    7.0.0 häufiger als unter 6.9.0. Sie führen das teils auf die Reihenfolge dieser
+    Reinigung, teils auf ihre Temperatur zurück, und beides hat sich bis 8.0.0 nicht
+    geändert. Das ist unter *Rückstände nach der Reinigung vor der Kalibrierung* weiter
+    unten dargestellt.
 
 ## Zusammenfassung
 
@@ -229,9 +268,9 @@ eine Richtungsangabe („tiefer als nur berührend“), die keine Zahl benötigt
     er nicht ein. Die Höhe ist ein einmaliger manueller Schritt im selben Assistenten,
     der Sie auffordert, die Düse in die Mitte der V-Nut im Silikon zu setzen, und dann
     anzeigt: „Turn the adjustment screw counterclockwise until it touches the silicone.“
-    Die eigenen Schritte des Assistenten sind in 6.9.0 und 6.9.1 dieselben, in beiden ist
-    die Tiefe also das,
-    was dieser Schraubenschritt hinterlässt, und das Kriterium, das der Assistent nennt,
+    Die eigenen Schritte des Assistenten sind von 6.9.0 bis 8.0.0 dieselben, geändert hat
+    sich nur, wie er vor dem Messen referenziert und wie weit er das Bett absenkt; in allen
+    diesen Versionen ist die Tiefe also das, was dieser Schraubenschritt hinterlässt, und das Kriterium, das der Assistent nennt,
     ist Berührung, nicht Vergraben. Das ist eine Lesart des Codes; niemand hat berichtet,
     das Ergebnis auf der Hardware mit der tieferen Einstellung verglichen zu haben, die
     Frage bleibt also offen.
@@ -276,6 +315,33 @@ eine Richtungsangabe („tiefer als nur berührend“), die keine Zahl benötigt
     Anwender in zwei Threads, nur eine Richtungsangabe, und wie der vorige zeigt dies
     nicht, ob die automatische Routine zu kurz greift.
 
+    Inzwischen weisen andere Anwender in einem separaten Thread in dieselbe Richtung. Ende
+    Oktober fand ein INDX-Anwender unter 8.0.0, mit neuem PLA, auf jeder Schicht mit
+    Werkzeugwechsel Blobs auf der Außenfläche und sah, wie der Reiniger hin und wieder einen
+    Blob aufnahm und auf oder neben dem Teil ablegte, obwohl er die Wischerkalibrierung
+    bereits durchgeführt hatte
+    ([Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-indx-blobs-at-color-change-layers-nozzle-wiper-dropping-filament-onto-print/)).
+    Von den Anwendern, die antworteten, fragte einer nur, wie man Spüllinien hinzufügt; die
+    übrigen drei zeigen auf Höhe oder Andruck des Reinigers: den Reiniger etwas anheben,
+    weil seine Position nach der Erfahrung des einen sehr empfindlich ist; dafür sorgen,
+    dass der Wischer fest genug gegen die Düse drückt, um sie sauber zu wischen; und den
+    Reiniger anheben, was dem dritten zusammen mit einer Änderung der Kühlung im Slicer
+    zuverlässige Drucke beschert. Der Fragesteller hat sich nicht wieder gemeldet. Der Rat,
+    dem Wischer mehr Kontakt mit der Düse zu geben, ist damit `reported`, von mehreren
+    Anwendern über mehrere Threads hinweg, aber als Rat:
+    Nichts davon ist ein Vorher-nachher-Test, und nichts davon vergleicht das
+    Berührungskriterium des Assistenten an einer Maschine mit einer tieferen Einstellung.
+
+    Ein neuer Anwender, der im November im Haupt-Thread schrieb und nach eigener Vermutung
+    8.0.0 installiert hat, bemerkte vorn am Abfallbehälter Kerben für X und Y und richtete
+    die Düse für die Kalibrierung an der für X aus statt an der Stelle, die seine Fotos als
+    die von Prusa bezeichnen
+    ([Thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/)).
+    Fast alle seine Reinigungsprobleme, auch auf den Druck verschlepptes Spülmaterial, seien
+    damit verschwunden, schreibt er und schließt die Aussage mit einem Fragezeichen; seine
+    Fotos zeigen, wie sich das Spülmaterial verändert. Welchen Schritt des Assistenten er
+    meint, sagt er nicht. `provisional` — ein Einzelbericht.
+
 ### Behelfslösungen ohne Kalibrierung
 
 - **Drucken Sie einen Skirt oder Brim.** Mehrere Anwender berichten, dass das die
@@ -306,7 +372,7 @@ eine Richtungsangabe („tiefer als nur berührend“), die keine Zahl benötigt
 Die Werkzeug-Offset-Kalibrierung läuft zu Beginn eines Drucks, und bevor sie ein
 Werkzeug vermisst, reinigt sie dessen Düse. Laut Firmware-Quellcode spült diese
 Reinigung heiß, kühlt mit eingeschaltetem Bauteillüfter ab und wischt die Düse dann
-vollständig (siehe *Verifizierung*). Was dieses Wischen übersteht, sitzt noch an der
+vollständig, in dieser Reihenfolge von 6.9.0 bis 8.0.0 (siehe *Verifizierung*). Was dieses Wischen übersteht, sitzt noch an der
 Düse, wenn sie vermessen wird.
 
 Auf einem 6.9.1-Build fand ein Anwender PLA, das zu langen Fäden ausgezogen an der Düse
@@ -323,7 +389,7 @@ nach dem Spülen und vor dem eigentlichen Wischen abgekühlt, sodass das Spülma
 Zeit hat, fest zu werden, und nicht vollständig entfernt wird; die Kalibrierung
 scheitert dann an den Resten. Der Melder wünscht sich, dass das Wischen vor dem
 Abkühlen kommt. Laut Quellcode läuft die Firmware tatsächlich in dieser Reihenfolge ab,
-und die Reihenfolge ist in 6.9.0 dieselbe. Geändert hat die Beta, wie weit die Düse vor
+und die Reihenfolge ist in 6.9.0 und im Stand des Git-Tags v8.0.0 dieselbe. Geändert hat die Beta, wie weit die Düse vor
 diesem Wischen abkühlt: Ihre Notes senken die Temperatur der
 Werkzeug-Offset-Kalibrierung, und der Quellcode wendet das auf genau dieses Abkühlen
 an; die stabile 6.9.1 behält das bei.
@@ -373,16 +439,54 @@ und einer Kalibriertemperatur, die sich nach dem Filament richtet. Ein Kommentat
 von #5568 widerspricht: Das Material solle weich sein, nicht flüssig, und die
 niedrigere Temperatur liege näher an dem, was er selbst wählen würde.
 
-Die Rückstände selbst sind damit `reported`: Zwei Anwender stellen in separaten
-Berichten fest, dass die kühle Reinigung klebriges PETG zurücklässt, und die beiden
-Beschwerden über die Reihenfolge beschreiben dasselbe. Die Ursachen, die sie anführen,
-sind nicht geklärt. Dass ein heißeres Reinigen das behebt, ist ein Vorschlag, den
-niemand getestet hat, und ein Kommentator hält dagegen. Weder die Notes zu 7.0.0 noch
-die zu 8.0.0 nennen eine Änderung an der Reinigungstemperatur oder an der Reihenfolge.
+Drei spätere Kommentatoren von #5568 stellen sich hinter die Anfrage. Einer, ein
+INDX-Anwender, der eigene verwandte Anfragen eingereicht hat, findet PETG bei der
+Reinigungstemperatur nahezu fest und würde sie nur so weit unter der Drucktemperatur
+halten, dass nichts ausschwitzt. Ein anderer, dessen Drucke mit PETG beginnen, findet die
+Düse vor jedem Druck schlecht gereinigt, nach der Filamentwechsel-Routine des Druckers
+aber sauber, die nach seiner Schilderung heißer läuft; das vergleicht zwei verschiedene
+Routinen, nicht eine Reinigung bei zwei Temperaturen. Ein dritter findet, dass PLA sich
+gut reinigen lässt, PCTG aber nicht: Wird nicht vor Beginn jedes Drucks ein Klumpen von
+Hand von der Düse entfernt, scheitert die Prüfung des Z-Offsets, auch bei einer frischen
+Düse. Die letzten beiden nennen weder Maschine noch Firmware, auch wenn die Anfrage den
+INDX betrifft.
 
-TODO(verify): die Kalibrier- und Reinigungstemperaturen vor und nach 6.9.1 sowie die
+Die Rückstände selbst sind damit `reported`, und inzwischen von mehreren Anwendern: Die
+Melder von #5567 und #5568 und zwei dieser Kommentatoren stellen fest, dass die kühle
+Reinigung klebriges PETG oder PCTG zurücklässt, und die beiden Beschwerden über die
+Reihenfolge beschreiben dasselbe. Die Ursachen, die sie anführen, sind nicht geklärt.
+Dass ein heißeres Reinigen das behebt, ist an der Reinigung selbst nicht getestet; der
+Vergleich eines Anwenders mit der Filamentwechsel-Routine weist in diese Richtung, und ein
+Kommentator hält dagegen. In der Firmware hat sich nichts bewegt: Im Stand des Git-Tags
+v8.0.0 kühlt die Reinigung weiterhin auf dieselbe gedeckelte Temperatur ab, in derselben
+Reihenfolge, wie im Stand von v6.9.2.
+
+Ein Forum-Thread, dessen Titel einer beim Reinigen zu kalten Düse die Schuld gibt,
+handelt von einer anderen Reinigung und wiegt für #5568 weniger, als sein Titel vermuten
+lässt. Ein INDX-Anwender auf 8.0.0 stellte fest, dass sich TPU am Extruder verhedderte,
+sobald der Druck nach der ersten Schicht wieder zu diesem Werkzeug wechselte, und beim
+Spülen fast nichts herauskam
+([Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/solved-tpu-tangling-at-the-extruder-after-indx-tool-changes-the-nozzle-was-too-cold-during-cleaning/)).
+Er führte es auf den Werkzeugwechsel-Block des Profils zurück, nicht auf die Firmware:
+Vor dem Schritt im Reiniger senkt dieser Block die Düse auf eine niedrigere
+Auswurftemperatur ab (siehe *Werkzeugwechsel* auf der Seite
+[kommentiertes Profil](../gcode/indx-profile-gcode.md)), und der Schub, der das Filament im
+neuen Werkzeug arretiert, läuft bei dieser Temperatur, sodass das weiche TPU gegen
+Kunststoff ausknickte, der noch nicht geschmolzen war. Diese Temperatur nur für flexible
+Filamente anzuheben und eine Pause einzulegen, sobald die Düse wieder Drucktemperatur hat,
+damit das Filament durchwärmt, bevor es wieder hineingeschoben wird, habe das behoben,
+berichtet er, wobei er gleichzeitig mehrere andere Einstellungen nur für flexible
+Filamente änderte und sie nicht einzeln ausprobierte. Das stützt #5568 nicht: Jene Anfrage
+betrifft die Reinigung innerhalb der Werkzeug-Offset-Kalibrierung, die die Firmware
+steuert, während diese hier im Profil sitzt, wo ein Anwender sie bearbeiten kann, und der
+Fehler ist ausknickendes Filament, nicht Rückstand an der Spitze. Gemeinsam ist beiden
+eine Reinigung deutlich unterhalb der Drucktemperatur. `provisional` — ein Anwender,
+mehrere Änderungen auf einmal.
+
+TODO(verify): die Kalibrier- und Reinigungstemperaturen vor und nach 6.9.1, die
 höheren Reinigungstemperaturen, die in #5567, #5568 und dem Forum-Thread vorgeschlagen
-werden. Keine davon wird hier veröffentlicht.
+werden, sowie die angehobene Auswurftemperatur und die Dauer der Pause, die der
+TPU-Anwender verwendete. Keine davon wird hier veröffentlicht.
 
 Der Melder von #5567 weist außerdem darauf hin, dass Prusas Start-G-Code die
 Werkzeug-Offset-Kalibrierung vor der eigenen Düsenreinigung des Drucks ausführt, und
@@ -393,15 +497,40 @@ Reinigungsstation, die das erste Werkzeug vorspülen (siehe
 Werkzeug, oben beschrieben, läuft weiterhin innerhalb von `G427`; gewünscht ist eine
 zusätzliche Reinigung davor.
 
+Eine ältere Anfrage geht es vom anderen Ende des Drucks her an
+([#5410](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5410)): Ein
+INDX-Anwender bittet darum, nach Abschluss eines Drucks jedes Werkzeug aufzuheizen und
+abzuwischen, weil PETG-Düsen mit Rückständen ringsum geparkt werden. Ein zweiter Anwender
+unterstützte das im August, und Ende Oktober schlug der INDX-Kommentator von #5568 oben
+vor, das zu erledigen, während das Bett am Ende abgesenkt wird. Derselbe Kommentator hat
+auch um eine Möglichkeit gebeten, eine Düse während eines Drucks von Hand zu reinigen
+([#5576](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5576)): Eine Pause lässt
+die Werkzeuge angedockt, kalt und unerreichbar, deshalb soll sie anbieten, ein Werkzeug
+aufzunehmen, aufzuheizen und zu warten. Beide Anfragen sind offen, unbeantwortet und
+nicht erprobt.
+
 Der Melder von #5500 fügt hinzu, dass 6.9.0 und 6.9.1 beide mehr spülen als nötig,
 sodass nach dem Wischen oft noch Material an der Düse hängt, und dass die Firmware das
-im Slicer eingestellte Spülvolumen nicht verwendet. Das ist ein Einzelbericht, nicht am
-Quellcode geprüft. Zwei spätere Kommentatoren dort melden dasselbe Problem, einer auf
-einem Gen 2 mit vier Werkzeugen, einer, bei dem ASA noch stärker haftet, ohne zu sagen,
-welche der Beschwerden sie meinen; es bleibt also ein Einzelbericht. Ob die verbesserte
-Wischerreinigung in 7.0.0 die Reihenfolge, das Abkühlen oder die Spülmenge ändert,
-sagen ihre Notes nicht, und die Notes zu 8.0.0 berühren keinen der drei Punkte. Zu
-Fehlern beim Antasten allgemein siehe
+im Slicer eingestellte Spülvolumen nicht verwendet. Zwei spätere Kommentatoren dort
+melden dasselbe Problem, einer auf einem Gen 2 mit vier Werkzeugen, einer, bei dem ASA
+noch stärker haftet, ohne zu sagen, welche der Beschwerden sie meinen. Anwender in einem
+Forum-Thread von Ende Oktober, die das Issue nicht erwähnen, beschreiben weitgehend
+dasselbe. Einer findet, dass das erste Spülen eines Werkzeugs im Druck groß ausfällt und
+teilweise an der Düse bleibt, weil der Wischer es nicht entfernen kann, und dann auf der
+ersten Schicht landet; deshalb druckt er mit jedem Werkzeug zuerst eine kurze Linie, die es
+auffängt. Ein anderer stimmt zu, dass das erste Spülen Material rund um die Düse verteilt,
+wo es sich nicht zuverlässig reinigen lässt, und fragt sich, warum es so groß ist
+([Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-indx-blobs-at-color-change-layers-nozzle-wiper-dropping-filament-onto-print/)).
+Keiner sagt, ob er das Spülen innerhalb der Kalibrierung meint oder das beim ersten
+Wechsel eines Werkzeugs. Der Quellcode klärt einen Teil davon für die Kalibrierung: Dort
+ist das Spülen die eigene Sequenz der Firmware, in den Git-Tags v6.9.2 und v8.0.0
+dieselbe, mit einer eingebauten Menge, in die keine Slicer-Einstellung einfließt (die
+Firmware lässt die Sequenz allerdings durch eine Makrodatei auf dem USB-Laufwerk ersetzen;
+siehe *Verifizierung*), während das Spülen bei einem Werkzeugwechsel im Werkzeugwechsel-G-Code
+des Profils berechnet wird. Ob eine der beiden Mengen größer ist als nötig, kann der
+Quellcode nicht beurteilen. Die Beschwerde, dass ein frühes Spülen Material an der Düse
+zurücklässt, ist damit `reported`, von Anwendern in zwei separaten Quellen; dass das
+Spülen zu groß ist, ist ihre Einschätzung. Zu Fehlern beim Antasten allgemein siehe
 [Ausschwitzen beim Antasten und Kalibrieren](oozing-during-probing-and-calibration.md).
 
 ### Bevor Sie den Wischer verantwortlich machen
@@ -447,7 +576,19 @@ Fehlern beim Antasten allgemein siehe
   mit kaltem Werkzeug nach einem Filamentwechsel an einem anderen Werkzeug und einen
   Versatz in Z nach einem Spool Join bei sofortigem Filamentende. Keiner davon ändert
   die Reihenfolge von Bettfahrt, Aufnehmen und Vorspülen, nach der #5412 und #5477
-  fragen. Eine Behelfslösung ist nicht bestätigt: Ein Kommentator schlug für Aufträge
+  fragen. Ab 7.0.0 hält ein Ablauf die gewünschte Reihenfolge ein: Hält der Drucker
+  während eines Drucks an, um den Abfallbehälter leeren zu lassen, fährt er das Bett über
+  dem Behälter hoch, wartet, bis es dort angekommen ist, und heizt erst dann die Düse auf
+  und spült sie über dem Reiniger vor, bevor er zum Druck zurückfährt. Die
+  ausführlicheren Notes zu 7.0.0 auf GitHub beschreiben diesen Halt mit eigenen
+  Bildschirmen, und der
+  [Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/wastebin_watcher/wastebin_watcher.cpp)
+  bestätigt das. Im Stand des
+  [Git-Tags v6.9.2](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.2/src/feature/wastebin_watcher/wastebin_watcher.cpp)
+  heizte derselbe Halt bereits über dem Behälter auf, begann damit aber, während das Bett
+  noch hochfuhr, und spülte die Düse überhaupt nicht vor. Das betrifft nur den Halt zum Leeren des
+  Behälters; die Reihenfolge eines gewöhnlichen Fortsetzens hat diese Seite noch nicht
+  gegen den inzwischen öffentlichen Quellcode geprüft. Eine Behelfslösung ist nicht bestätigt: Ein Kommentator schlug für Aufträge
   mit Pause einen kleinen Reinigungsturm vor, hatte das aber nicht ausprobiert.
   `reported` — zwei Anwender führen den Blob in separaten Issues auf das Ausschwitzen
   während der Bettfahrt zurück.
@@ -486,10 +627,11 @@ dokumentierte Tatsache.
 
 Die Hauptquelle ist
 [Probleme bei Düsenreinigung und -kalibrierung](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-cleaning-calibration-issues/),
-ein Thread mit 87 Beiträgen und sechzehn Teilnehmern von Ende Juli bis Mitte September
-2026. Er enthält die Symptomberichte, die Klagen über die fehlende Sicht, die Anpassungen
-im Tune-Menü, das Reinigungsturm-Experiment, das Ergebnis unter 6.9.0 sowie die späteren
-Einzelberichte zur Wischerhöhe und zu 6.9.1. Ein großer Teil der späteren
+ein Thread mit 88 Beiträgen und siebzehn Teilnehmern von Ende Juli bis Mitte September
+2026, mit einem weiteren Beitrag im November. Er enthält die Symptomberichte, die Klagen
+über die fehlende Sicht, die Anpassungen im Tune-Menü, das Reinigungsturm-Experiment, das
+Ergebnis unter 6.9.0, die späteren Einzelberichte zur Wischerhöhe und zu 6.9.1 sowie den
+Bericht vom November über das Ausrichten bei der Kalibrierung unter 8.0.0. Ein großer Teil der späteren
 Beiträge dreht sich um die Werkzeug-Offset-Kalibrierung, die
 [eine eigene Seite](offset-sensor-board-failure.md) hat.
 
@@ -505,30 +647,45 @@ fügt die Presets für PVA und BVOH hinzu und sonst nichts, was einen INDX errei
 der unten zitierten Quelldateien unterscheidet sich zwischen den Git-Tags v6.9.1 und
 v6.9.2, die folgende Lesart gilt also auch für 6.9.2.
 
-Die Nachprüfung gegen 7.0.0 stützt sich
-[allein auf die Notes](https://help.prusa3d.com/downloads/core-one-indx): Prusa hatte bei
-Abfassung dieses Textes kein 7.0.0-Tag auf GitHub veröffentlicht, die Lesart des
-Quellcodes unten endet also bei 6.9.2. Von den beiden im Hinweis oben beschriebenen
-Einträgen zum Reiniger sagt keiner, was sich am Wischen geändert hat, und die Notes
-nennen keine Änderung an der Wischerhöhe, an der Reihenfolge von Spülen, Abkühlen und
-Wischen oder an der Reihenfolge von Bettfahrt und Vorspülen beim Fortsetzen, um
-die #5412 und #5477 bitten. Inzwischen hat ein INDX-Anwender PETG gemeldet, das unter
-7.0.0 nach dem Wischen an der Düse blieb
-([#5567](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567)); zur Spülmenge
-dort hat niemand berichtet.
+Die Nachprüfung gegen 7.0.0 begann
+[allein mit den Notes](https://help.prusa3d.com/downloads/core-one-indx) und stützt sich
+nun auch auf den Quellcode: Prusa hat das
+[7.0.0-Tag](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0) mit
+ausführlicheren Notes am 3. November veröffentlicht. Von den beiden im Hinweis oben
+beschriebenen Einträgen zum Reiniger erreicht der zum Nozzle Wiper den INDX nicht. Die
+[Build-Optionen](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/ProjectOptions.cmake)
+der Firmware geben dem INDX seinen eigenen Düsenreiniger und den leichteren Wischer nur
+Druckern ohne INDX, und Nozzle Wiper ist der
+[Menüname](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/gui/MItem_hardware.hpp)
+dieses leichteren Wischers. Der andere Eintrag steckt im
+[Park-Code](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp),
+der ab 7.0.0 den kalibrierten Reiniger-Offset auf die Lade- und Entladepositionen über
+dem Abfallbehälter anwendet. Weder die Notes noch der Quellcode ändern die Wischerhöhe
+oder die Reihenfolge von Spülen, Abkühlen und Wischen. Die Notes nennen keine Änderung an
+der Reihenfolge von Bettfahrt und Vorspülen beim gewöhnlichen Fortsetzen, um die #5412
+und #5477 bitten; diese Seite hat diese Reihenfolge im Quellcode nicht nachgeprüft, und
+der unter *Bevor Sie den Wischer verantwortlich machen* beschriebene Ablauf beim Leeren
+des Abfallbehälters ist die einzige gefundene Stelle, die das Bett zuerst hochfährt, und
+das erst ab 7.0.0.
+Inzwischen hat ein INDX-Anwender PETG gemeldet, das unter 7.0.0 nach dem Wischen an der
+Düse blieb ([#5567](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567)).
 
 Die am 19. Oktober 2026 auf derselben Download-Seite veröffentlichte Firmware 7.0.1
 führt eine einzige Korrektur auf, für ein Hängenbleiben beim Start, und berührt nichts
-auf dieser Seite.
+auf dieser Seite; ihr
+[Tag](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1) ändert keine
+der hier gelesenen Dateien.
 
-Die Nachprüfung gegen 8.0.0 stützt sich ebenfalls
-[allein auf die Notes](https://help.prusa3d.com/downloads/core-one-indx), denn auch für
-8.0.0 gibt es kein Tag auf GitHub. Ihre beiden Zeilen in der Nähe des Reinigers, weniger
-verlangsamte flexible Filamente beim Reinigen und ein weiter abgesenktes Bett bei
-Kalibrierungen, für die man mit der Hand hineingreifen muss, sind im Hinweis oben
-beschrieben. Keine davon nennt eine Änderung an der Wischerhöhe, an der
-Reinigungstemperatur, an der Reihenfolge von Spülen, Abkühlen und Wischen oder an der
-Reihenfolge beim Fortsetzen.
+Auch die Nachprüfung gegen 8.0.0 begann
+[allein mit den Notes](https://help.prusa3d.com/downloads/core-one-indx) und hat nun das
+[8.0.0-Tag](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0) als
+Grundlage. Von ihren drei Zeilen in der Nähe des Reinigers, im Hinweis oben beschrieben,
+stammt das tiefere Bett aus einem
+[Commit](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/596d5330f3a5afde6b6eaefa6f60e9cb12882074),
+mit dem der Assistent bei der gemeinsamen Kalibrier-Vorbereitung eine Höhe für den Zugriff
+mit der Hand anfordert, und die genauere Kalibrierung aus dem dort beschriebenen präzisen
+Referenzieren. Keine der drei ändert die Wischerhöhe, die Reinigungstemperatur, die
+Reihenfolge von Spülen, Abkühlen und Wischen oder die Reihenfolge beim Fortsetzen.
 
 Was die automatische Kalibrierung abdeckt und was nicht, sowie die Reihenfolge von
 Spülen, Abkühlen und Wischen bei der Reinigung je Werkzeug zu Beginn eines Drucks, sind
@@ -538,7 +695,24 @@ ihren [Bildschirmen](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1
 der [Werkzeug-Offset-Kalibrierung](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp),
 die die Reinigung ausführt, und den [Sequenzen des Reinigers](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/nozzle_cleaner/nozzle_cleaner.cpp).
 Die eigenen Schritte des Assistenten, darunter der Schraubenschritt, und die Wisch- und
-Spülbewegungen des Reinigers sind gegenüber dem Git-Tag 6.9.0 unverändert. Das weiter
+Spülbewegungen des Reinigers sind gegenüber dem Git-Tag 6.9.0 unverändert. Unverändert
+sind sie auch im Stand des Git-Tags v8.0.0
+([Vergleich](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0)):
+Die
+[Reinigersequenzen](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/nozzle_cleaner/nozzle_cleaner.cpp)
+des INDX unterscheiden sich von v6.9.2 nur in einem Block für einen anderen Drucker, der
+[Schraubenschritt](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/indx_nozzle_cleaner_calibration/screen_nozzle_cleaner_calibration.cpp)
+lautet wie zuvor, und die Reinigung je Werkzeug in der
+[Werkzeug-Offset-Kalibrierung](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_calibration/tool_offset_calibration.cpp)
+durchläuft dieselben Schritte bei denselben Temperaturen. Das Spülen innerhalb dieser
+Reinigung ist eine eingebaute Menge in der Spülsequenz der Firmware, und keine
+Slicer-Einstellung erreicht sie. Sie ist ein Vorgabewert, kein fester Wert: Der
+[G-Code-Lader](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/gcode/gcode_loader.cpp)
+der Firmware sucht zuerst auf dem USB-Laufwerk in einem Ordner `macros/nozzle_cleaner`
+nach einer Datei `purge_clean.gcode` und führt stattdessen diese aus, wie bei jeder
+Sequenz des Reinigers, und greift nur dann auf die eingebaute zurück, wenn dort keine
+solche Datei liegt. Dieser Weg ist im Stand des Git-Tags v6.9.2 derselbe; er ist aus dem
+Quellcode gelesen, nicht an einem Drucker ausprobiert. Das weiter
 abgesenkte Bett während des Assistenten, das die Notes der Beta erwähnen, stammt aus einer
 [Kalibrier-Vorbereitung](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/common/mapi/calibration_preamble.cpp),
 die der Assistent mit anderen Kalibrierungen teilt, nicht aus dem Assistenten selbst. Die
@@ -606,9 +780,22 @@ Ebenfalls nicht übernommen ist ein späterer Gen-2-Bericht, nach dem das Wische
 Luft stattfindet, deutlich oberhalb des Wischers
 ([#5563](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5563)), weil er von
 Maschinen stammt, die keinen INDX haben oder keinen erwähnen, und kein INDX-Anwender ihn
-gemeldet hat. Laut dem Melder hat die Maschine keinen INDX. Zwei Anwender haben seither
-ergänzt, dass sie das ebenfalls sehen, beide auf 8.0.0 und beide auf einem Gen 2: Einer
-nennt Prusas Wischer-Zubehör und eine MMU3, der andere erwähnt keinen INDX.
+gemeldet hat. Laut dem Melder hat die Maschine keinen INDX. Fünf Anwender haben seither
+ergänzt, dass sie das ebenfalls sehen, alle auf 8.0.0 und auf einem Gen 2, einer davon
+seit dem Update von 6.8.1: Einer nennt Prusas Wischer-Zubehör und eine MMU3, die anderen
+erwähnen keinen INDX. Im November beschrieb der Besitzer einer Core One ohne INDX in
+einem Kommentar zu #5567 dasselbe Wischen oberhalb des Wischers. Im Quellcode ist der
+Wischer dieser Maschinen das Zubehör Nozzle Wiper, dessen Code 7.0.0 überarbeitet hat und
+der für den INDX nicht gebaut wird (siehe die Nachprüfung gegen 7.0.0 oben); ob diese
+Überarbeitung hinter den Berichten steckt, ist nicht geklärt.
+Einer der Anwender fand später heraus, dass das Wischen wieder auf dem Wischer landet,
+wenn das Hotend während des Homings nicht aufheizt, ein Tipp aus einem Forumsthread
+über eine Core One ohne INDX, die ständig Kollisionen erkennt, wo man die Wägezelle oder
+ihre Verkabelung verdächtigt. Ein zweiter Anwender bestätigt, dass dieselbe Änderung
+das Problem behoben hat. Das passt eher zu einem falschen Auslösen der Wägezelle, während die
+Heizung aufwärmt, dem Muster unter [Rauschen der Wägezelle](loadcell-emi-noise.md), als
+zu einem falsch platzierten Wischer, aber niemand im Issue hat das geprüft, und es
+stammt weiterhin von Gen-2-Maschinen ohne INDX.
 
 ## Verwandte Seiten
 

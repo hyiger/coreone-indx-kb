@@ -1,7 +1,7 @@
 ---
 title:        Kommentierter G-Code für Start, Schichtwechsel und Werkzeugwechsel
 confidence:   measured
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -35,8 +35,29 @@ sources:
   - https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.6/src/libslic3r/PlaceholderParser.cpp
   - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.6.ini
   - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.7.ini
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/config/M200-M205.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/planner.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/feedrates/standard_feedrates_indx.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/G750.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/nozzle_cleaner/nozzle_cleaner.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_calibration/tool_offset_calibration.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/bedlevel/ubl/G29.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/control/T.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_indx.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5592
+  - https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.14.ini
+  - https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.7/src/libslic3r/PrintConfig.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/include/marlin/Configuration_COREONE.h
+  - https://github.com/prusa3d/PrusaSlicer/releases/tag/version_3.0.0-alpha13
+  - https://github.com/prusa3d/PrusaSlicer/blob/version_3.0.0-alpha14/resources/presets/prusa-research-fff/PrusaResearch/preset-printer-coreone-indx.yaml
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/solved-tpu-tangling-at-the-extruder-after-indx-tool-changes-the-nozzle-was-too-cold-during-cleaning/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/i-printed-tpu-on-my-indx/
 superseded_by:
-source_sha:   91a0dc421e5898c9a1b3f61ed5c4097eb1edcaf41ada77f5a907bd50aa5ccc8e
+source_sha:   9e19961e13a96fcf2b9bb93a1abd8235b39d3b17293d5bd869c5020dd4bd3188
 ---
 # Kommentierter G-Code für Start, Schichtwechsel und Werkzeugwechsel
 
@@ -64,7 +85,8 @@ source_sha:   91a0dc421e5898c9a1b3f61ed5c4097eb1edcaf41ada77f5a907bd50aa5ccc8e
     6.9.1, in Prusas Profil-Repository erschien: Alle fünf INDX-Blöcke sind mit denen
     aus 2.5.10 identisch, und die `M115`-Zeile nennt weiterhin 6.9.0. **Paket 2.5.12 vom
     15. Oktober ist das erste, das sie ändert**, und 2.5.13 vom 22. Oktober ändert sie
-    erneut; siehe den Hinweis unten. Weicht das Profil in Ihrem Slicer von dem hier
+    erneut, während 2.5.14 vom 2. November sie so lässt, wie 2.5.13 sie hatte; siehe den
+    Hinweis unten. Weicht das Profil in Ihrem Slicer von dem hier
     gezeigten ab, ist Ihres das aktuelle.
 
     Die Firmware-Seite wurde gegen den öffentlichen Quellcode geprüft, durch einen
@@ -87,9 +109,43 @@ source_sha:   91a0dc421e5898c9a1b3f61ed5c4097eb1edcaf41ada77f5a907bd50aa5ccc8e
     von 6.9.1 angekündigt hatten, die im Build dieser Version aber fehlten, und
     berührt keinen G-Code-Handler.
 
-    Keine der Versionen 7.0.0, 7.0.1 und 8.0.0 ist auf dieselbe Weise geprüft. Prusa
-    hatte den Quellcode keiner von ihnen bis zum 25. Oktober auf GitHub veröffentlicht,
-    daher ist jede Befehlserläuterung hier nur bis einschließlich 6.9.2 verifiziert. Zwei
+    Prusa hat am 3. November Release-Tags und Quellcode für 7.0.0, 7.0.1 und 8.0.0
+    veröffentlicht, und ein
+    [Vergleich der Tags 6.9.2 und 8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v8.0.0)
+    erweitert die Prüfung bis einschließlich 8.0.0. (Bis November konnte diese Seite die
+    Befehlserläuterungen nur bis 6.9.2 verifizieren.) Für die hier kommentierten Befehle
+    ergibt er:
+
+    - `M574` und `M573` haben weiterhin keinen Handler, und keiner der drei Quellbäume
+      erwähnt einen der beiden; siehe den Hinweis zu `M574` unten.
+    - `G27` hat denselben Handler, und `W3` wählt dieselbe Werkzeug-Parkposition. Die
+      einzige INDX-Änderung am Park-Code verschiebt die Lade- und Entladepositionen für
+      Filament um den kalibrierten Versatz des Düsenreinigers, und die nutzt `G27 W3`
+      nicht.
+    - `G427` hat denselben Handler, liest `R` und `P` wie bisher und wählt seine
+      Antasttemperatur mit demselben Code. 8.0.0 ändert, was geschieht, wenn die Schritte
+      eines Werkzeugs fehlschlagen. Eine fehlgeschlagene Reinigung oder Antastung des
+      Druckblechs, die bisher den ganzen Durchgang neu startete, wiederholt nun nur dieses
+      Werkzeug, wie es eine fehlgeschlagene Messung am Sensor schon vorher tat. Drei
+      solcher Fehler erhalten einen eigenen Bildschirm, ein nicht aufgenommenes Werkzeug
+      (36146), ein nicht gefundener Sensor (36144) und ein Sensorfehler (36145); die
+      übrigen, darunter Fehler beim Reinigen und beim Antasten des Druckblechs, teilen sich
+      den allgemeinen Bildschirm 36130
+      ([Hinweise](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0),
+      [Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_calibration/tool_offset_calibration.cpp),
+      [Bildschirme von Stock-8.0.0](../codes.md#stock-800)).
+    - `G12` führt für `S90`, `S30` und `S91` dieselben INDX-Sequenzen aus; die Änderungen
+      am Handler betreffen den Nozzle Cleaner Lite, der im INDX-Build nicht enthalten ist.
+    - `G29` erhält in 7.0.0 einen zusätzlichen Schritt. Stellt das Antasten ein zu unebenes Bett
+      fest, führt die Firmware nun einmal von sich aus ihre Z-Achsen-Ausrichtung durch,
+      tastet erneut an und fragt Sie nur, wenn das fehlschlägt
+      ([Hinweise zu 7.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0),
+      [Quellcode von `G29`](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/bedlevel/ubl/G29.cpp)).
+      `G29 P1` unten kann also nun eine Z-Ausrichtung einschließen.
+    - `M204` erhält einen Parameter `F`; siehe unten.
+
+    Die übrigen hier kommentierten Handler sind entweder unverändert oder so geändert,
+    dass die Zeilen des Profils weiterhin tun, was sie taten. Zwei
     Einträge in den
     [Versionshinweisen](https://help.prusa3d.com/downloads/core-one-indx) zu 7.0.0
     liegen nahe an dieser Seite, und beide sind als Übernahmen aus früheren Versionen
@@ -105,22 +161,60 @@ source_sha:   91a0dc421e5898c9a1b3f61ed5c4097eb1edcaf41ada77f5a907bd50aa5ccc8e
     ist das eine von der Reinigungsstation des INDX getrennte Funktion, die für den INDX
     nicht gebaut wird. Keiner der beiden Einträge ist neu in 7.0.0. Nur ein neuer Eintrag
     nennt den Düsenreiniger: Lade- und Entladepositionen nutzen nun dessen kalibrierten
-    Versatz. Er betrifft die eigenen Lade- und Entladebewegungen der Firmware; ob er etwas
-    an dem ändert, was die `G12`-Zeilen unten tun, lässt sich erst prüfen, wenn der
-    Quellcode vorliegt.
+    Versatz. Er betrifft die eigenen Lade- und Entladebewegungen der Firmware, und der
+    Quellcode bestätigt das: Die Änderung beschränkt sich auf diese beiden Parkpositionen
+    ([Quellcode zum Parken](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp)).
+    Die `G12`-Sequenzen, die das Profil aufruft, rechneten über `G750` bereits vom
+    kalibrierten Ursprung des Reinigers aus und sind unverändert
+    ([Quellcode des Reinigers](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/nozzle_cleaner/nozzle_cleaner.cpp)).
 
     Auch zwei Einträge in den
     [Hinweisen](https://help.prusa3d.com/downloads/core-one-indx) zu 8.0.0, beide neu,
-    berühren diese Seite. Der erste gibt `M204` einen Parameter `F`, eine
-    Beschleunigungsgrenze für das Filament, die laut den Hinweisen standardmäßig aktiv
-    ist. Die `M204`-Zeilen des Profils setzen nur `S`, und nichts in Paket 2.5.13 gibt
-    `M204 F` aus; welche Grenze 8.0.0 auch anwendet, sie stammt also aus der Firmware,
-    nicht aus dem Profil. Der zweite bremst flexibles Filament beim Reinigen der Düse
-    weniger stark ab als zuvor. Das ist die eigene Reinigungsbewegung der Firmware:
-    Keine der `G12`-Zeilen unten übergibt eine Geschwindigkeit.
+    berühren diese Seite. Der erste gibt `M204` einen Parameter `F`. Nach den
+    ausführlicheren [GitHub-Versionshinweisen](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0)
+    und dem [Handler](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/config/M200-M205.cpp)
+    begrenzt er, wie stark der Filamentvorschub bei Druckbewegungen beschleunigen darf,
+    also bei Bewegungen, in denen sich der Extruder zusammen mit X und Y bewegt, damit
+    Pressure Advance keine abrupten Änderungen der Extrudergeschwindigkeit verlangt.
+    Würde eine Bewegung die Grenze überschreiten, senkt der
+    [Planer](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/planner.cpp)
+    die Beschleunigung der ganzen Bewegung, ebenso die Kurvengeschwindigkeit an
+    Übergängen neben einer Extrusion, nicht nur die des Extruders; Fahrbewegungen ohne
+    Extrusion bleiben unberührt. Es ist ein einziger Wert für die ganze Maschine, nicht
+    einer je Werkzeug, mit einem in die Firmware einkompilierten Standardwert. `F0`
+    schaltet die Grenze ab, ein bloßes `M204` meldet sie nun mit, und laut den Hinweisen
+    fällt sie nach einem Neustart auf den Standardwert zurück. Die `M204`-Zeilen des
+    Profils setzen nur `S`, was `F` nicht berührt, und nichts in den Paketen 2.5.13 oder
+    2.5.14 gibt `M204 F` aus; mit dem Serienprofil gilt also während des ganzen Drucks der
+    Standardwert der Firmware. Ein Besitzer hat bereits um einen Schalter dafür in den
+    Druckereinstellungen gebeten
+    ([#5592](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5592)): Mit einem
+    selbst gebauten Profil für eine große Düse mache sie seine Drucke deutlich länger, und
+    er wolle nicht alle seine Dateien neu slicen, nur um eine `M204 F`-Zeile zu ergänzen.
 
-    TODO(verify): was `M204 F` genau begrenzt und welchen Standardwert es hat; die
-    Hinweise zu 8.0.0 nennen beides nicht, und der Quellcode ist unveröffentlicht.
+    Der zweite Eintrag bremst flexibles Filament weniger stark ab als zuvor. Der
+    [Quellcode der Vorschübe](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/feedrates/standard_feedrates_indx.cpp)
+    zeigt, dass es ein Faktor ist, der auf filamentabhängige Extruderbewegungen
+    angewendet wird, die die Firmware von sich aus ausführt, nicht aber auf
+    G-Code-Bewegungen. Die GitHub-Versionshinweise, die für alle Drucker gelten, nennen
+    Laden, Entladen, Spülen, Parken bei Pause und Fortsetzen, Werkzeugwechsel und
+    Reinigen. Im INDX-Build wendet der Quellcode ihn auf mehrere Bewegungen an, darunter
+    Laden und Entladen, auf die
+    Extruderbewegungen rund um Pause und Fortsetzen, auf den automatischen Rückzug, auf
+    den Rückzug rund um das Leeren des Abfallbehälters und auf das Spülen in den eigenen
+    Sequenzen des Reinigers. Nur der Werkzeugwechsler-Code des XL nutzt ihn bei einem
+    Werkzeugwechsel; der Werkzeugwechsel des INDX führt seine eigenen Extruderbewegungen,
+    die die Werkzeugverriegelung öffnen und schließen, mit festen Geschwindigkeiten aus
+    ([Quellcode des INDX-Werkzeugwechsels](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/toolchanger_indx.cpp)).
+    Keine Zeile des Profils ist betroffen: Die drei `G12`-Sequenzen, die es aufruft,
+    bewegen nur X und Y, sein `G27` übergibt eine eigene Rückzugsgeschwindigkeit, seine
+    `G750`-Bewegungen fordern die Anpassung nicht an, und seine Spülbewegungen sind
+    eigener G-Code. (Bis November beschrieb diese Seite die Änderung nach den kürzeren
+    Hinweisen auf der Download-Seite so, als betreffe sie nur die Düsenreinigung.)
+
+    TODO(verify): der Standardwert von `M204 F` am INDX; die GitHub-Versionshinweise zu
+    8.0.0 und der Quellcode nennen ihn beide, und er wird hier zurückgehalten, bis er an
+    Hardware geprüft ist.
 
 !!! note "Die Pakete 2.5.12 und 2.5.13 haben drei dieser Blöcke geändert, nachdem diese Seite entstand"
     Prusas Profilpaket 2.5.12, eingecheckt am 15. Oktober 2026, dem Tag, an dem Firmware
@@ -170,11 +264,42 @@ source_sha:   91a0dc421e5898c9a1b3f61ed5c4097eb1edcaf41ada77f5a907bd50aa5ccc8e
       fallen; warum, erklärt der Abschnitt zum Schichtwechsel weiter unten.
     - **Vor dem Schichtwechsel, Werkzeugwechsel und Ende:** gegenüber 2.5.12 unverändert.
 
+    Paket 2.5.14 folgte am 2. November. Ein Vergleich
+    [der Datei](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/blob/main/PrusaResearch/2.5.14.ini)
+    mit 2.5.13 zeigt alle fünf Blöcke unverändert, und die `M115`-Zeile nennt weiterhin
+    7.0.1, nicht 8.0.0. Die einzige Änderung an den INDX-Druckerprofilen daneben ist eine
+    in PrusaSlicer 2.9.7 neue Druckeroption, `used_filament_compensation`, nun für beide
+    INDX-Modelle gesetzt: ein Faktor auf den Filamentverbrauch, den der Slicer als Länge,
+    Volumen, Gewicht und Kosten meldet, der die Extrusionsbewegungen selbst unberührt lässt
+    ([Quellcode von PrusaSlicer 2.9.7](https://github.com/prusa3d/PrusaSlicer/blob/version_2.9.7/src/libslic3r/PrintConfig.cpp)).
+    Wie die Markierungen aus 2.5.12 betrifft er die Verbrauchszählung des Slicers, keine
+    Bewegung des Druckers. Der INDX erhält einen eigenen Wert, den diese Seite nicht
+    wiedergibt. Der Quellcode der Firmware 8.0.0 erklärt ihn. Dort liegen die
+    voreingestellten Schritte pro Millimeter des INDX-Extruders absichtlich unter dem Wert,
+    bei dem er genau die verlangte Länge fördert, ein normalisierter Fluss („normalised
+    flow“, wie der Quellcode es nennt), den die Firmware bei ihren eigenen
+    Servicebewegungen ausgleicht
+    ([Quellcode der Konfiguration](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/include/marlin/Configuration_COREONE.h)).
+    Der INDX-Faktor ist das gerundete Verhältnis dieser beiden Werte, so wie der Faktor des
+    Core One mit einem Werkzeug das Verhältnis seines eigenen Paares ist. Er bringt die
+    Verbrauchszählung des Slicers also in Einklang mit dem, was der Extruder tatsächlich
+    fördert. Das ist aus dem Paket und dem Quellcode gelesen, nicht an einer Spule
+    nachgewogen.
+
+    Die 3.0-Alphas führen eine eigene Kopie des INDX-Profils. Seit Alpha 13 vom
+    2. November enthält deren
+    [Druckerdatei](https://github.com/prusa3d/PrusaSlicer/blob/version_3.0.0-alpha14/resources/presets/prusa-research-fff/PrusaResearch/preset-printer-coreone-indx.yaml)
+    ebenfalls die Überarbeitung des Werkzeugwechsels aus 2.5.12 und die Korrektur am
+    Dock-Lüfter aus 2.5.13 sowie denselben Faktor, und
+    [die Versionshinweise zu Alpha 13](https://github.com/prusa3d/PrusaSlicer/releases/tag/version_3.0.0-alpha13)
+    nennen eine Korrektur an einer Verbrauchsschätzung für den INDX, die den Rückzug von
+    `G27 R` beim Parken nicht berücksichtigt hatte.
+
     Die Blöcke unten sind weiterhin der Text aus 2.5.11. Die Auszüge zum Werkzeugwechsel
     stimmen mit 2.5.12 und später nicht mehr überein, und die Prüfung auf die PET-Familie
-    im Auszug nach dem Schichtwechsel stimmt mit 2.5.13 nicht mehr überein. Sie wurden
-    hier nicht neu geschrieben: Diese Seite gibt ein Profil wortgetreu wieder und
-    kommentiert es, und eine neue Wiedergabe wäre eine neue Fassung der Seite, keine
+    im Auszug nach dem Schichtwechsel stimmt mit 2.5.13 und später nicht mehr überein.
+    Sie wurden hier nicht neu geschrieben: Diese Seite gibt ein Profil wortgetreu wieder
+    und kommentiert es, und eine neue Wiedergabe wäre eine neue Fassung der Seite, keine
     Änderung daran.
 
 ## Worum es sich handelt
@@ -253,6 +378,12 @@ maßlich nicht aus dem Rahmen zu fallen, aber kühl genug, um nicht auf das Druc
 sabbern, während die Wägezelle den Kontakt zu erfassen versucht. Sabbern während des
 Antastens ist ein bekannter Fehlerfall — siehe
 [Sabbern verdirbt das Antasten des Betts](../issues/oozing-during-probing-and-calibration.md).
+Im November berichtete ein Besitzer, der ein weiches TPU druckt, er habe die
+Antasttemperatur für FLEX in seiner eigenen Fassung dieser Zeile gesenkt, weil Klumpen das
+Antasten des Betts verzögerten oder scheitern ließen
+([Forumsthread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/i-printed-tpu-on-my-indx/)).
+Das ist die Änderung eines einzelnen Besitzers, also vorläufig, und sein Wert wird hier
+nicht wiedergegeben.
 
 ### Vorabprüfungen
 
@@ -393,14 +524,16 @@ weiteres Indiz dafür, dass `M574` ein herstellereigener Befehl mit eigener Konv
 
 !!! note "M574 hat in veröffentlichter Firmware keinen Handler — und ist vermutlich nicht fertig"
     Keine Prusa-Firmware mit veröffentlichtem Quellcode, die des INDX bis einschließlich
-    6.9.2 eingeschlossen, hat einen Handler für `M574`. Der Drucker protokolliert
+    8.0.0 eingeschlossen, hat einen Handler für `M574`. Der Drucker protokolliert
     `Unknown command:`, antwortet mit `ok` und fährt fort: acht ignorierte Zeilen je
     Druck, eine je verwendetem Nicht-FLEX-Werkzeug. Nichts geht kaputt. Das ist aus dem
     Firmware-Quellcode abgeleitet — öffentlich scheint es keine Aufzeichnung von einer
     echten Maschine zu geben, und Prusa entwickelt nicht öffentlich. Belegt ist also,
-    dass die Firmware, **die Sie einsetzen**, den Befehl ignoriert, sofern es 6.9.2 oder
-    älter ist, nicht, dass nirgends ein Handler existiert. Für 7.0.0, 7.0.1 und 8.0.0,
-    deren Quellcode unveröffentlicht ist, ist das ungeprüft.
+    dass die Firmware, **die Sie einsetzen**, den Befehl ignoriert, sofern es 8.0.0 oder
+    älter ist, nicht, dass nirgends ein Handler existiert. Der Quellcode von 7.0.0, 7.0.1
+    und 8.0.0 erschien am 3. November, und keiner der drei Quellbäume erwähnt `M574` oder
+    `M573` irgendwo, nach einer Klartextsuche in jedem Tag, bei der `M572` in vielen
+    Dateien auftaucht. (Bis November konnte diese Seite das nur bis 6.9.2 sagen.)
 
     Auch einen Commit gibt es nicht zu finden. Die Zeile wird außerhalb des Repositorys
     im Profilbündel des Herstellers ausgeliefert, erstmals in
@@ -425,8 +558,13 @@ weiteres Indiz dafür, dass `M574` ein herstellereigener Befehl mit eigener Konv
     standardmäßig aktiv, doch ihre
     [Versionshinweise](https://help.prusa3d.com/downloads/core-one-indx) führen sie als
     `M204 F`, nicht als `M574`, und verbinden sie weder mit der Ankündigung noch mit
-    `M574`. Paket 2.5.13, am selben Tag veröffentlicht, enthält weiterhin die acht
-    `M574`-Zeilen.
+    `M574`. Ihr inzwischen veröffentlichter Quellcode geht weiter: Die Grenze ist ein
+    einziger Wert für die ganze Maschine, der nur über `M204 F` gesetzt wird und sonst auf
+    einem einkompilierten Standardwert steht; sie übernimmt also keinen der Werte je
+    Werkzeug, die die `M574`-Zeilen tragen (siehe die Warnung oben). Sie ist von derselben
+    Art wie die extrusionsbewussten Beschleunigungsgrenzen der Ankündigung, doch weder
+    ihre Hinweise noch ihr Quellcode sagen, dass sie diese Arbeit ist. Die Pakete 2.5.13
+    und 2.5.14 enthalten weiterhin die acht `M574`-Zeilen.
 
     Eine praktische Warnung: `M574` bedeutet in RepRap und RepRapFirmware
     Endschalter-Konfiguration, daher beschreibt fast alles, was eine Suche liefert, ein
@@ -449,7 +587,9 @@ XYZ und schreibt die Ergebnisse in Laufzeitvariablen und in das EEPROM. Weiß di
 Firmware nicht, welche Werkzeuge der Druck verwendet, kalibriert `G427` ersatzweise jedes
 aktivierte Werkzeug
 ([Firmware-Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.1/src/feature/tool_offset_calibration/tool_offset_calibration.cpp),
-gegenüber 6.9.0 unverändert). Laut einer offenen Funktionsanfrage ist das bei Drucken der
+gegenüber 6.9.0 unverändert und in
+[8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/feature/tool_offset_calibration/tool_offset_calibration.cpp)
+weiterhin so). Laut einer offenen Funktionsanfrage ist das bei Drucken der
 Fall, die ein Host wie OctoPrint über USB bzw. seriell sendet, sodass selbst ein Druck
 mit nur einem Werkzeug alle kalibriert
 ([#5508](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5508)).
@@ -606,7 +746,8 @@ Druck in demselben Zustand beginnt wie ein eingewechseltes.
 hinein, `S30` wirft das angesammelte Spülmaterial aus, `S91` fährt hinaus. Alles zwischen
 `S90` und `S91` geschieht mit an der Station geparktem Kopf und nicht über dem Bett.
 
-**Das zweistufige Temperaturvorgehen** ist der Teil, der zum Nachahmen taugt. `eject_temp`
+**Das zweistufige Temperaturvorgehen** ist der Teil, der zum Nachahmen taugt, mit einem
+Haken bei flexiblem Filament, der beim Werkzeugwechsel-Block beschrieben ist. `eject_temp`
 liegt deutlich unter der Drucktemperatur. Die Düse wird vor dem Auswerfen *herunter*
 gefahren, weil sich etwas abgekühltes Material als fester Klumpen von der Spitze löst,
 statt Fäden zu ziehen. Erst nach dem Auswurf geht es auf Drucktemperatur hinauf.
@@ -644,9 +785,9 @@ und sei zusammen mit dem Abschalten von Pressure Advance für das Spülen eingef
 worden. In derselben Antwort hieß es, Prusa erwäge, ihn nach weiteren Tests zu entfernen
 ([Issue 49](https://github.com/prusa3d/PrusaSlicer-settings-prusa-fff/issues/49)).
 Paket 2.5.12 vom 15. Oktober hat ihn inzwischen aus dem Werkzeugwechsel-Block gestrichen,
-in diesem Start-Block aber beibehalten, und 2.5.13 belässt ihn dort, wo 2.5.12 ihn
-gelassen hat; das Issue selbst hatte keine weitere Antwort erhalten und war am
-25. Oktober noch offen.
+in diesem Start-Block aber beibehalten, und 2.5.13 und 2.5.14 belassen ihn dort, wo
+2.5.12 ihn gelassen hat; das Issue selbst hatte keine weitere Antwort erhalten und war am
+8. November noch offen.
 
 !!! important "Die letzte interessante Zeile ist `{tool_init[initial_tool] = 1}`"
     Damit wird das Startwerkzeug als bereits gereinigt und vorgefüllt markiert. Nichts in
@@ -857,8 +998,35 @@ oder das ankommende Werkzeug nie vorgefüllt wurde. Er hat dieselbe Gestalt wie 
 Vorfüll-Sequenz im Start-Block: kalt auswerfen, Lüfter an, Strom hoch, auf Temperatur
 kommen, Deretract, in einem berechneten Muster spülen, zurückziehen, Strom zurück.
 
-Der Wipe-Tower-Pfad gibt stattdessen eine Folge von `G750`-Bewegungen aus, die die
-Wipe-Tower-Sequenz mit der Geometrie des Turms ausführen, und lässt die Station ganz aus.
+Ein Schritt darin ist für flexibles Filament wichtig. Bei einem bereits vorgefüllten
+Werkzeug läuft der Schub, der es verriegelt, in den gekürzten Zeilen direkt vor
+`G12 S30`, unmittelbar nachdem die Düse auf `eject_temp` abgekühlt ist und bevor sie
+wieder `target_temp` erreicht. Im November führte ein Besitzer mit Firmware 8.0.0
+Verhedderungen von TPU am Extruder, die immer dann auftraten, wenn ein Druck zu seinem
+TPU-Werkzeug zurückkehrte, auf genau diesen Schritt zurück: Der Schub trifft in der Düse
+auf Filament, das nicht geschmolzen ist, und der weiche Strang knickt aus. Eine höhere
+Auswurftemperatur für FLEX, damit der Verriegelungsschub auf weicheres Filament trifft,
+und eine Wartezeit, sobald die Düse wieder Drucktemperatur hat, nach dem Auswurf und
+bevor das Filament wieder nachgeschoben wird, behoben das bei ihm, zusammen mit mehreren
+weiteren Änderungen nur für FLEX an diesem Block, darunter ein langsamerer
+Verriegelungsschub, die er nicht einzeln getestet hat
+([Forumsthread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/solved-tpu-tangling-at-the-extruder-after-indx-tool-changes-the-nozzle-was-too-cold-during-cleaning/)).
+Dass der Schub bei der abgesenkten Temperatur kommt, ist aus dem Profil gelesen; Diagnose
+und Abhilfe stammen von einem einzelnen Besitzer in einem Thread, sind also vorläufig,
+und seine Werte werden hier nicht wiedergegeben.
+
+Der Wipe-Tower-Pfad lässt Auswurf und Spülen aus, weil der Wipe Tower das Spülen
+übernimmt, nicht aber die Station: Er läuft zwischen denselben `G12 S90` und `G12 S91`
+wie der Pfad über die Reinigungsstation. Statt Auswurf und Spülen gibt er sechs
+`G750`-Bewegungen aus, die der
+[Firmware-Quellcode](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/marlin_stubs/G750.cpp)
+als Bewegungen am Düsenreiniger definiert, gemessen vom kalibrierten Ursprung des
+Reinigers und in Maschinenkoordinaten ausgeführt, außerhalb des Mesh Bed Leveling. Da nur
+`Y` angegeben ist, ziehen sie die Düse über dem Reiniger hin und her, ganz ähnlich wie die
+eigenen Reinigungssequenzen der Firmware. (Bis November stand hier, diese Bewegungen
+führten die eigene Sequenz des Wipe Towers aus und ließen die Station aus; für die
+Station zeigt das Profil selbst etwas anderes, für die Bewegungen der `G750`-Handler, in
+dieser Hinsicht seit 6.9.2 unverändert.)
 
 ```gcode
   G90 ; use absolute coordinates
@@ -887,14 +1055,27 @@ Wipe-Tower-Sequenz mit der Geometrie des Turms ausführen, und lässt die Statio
     nicht zeigen konnte: Die abstandsbewusste Option existiert in der Firmware, und dieses
     Profil verwendet sie nicht.
 
-    **Das ist kein Lösungsvorschlag.** Ob `P0` das tatsächlich beheben würde, hängt davon
-    ab, was die Firmware unter "above print" versteht — ob sie die Höhen fertiggestellter
-    Objekte verfolgt oder nur die aktuelle —, und das ist nicht geklärt. Es ist das, was
-    zuerst zu untersuchen ist, keine Änderung, die man blind vornimmt.
+    Der Firmware-Quellcode klärt, was "above print" bedeutet. `G27 P0` hebt Z auf
+    mindestens die angegebene Strecke über eine Höchstmarke an, die der Planer führt: das
+    höchste Z, auf dem der Druck innerhalb des mit `M555` deklarierten Druckbereichs
+    extrudiert hat, seit der Druck begann oder Z zuletzt referenziert wurde. Ein fertiges
+    Objekt, das höher ist als die aktuelle Schicht, zählt also mit
+    ([Quellcode zum Parken](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/common/mapi/parking.cpp),
+    [Quellcode des Planers](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/planner.cpp),
+    beide in 6.9.2 gleich). Der eigene Hub der Firmware beim Werkzeugwechsel steigt über
+    dieselbe Marke, doch `L0` in den Zeilen des Profils zum Ablegen (`P0 S1 L0 D0`) und
+    Aufnehmen (`T`) schaltet diesen Hub ab
+    ([Quellcode von `T`](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/gcode/control/T.cpp)).
+    (Bis November stand hier, es sei nicht geklärt, was "above print" bedeutet.)
 
-    TODO(verify): ob `G27 P0` bei einem sequenziellen Druck fertiggestellte Objekte
-    berücksichtigt und ob die beiden Hübe `G0 Z{layer_z + …}` abstandsbewusst gemacht
-    werden können.
+    **Das ist weiterhin kein Lösungsvorschlag.** Gelesen ist der Code, nicht ein damit
+    ausgeführter sequenzieller Druck, und die beiden Hübe `G0 Z{layer_z + …}` würden
+    weiterhin aus der aktuellen Schicht berechnet. Es ist das, was zuerst zu untersuchen
+    ist, keine Änderung, die man blind vornimmt.
+
+    TODO(verify): ob Parken mit `G27 P0` oder Ablegen und Aufnehmen mit einem hebenden
+    `L` die Kollision bei einem sequenziellen Druck in der Praxis vermeidet und ob die
+    beiden Hübe `G0 Z{layer_z + …}` abstandsbewusst gemacht werden können.
 
 ## End-G-Code
 
@@ -946,7 +1127,8 @@ damit das Bett seine Position hält, statt abzusacken.
 
 ## Befehlsreferenz
 
-Verhalten gegen den Quellcode der Prusa-Firmware verifiziert, sofern nicht anders vermerkt.
+Verhalten gegen den Quellcode der Prusa-Firmware verifiziert, bis einschließlich 8.0.0,
+sofern nicht anders vermerkt.
 
 | Befehl | Was er tut |
 |---|---|
@@ -958,8 +1140,8 @@ Verhalten gegen den Quellcode der Prusa-Firmware verifiziert, sofern nicht ander
 | `M555 X Y W H` | Deklariert den Druckbereich |
 | `M591 S<0\|1>` | Erkennung von festsitzendem Filament aus/ein |
 | `G28 XY` / `G28 Z` | Referenzfahrt der genannten Achsen |
-| `T<n> S L D` | Ein Werkzeug auswählen |
-| `P0 S1 [L D]` | Das aktuelle Werkzeug in seinem Dock parken |
+| `T<n> S L D` | Ein Werkzeug auswählen; `L0` lässt den eigenen Z-Hub der Firmware aus |
+| `P0 S1 [L D]` | Das aktuelle Werkzeug in seinem Dock parken; `L` wie bei `T` |
 | `G27 W Z P R V A` | Den Kopf parken; Parameter siehe Tabelle oben |
 | `G427 R P` | Werkzeug-Offset-Kalibrierung; `R` Versatz in mm, `P` gemittelte Antastungen |
 | `G29 G` | Durchwärmen / Wärme aufnehmen |
@@ -970,7 +1152,7 @@ Verhalten gegen den Quellcode der Prusa-Firmware verifiziert, sofern nicht ander
 | `G12 S90` | Die Reinigungsstation anfahren |
 | `G12 S30` | Angesammeltes Spülmaterial auswerfen |
 | `G12 S91` | Die Reinigungsstation verlassen |
-| `G750 Y F A` | Wipe-Tower-Bewegung |
+| `G750 Y F A` | Bewegung am Düsenreiniger, gemessen vom kalibrierten Ursprung des Reinigers; `A` wartet nicht auf ihr Ende |
 | `M104 S` / `M104 T<n> S` | Düsenziel setzen, aktuelles oder benanntes Werkzeug, ohne Warten |
 | `M109 S` | Düsenziel setzen und warten, einschließlich Haltezeit |
 | `M109 C` | Düsenziel setzen und warten, **ohne Haltezeit** |
@@ -980,7 +1162,7 @@ Verhalten gegen den Quellcode der Prusa-Firmware verifiziert, sofern nicht ander
 | `M106 P6 S` | **Dock-Lüfter**, PWM 0–255 |
 | `M107` | Bauteillüfter aus |
 | `M204 S` | Beschleunigung setzen |
-| `M204 F` | Beschleunigungsgrenze für das Filament, neu in 8.0.0 und laut dessen Versionshinweisen standardmäßig aktiv; vom Profil nicht ausgegeben und nicht gegen den Quellcode geprüft |
+| `M204 F` | Beschleunigungsgrenze für das Filament bei Druckbewegungen, neu in 8.0.0 und standardmäßig aktiv; ein Wert für die Maschine, `F0` aus; vom Profil nicht ausgegeben |
 | `M201 X Y` | Maximale Beschleunigung je Achse setzen |
 | `M221 S` | Flussprozentsatz |
 | `M572 S` | Pressure Advance; `S0` deaktiviert |
@@ -991,7 +1173,7 @@ Verhalten gegen den Quellcode der Prusa-Firmware verifiziert, sofern nicht ander
 | `M77` | Den Drucktimer stoppen |
 | `M262 P B` | Pin-Richtung am IO-Expander — `B0` Ausgang, `B1` Eingang |
 | `M264 P B` | Pin-Pegel am IO-Expander — `B0` low, ungleich null high |
-| `M574 S V T F` | **Kein Handler** im veröffentlichten Firmware-Quellcode, bis 6.9.2; als unbekannt protokolliert und übersprungen |
+| `M574 S V T F` | **Kein Handler** im veröffentlichten Firmware-Quellcode, bis 8.0.0; als unbekannt protokolliert und übersprungen |
 
 ## Verifikation
 
@@ -1011,11 +1193,18 @@ Wo sich die Bedeutung eines Befehls nicht klären ließ, ist das als solches gek
 und nicht geraten. `M574` ist der einzige in diesem Zustand, und die Unterscheidung ist
 wichtig: Sein *Fehlen* in der Firmware ist inzwischen nach demselben Maßstab belegt wie das
 Vorhandensein der übrigen Befehle — geprüft gegen das Release-Tag v6.9.0 und gegen jedes
-Objekt in der Historie des öffentlichen Repositorys, mit Positivkontrollen. Wozu er gedacht
+Objekt in der Historie des öffentlichen Repositorys, mit Positivkontrollen, und seit
+November auch gegen die Tags 7.0.0, 7.0.1 und 8.0.0. Wozu er gedacht
 war, ist weiterhin unbekannt und wird an Ort und Stelle markiert statt rekonstruiert.
 Prusas Ankündigung einer Pressure-Advance-Kalibrierung über die Wägezelle vom August 2026
 stammt aus erster Hand und ist belegt, aber nichts Veröffentlichtes verbindet sie mit
 diesem Befehl; die Seite hält beides bewusst auseinander.
+
+Eine Erläuterung hat die erneute Prüfung gegen den Quellcode im November nicht
+überstanden: Die `G750`-Bewegungen des Wipe-Tower-Pfads waren hier so beschrieben, als
+führten sie die eigene Sequenz des Wipe Towers abseits der Reinigungsstation aus, und der
+Handler zeigt, dass es Bewegungen am Reiniger sind. Der Abschnitt zum Werkzeugwechsel ist
+korrigiert und sagt das.
 
 `M262` und `M264` verdienen eine Anmerkung. Sie werden häufig als Befehle für die
 Kammerbeleuchtung beschrieben, und das Profil, aus dem sie stammen, hat sie so bezeichnet.
@@ -1041,7 +1230,8 @@ Version im Front Matter ab, rechnen Sie mit Unterschieden. Das Profil ändert si
 zwischen Paketen nach eigenem Zeitplan: 2.5.12 hat den Werkzeugwechsel-Block überarbeitet
 und nennt 6.9.2, nicht das am selben Tag erschienene 7.0.0, und 2.5.13 hat die Prüfung für
 den Dock-Lüfter auf PETG erweitert und nennt 7.0.1, nicht das am selben Tag erschienene
-8.0.0, wie der Hinweis oben beschreibt.
+8.0.0, wie der Hinweis oben beschreibt; 2.5.14 hat alle fünf Blöcke so gelassen, wie sie
+waren.
 
 ## Verwandte Seiten
 

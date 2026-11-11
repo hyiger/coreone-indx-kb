@@ -1,13 +1,13 @@
 ---
 title:        Tool offset calibration fails — contactless offset sensor
 confidence:   reported
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1 and 6.9.2; first owner reports on 7.0.0; the 7.0.0 startup hang fixed in 7.0.1; no reports yet on 8.0.0; the board fault is not version-specific
+firmware:     6.9.0 for the calibration regression, addressed in 6.9.1-beta and carried into 6.9.1, 6.9.2, 7.0.0, 7.0.1 and 8.0.0 (source-checked); first owner reports on 7.0.0; the 7.0.0 startup hang fixed in 7.0.1 and 8.0.0; no reports yet on 8.0.0; the board fault is not version-specific
 sources:
   - https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5442
@@ -31,6 +31,17 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5544
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5567
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5518
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v7.0.0...v7.0.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v7.0.0...v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/puppy/tool_offset_sensor/src/main.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/852dedffe929cf95ea5031c9e8a8e234f1536d9d
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/ebe27870c752655f48de9af57bc28e6f337c0e3d
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5585
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml
 superseded_by:
 ---
 
@@ -122,18 +133,54 @@ tension, which support may suggest, has not fixed a single reported case.
     which that release left out.
     [7.0.0](https://help.prusa3d.com/downloads/core-one-indx), published on Prusa's
     downloads page on 15 October 2026, says nothing in its notes about tool offset
-    calibration or the offset sensor. Prusa has not yet published its source, so unlike
-    6.9.1 and 6.9.2 there is no way to check whether it carries the same code. The notes
+    calibration or the offset sensor. Prusa published its source on GitHub on
+    3 November 2026, along with that of 7.0.1 and 8.0.0, and
+    [it keeps the 6.9.1 changes](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v7.0.0):
+    the sensor chip's clock and coil settings and the way the calibration picks its
+    temperatures are the same as in 6.9.2. What 7.0.0 changes on the sensor side is how
+    the sensor board's own firmware reads the chip, see the note further down. The notes
     do list improved nozzle wiper cleaning, marked as first shipped in 6.10.1; the one
     report since that ties what cleaning leaves on INDX nozzles to calibration failures
     groups 7.0.0 with 6.9.2, both much worse than 6.9.0, without comparing the two or
-    mentioning the cleaning change, see below. Neither of the two releases since says
-    anything more about tool offset calibration. 7.0.1, published on 19 October 2026,
-    lists a single fix, for the startup hang described further down this page. The notes
-    for 8.0.0, published on 22 October 2026, mention neither tool offset calibration nor
-    the offset sensor; their one item on nozzle cleaning slows flexible filaments down
-    less while they are cleaned. Neither source is published, and no owner has yet
-    reported on calibration under 8.0.0.
+    mentioning the cleaning change, see below. In the source that item does not reach
+    the INDX: Nozzle Wiper is the firmware's name for the lighter wiper of printers
+    without an INDX, its code is not built for the INDX, and the INDX's own cleaning
+    sequences are the same as in 6.9.2, see
+    [blobs dragged into the print](stringing-and-wiper-calibration.md).
+    [7.0.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1),
+    published on Prusa's downloads page on 19 October 2026, lists a single fix, for the
+    startup hang described
+    further down this page, and
+    [its source](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v7.0.0...v7.0.1)
+    differs from 7.0.0 by that fix alone.
+    [8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0),
+    published on Prusa's downloads page on 22 October 2026, is the first release since
+    the beta whose notes
+    mention this calibration on the INDX. Its detailed notes on GitHub, which say more
+    than the downloads page did, list two changes: when a tool fails, the calibration
+    repeats that tool rather than starting over, and each kind of failure has its own
+    screen naming the tool and giving an error code. The source bears out the first, but
+    not as a change for the fault on this page: from 6.9.0 through 7.0.1, Retry after a
+    failed measurement over the sensor already measured that tool again on its own. What
+    8.0.0 narrows to one tool is Retry after the other failures in a tool's steps, such
+    as a cleaning that did not finish or a rejected touch on the sheet at print start;
+    there, Retry used to start the pass over from the first tool. Retry after the checks
+    that compare the tools at the end still does. The second holds only in part: several
+    kinds of failure share one screen, and the Sensor Not Found and Sensor Failure
+    screens name no tool. Which failure gets which code is on
+    [error codes](../codes.md#stock-800). In the
+    [source](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v7.0.0...v8.0.0),
+    the chip settings, the sensor board's firmware and the temperature choice are the
+    same as in 7.0.0. One further change there is not in the notes: the sweeps over the
+    sensor are now driven the same way as ordinary moves, so they follow the bed mesh and
+    start at a known instant, which
+    [its commit](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/ebe27870c752655f48de9af57bc28e6f337c0e3d)
+    says removes a small timing offset from measurements taken against the motion. That
+    is a reading of the code, not an observed result, and no owner has yet reported on
+    calibration under 8.0.0. On nozzle cleaning, the notes list two items: the extruder
+    moves flexible filaments faster than before during cleaning, and the INDX's nozzle
+    cleaner calibration is more accurate. This page has not checked what the second
+    changes.
 
     The beta was not clean for everyone, and the stable notes mention none of what
     follows. One owner finds calibration passing reliably but nozzles coming out
@@ -226,6 +273,8 @@ tension, which support may suggest, has not fixed a single reported case.
     reporter was still repeating, and a write-up they disclosed was drafted with an AI
     assistant. See
     [firmware issue 5473](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5473).
+    The reporter has not posted the result of that repeat; the only reply on the issue is
+    an automated notice marking it stale.
 
     **The vendor made the same clock change.** The 6.9.1-beta source, and so the
     stable 6.9.1, halves the sensor's reference clock. The
@@ -242,12 +291,27 @@ tension, which support may suggest, has not fixed a single reported case.
     failure, any of those could be why. If your board fails this way on 6.9.0 or
     earlier, updating costs nothing and is worth doing before you replace it.
 
+    **7.0.0 and 8.0.0 keep those settings and change the error handling around them.**
+    The sensor board runs firmware of its own, built into the printer firmware and
+    flashed onto the board from it. In 7.0.0 and 8.0.0
+    [that firmware](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/puppy/tool_offset_sensor/src/main.cpp)
+    sets the chip up exactly as 6.9.1 did, so the clock change stays. What
+    [7.0.0 rewrites](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v7.0.0)
+    is its read loop. It now checks the chip's error flags before taking a reading,
+    counts a reading as failed unless every channel in use delivered one, and switches
+    the chip off when setting it up fails. As before, the board resets itself after
+    several failed reads in a row. 8.0.0 carries the same board firmware. That is the
+    handling around the first-sample failure rather than its cause, and the code alone
+    does not show what it changes on a board that fails this way. No owner has reported
+    that either.
+
 ## Error codes that lead here
 
 | Code | What the printer shows |
 |---|---|
 | [`36130`](https://help.prusa3d.com/article/tool-offset-failed-36130-core-one-indx_1089016) | Tool offset failed |
 | [`36136`](https://help.prusa3d.com/article/calibrate-dock-from-menu-17136-xl-36136-core-one-indx_1037195) | Calibrate dock from menu |
+| [`36145`](../codes.md#stock-800) | Sensor Failure (stock 8.0.0) |
 | [`36194`](../codes.md#36194) | The tool offset sensor sent no usable data |
 
 `36130` is this page. It is also the code the firmware links its own help
@@ -256,8 +320,13 @@ their case.
 
 `36194` exists only in firmware built from hyiger/Prusa-Firmware-Buddy, which reports
 this fault as its own code when no sweep got usable data from the sensor. On stock
-firmware the same fault is `36130`; [error codes](../codes.md#stock-firmware) shows how
-to recognize it in the serial log.
+firmware through 7.0.1 the same fault is `36130`; [error codes](../codes.md#stock-firmware)
+shows how to recognize it in the serial log. Stock 8.0.0 shows `36145` when the sweeps
+gave up after at least one failed on a fault the sensor flagged or on samples lost
+before they reached the main board, or when the head board restarted during the
+sweeps, and still `36130` when the sensor sent nothing at all, see
+[what stock 8.0.0 shows](../codes.md#stock-800). That is a reading of the source; no
+owner has yet reported either screen.
 
 ## Detail
 
@@ -318,6 +387,13 @@ What makes this fault confusing:
   ferrite beads at the same time, and their failures stopped too. A further owner, on
   firmware issue 5526, found that ferrite beads did not help and that switching the
   light off has so far seemed to help every time; they do not give their firmware.
+  Two more owners in the thread have since switched the light off, one naming the bed
+  light, and mention no other change made at the same time. For one, tool offset calibration and bed leveling then ran for the
+  first time without dragging on or failing. The other, whose bed leveling had kept
+  retrying and failing, had one print level cleanly. Neither gives their firmware.
+  With the owner on issue 5526, that makes switching the light off, with no other
+  change reported alongside it, `reported`, from two sources, as something that helped; why it helps is not
+  established.
   One owner describes the light as lit during a print and not during a calibration
   from the menu. That is the other sensor, see [loadcell noise](loadcell-emi-noise.md).
 - **A startup that hangs at the offset sensor on 7.0.0 is a separate problem, fixed
@@ -332,7 +408,16 @@ What makes this fault confusing:
   source points at the sensor board. Prusa's notes for
   [7.0.1](https://help.prusa3d.com/downloads/core-one-indx), published on
   19 October 2026, list one change: a fix for Core One INDX printers hanging at
-  startup on the screen that reports the tool offset sensor as ready. The owner who
+  startup on the screen that reports the tool offset sensor as ready. The detailed
+  [8.0.0 notes](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0)
+  list the same fix, and the source shows that it is not in the sensor code at all.
+  The one code change in 7.0.1, which 8.0.0 also carries,
+  [fixes a deadlock](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/852dedffe929cf95ea5031c9e8a8e234f1536d9d)
+  in the check that compares whether the head senses a tool with the tool the printer
+  last recorded as picked. On a mismatch that check opens a dialog and waits for an
+  answer, and its commit says it could do so before the screen was ready to show one.
+  The sensor-ready message is the last step of the boot screen, so that is where the
+  printer would be left; that last part is this page's reading. The owner who
   opened the thread reports bringing the hang about again and finding that 7.0.1
   fixes it. No owner has said whether, or how, they put 7.0.1 onto a printer that was
   already stuck. The flashes onto stuck printers that owners describe were downgrades:
@@ -345,7 +430,14 @@ What makes this fault confusing:
   disconnected, at the main INDX connector or at the xBuddy board. In the thread the
   steps are: with the printer off, unplug it, switch on once, switch off, reconnect it
   and switch on again. The issue's report does not say whether the printer was off when
-  they unplugged it; switch it off before you unplug either connector.
+  they unplugged it; switch it off before you unplug either connector. A boot that
+  stops because the INDX head board is too cold is a different matter: one owner asks,
+  in [firmware issue 5585](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5585),
+  for the boot to finish anyway so that the bed heater can warm the board. The firmware
+  has a
+  [red-screen error, 36274](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Prusa-Error-Codes/yaml/buddy-error-codes.yaml),
+  for a head board below its allowed range; the report
+  does not say whether that is what they saw, or which firmware they run.
 
 ### What to do, in order
 
@@ -428,19 +520,28 @@ not say. That makes it the vendor's released fix, not a verified cure: one owner
 report still saw occasional failures on the beta, and the first owner to report on the
 stable, in a separate issue, still sees calibration fail often on prints that use
 several tools, which they put down to purge material left on the nozzles. The notes
-for 7.0.0, 7.0.1 and 8.0.0 say nothing about it, and none of their sources is
-published yet. The first two reports on 7.0.0, one in the forum and one on the issue
-tracker, each describe a failure at print start, and neither is put down to the sensor
-board. A third, on another issue, blames the lower calibration temperature for PETG
-left on the nozzle; that is a single report. There are none yet on 8.0.0. The startup
+for 7.0.0 and 7.0.1 say nothing about it. Their source, and that of 8.0.0, published
+on 3 November 2026, keeps the 6.9.1 sensor settings and calibration temperatures, which
+the tags show. The per-tool retry in 8.0.0 is in its detailed notes and in the source,
+but for a failed measurement over the sensor the source of 6.9.0 through 7.0.1
+already retried that tool alone; what 8.0.0 adds is the same for the other failures in
+a tool's steps. The notes' separate screen naming the tool for every kind of failure
+holds there only in part. Nobody has reported on either yet. The first two
+reports on 7.0.0, one in the forum and one on the issue tracker, each describe a
+failure at print start, and neither is put down to the sensor board. A third, on
+another issue, blames the lower calibration temperature for PETG left on the nozzle;
+that is a single report. There are none yet on 8.0.0. The startup
 hang on 7.0.0 rests on the forum thread and the issue linked where it appears; that
-7.0.1 fixes it is Prusa's notes and one owner's test.
+7.0.1 fixes it is Prusa's notes and one owner's test, and what the fix changes is from
+its commit, which 8.0.0 also carries. That switching the light off, with no other
+change reported alongside it, helped rests on two owners in the tool offset thread and one on issue 5526.
 
 The LDC1612 reference-frequency lead is a separate single report from a different
 owner, and is marked `provisional` where it appears. The vendor's own commit confirms
 that the clock exceeded the chip's limit and changes it, alongside several other
 sensor settings, but says nothing about whether that caused the failures that owner
-saw.
+saw. That 7.0.0 and 8.0.0 keep those settings and rework the sensor board's read loop
+comes from comparing their tags with 6.9.2's.
 
 ## Related
 

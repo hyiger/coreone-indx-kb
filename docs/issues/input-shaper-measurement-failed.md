@@ -1,13 +1,13 @@
 ---
 title:        Input shaper calibration stops with "Measurement failed"
 confidence:   provisional
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One / Core One+ with INDX, mostly Founders Edition; one Founders Edition with the Gen 2 upgrade
 toolhead:     INDX (one report is an 8-tool head; the rest do not say)
 hotend:       unknown
 nozzle:       unknown
-firmware:     6.9.0 and 6.9.1-beta; one report also on 6.6.3, and an update from another reporter on 6.9.2, 6.9.1 and 6.6.3
+firmware:     6.9.0 and 6.9.1-beta; one report also on 6.6.3, and an update from another reporter on 6.9.2, 6.9.1 and 6.6.3; no reports on 7.0.0 or later, whose calibration and accelerometer code is unchanged from 6.9.2 (source-checked)
 sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5436
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.6.0
@@ -29,6 +29,14 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/coreone-with-mmu-upgrade-to-indx/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/toolhead-docking-calibration-fails/
   - https://help.prusa3d.com/downloads/core-one-indx
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v7.0.0...v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/ProjectOptions.cmake
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/AddMarlin.cmake
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/accelerometer_remote.cpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/a738685d8ddafbe135315874988ef5dcbf047e81
 superseded_by:
 ---
 
@@ -47,11 +55,18 @@ accelerometer has just calibrated without complaint. Prusa is investigating and 
 issue is open; nothing in the 6.9.1 release notes addresses it, 6.9.2, released on
 7 October 2026, changes only the printer's filament presets, and the notes for
 [7.0.0](https://help.prusa3d.com/downloads/core-one-indx), published on 15 October 2026,
-do not mention input shaping or the accelerometer, and neither do those for 7.0.1 and
-8.0.0, published on 19 and 22 October. The only report since 6.9.2 came out
-is an update from an owner who had reported on the beta: since they flashed 6.9.2 the
-calibration fails one step earlier, at the accelerometer, and it still did after going
-back to 6.9.1. Nobody has reported on 7.0.0 or later. A Prusa developer's
+do not mention input shaping or the accelerometer, and neither do those for 7.0.1. The
+detailed GitHub notes for
+[8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0), which
+reached Prusa's downloads page on 22 October, do list a fix for an accelerometer that
+stops working until a restart, which made the Input Shaper calibration fail, but tag it for the MK4 family and the
+Core One models without the INDX, and the source bears that out: the fix is in
+code the INDX firmware does not build, see below. The source of 7.0.0 and 8.0.0, now
+public, leaves the INDX's calibration and accelerometer code as it was in 6.9.2. The
+only report since 6.9.2 came out is an update from an owner who had reported on the
+beta: since they flashed 6.9.2 the calibration fails one step earlier, at the
+accelerometer, and it still did after going back to 6.9.1. Nobody has reported on
+7.0.0 or later. A Prusa developer's
 first check was the **1.5GT Belts** setting, which must match the belts actually on the
 printer. Going back to firmware 6.6.3 got the calibration working for two owners, though
 one of them now finds it failing there too. A
@@ -132,10 +147,32 @@ mention input shaping or the accelerometer. The only input shaper source file th
 changed between the two tags is a small refactor of how filter names are looked up.
 On the INDX, 6.9.2 changes nothing but the PVA and BVOH filament presets, which the
 6.9.1 notes had announced and which that release left out. 6.9.2 touches no input
-shaper or accelerometer code. The notes for 7.0.0, 7.0.1 and 8.0.0 do not mention input
-shaping or the accelerometer either, and Prusa has not yet published the source of any
-of them, so whether they change that code cannot be checked. Prusa has not commented
-on the issue since saying it was tracking the problem.
+shaper or accelerometer code. The notes for 7.0.0 and 7.0.1 do not mention input
+shaping or the accelerometer either.
+
+The detailed GitHub notes for
+[8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0) do. They
+list a fix for an accelerometer that, after a communication error under heavy load,
+stayed unusable until a restart, so that the Input Shaper and Phase Stepping
+calibrations failed. That matches the symptom here, but the notes tag it for the MK4
+family and the Core One models without the INDX, and the source agrees. The
+[firmware's build options](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/ProjectOptions.cmake)
+give those printers an accelerometer wired straight to the main board, while the INDX
+printers read theirs through the INDX head board. The
+[commits behind the fix](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/a738685d8ddafbe135315874988ef5dcbf047e81)
+rework the driver for the directly wired accelerometer, which the INDX firmware
+[does not build](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/AddMarlin.cmake);
+one of them also adjusts interrupt priorities on the main board that the INDX shares,
+for the sake of that same accelerometer. So the fix as described does not reach the
+INDX. On the INDX side, the calibration itself, the
+[code that reads the accelerometer through the head board](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/prusa/accelerometer_remote.cpp)
+and the head board's own accelerometer handling are unchanged from 6.9.2 in
+[7.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.2...v7.0.0), 7.0.1
+and [8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v7.0.0...v8.0.0),
+apart from a code cleanup in the input shaper menu. Other parts of the main board's
+communication with the head board did change, and this page has not traced whether any
+of them touches the accelerometer's data on its way. Prusa has not commented on the
+issue since saying it was tracking the problem.
 
 Earlier, Prusa's notes for 6.6.0, the first INDX firmware, listed occasional errors in
 the Input Shaper and Phase Stepping calibrations as a known issue, which a restart and
@@ -210,7 +247,7 @@ the Gen 2 owner does not say how their 1.5GT Belts setting is set. The disagreem
 whether 6.6.3 alone fixes it is unresolved, and one of the two owners it fixed has since
 reported it failing there. That owner's update is the only report on 6.9.2 or on a
 return to 6.9.1, and it describes the failure moving to the accelerometer calibration.
-Nobody has reported on 7.0.0, 7.0.1 or 8.0.0. Rechecked on 25 October 2026, the issue
+Nobody has reported on 7.0.0, 7.0.1 or 8.0.0. Rechecked on 8 November 2026, the issue
 had no comments newer than that update.
 
 The two reports about the belt setting in the assembly notes concern the setting and
@@ -221,15 +258,20 @@ for this site reports the failure.
 **First-party.** The Factory Reset presets, what the Common Misconfigurations item
 covers, the belt setting's stored default, the Gen 2 variant applied on a first run and
 after a hardware-configuration reset, and what changing the belt setting resets all come
-from Prusa's firmware source at the 6.9.1 tag; that 6.6.3 has no belt setting comes from
-the source at that tag. That 6.9.2 changes only the filament presets comes from
+from Prusa's firmware source at the 6.9.1 tag, and are unchanged for the INDX at the
+8.0.0 tag apart from how the reset screen is drawn; that 6.6.3 has no belt setting comes
+from the source at that tag. That 6.9.2 changes only the filament presets comes from
 [comparing its tag with 6.9.1's](https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2),
 and what the stable 6.9.1 adds to the beta from comparing those two tags.
 That a hardware-configuration reset also clears the calibrations is in the
 [7.0.0 notes](https://help.prusa3d.com/downloads/core-one-indx), marked as first shipped
 in 6.9.0, and in the 6.9.1 source. The warning shown when the belt setting changes is
 the printer's own. The known issue
-with input shaper calibration errors is from Prusa's 6.6.0 release notes.
+with input shaper calibration errors is from Prusa's 6.6.0 release notes. The 8.0.0
+accelerometer fix and its tags are from the detailed 8.0.0 notes; that it does not
+reach the INDX, and that the INDX's calibration and accelerometer code is unchanged
+from 6.9.2 through 8.0.0, come from the build options and from comparing the tags. That
+is what the code says, not a test on a printer.
 
 What would move this forward: Prusa naming a cause or shipping a fix, or a report in a
 separate thread or issue.

@@ -1,20 +1,22 @@
 ---
 title:        Fehlgeschlagenes Entladen und Auswerfen — zu enge Bohrung der Filamentführung
 confidence:   provisional
-updated:      2026-10-18
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       unknown
 nozzle:       unknown
-firmware:     unknown
+firmware:     unknown on the reporting machines; 8.0.0 release notes cited
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/nozzle-stuck-with-filament/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/filament-jams-on-first-load/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/1st-time-filament-loading-doesn%cb%8bt-work/
+  - https://help.prusa3d.com/article/cold-pull-core-one-indx_1218914
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
 superseded_by:
-source_sha:   a3e5e1503a1691e62c40d4f91888f91f7d6f78c8bb9b5c817301b9e29f023630
+source_sha:   67fca34349d26039eea65db8ae43adefe02efcc276c559b8674ed705a6bf05dd
 ---
 # Fehlgeschlagenes Entladen und Auswerfen — zu enge Bohrung der Filamentführung
 
@@ -124,8 +126,31 @@ und an Werkzeugen, die sich
 [weder laden noch entladen ließen](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/1st-time-filament-loading-doesn%cb%8bt-work/),
 während der Antrieb klickte. Die meisten ließen sich schließlich lösen, durch erneute
 Versuche mit zusätzlicher Wärme oder indem das Filament von Hand nachgeschoben wurde, und
-ein Besitzer bekam vom Support Ersatz geschickt. Auch dort schlägt das Laden fehl; sie
-passen also ebenfalls nicht zu diesem Mechanismus und werden nicht gezählt.
+ein Besitzer bekam vom Support Ersatz geschickt. Ein späterer Besitzer im zweiten dieser
+Threads, dem an einem neuen Aufbau dasselbe passierte, bietet eine Erklärung, die ohne die
+Bohrung auskommt. Das Ende eines Strangs, der schon einmal aus einem anderen Extruder
+entladen wurde, kann etwas dicker sein als der Rest, und diese Düsen reagieren empfindlich
+auf die Form der Spitze; er rät deshalb, dieses Ende abzuschneiden und die Spitze vor dem
+Laden schräg anzuschneiden, und verweist für eine Verstopfung auf Prusas
+[Cold-Pull-Verfahren für den INDX](https://help.prusa3d.com/article/cold-pull-core-one-indx_1218914).
+Das ist der praktische Rat eines einzelnen Besitzers, keine gemessene Ursache.
+
+TODO(verify): die abzuschneidende Länge und der Schnittwinkel der Spitze, aus dem
+späteren Beitrag im Thread zu den Werkzeugen, die sich weder laden noch entladen ließen;
+hier zurückgehalten.
+
+Auch in diesen Threads schlägt das Laden fehl; sie passen also ebenfalls nicht zu diesem
+Mechanismus und werden nicht gezählt. Ebenso wenig handelt es sich um den falschen Fehler
+„Filament loading timed out“, den Firmware 8.0.0 behebt und der ein Laden sofort abbrach,
+wenn der Filamentsensor des Extruders ausgeschaltet oder nicht kalibriert war
+([Hinweise zu 8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0));
+diese Besitzer beschreiben Filament, das sich bei klickendem oder durchrutschendem Antrieb
+nicht bewegte. Im Thread zu den häufigen Problemen selbst schrieb ein Besitzer lediglich,
+ihm gehe es wie einem, dem sich beim Laden die Werkzeuge gelöst hatten, und fügte hinzu,
+er könne das Filament nun überhaupt nicht mehr entladen; nach seiner Darstellung bekamen
+es auch die Vorschläge des Supports, darunter ein Cold Pull, nicht heraus. Dieser Bericht
+nennt keine Ursache und sagt nichts über das Drucken durch das Werkzeug, daher wird er
+ebenfalls nicht gezählt.
 
 Inzwischen wurde ein zweiter Bericht aus dem Discord des Herstellers weitergegeben,
 unabhängig vom Forums-Thread. Er stimmt im Mechanismus überein — ein

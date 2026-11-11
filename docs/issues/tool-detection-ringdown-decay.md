@@ -1,7 +1,7 @@
 ---
 title:        Phantom tools, "tool not detected" and park failures
 confidence:   reported
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -17,7 +17,9 @@ sources:
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.0...v6.9.1
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v6.9.2
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/compare/v6.9.1...v6.9.2
-  - https://help.prusa3d.com/downloads/core-one-indx
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/puppy/indx_head/src/heater.hpp
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/0b03bbf232191626847c21fbc82d8e424297269a
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/6-9-0-firmware-tool-docking/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/will-the-prusa-indxs-wave1-ship-with-fixed-induction-coils/
@@ -227,8 +229,13 @@ the only change that reaches an INDX is the PVA and BVOH filament presets. Firmw
 [Prusa's downloads page](https://help.prusa3d.com/downloads/core-one-indx), lists nothing
 on nozzle-presence detection or the park check, and neither do the notes for 7.0.1
 (19 October 2026, a single fix for a freeze at startup on the offset sensor screen) or
-8.0.0 (22 October 2026). Prusa had not published the source for either when this was
-written, so that is the notes' silence, not a reading of the code.
+8.0.0 (22 October 2026). Prusa published the source for 7.0.0, 7.0.1 and 8.0.0 on
+3 November 2026, and it bears the notes out: the
+[decay thresholds](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/src/puppy/indx_head/src/heater.hpp)
+are unchanged at the 8.0.0 tag, and the one change 8.0.0 makes to the park routine is a
+[refactor](https://github.com/prusa3d/Prusa-Firmware-Buddy/commit/0b03bbf232191626847c21fbc82d8e424297269a)
+that returns the same after-park check. No owner has reported the still-detected-after-park
+failure on these releases either.
 
 ## Verification
 

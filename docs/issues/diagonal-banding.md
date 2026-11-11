@@ -1,18 +1,25 @@
 ---
 title:        Diagonal banding across print walls
 confidence:   reported
-updated:      2026-10-25
+updated:      2026-11-08
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
 hotend:       CHT high-flow
 nozzle:       0.4mm reported
-firmware:     unknown
+firmware:     unknown on the reporting machines; 7.0.0, 7.0.1 and 8.0.0 release notes and 6.9.2 and 8.0.0 source checked
 sources:
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/a-summary-of-common-indx-problems/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/upgrade-core1-to-indx-gen2/
   - https://help.prusa3d.com/downloads/core-one-indx
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/include/marlin/Configuration_COREONE.h
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.2/include/marlin/Configuration_COREONE.h
+  - https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/planner.cpp
 superseded_by:
 ---
 
@@ -26,9 +33,12 @@ rather than the motion system. There is a two-print test that settles it in abou
 hour without any disassembly, and it is worth running before you open a support case.
 A faint version of this artifact appears to be normal for a dual-gear extruder; a
 pronounced one is a hardware fault, and the reported remedy is a replacement toolhead —
-not yet a dependable one, since by mid-October three owners had received replacements,
+not yet a dependable one, since by early November four owners had received replacements,
 two of them the newer injection-molded version, that did not cure it (all in one
-thread, so `provisional`).
+thread, so `provisional`). On 7 November an owner relayed the vendor's explanation:
+small tolerances in the drivetrain adding up within one unit, since tightened (a single
+owner's relay, with no public vendor statement known, so `provisional`). No owner has
+yet reported on a head built to the tighter tolerances.
 
 ## Detail
 
@@ -139,12 +149,16 @@ Several owners in the thread report seeing a faint version on glossy filaments �
 describing it as the sort of thing you cannot unsee once noticed. The consensus among
 them is that dual-drive extruders at this price point generally show some periodic
 extrusion signature, and that the single-drive design of the Nextruder is why owners
-did not see it there.
+did not see it there. A newer owner who noticed it on their first functional print with
+flat faces printed the same two parts on a Core One without the INDX and on the INDX, and
+found the difference striking (a single report).
 
 The vendor appears to take a similar line. The owner behind the shim workaround below
 relayed a support reply that agreed their case was bad, yet said a certain amount of
 unevenness comes with how a dual-drive extruder works. That is one owner's secondhand
-account of a private reply, not a published position.
+account of a private reply, not a published position. The vendor's November account,
+covered in the next section, neither repeats nor contradicts it: it explains why some
+units are affected more than others, and says nothing about a faint residue.
 
 So the question is not *whether* the artifact exists but *how pronounced* it is.
 Faint and only visible on glossy filament at the right angle is expected. Clearly
@@ -201,12 +215,52 @@ thread (`provisional`).
 If it holds, it reframes the fault: not a gear that was made badly, but a stack-up that
 depends on machining being perfect and offers no adjustment when it is not.
 
+**The vendor's account, relayed on 7 November** (`provisional`: a single owner's relay,
+and the reading built on it below inherits that tier). One owner posted an update
+attributed to the vendor, without saying how it reached them, in which the vendor says its
+investigation has concluded. By that account the cause is tolerance stack-up
+in the drivetrain. No single part was out of tolerance, but in an affected unit several
+dimensions sat toward the wide end of their range, and in combination the deviations
+showed up as the periodic pattern. Units got different combinations, which the vendor
+gives as the reason some are affected more than others. It says it has since narrowed
+the allowed range for those dimensions and reports a clear improvement from the change.
+
+That supports the stack-up reading above, and the observation that severity varies unit
+to unit. It also corrects the quality-control theory in one respect: if every part met
+its specification, inspecting parts one at a time would not have caught this. On that
+account the limits themselves were too loose for the way the parts combine, which makes
+it closer to a design tolerance problem than a spread of bad parts (an inference from the
+vendor's wording, not something it said; the thread argues both sides of this). What the
+account does not do is name the part or the dimensions, so it neither confirms nor rules
+out the pinion misalignment the teardown found, or the first-stage conclusion of the
+analysis. It is one owner's relay of a message addressed to an affected owner, and
+whether it went to that owner alone or more widely is not said; this page knows of no
+public statement from the vendor. At the end of
+October, Prusa support had told another owner only that the gears were at fault, without
+saying which.
+
 TODO(verify): the same teardown reports a discrepancy between the extruder steps per
 millimeter implied by the vendor's own toolboard documentation and what the firmware
-uses. The figure is withheld here because extruder steps/mm is a calibration value and a
-wrong one degrades every print silently — the opposite of the shim, whose result you see
-immediately. Recorded because it is a real lead, not because it is settled: it appears in
-a sidenote of a single post, and nobody has confirmed the two figures actually disagree.
+uses. The figures are withheld here because extruder steps/mm is a calibration value and
+a wrong one degrades every print silently — the opposite of the shim, whose result you see
+immediately. The 8.0.0 source, public since 3 November, and the 6.9.2 source before it
+show the firmware's figure is not meant to match. In 8.0.0 the INDX default sits
+deliberately below the steps/mm that would deliver precisely the length the G-code asks
+for, taking the place of a flow reduction that used to live in the slicer's start G-code
+([source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/include/marlin/Configuration_COREONE.h)).
+6.9.2 used the same default, also described it as a deliberate change, and already
+corrected the firmware's own extruder moves during tool changes for it
+([source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v6.9.2/include/marlin/Configuration_COREONE.h));
+8.0.0 extends the correction to filament usage tracking and to extruder moves from the
+Move Axis menu, the latter listed in its notes. 6.9.2 was not consistent with itself
+here: the comment in the passage the teardown quoted names one exact-feed figure, while
+the tool-change correction beneath it is computed from a different one. 8.0.0 resolves
+that by defining the exact-feed figure once, equal to the one the 6.9.2 correction used.
+8.0.0's exact-feed figure for the INDX does not equal the one the teardown derived from
+the vendor's documentation either, and nothing published accounts for that difference.
+Either way it is a uniform scale on how much filament is fed, not on how evenly, so it
+could not by itself produce a periodic pattern; it no longer looks like a lead on the
+banding (an inference from the source, not a measurement).
 
 TODO(verify): the gear ratios, the filament advance per pinion tooth, and the
 resulting expected band pitch. The owner who derived these described one input as an
@@ -217,7 +271,8 @@ tooth of the first reduction stage — is the reportable part and needs none of 
 
 For a pronounced case the reported route is a **toolhead replacement** through the
 vendor, since at the time of writing the fault had not been narrowed to an
-individually replaceable part, and at this update it still has not been. See
+individually replaceable part. At this update it still has not been: the vendor's relayed
+account blames drivetrain tolerances and names no part. See
 [who to contact](support-and-warranty-path.md).
 
 That route may be slow. In mid-September another owner reported being told that the
@@ -265,13 +320,46 @@ since, so whether it arrived or helped is unknown. The owner with the open Prusa
 said only that support was taking the matter seriously. Each is one owner's account,
 all in the same thread, and none names a part.
 
+Early November brought the vendor's account described above. It reached the thread
+through the owner who had been told replacements would wait until the vendor was sure of
+a fix, and with it came a plan that this owner had heard secondhand from other affected
+owners: Founders Edition owners who had reported the fault and were waiting would be sent
+a new toolhead, that owner among them, while owners who bought through Prusa deal with
+Prusa. The same owner expected recent shipments to carry the change, but pointed out that
+the vendor's update was only days old, and guessed that Prusa may still be sending
+replacements from stock built before the tighter tolerances. Both are guesses; neither
+company has said so.
+
+Replacement outcomes, meanwhile, stayed poor. A further owner, told by Prusa support at
+the end of October that the gears were at fault, received a new head through Prusa in
+early November and found exactly the same pattern on it, which left them wondering
+whether the cause lies somewhere else; they gave their batch as 1.7, without saying
+whether that meant the kit or the replacement. The owner with the open Prusa case
+restated that their new head showed the same fault in a slightly different pattern, and
+said support had not replied since. The owner who was waiting on a second replacement in
+mid-October reported that this third head was acceptable but never clean, and is now
+getting worse. Each is one owner's account, all in the same thread.
+
 Neither firmware 7.0.0, published on 15 October, nor 8.0.0, published on 22 October,
-changes that picture: none of the items in their
-[release notes](https://help.prusa3d.com/downloads/core-one-indx) names a fix for the
-extruder drive or for this artifact, and those for 7.0.1, published between them on
-19 October, list only a startup-freeze fix. The nearest is a new filament acceleration limit
-in 8.0.0, enabled by default; the notes list it as a new feature, not a print-quality
-fix, and by 25 October no owner in the thread had reported it changing the banding.
+changes that picture, and neither does 7.0.1, published between them on 19 October. The
+[downloads-page notes](https://help.prusa3d.com/downloads/core-one-indx) and the more
+detailed GitHub release notes for all three
+([7.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.0),
+[7.0.1](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v7.0.1),
+[8.0.0](https://github.com/prusa3d/Prusa-Firmware-Buddy/releases/tag/v8.0.0)), published
+with their source on 3 November, name no fix for the extruder drive or for this artifact;
+7.0.1 carries only a startup-freeze fix. That fits the vendor's account, which puts the
+cause in part tolerances. The nearest item is the new filament acceleration limit
+(`M204 F`) in 8.0.0, on by default, with the same default for the INDX as for every
+printer but the MINI, so nothing about it is INDX-specific. The GitHub notes and the
+[planner source](https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/v8.0.0/lib/Marlin/Marlin/src/module/planner.cpp)
+give its purpose: with pressure advance, any change in flow becomes an abrupt step in
+extruder speed, so on printing moves the firmware now caps how fast the flow may change,
+lowering the acceleration of the whole move, cornering near extrusion included; travel
+moves are unaffected. That limits how quickly the commanded feed changes, not how evenly
+the drivetrain delivers a steady one, and nothing in the notes or the code ties it to
+periodic banding (a reading of the source, not a test). By 7 November no owner in the
+thread had reported it changing the banding.
 
 #### The shim workaround
 
@@ -293,16 +381,19 @@ result still showed the faintest banding if you went looking for it.
 
 How long the correction lasts is unknown. The shim's owner treats it as a stopgap, to
 come out once the vendor fixes the part, and their reports through mid-September
-describe it still working. Another owner has since suggested, as a personal theory,
-that the misaligned contact could wear the motor side and let the banding return;
-nobody has reported that happening.
+describe it still working; they have not posted since. Another owner has since
+suggested, as a personal theory, that the misaligned contact could wear the motor side
+and let the banding return; nobody has reported that happening to a shimmed head. The
+nearest report is a replacement head, not reported as shimmed, that one owner says
+started out acceptable and is now getting worse, with no cause given.
 
 !!! warning "One owner, one machine, and an invasive fix"
     `provisional`, inline on an otherwise `reported` page. This is a single first-hand
-    account. Nobody has reproduced it, the vendor has not commented on it, and the
-    thicknesses above are what worked on **one** toolhead — if the misalignment really is
-    a machining stack-up, it will vary unit to unit and yours may want a different shim
-    or none.
+    account. Nobody has reproduced it, the vendor has not commented on it (its November
+    account does not mention it), and the thicknesses above are what worked on **one**
+    toolhead. By the vendor's account as one owner relayed it, the fault is a tolerance
+    stack-up whose combination differs from unit to unit, so yours may want a different
+    shim or none.
 
     It also means dismantling a toolhead the vendor may otherwise replace under warranty.
     The owner here went this route only after a promised replacement went quiet for a
@@ -329,11 +420,14 @@ nobody has reported that happening.
     — see [loadcell noise](loadcell-emi-noise.md), where a ferrite core is the usual
     answer. A ferrite treats interference; it will not fix a bad loadcell.
 
-    Nor is the banding itself certain to be gone: as covered above, three other owners'
+    Nor is the banding itself certain to be gone: as covered above, four other owners'
     replacements did not cure it, two of them the newer injection-molded version
     (`provisional`: several owners, but all in one thread). Run a probing and homing
     check on any replacement head, and run the first print of the two-print protocol on
-    it, before you commit a long print to it.
+    it, before you commit a long print to it. If a new head reproduces the old pattern
+    exactly, run the second print as well: a pattern that does not shift with the
+    extrusion width points away from the extruder (an inference from the protocol, not a
+    reported result).
 
 ## Verification
 
@@ -344,7 +438,7 @@ claims on this page.
 [the diagonal banding thread](https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/diagonal-banding-2/)
 when this page was first written, and by several more since, ranging from severe to
 barely perceptible on glossy filament, so the phenomenon is not one person's
-imagination. The thread is marked answered and runs to 151 posts. The two-print
+imagination. The thread is marked answered and runs to 165 posts. The two-print
 protocol is its accepted answer, written by the owner who worked the problem with
 vendor and Prusa support involvement, and the reasoning for why it isolates extrusion
 from motion is sound on its own terms.
@@ -363,15 +457,19 @@ replacements. The
 independently records a severe banding case as vendor-confirmed to be a defective
 extruder unit, which corroborates the conclusion but may well be describing the same
 case rather than a second one. The replacements that did not cure the banding come from
-three further owners, two of them reporting the newer injection-molded version; the
+four further owners, two of them reporting the newer injection-molded version, and one of
+those owners now reports a second replacement that is acceptable but worsening; the
 reports are independent of one another but all in the same thread. On balance the
 outcomes on record lean against a replacement being a dependable cure, and none rises
-above `provisional`.
+above `provisional`. None of them is known to involve a head built to the tightened
+tolerances.
 
 **Analysis, not measurement.** The gear-meshing explanation is one owner's calculation,
 posted shortly before this page was written, with the vendor not yet having responded.
 It is coherent and specific, but it has not been confirmed by anyone with access to
-the parts. Treat it as the best available hypothesis.
+the parts. Treat it as the best available hypothesis. The vendor's relayed November
+account fits it in general terms, a drivetrain stack-up varying unit to unit, but names
+no reduction stage or part, so it does not confirm the specifics.
 
 **A caution on the second source.** The banding discussion in the
 [nozzle hardening thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/bondtech-nozzle-hardening-debacle-how-does-this-affect-prusa-indx-orders/)
@@ -384,16 +482,22 @@ diagonal, and which yields the cheap gear-cleaning check.
 What would strengthen this page: more owners running the two-print protocol and
 reporting the result, the shim working on a second toolhead, a vendor statement
 naming the specific part, and a replacement known to carry a fix. At this update,
-25 October, none of these has appeared. Nobody has reported a shim result on another
-toolhead; one owner said on 10 October that they would try it on their original head
-and has not reported back. Nobody has reported a further run of the protocol either.
-The vendor replies relayed in the thread acknowledge the fault and say a solution is
-being worked on, without naming a part; Prusa's replies relayed through mid-October
-likewise name none, and nothing relayed since names one. No batch is known to carry a
-fix: the two injection-molded replacements reported so far did not, a further
-replacement awaited in mid-October has no reported outcome, and an owner with a kit they
-identified as batch 5 believes they have the fault, though they have not reported
-running the protocol.
+8 November, only the vendor statement has moved, and only partly. Nobody has reported a
+shim result on another toolhead; the owner who said on 10 October that they would try it
+on their original head posted again on 7 November without mentioning it. Nobody has
+reported a further run of the protocol either. The vendor's account relayed on
+7 November names a cause, tolerance stack-up in the drivetrain, and a change, tightened
+tolerances, but no part, and no public vendor statement is known; Prusa support's
+reply relayed at the end of October said only that the gears were at fault. No batch is
+known to carry a fix. The vendor gives no batch or shipping date for the tightened
+tolerances. The two injection-molded replacements reported earlier did not cure it, nor
+did the head received through Prusa in early November, from an owner who gave their
+batch as 1.7. An owner with a kit they identified as batch 5 believes they have the
+fault, though they have not reported running the protocol. In
+[a separate build thread](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/upgrade-core1-to-indx-gen2/),
+an owner of a batch 7 kit saw no diagonal banding on their first prints, again without
+the protocol. Since the vendor says the stack-up differs unit to unit, one clean unit
+says little about its batch.
 
 ## Related
 
