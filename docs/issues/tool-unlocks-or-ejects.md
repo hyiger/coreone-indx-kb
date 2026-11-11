@@ -1,7 +1,7 @@
 ---
 title:        Tool unlocks or ejects from the head
 confidence:   provisional
-updated:      2026-11-08
+updated:      2026-11-10
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -14,6 +14,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-how-do-i-print-this-printing-help/filament-stuck-with-asa-pla-support/
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/is-it-worth-upgrading-from-core-one-to-indx/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/indx-toolhead-looses-tool-when-unloading-filament-and-blobs-after-every-colorchange/
+  - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-dropping/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/flex-filament-stuck-and-cannot-dock-tool/
   - https://help.prusa3d.com/article/nozzle-tool-remains-attached-to-the-print-head-core-one-indx_1077657
   - https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5532
@@ -37,12 +38,12 @@ superseded_by:
 
 # Tool unlocks or ejects from the head
 
-!!! warning "Five ejection reports in two threads, one teardown, and stuck-tool reports with different suspects"
-    Five owners describe the active tool coming loose from the toolhead, four of them in
+!!! warning "Six ejection reports in three threads, one teardown, and stuck-tool reports with different suspects"
+    Six owners describe the active tool coming loose from the toolhead, four of them in
     one thread, one of those only by saying they have the same problem as another, and
-    one in a separate thread. One opened the head and found a physical
-    cause on their own machine. The owner in the separate thread opened theirs too and
-    believes the lock is not closing fully, but names no damaged part. The teardown is
+    one in each of two separate threads. One opened the head and found a physical
+    cause on their own machine. The owners in the separate threads opened theirs too and
+    describe a lock that does not hold, but name no damaged part. The teardown is
     strong evidence for that one unit and says nothing yet about how common the defect
     is. Other owners report the opposite fault, a tool that will not release: one, in
     the first thread, suspects the lock, and owners in two further threads suspect
@@ -58,7 +59,8 @@ in the toolhead's locking train with its last tooth missing or malformed. The re
 they expect is a replacement gear or a replacement toolhead from the vendor. Another
 owner, in a separate thread, sees the same release in their own toolhead and also ties
 it to blobs after every tool change; they say support confirmed a toolhead problem and
-offered a replacement head.
+offered a replacement head. A third owner, in a third thread, loses the tool on every
+unload and has not yet found a cause.
 
 ## Detail
 
@@ -167,6 +169,21 @@ They do not report a missing or deformed tooth, or any other damaged part. A Pru
 member on the forum suggested taking the videos to support. A week after the first post
 the owner wrote that support had agreed the head was at fault and offered a new one,
 which they were still waiting for on 18 October 2026.
+
+### A third thread: the tool lost on every unload
+
+On 9 November 2026 another owner opened a
+[thread of their own](https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/tool-dropping/).
+They had fitted the Gen 2 upgrade and an eight-tool INDX to their Core One, and now the
+head lets go of the tool whenever they unload filament, including during the filament
+sensor calibration. Support had them open one side of the head and film the lock, which
+by their account comes undone too soon; the case had been escalated without an outcome.
+They name no damaged part, and in a later post they say they plan to open the head again
+to look for a broken tooth. They give their firmware only as the latest release. Earlier
+they had moved the heated bed wiring away from the toolhead wiring at the main board,
+which they say cleared many of the false errors they first saw; that is an interference
+fix of the kind described under [loadcell noise](loadcell-emi-noise.md), and it did not
+stop the tool coming out.
 
 ### A third owner, the opposite fault
 
@@ -366,10 +383,10 @@ owner's fix for the tangle itself.
 
 ## Verification
 
-`provisional` — five owners report the tool coming loose, four in one thread, one of them
-only by agreeing with another's post, and one in a separate thread; a physical cause was
-found on one machine only, and the owner in the
-separate thread, who also opened their head, names no damaged part. One owner reports
+`provisional` — six owners report the tool coming loose, four in one thread, one of them
+only by agreeing with another's post, and one in each of two separate threads; a physical
+cause was found on one machine only, and the owners in the separate threads, who both
+opened their heads, name no damaged part. One owner reports
 only the opposite fault, a tool that will not release; owners in two further threads
 report a stuck tool and suspect the filament.
 
@@ -402,6 +419,11 @@ not the only thing that could. Support's confirmation and replacement offer reac
 page only through the owner's own post and name no defect, so, like the third owner's
 replacement head, they are not the vendor statement asked for below. The link to blobs
 after tool changes is that owner's interpretation alone.
+
+The thread opened in November is a third independent thread for the symptom, and a
+third head whose lock its owner saw coming undone, but again with no damaged part named,
+so it does not meet the bar either. It would if that owner finds a broken or deformed
+tooth when they open the head again.
 
 Taken by itself, the symptom — a tool released by reverse extrusion away from a dock —
 now comes from independent owners in two different threads, which meets `reported` for

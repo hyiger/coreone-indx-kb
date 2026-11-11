@@ -1,7 +1,7 @@
 ---
 title:        Dock calibration rejects some or all docks
 confidence:   reported
-updated:      2026-11-08
+updated:      2026-11-10
 author:       hyiger
 printer:      Core One, Core One+, Core One+ (Gen 2)
 toolhead:     INDX
@@ -368,7 +368,11 @@ downgrade settled the homing fault but says nothing about the wizard's reading. 
 7.0.0, two more affected owners posted logs from 7.0.1, one of them saying the fault
 remains, and several later commenters report it still present on 8.0.0, none of them in
 connection with dock calibration. The 7.0.1 and 8.0.0 release notes, the detailed
-GitHub ones included, say nothing about homing. Another owner there reports dock
+GitHub ones included, say nothing about homing. On 10 November a Prusa developer posted
+an 8.0.2-alpha build there whose homing calibration chooses the motor current itself,
+and one owner's log from it read as fixed; the
+[loadcell page](loadcell-emi-noise.md) has the details. Nobody has yet said whether it
+changes anything for dock calibration. Another owner there reports dock
 calibration stalling on their printer, which has the homing fault too: on 6.9.2 they had
 hardly been able to get beyond the fourth dock, and after going back to 6.9.0, where the
 homing fault was milder but still present, they got through the dock step. They do not

@@ -1,7 +1,7 @@
 ---
 title:        Hardware
 confidence:   unknown
-updated:      2026-11-08
+updated:      2026-11-10
 author:       hyiger
 printer:      Core One, Core One Plus, Core One L
 toolhead:     INDX
@@ -25,7 +25,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/update-kit-from-indx-4t-to-8t/
   - https://forum.prusa3d.com/forum/prusa-indx-hardware-firmware-and-software-help/sourcing-tool-dock-hardware/
 superseded_by:
-source_sha:   f53cb148b487c73d0da5969bad0f0864149f67fa94fc0fb850d646776100a44a
+source_sha:   f5d7de2e1bf8f70c3831f752f0242ede35739ca11ee2927c4d28ad775b4930e3
 ---
 # Hardware
 
@@ -67,7 +67,13 @@ verstrichen, ohne dass im Ankündigungs-Thread eine Auslieferung gemeldet wurde.
 27. Oktober gaben Besitzer dort E-Mails wieder, die ihre Bestellungen Chargen zuordnen,
 die am 30. November oder, bei einer späteren Charge, um den 14. Dezember beginnen
 sollen; Stand 5. November war zwei Besitzern des Umbausatzes für die L, einer davon mit
-einer Bestellung vom ersten Tag, noch überhaupt keine Charge zugeteilt worden.
+einer Bestellung vom ersten Tag, noch überhaupt keine Charge zugeteilt worden. Bis zum
+10. November hatten zwei weitere Besitzer dieses Bausatzes, die ebenfalls am ersten Tag
+bestellt hatten, noch immer keine. Besitzer in diesem Thread und im
+[Haupt-Thread zum INDX-Versand](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/prusa-indx-update-shipping-starts-this-week/)
+gaben außerdem einen neuen Wortlaut auf Prusas Seite mit Versandinformationen wieder:
+Sommerbestellungen, die noch keine Chargennummer haben, sollen Anfang 2027 eine
+erhalten und dann bearbeitet werden.
 
 Das ist für die Lektüre des übrigen Angebots hier von Bedeutung. Die Seiten halten in
 ihrem `printer:`-Feld fest, von welcher Maschine ein Befund stammt, und ein Befund von
@@ -131,7 +137,11 @@ Ergänzen von Werkzeugen erfordert.
 Quelle ist die [datierte Ankündigung](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-l-with-indx-now-available-assembled-and-upgrade/) des Herstellers vom 27. August 2026; sie
 ist es, die Verfügbarkeit und Liefertermin festhält; die Chargen, die Besitzern genannt
 wurden, und die Bausatz-Bestellungen ohne Charge stammen aus späteren Beiträgen im selben
-Thread, so wie die Besitzer sie wiedergeben. Die Produktseiten für den
+Thread, so wie die Besitzer sie wiedergeben. Der Wortlaut zu Anfang 2027 ist so
+wiedergegeben, wie Besitzer ihn am 9. und 10. November 2026 in diesem Thread und im
+Haupt-Thread zum Versand weitergaben; diese Seite hat die Seite mit
+Versandinformationen, die Prusa an Ort und Stelle ändert, nicht selbst gelesen. Die
+Produktseiten für den
 [fertig montierten Drucker](https://www.prusa3d.com/en/product/prusa-core-one-l-indx-8-tool/)
 und den [Umbausatz](https://www.prusa3d.com/product/indx-8-tool-conversion-kit-for-core-one-l/)
 sind nur als bequeme Verweise angegeben — Shop-Texte ändern sich, sie sind nicht der

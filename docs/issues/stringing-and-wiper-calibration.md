@@ -1,7 +1,7 @@
 ---
 title:        Blobs dragged into the print — nozzle wiper and purge
 confidence:   reported
-updated:      2026-11-08
+updated:      2026-11-10
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -700,13 +700,20 @@ offset stands.
 Also not carried over is a later Gen 2 report in which the wipe runs in the air, well
 above the wiper ([#5563](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5563)),
 because it comes from machines that have no INDX or do not say they have one, and no
-INDX owner has reported it. Its reporter says the machine has no INDX. Three owners have
+INDX owner has reported it. Its reporter says the machine has no INDX. Five owners have
 since added that they see it too, all on 8.0.0 and on a Gen 2, one of them since updating
 from 6.8.1: one names Prusa's wiper accessory and an MMU3, the others do not mention an
 INDX. In November the owner of a non-INDX Core One described the same wipe above the
 wiper in a comment on #5567. In the source, those machines' wiper is the Nozzle Wiper
 accessory, whose code 7.0.0 reworked and which is not built for the INDX (see the 7.0.0
 re-check above); whether that rework lies behind these reports is not established.
+One of the owners later found that keeping the hotend from heating while the printer
+homes made the wipe land on the wiper again, a tip taken from a forum thread about a
+non-INDX Core One that keeps detecting collisions, where owners suspect the loadcell or
+its wiring. A second owner says the same change cured it for them. That would fit a
+false loadcell trigger while the heater warms up, the pattern described under
+[loadcell noise](loadcell-emi-noise.md), more than a misplaced wiper, but nobody in the
+issue has tested that, and it still comes from Gen 2 machines without an INDX.
 
 ## Related
 

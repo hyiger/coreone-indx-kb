@@ -1,7 +1,7 @@
 ---
 title:        Nur eine Düsengröße hat ein Slicer-Profil
 confidence:   reported
-updated:      2026-11-08
+updated:      2026-11-10
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -50,8 +50,10 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/how-tu-print-tpu/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/solved-tpu-tangling-at-the-extruder-after-indx-tool-changes-the-nozzle-was-too-cold-during-cleaning/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/a-mixed-nozzle-profile-for-the-indx/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/i-have-created-a-multi-size-custom-vendor-profil/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-nozzles/
 superseded_by:
-source_sha:   df7a51325a2f374c615c7e6a56bd3f01e97a015b8b92450b07ad3410eb6997b7
+source_sha:   2c3e67bb03478def51fed5edc04b1832a25e83bfa451ef2189fd2a3a4406d650
 ---
 # Nur eine Düsengröße hat ein Slicer-Profil
 
@@ -482,12 +484,19 @@ sagte nichts dazu, wie er es gebaut hat oder wie es druckt
 stand hier, niemand in den Quellen habe über einen gelungenen Versuch berichtet.) Der
 Autor dieser Seite hat außerdem ein selbst gebautes Profil für gemischte Düsen in einem
 [eigenen Forumsthread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/a-mixed-nozzle-profile-for-the-indx/)
-geteilt, in dem ein anderer Besitzer inzwischen eine Variante für die 3.0-Alphas
-eingestellt hat, aufgebaut auf Alpha 12, und angibt, gemischte Drucke mit deren
-Düsenvarianten 0.4mm, HF0.4mm und HF0.6mm seien bei ihm problemlos gelaufen, die
-0.25mm-Variante ungetestet. Da es der Thread des Autors ist, steht er hier als Hinweis,
-nicht als Beleg: Antworten darin, dieser Bericht eingeschlossen, werden absichtlich nicht
-zu den Berichten oben gezählt, und keines der beiden Profile ist bewertet. Bis jemand
+geteilt. Ein anderer Besitzer stellte dort eine Variante für die 3.0-Alphas ein,
+aufgebaut auf Alpha 12, und gibt an, gemischte Drucke mit deren Düsenvarianten 0.4mm,
+HF0.4mm und HF0.6mm seien problemlos gelaufen, die 0.25mm-Variante ungetestet; im
+November verschob ein Moderator sie auf Wunsch dieses Besitzers in
+[einen eigenen Thread](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/i-have-created-a-multi-size-custom-vendor-profil/).
+Ein dritter Besitzer, der den Thread des Autors als Ausgangspunkt nennt, hat einen Satz
+für eine andere Düsenbelegung veröffentlicht, mit Presets für PrusaSlicer 2.9.x, die
+3.0-Alphas 13 und 14 und OrcaSlicer 2.5
+(angekündigt, mit einem Link darauf, in
+[einem Thread über INDX-Düsen](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-nozzles/)).
+Da beide aus dem Thread des Autors hervorgegangen sind, stehen sie hier als Hinweise,
+nicht als Belege: Sie werden absichtlich nicht zu den Berichten oben gezählt, und keines
+der drei Profile ist bewertet. Bis jemand
 mehr berichtet, spekuliert diese Seite nicht — das Spül- und Kalibrierverhalten des
 Werkzeugwechslers hängt auf nicht offensichtliche Weise am Profil.
 

@@ -1,7 +1,7 @@
 ---
 title:        In den Druck geschleppte Blobs — Düsenwischer und Spülvorgang
 confidence:   reported
-updated:      2026-11-08
+updated:      2026-11-10
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -57,7 +57,7 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/core-one-indx-blobs-at-color-change-layers-nozzle-wiper-dropping-filament-onto-print/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/solved-tpu-tangling-at-the-extruder-after-indx-tool-changes-the-nozzle-was-too-cold-during-cleaning/
 superseded_by:
-source_sha:   fa9a2908c3e2b4357fc449787725237c76072151d81d89ce01bf8ae2b9626bf4
+source_sha:   70bfa500f926f90e3e5d8859f061c24da5c8e46a0532e499179d2a1dfe107da8
 ---
 # In den Druck geschleppte Blobs — Düsenwischer und Spülvorgang
 
@@ -780,7 +780,7 @@ Ebenfalls nicht übernommen ist ein späterer Gen-2-Bericht, nach dem das Wische
 Luft stattfindet, deutlich oberhalb des Wischers
 ([#5563](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5563)), weil er von
 Maschinen stammt, die keinen INDX haben oder keinen erwähnen, und kein INDX-Anwender ihn
-gemeldet hat. Laut dem Melder hat die Maschine keinen INDX. Drei Anwender haben seither
+gemeldet hat. Laut dem Melder hat die Maschine keinen INDX. Fünf Anwender haben seither
 ergänzt, dass sie das ebenfalls sehen, alle auf 8.0.0 und auf einem Gen 2, einer davon
 seit dem Update von 6.8.1: Einer nennt Prusas Wischer-Zubehör und eine MMU3, die anderen
 erwähnen keinen INDX. Im November beschrieb der Besitzer einer Core One ohne INDX in
@@ -788,6 +788,14 @@ einem Kommentar zu #5567 dasselbe Wischen oberhalb des Wischers. Im Quellcode is
 Wischer dieser Maschinen das Zubehör Nozzle Wiper, dessen Code 7.0.0 überarbeitet hat und
 der für den INDX nicht gebaut wird (siehe die Nachprüfung gegen 7.0.0 oben); ob diese
 Überarbeitung hinter den Berichten steckt, ist nicht geklärt.
+Einer der Anwender fand später heraus, dass das Wischen wieder auf dem Wischer landet,
+wenn das Hotend während des Homings nicht aufheizt, ein Tipp aus einem Forumsthread
+über eine Core One ohne INDX, die ständig Kollisionen erkennt, wo man die Wägezelle oder
+ihre Verkabelung verdächtigt. Ein zweiter Anwender bestätigt, dass dieselbe Änderung
+das Problem behoben hat. Das passt eher zu einem falschen Auslösen der Wägezelle, während die
+Heizung aufwärmt, dem Muster unter [Rauschen der Wägezelle](loadcell-emi-noise.md), als
+zu einem falsch platzierten Wischer, aber niemand im Issue hat das geprüft, und es
+stammt weiterhin von Gen-2-Maschinen ohne INDX.
 
 ## Verwandte Seiten
 

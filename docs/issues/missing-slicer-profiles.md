@@ -1,7 +1,7 @@
 ---
 title:        Only one nozzle size has a slicer profile
 confidence:   reported
-updated:      2026-11-08
+updated:      2026-11-10
 author:       hyiger
 printer:      Core One
 toolhead:     INDX
@@ -50,6 +50,8 @@ sources:
   - https://forum.prusa3d.com/forum/prusa-indx-assembly-and-first-prints-troubleshooting/how-tu-print-tpu/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/solved-tpu-tangling-at-the-extruder-after-indx-tool-changes-the-nozzle-was-too-cold-during-cleaning/
   - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/a-mixed-nozzle-profile-for-the-indx/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/i-have-created-a-multi-size-custom-vendor-profil/
+  - https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-nozzles/
 superseded_by:
 ---
 
@@ -431,12 +433,19 @@ how they built it or how it prints
 ([#5592](https://github.com/prusa3d/Prusa-Firmware-Buddy/issues/5592)). (Until November
 this page said nobody in the sources had reported a working attempt.) This page's author
 has also shared a hand-made mixed-nozzle profile in a
-[forum thread of their own](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/a-mixed-nozzle-profile-for-the-indx/),
-where another owner has since posted a variant for the 3.0 alphas, built on alpha 12, and
-says mixed prints using its 0.4mm, HF0.4mm and HF0.6mm nozzle variants have run for them
-without trouble, the 0.25mm variant untested. Being the author's thread, it is listed
-here as a pointer, not as evidence: replies in it, that report included, are deliberately
-not weighed with the reports above, and neither profile is assessed.
+[forum thread of their own](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/a-mixed-nozzle-profile-for-the-indx/).
+Another owner posted a variant for the 3.0 alphas there, built on alpha 12, and says
+mixed prints using its 0.4mm, HF0.4mm and HF0.6mm nozzle variants have run for them
+without trouble, the 0.25mm variant untested; in November a moderator moved it into
+[a thread of its own](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/i-have-created-a-multi-size-custom-vendor-profil/)
+at that owner's request. A third owner, who names the author's thread as their starting
+point, has published a set for a different nozzle layout, with presets for PrusaSlicer
+2.9.x, the 3.0 alphas 13 and 14, and OrcaSlicer 2.5
+(announced, with a link to it, in
+[a thread on INDX nozzles](https://forum.prusa3d.com/forum/prusa-indx-general-discussion-announcements-and-releases/indx-nozzles/)).
+Because both grew out of the author's thread, they are listed here as pointers, not as
+evidence: they are deliberately not weighed with the reports above, and none of the
+three profiles is assessed.
 Until someone reports more, this page will not speculate — the toolchanger's purge and
 calibration behavior is tied to the profile in ways that are not obvious.
 
